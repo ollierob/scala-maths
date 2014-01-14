@@ -5,6 +5,7 @@ import net.ollie.maths.functions.numeric.PositiveSquareRoot
 import net.ollie.maths.functions.polynomial.LegendrePolynomial
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.real.Pi
+import net.ollie.maths.functions.Represented
 
 /**
  * Order-less spherical harmonics.
@@ -32,9 +33,10 @@ object ZeroZeroHarmonic
 
 class LZeroHarmonic(val l: NaturalNumber, val theta: Variable)
         extends AnyRef
-        with ZonalSphericalHarmonic {
+        with ZonalSphericalHarmonic
+        with Represented {
 
-    private final def func: Differentiable = PositiveSquareRoot(((2 * l + 1) !) / (Pi * NaturalNumber(4))) * LegendrePolynomial(l, Cos(theta))
+    private val func: Differentiable = PositiveSquareRoot(((2 * l + 1) !) / (Pi * NaturalNumber(4))) * LegendrePolynomial(l, Cos(theta))
 
     protected[this] def f = func
 
