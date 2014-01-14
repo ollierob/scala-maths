@@ -34,9 +34,9 @@ trait RationalNumber
         case _ => super.?*(that)
     }
 
-    override def equals(that: RealNumber) = that match {
-        case r: RationalNumber => this.numerator == r.numerator && this.denominator == r.denominator
-        case _ => super.equals(that)
+    override def ?==(that: RealNumber) = that match {
+        case r: RationalNumber => Some(this.numerator == r.numerator && this.denominator == r.denominator)
+        case _ => super.?==(that)
     }
 
     override def toString: String = numerator.toString + "/" + denominator.toString

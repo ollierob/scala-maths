@@ -14,14 +14,15 @@ import net.ollie.maths.functions.Represented
 trait ZonalSphericalHarmonic
         extends SphericalHarmonic {
 
-    final override def m = Zero
+    override final def m = Zero
 
     override def toString = "Z(" + l + ")"
 
 }
 
 object ZeroZeroHarmonic
-        extends ZonalSphericalHarmonic {
+        extends ZonalSphericalHarmonic
+        with Represented {
 
     def l = Zero
 

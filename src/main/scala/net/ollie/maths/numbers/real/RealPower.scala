@@ -14,6 +14,7 @@ object RealPower {
         case (Zero, Zero) => convention.value
         case (Zero, _) if power > Zero => Zero
         case (Zero, _) if power < Zero => Zero.inverse
+        case (One, _) => One
         case (_, Zero) => One
         case (_, One) => base
         case _ => new RealToIntegerPower(base, power)
@@ -35,7 +36,7 @@ object RealPower {
 
 }
 
-class RealToIntegerPower(val base: RealNumber, val power: IntegerNumber)
+private class RealToIntegerPower(val base: RealNumber, val power: IntegerNumber)
         extends RealNumber
         with ApproximatelyEvaluated {
 
@@ -53,9 +54,9 @@ class RealToIntegerPower(val base: RealNumber, val power: IntegerNumber)
         else throw new UnsupportedOperationException(s"Precision $precision unsupported for evaluation of $this")
     }
 
-    override def equals(that: RealNumber) = that match {
-        case pow: RealToIntegerPower if base == pow.base => power == pow.power
-        case _ => super.equals(that)
+    override def ?==(that: RealNumber) = that match {
+        case pow: RealToIntegerPower if base == pow.base => Some(power == pow.power)
+        case _ => super.?==(that)
     }
 
     override def toString = s"($base ^ $power)"

@@ -4,6 +4,7 @@ import scala.math.BigDecimal.RoundingMode
 
 import net.ollie.maths.functions.UnivariateFunction
 import net.ollie.maths.numbers.{PositiveRealNumber, Precision, RealNumber}
+import net.ollie.maths.methods.ApproximatelyEvaluated
 
 /**
  * Created by Ollie on 08/01/14.
@@ -19,9 +20,13 @@ object PositiveSquareRoot
 
 class PositiveSquareRoot(val of: PositiveRealNumber)
         extends AnyRef
-        with PositiveRealNumber {
+        with PositiveRealNumber
+        with ApproximatelyEvaluated {
 
-    protected[this] def eval(precision: Precision)(implicit mode: RoundingMode.RoundingMode): BigDecimal = ???
+    override def approximatelyEvaluate(precision: Precision)(implicit mode: RoundingMode.RoundingMode) = {
+        if (precision.value < 16) Math.sqrt(of.approximatelyEvaluate(precision).toDouble)
+        else ???
+    }
 
     def isEmpty = of.isEmpty
 

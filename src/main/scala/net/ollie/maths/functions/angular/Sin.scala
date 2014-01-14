@@ -79,9 +79,4 @@ private class RealSin(override val of: RealNumber)
 
     override def toConstant = Some(this)
 
-    override def equals(that: RealNumber) = that match {
-        case r: RealSin => of == r.of
-        case _ => super.equals(that)
-    }
-
 }

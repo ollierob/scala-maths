@@ -9,8 +9,7 @@ import net.ollie.maths.numbers._
  */
 trait SphericalHarmonic
         extends Modal
-        with Differentiable
-        with Represented {
+        with Differentiable {
 
     require(l >= m.abs)
 
@@ -53,7 +52,8 @@ object SphericalHarmonic {
 }
 
 class LMHarmonic(val l: NaturalNumber, val m: IntegerNumber, val theta: Variable, val phi: Variable)
-        extends SphericalHarmonic {
+        extends SphericalHarmonic
+        with Represented {
 
     protected[this] def f = ???
 
