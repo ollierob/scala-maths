@@ -23,6 +23,8 @@ trait PositiveRealNumber
 
 object PositiveRealNumber {
 
+    implicit def apply(int: Int): NaturalNumber = NaturalNumber(int)
+
     def inverse(re: PositiveRealNumber): PositiveRealNumber = new PositiveRealInverseNumber(re)
 
 }

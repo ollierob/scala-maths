@@ -3,8 +3,8 @@ package net.ollie.maths.functions.numeric
 import scala.math.BigDecimal.RoundingMode
 
 import net.ollie.maths.functions.UnivariateFunction
-import net.ollie.maths.numbers.{PositiveRealNumber, Precision, RealNumber}
 import net.ollie.maths.methods.ApproximatelyEvaluated
+import net.ollie.maths.numbers.{PositiveRealNumber, Precision, RealNumber, Zero}
 
 /**
  * Created by Ollie on 08/01/14.
@@ -12,7 +12,14 @@ import net.ollie.maths.methods.ApproximatelyEvaluated
 object PositiveSquareRoot
         extends UnivariateFunction[PositiveRealNumber, PositiveRealNumber] {
 
-    def apply(f: PositiveRealNumber): PositiveRealNumber = if (f.isEmpty) f else new PositiveSquareRoot(f)
+    def apply(f: RealNumber): Option[PositiveRealNumber] = f match {
+        case p: PositiveRealNumber => Some(apply(p))
+        case Zero => Some(Zero)
+        case _ if f.isStrictlyPositive => Some(apply(f.abs))
+        case _ => None
+    }
+
+    def apply(f: PositiveRealNumber): PositiveRealNumber = if (f.isEmpty) Zero else new PositiveSquareRoot(f)
 
     def unapply(root: PositiveSquareRoot): Option[PositiveRealNumber] = Some(root.of)
 

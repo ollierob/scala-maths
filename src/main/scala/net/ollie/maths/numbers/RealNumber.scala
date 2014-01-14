@@ -258,8 +258,6 @@ class RealProduct(val terms: Seq[RealNumber])
     override def variables = super[RealNumber].variables
 
     override def approximatelyEvaluate(precision: Precision)(implicit mode: RoundingMode) = {
-        println(s"EVALUATING $this -> " + terms.map(_.approximatelyEvaluate(precision)))
-        println(s"EVALUATING $this -> " + terms.map(_.getClass))
         terms.map(_.approximatelyEvaluate(precision)).product
     }
 
