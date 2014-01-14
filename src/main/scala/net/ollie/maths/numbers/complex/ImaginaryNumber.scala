@@ -33,7 +33,7 @@ class ImaginaryNumber(val coefficient: RealNumber)
 
     def *(that: RealNumber): ImaginaryNumber = coefficient * that
 
-    def /(that: RealNumber): ImaginaryNumber = coefficient / that
+    override def /(that: RealNumber): ImaginaryNumber = coefficient / that
 
     override def equals(that: ComplexNumber): Boolean = that match {
         case i: ImaginaryNumber => this.coefficient == i.coefficient

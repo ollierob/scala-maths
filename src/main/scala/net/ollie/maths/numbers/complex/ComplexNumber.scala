@@ -40,6 +40,10 @@ trait ComplexNumber
 
     def *(that: ComplexNumber): ComplexNumber = ComplexNumber((this.re * that.re) + (this.im * that.im), (this.im * that.re) + (that.im * this.re))
 
+    def /(that: ComplexNumber): ComplexNumber = this * that.inverse
+
+    def /(that: RealNumber): ComplexNumber = ComplexNumber(this.re / that, this.im / that)
+
     def ?+(that: Number) = that match {
         case re: RealNumber => Some(this + ComplexNumber(re))
         case z: ComplexNumber => Some(this + z)
@@ -75,7 +79,7 @@ object ComplexNumber {
 
     def negate(z: ComplexNumber): ComplexNumber = ComplexNumber(-z.re, -z.im)
 
-    def inverse(z: ComplexNumber): ComplexNumber = ??? //z.conjugate / (re^2 + im^2)
+    def inverse(z: ComplexNumber): ComplexNumber = z.conjugate / z.abs.squared
 
     def conjugate(z: ComplexNumber): ComplexNumber = if (z.isEmpty) ComplexZero else new ComplexConjugate(z)
 

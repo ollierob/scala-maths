@@ -30,7 +30,7 @@ trait RealNumber
         case Some(n) => n
         case _ => that ?+ this match {
             case Some(m) => m
-            case _ => ???
+            case _ => RealSeries(this, that)
         }
     }
 
@@ -241,28 +241,69 @@ class AbsRealNumber(val re: RealNumber)
 
 }
 
+object RealSeries {
+
+    def apply(left: RealNumber, right: RealNumber): RealNumber = (left, right) match {
+        case (Zero, _) => right
+        case (_, Zero) => left
+        case _ => new RealSeries(Seq(left, right))
+    }
+
+    def apply(terms: Seq[RealNumber]): RealNumber = terms.filterNot(_.isEmpty) match {
+        case Nil => Zero
+        case term :: Nil => term
+        case _ => new RealSeries(terms)
+    }
+
+}
+
+class RealSeries private(val terms: Seq[RealNumber])
+        extends RealNumber
+        with ApproximatelyEvaluated {
+
+    private final def series = Series(terms)
+
+    override def toConstant = super[RealNumber].toConstant
+
+    override def approximatelyEvaluate(precision: Precision)(implicit mode: RoundingMode) = {
+        terms.map(_.approximatelyEvaluate(precision)).sum
+    }
+
+    override def ?+(that: RealNumber) = Some(RealSeries(terms :+ that)) //TODO simplify
+
+    def isEmpty = series.isEmpty
+
+    override def toString = series.toString
+
+}
+
 object RealProduct {
 
     def apply(left: RealNumber, right: RealNumber): RealNumber = if (left.isEmpty || right.isEmpty) Zero else new RealProduct(Seq(left, right))
 
+    def apply(terms: Seq[RealNumber]): RealNumber = terms match {
+        case Nil => Zero
+        case item :: Nil => item
+        case _ if terms.contains(None) => Zero
+        case _ => new RealProduct(terms)
+    }
+
 }
 
-class RealProduct(val terms: Seq[RealNumber])
+class RealProduct private(val terms: Seq[RealNumber])
         extends RealNumber
         with ApproximatelyEvaluated {
 
     private final def product = Product(terms)
 
-    override def toConstant = super[RealNumber].toConstant
-
-    override def variables = super[RealNumber].variables
-
     override def approximatelyEvaluate(precision: Precision)(implicit mode: RoundingMode) = {
         terms.map(_.approximatelyEvaluate(precision)).product
     }
 
+    override def ?*(that: RealNumber) = Some(RealProduct(terms :+ that)) //TODO simplify
+
     def isEmpty = product.isEmpty
 
-    override def toString = "REAL" + product.toString
+    override def toString = product.toString
 
 }

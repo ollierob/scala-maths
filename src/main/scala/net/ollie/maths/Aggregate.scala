@@ -50,7 +50,7 @@ class Series(val terms: Seq[Expression])
 
     def isEmpty = terms.forall(_.isEmpty)
 
-    override def toString = terms.mkString("(", " + ", ")")
+    override def toString = terms.mkString("Σ(", " + ", ")")
 
     override def hashCode = terms.hashCode
 
