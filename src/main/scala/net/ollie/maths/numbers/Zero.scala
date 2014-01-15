@@ -3,6 +3,7 @@ package net.ollie.maths.numbers
 import net.ollie.maths.{Variable, Empty}
 
 /**
+ * Empty real number.
  * Created by Ollie on 01/01/14.
  */
 object Zero

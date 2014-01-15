@@ -19,6 +19,15 @@ class RealProductTest extends FlatSpec with Matchers {
             2 * product shouldBe (RealProduct(4, Pi))
         }
 
+        it should "multiply by itself" in {
+            product * product shouldBe (RealProduct(Seq(4, Pi, Pi)))
+        }
+
+        it should "multiply by zero" in {
+            product * Zero shouldBe (Zero)
+            Zero * product shouldBe (Zero)
+        }
+
     }
 
 }
