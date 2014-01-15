@@ -59,7 +59,10 @@ object Angle extends Enumeration {
 
     }
 
-    implicit class Angular(value: RealNumber) {
+    implicit class AngularInt(val int: Int)
+            extends Angular(int)
+
+    implicit class Angular(val value: RealNumber) {
 
         def radians: Radians = Radians(value)
 
