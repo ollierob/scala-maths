@@ -1,6 +1,7 @@
 package net.ollie.maths.numbers
 
 import scala.Some
+import scala.collection.mutable
 import scala.math.BigDecimal.RoundingMode.RoundingMode
 
 import net.ollie.maths._
@@ -60,6 +61,25 @@ trait RealNumber
         case _ => None
     }
 
+
+    /**
+     * Shortcut for this ?* that and that ?* this
+     * @param that
+     * @return
+     */
+    def ?*?(that: RealNumber): Option[RealNumber] = this ?* that match {
+        case Some(m) => Some(m)
+        case _ => that ?* this match {
+            case Some(m) => Some(m)
+            case _ => None
+        }
+    }
+
+    /**
+     *
+     * @param that
+     * @return
+     */
     def ?*(that: Number) = that match {
         case re: RealNumber => Some(this * re)
         case _ => None
@@ -300,7 +320,21 @@ class RealProduct private(val terms: Seq[RealNumber])
         terms.map(_.approximatelyEvaluate(precision)).product
     }
 
-    override def ?*(that: RealNumber) = Some(RealProduct(terms :+ that)) //TODO simplify
+    override def ?*(that: RealNumber) = Some(RealProduct(that match {
+        case product: RealProduct => ??? //TODO
+        case term: RealNumber => multiplyIn(term, terms)
+    }))
+
+    private def multiplyIn(term: RealNumber, terms: Seq[RealNumber]): Seq[RealNumber] = {
+        var current = term
+        terms.foldLeft(new mutable.ListBuffer[RealNumber]())((seq, next) => next ?*? current match {
+            case Some(m) => {
+                current = m
+                seq :+ current
+            }
+            case _ => seq :+ next
+        })
+    }
 
     def isEmpty = product.isEmpty
 

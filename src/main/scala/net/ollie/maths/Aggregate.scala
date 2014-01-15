@@ -96,7 +96,6 @@ class Product(val terms: Seq[Expression])
     }
 
     private def multiply(result: Option[Number], current: Option[Number]): Option[Number] = {
-        println(s"MULTIPLY $result BY $current")
         if (!result.isDefined || !current.isDefined) return None //TODO use option foldLeft?
         val n = result.get ?* current.get
         if (n.isDefined) n

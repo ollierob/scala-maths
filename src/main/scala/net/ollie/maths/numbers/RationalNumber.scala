@@ -23,10 +23,10 @@ trait RationalNumber
 
     override def approximatelyEvaluate(precision: Precision)(implicit mode: RoundingMode): BigDecimal = numerator.evaluate(precision) / denominator.evaluate(precision)
 
-    override def ?+(that: RealNumber) = that match {
-        case r: RationalNumber => Some(IntegerFraction((numerator * r.numerator) + (r.numerator * denominator), denominator * r.denominator))
-        case _ => super.?+(that)
-    }
+    //    override def ?+(that: RealNumber) = that match {
+    //        case r: RationalNumber => Some(IntegerFraction((numerator * r.numerator) + (r.numerator * denominator), denominator * r.denominator))
+    //        case _ => super.?+(that)
+    //    }
 
     override def ?*(that: RealNumber) = that match {
         case r: RationalNumber => Some(IntegerFraction(r.numerator * numerator, r.denominator * denominator))
@@ -45,19 +45,26 @@ trait RationalNumber
 
 object IntegerFraction {
 
-    def apply(numerator: IntegerNumber, denominator: IntegerNumber)(implicit doReduce: Boolean = true): RealNumber = (numerator, denominator) match {
-        case (_, Zero) => numerator * denominator.inverse
-        case (Zero, _) => Zero
-        case (_, One) => numerator
-        case _ if numerator == denominator => One
-        case _ if doReduce => reduce(numerator, denominator) match {
-            case Some((n, d)) => apply(n, d)(false)
-            case _ => new IntegerFraction(numerator, denominator)
+    def apply(numerator: IntegerNumber, denominator: IntegerNumber): RealNumber = common(numerator, denominator) match {
+        case Some(m) => m
+        case _ => (numerator, denominator) match {
+            case (n1: NaturalNumber, n2: NaturalNumber) => NaturalNumberFraction(n1, n2)
+            case _ => reduce(numerator, denominator) match {
+                case Some((n, d)) => apply(n, d)
+                case _ => new IntegerFraction(numerator, denominator)
+            }
         }
-        case _ => new IntegerFraction(numerator, denominator)
     }
 
-    private def reduce(numerator: IntegerNumber, denominator: IntegerNumber): Option[(IntegerNumber, IntegerNumber)] = {
+    def common(numerator: IntegerNumber, denominator: IntegerNumber): Option[RealNumber] = (numerator, denominator) match {
+        case (_, Zero) => Some(numerator * denominator.inverse)
+        case (Zero, _) => Some(Zero)
+        case (_, One) => Some(numerator)
+        case _ if numerator == denominator => Some(One)
+        case _ => None
+    }
+
+    def reduce(numerator: IntegerNumber, denominator: IntegerNumber): Option[(IntegerNumber, IntegerNumber)] = {
         GreatestCommonDivisor(numerator, denominator) match {
             case One => None
             case gcd => Some(IntegerNumber(numerator.evaluate / gcd.evaluate), IntegerNumber(denominator.evaluate / gcd.evaluate))
@@ -66,17 +73,26 @@ object IntegerFraction {
 
 }
 
-final class IntegerFraction(val numerator: IntegerNumber, val denominator: IntegerNumber)
+class IntegerFraction private[numbers](val numerator: IntegerNumber, val denominator: IntegerNumber)
         extends RationalNumber
         with ApproximatelyEvaluated {
 
     require(!denominator.isEmpty)
+
+    override def unary_-() = IntegerFraction(-numerator, denominator)
+
+    override def squared = NaturalNumberFraction(numerator.squared, denominator.squared)
+
+    override def ?*(that: RealNumber) = numerator ?* that match {
+        case Some(m: IntegerNumber) => Some(IntegerFraction(m, denominator))
+        case _ => super.?*(that)
+    }
 
     override def /(that: RealNumber) = that match {
         case rational: RationalNumber => this * rational.inverse
         case _ => super./(that)
     }
 
-    override def toString = s"IntegerFraction($numerator/$denominator)"
+    override def toString = s"($numerator/$denominator)"
 
 }

@@ -53,4 +53,16 @@ class IntegerFractionTest extends FlatSpec with Matchers {
         r.evaluate(4 dp).toString shouldBe ("0.3333")
     }
 
+    "-4 / 2" should "equal -2" in {
+        ((-FOUR) / TWO).evaluate(4 dp) shouldBe (BigDecimal(-2))
+    }
+
+    "-4 / -2" should "equal 2" in {
+        ((-FOUR) / (-TWO)).evaluate(4 dp) shouldBe (BigDecimal(2))
+    }
+
+    "1/3 + 1/5" should "equal 8/15" in {
+        IntegerFraction(ONE, THREE) + IntegerFraction(ONE, FIVE) shouldBe (IntegerFraction(8, 15))
+    }
+
 }

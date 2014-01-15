@@ -11,7 +11,7 @@ object EulersNumber extends PositiveRealNumber {
 
     private final val E50 = BigDecimal("2.71828182845904523536028747135266249775724709369995")
 
-    def nthTerm(n: NaturalNumber): RealNumber = 1 / (n !)
+    def nthTerm(n: NaturalNumber): PositiveRealNumber = 1 / (n !)
 
     def isEmpty = false
 

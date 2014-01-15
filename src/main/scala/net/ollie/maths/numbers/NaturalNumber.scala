@@ -1,7 +1,6 @@
 package net.ollie.maths.numbers
 
 import scala.collection.mutable
-import net.ollie.maths.methods.ApproximatelyEvaluated
 
 /**
  * Positive integer classes.
@@ -14,6 +13,8 @@ trait NaturalNumber
     override def abs: NaturalNumber = this
 
     def +(that: NaturalNumber): NaturalNumber = NaturalNumber(this.evaluate + that.evaluate)
+
+    override def inverse = NaturalNumber.inverse(this)
 
     def succ: NaturalNumber = this + One
 
@@ -40,7 +41,9 @@ object NaturalNumber {
         case _ => Left(int)
     }
 
-    def divide(numerator: NaturalNumber, denominator: NaturalNumber) = new PositiveIntegerFraction(numerator, denominator)
+    def divide(numerator: NaturalNumber, denominator: NaturalNumber): PositiveRealNumber = NaturalNumberFraction(numerator, denominator)
+
+    def inverse(n: NaturalNumber): PositiveRealNumber = divide(One, n)
 
     private val factorials: mutable.Map[NaturalNumber, NaturalNumber] = new mutable.HashMap()
 
@@ -80,15 +83,6 @@ class ExactNaturalNumber(int: BigInt)
 
 }
 
-class PositiveIntegerFraction(val numerator: NaturalNumber, val denominator: NaturalNumber)
-        extends RationalNumber
-        with PositiveRealNumber
-        with ApproximatelyEvaluated {
-
-    def reduce: RationalNumber = ???
-
-}
-
 class Factorial(val n: NaturalNumber)
         extends NaturalNumber {
 
@@ -97,5 +91,28 @@ class Factorial(val n: NaturalNumber)
     def evaluate = evaluated
 
     override def toString = n.toString + "!"
+
+}
+
+object NaturalNumberFraction {
+
+    def apply(n1: NaturalNumber, n2: NaturalNumber): PositiveRealNumber = IntegerFraction.common(n1, n2) match {
+        case Some(m) => m.abs
+        case _ => IntegerFraction.reduce(n1, n2) match {
+            case Some((i1, i2)) => apply(i1.abs, i2.abs)
+            case _ => new NaturalNumberFraction(n1, n2)
+        }
+    }
+
+
+}
+
+class NaturalNumberFraction(override val numerator: NaturalNumber, override val denominator: NaturalNumber)
+        extends IntegerFraction(numerator, denominator)
+        with PositiveRealNumber {
+
+    override def abs = this
+
+    override def inverse = NaturalNumberFraction(denominator, numerator)
 
 }

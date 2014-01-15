@@ -27,6 +27,8 @@ trait IntegerNumber
 
     override def abs: NaturalNumber = IntegerNumber.abs(this)
 
+    override def squared: NaturalNumber = NaturalNumber(this.evaluate.pow(2))
+
     def toInt: Option[Int] = this.evaluate match {
         case i if i.isValidInt => Some(i.toInt)
         case _ => None
@@ -81,6 +83,8 @@ object IntegerNumber {
     def divide(numerator: IntegerNumber, denominator: IntegerNumber): RealNumber = IntegerFraction(numerator, denominator)
 
     def abs(i: IntegerNumber): NaturalNumber = NaturalNumber(i.evaluate.abs)
+
+    def pow(n: NaturalNumber): IntegerNumber = ???
 
     def is(n: Number): Option[IntegerNumber] = n match {
         case i: IntegerNumber => Some(i)
