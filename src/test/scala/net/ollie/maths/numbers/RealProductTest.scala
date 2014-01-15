@@ -14,6 +14,15 @@ class RealProductTest extends FlatSpec with Matchers {
 
         val product = RealProduct(2, Pi)
 
+        it should "multiply by zero" in {
+            product * Zero shouldBe (Zero)
+            Zero * product shouldBe (Zero)
+        }
+
+        it should "multiply by 1" in {
+            product * One shouldBe (product)
+        }
+
         it should "multiply by 2" in {
             product * 2 shouldBe (RealProduct(4, Pi))
             2 * product shouldBe (RealProduct(4, Pi))
@@ -21,11 +30,6 @@ class RealProductTest extends FlatSpec with Matchers {
 
         it should "multiply by itself" in {
             product * product shouldBe (RealProduct(Seq(4, Pi, Pi)))
-        }
-
-        it should "multiply by zero" in {
-            product * Zero shouldBe (Zero)
-            Zero * product shouldBe (Zero)
         }
 
     }

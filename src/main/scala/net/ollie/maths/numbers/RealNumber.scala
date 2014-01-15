@@ -297,11 +297,41 @@ class RealSeries private(val terms: Seq[RealNumber])
         terms.map(_.approximatelyEvaluate(precision)).sum
     }
 
-    override def ?+(that: RealNumber) = Some(RealSeries(terms :+ that)) //TODO simplify
+    override def ?+(that: RealNumber) = {
+        if (that.isEmpty) this
+        Some(RealSeries(that match {
+            case series: RealSeries => simplify(this.terms, series.terms)
+            case _ => simplify(that, terms)
+        }))
+    }
 
-    def isEmpty = series.isEmpty
+    private def simplify(left: Seq[RealNumber], right: Seq[RealNumber]): Seq[RealNumber] = {
+        left.foldLeft(right)((seq, next) => simplify(next, seq))
+    }
+
+    private def simplify(term: RealNumber, terms: Seq[RealNumber]): Seq[RealNumber] = {
+        var simplified = false
+        var current = term
+        val series = terms.foldLeft(new mutable.ListBuffer[RealNumber]())((seq, next) => next ?+? current match {
+            case Some(m) => {
+                simplified = true
+                current = m
+                seq += current
+            }
+            case _ => seq :+ next
+        })
+        if (!simplified) current +=: series
+        series.toSeq
+    }
+
+    def isEmpty = series.isEmpty //TODO not necessarily true!
 
     override def toString = series.toString
+
+    override def equals(that: RealNumber) = that match {
+        case series: RealSeries => this.terms == series.terms || super.equals(series)
+        case _ => super.equals(that)
+    }
 
 }
 
@@ -321,6 +351,8 @@ object RealProduct {
 class RealProduct private(val terms: Seq[RealNumber])
         extends RealNumber
         with ApproximatelyEvaluated {
+
+    require(!terms.isEmpty)
 
     private final def product = Product(terms)
 
@@ -358,5 +390,10 @@ class RealProduct private(val terms: Seq[RealNumber])
     def isEmpty = product.isEmpty
 
     override def toString = product.toString
+
+    override def equals(that: RealNumber) = that match {
+        case product: RealProduct => this.terms == product.terms || super.equals(product)
+        case _ => super.equals(that)
+    }
 
 }

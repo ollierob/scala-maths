@@ -3,7 +3,10 @@ package net.ollie.maths
 import net.ollie.maths.numbers.Zero
 
 /**
+ * An empty expression.
+ * For a number, it may mean that it is equal to zero, though this may not be known until it is evaluated.
  * Created by Ollie on 02/01/14.
+ * @see Zero
  */
 trait Empty
         extends Differentiable {

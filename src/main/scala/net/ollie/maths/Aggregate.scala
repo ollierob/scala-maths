@@ -8,13 +8,18 @@ import net.ollie.maths.numbers.{IntegerNumber, One, Zero}
 trait Aggregate
         extends Expression {
 
-    protected[this] def terms: Seq[Expression]
+    protected def terms: Seq[Expression]
 
     def variables = terms.map(_.variables).flatten.toSet
 
     def replace(variables: Map[Variable, Expression]) = apply(terms.map(_.replace(variables)))
 
     protected[this] def apply(expressions: Seq[Expression]): Expression
+
+    override def equals(that: Expression) = that match {
+        case a: Aggregate => this.terms == a.terms //Note that ordering matters here
+        case _ => super.equals(that)
+    }
 
 }
 
