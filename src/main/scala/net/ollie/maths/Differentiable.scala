@@ -1,12 +1,14 @@
 package net.ollie.maths
 
 import net.ollie.maths.functions.Represented
+import net.ollie.maths.functions.numeric.Ln
 import net.ollie.maths.numbers.Zero
 
 /**
  * Created by Ollie on 03/01/14.
  */
-trait Differentiable extends Expression {
+trait Differentiable
+        extends Expression {
 
     def +(that: Differentiable): Differentiable = DifferentiableSeries(this, that)
 
@@ -21,7 +23,7 @@ trait Differentiable extends Expression {
 
     def /(that: Differentiable): Differentiable = ???
 
-    def ^(that: Differentiable): Differentiable = ???
+    def ^(that: Differentiable): Differentiable = DifferentiablePower(this, that)
 
     def df(x: Variable): Differentiable
 
@@ -63,7 +65,7 @@ trait DifferentiableComposite
 
     protected[this] override def of: Differentiable
 
-    def df(x: Variable) = of.df(x) * df(of)
+    def df(x: Variable): Differentiable = of.df(x) * df(of)
 
     protected[this] def df(of: Differentiable): Differentiable
 
@@ -76,30 +78,6 @@ trait DifferentiableRepresented
     protected[this] override def f: Differentiable
 
     def df(x: Variable) = f.df(x)
-
-}
-
-trait DifferentiableUnivariate
-        extends Differentiable
-        with Univariate {
-
-    override def unary_-(): DifferentiableUnivariate = new DifferentiableNegatedExpression(this) with DifferentiableUnivariate {
-
-        override def unary_-() = DifferentiableUnivariate.this
-
-        override def variable: Variable = DifferentiableUnivariate.this.variable
-
-        override def variables = super[DifferentiableUnivariate].variables
-
-        override def df(x: Variable): DifferentiableUnivariate = -(DifferentiableUnivariate.this.df(x))
-
-        override def toString = "-(" + DifferentiableUnivariate.this.toString + ")"
-
-    }
-
-    def df(x: Variable): DifferentiableUnivariate
-
-    def dx: DifferentiableUnivariate = df(variable)
 
 }
 
@@ -173,5 +151,19 @@ class DifferentiableProduct(expressions: Seq[Differentiable])
     override def *(that: Differentiable) = if (that.isEmpty) Zero else DifferentiableProduct(expressions :+ that)
 
     override def toString = product.toString
+
+}
+
+object DifferentiablePower {
+
+    def apply(base: Differentiable, power: Differentiable): Differentiable = new DifferentiablePower(base, power)
+
+}
+
+class DifferentiablePower(base: Differentiable, power: Differentiable)
+        extends Power(base, power)
+        with Differentiable {
+
+    def df(x: Variable): Differentiable = (base ^ (power - 1)) * ((base.df(x) * power) + (base * Ln(power))) * power.df(x)
 
 }

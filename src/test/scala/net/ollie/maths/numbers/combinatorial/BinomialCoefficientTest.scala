@@ -25,15 +25,15 @@ class BinomialCoefficientTest extends FlatSpec with Matchers {
     }
 
     "3 choose 2" should "be good" in {
-        (3 choose 2).isGood shouldBe (true)
+        BinomialCoefficient.isGood(3 choose 2) shouldBe (true)
     }
 
     "5 choose 3" should "not be good" in {
-        (5 choose 3).isGood shouldBe (false)
+        BinomialCoefficient.isGood(5 choose 3) shouldBe (false)
     }
 
     "5 choose 4" should "be good" in {
-        (5 choose 4).isGood shouldBe (true)
+        BinomialCoefficient.isGood(5 choose 4) shouldBe (true)
     }
 
 }

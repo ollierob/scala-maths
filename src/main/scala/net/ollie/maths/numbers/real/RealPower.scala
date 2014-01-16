@@ -1,13 +1,27 @@
 package net.ollie.maths.numbers.real
 
 
-import net.ollie.maths.numbers._
-import net.ollie.maths.methods.ApproximatelyEvaluated
 import scala.math.BigDecimal.RoundingMode
+
+import net.ollie.maths.methods.ApproximatelyEvaluated
+import net.ollie.maths.numbers._
 
 /**
  * Created by Ollie on 12/01/14.
  */
+trait RealPower
+        extends RealNumber {
+
+    protected def base: RealNumber
+
+    protected def power: RealNumber
+
+    override def isEmpty = base.isEmpty
+
+    override def toString = s"($base ^ $power)"
+
+}
+
 object RealPower {
 
     def apply(base: RealNumber, power: IntegerNumber)(implicit convention: ZeroToPowerZeroConvention = ZeroToPowerZeroIsOne): RealNumber = (base, power) match {
@@ -37,10 +51,8 @@ object RealPower {
 }
 
 private class RealToIntegerPower(val base: RealNumber, val power: IntegerNumber)
-        extends RealNumber
+        extends RealPower
         with ApproximatelyEvaluated {
-
-    def isEmpty = false
 
     override def ?*(that: RealNumber) = that match {
         case pow: RealToIntegerPower if base == pow.base => Some(RealPower(base, power + pow.power))
@@ -58,8 +70,6 @@ private class RealToIntegerPower(val base: RealNumber, val power: IntegerNumber)
         case pow: RealToIntegerPower if base == pow.base => Some(power == pow.power)
         case _ => super.?==(that)
     }
-
-    override def toString = s"($base ^ $power)"
 
 }
 

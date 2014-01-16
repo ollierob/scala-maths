@@ -1,6 +1,6 @@
 package net.ollie.maths.functions.polynomial
 
-import net.ollie.maths.{Differentiable, Variable}
+import net.ollie.maths._
 import net.ollie.maths.functions.Modal
 import net.ollie.maths.numbers.{IntegerNumber, NaturalNumber, Zero}
 
@@ -8,10 +8,16 @@ import net.ollie.maths.numbers.{IntegerNumber, NaturalNumber, Zero}
  * Created by Ollie on 08/01/14.
  */
 trait AssociatedLegendrePolynomial
-        extends LegendrePolynomial
-        with Modal {
+        extends Modal
+        with DifferentiableRepresented {
 
-    def m = order
+    def l: NaturalNumber
+
+    def degree = l
+
+    def m: IntegerNumber
+
+    def order = m
 
     override def toString = "P(" + l + "," + m + ")"
 
@@ -19,10 +25,10 @@ trait AssociatedLegendrePolynomial
 
 object AssociatedLegendrePolynomial {
 
-    def apply(l: NaturalNumber, m: IntegerNumber, z: Variable): LegendrePolynomial = m match {
-        case Zero => LegendrePolynomial(l, z)
-        case _ if m.abs > l => new EmptyAssociatedLegendrePolynomial(l, m, z)
-        case _ => new RegularAssociatedLegendrePolynomial(l, m, z)
+    def apply(l: NaturalNumber, m: IntegerNumber, x: Variable): AssociatedLegendrePolynomial = m match {
+        case Zero => LegendrePolynomial(l, x)
+        case _ if m.abs > l => new EmptyAssociatedLegendrePolynomial(l, m)
+        case _ => new RegularAssociatedLegendrePolynomial(l, m)(x)
     }
 
 }
@@ -30,20 +36,32 @@ object AssociatedLegendrePolynomial {
 /**
  * When |m| > l the polynomial is empty.
  */
-class EmptyAssociatedLegendrePolynomial(val degree: NaturalNumber, val order: IntegerNumber, val z: Variable)
-        extends AssociatedLegendrePolynomial {
+class EmptyAssociatedLegendrePolynomial(val l: NaturalNumber, val m: IntegerNumber)
+        extends AssociatedLegendrePolynomial
+        with Empty {
 
     require(order.abs > degree)
 
     protected[this] def f = Zero
 
+    override def isEmpty = super[Empty].isEmpty
+
+    override def variables = super[Empty].variables
+
 }
 
-class RegularAssociatedLegendrePolynomial(val degree: NaturalNumber, val order: IntegerNumber, val z: Variable)
-        extends AssociatedLegendrePolynomial {
+class RegularAssociatedLegendrePolynomial(val l: NaturalNumber, val m: IntegerNumber)(val x: Variable)
+        extends AssociatedLegendrePolynomial
+        with Univariate {
+
+    import net.ollie.maths.functions.polynomial.{AssociatedLegendrePolynomial => Plm}
 
     require(degree <= order.abs)
 
-    protected[this] def f: Differentiable = ???
+    override def variables = super[Univariate].variables
+
+    def variable = x
+
+    protected[this] def f = (((2 * l - 1) * Plm(l - 1, m, x)) - ((l + m) * Plm(l - 2, m, x))) / (l - m + 1)
 
 }

@@ -56,6 +56,8 @@ trait ComplexNumber
         case _ => None
     }
 
+    def ?^(that: Number) = ???
+
     override def equals(n: Number): Boolean = n match {
         case z: ComplexNumber => this equals z
         case _ => super.equals(n)

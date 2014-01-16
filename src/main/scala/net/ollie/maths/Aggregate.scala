@@ -112,3 +112,32 @@ class Product(val terms: Seq[Expression])
     override def hashCode = terms.hashCode
 
 }
+
+object Power {
+
+    def apply(base: Expression, power: Expression): Expression = if (base.isEmpty) Zero else new Power(base, power)
+
+}
+
+class Power(val base: Expression, val power: Expression)
+        extends Aggregate {
+
+    protected def terms = Seq(base, power)
+
+    override def replace(variables: Map[Variable, Expression]) = Power(base.replace(variables), power.replace(variables))
+
+    protected[this] def apply(expressions: Seq[Expression]) = ???
+
+    def toConstant = base.toConstant match {
+        case Some(b) => power.toConstant match {
+            case Some(p) => b ?^ p
+            case _ => None
+        }
+        case _ => None
+    }
+
+    def isEmpty = base.isEmpty
+
+    override def toString = s"($base ^ $power)"
+
+}

@@ -3,7 +3,7 @@ package net.ollie.maths.functions.angular
 import scala.math.BigDecimal.RoundingMode
 
 import net.ollie.maths._
-import net.ollie.maths.functions.{DifferentiableUnivariateExpressionBuilder, UnivariateFunction}
+import net.ollie.maths.functions.{DifferentiableUnivariate, DifferentiableUnivariateBuilder, UnivariateFunction}
 import net.ollie.maths.methods.MaclaurinSeries
 import net.ollie.maths.numbers.{Precision, RealNumber, Zero}
 
@@ -12,7 +12,7 @@ import net.ollie.maths.numbers.{Precision, RealNumber, Zero}
  */
 object Sin
         extends UnivariateFunction[RealNumber, RealNumber]
-        with DifferentiableUnivariateExpressionBuilder {
+        with DifferentiableUnivariateBuilder {
 
     def apply(n: Number): Number = n match {
         case Zero => empty

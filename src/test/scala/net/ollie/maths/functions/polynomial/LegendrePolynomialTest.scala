@@ -10,30 +10,41 @@ import net.ollie.maths.numbers.real.Pi
  */
 class LegendrePolynomialTest extends FlatSpec with Matchers {
 
-    val x = new Variable("x")
+    val x = Variable("x")
 
-    behavior of "P(1)"
+    behavior of "P(1)(x)"
 
-    it should "be x" in {
-        LegendrePolynomial(1, Zero) shouldBe (Zero)
-        LegendrePolynomial(1, Pi) shouldBe (Pi)
-        LegendrePolynomial(1, x).replace(x, Pi) shouldBe (Pi)
+    {
+
+        val p1 = LegendrePolynomial(1, x)
+
+        it should "be x" in {
+            LegendrePolynomial(1, Zero) shouldBe (Zero)
+            LegendrePolynomial(1, Pi) shouldBe (Pi)
+            LegendrePolynomial(1, x).replace(x, Pi) shouldBe (Pi)
+        }
+
+        it should "differentiate" in {
+            LegendrePolynomial(1, x).df(x) shouldBe (One)
+        }
+
     }
 
-    it should "differentiate" in {
-        LegendrePolynomial(1, x).df(x) shouldBe (One)
+    behavior of "P(2)(x)"
+
+    {
+
+        val p2 = LegendrePolynomial(2, x)
+
+        it should "(3x^2 - 1)/2" in {
+            p2.replace(x, Zero) shouldBe (-One / 2)
+            p2.replace(x, One) shouldBe (One)
+        }
+
+        it should "differentiate" in {
+            val df = p2.df(x)
+        }
+
     }
-
-    behavior of "P(2)"
-
-    it should "(3x^2 - 1)/2" in {
-        LegendrePolynomial(2, Zero) shouldBe (-One / 2)
-        LegendrePolynomial(2, One) shouldBe (One)
-    }
-
-    it should "differentiate" in {
-        println(LegendrePolynomial(2, x).df(x))
-    }
-
 
 }

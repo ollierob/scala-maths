@@ -43,6 +43,8 @@ trait Number
         exponentiation.exponent(this, power.narrow)
     }
 
+    def ?^(that: Number): Option[Number]
+
     /**
      * Tetration.
      * @param tower

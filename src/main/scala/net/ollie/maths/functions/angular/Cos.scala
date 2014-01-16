@@ -3,7 +3,7 @@ package net.ollie.maths.functions.angular
 import scala.math.BigDecimal.RoundingMode
 
 import net.ollie.maths._
-import net.ollie.maths.functions.DifferentiableUnivariateExpressionBuilder
+import net.ollie.maths.functions.{DifferentiableUnivariate, DifferentiableUnivariateBuilder}
 import net.ollie.maths.methods.MaclaurinSeries
 import net.ollie.maths.numbers.{One, Precision, RealNumber}
 
@@ -11,7 +11,7 @@ import net.ollie.maths.numbers.{One, Precision, RealNumber}
  * Created by Ollie on 03/01/14.
  */
 object Cos
-        extends DifferentiableUnivariateExpressionBuilder {
+        extends DifferentiableUnivariateBuilder {
 
     def apply(n: Number): Number = n match {
         case ang: Angle => apply(ang.toRadians)

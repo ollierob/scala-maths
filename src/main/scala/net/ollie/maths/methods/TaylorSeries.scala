@@ -1,12 +1,11 @@
 package net.ollie.maths.methods
 
-import scala.Some
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 import scala.math.BigDecimal.RoundingMode
 
 import net.ollie.maths._
-import net.ollie.maths.functions.DifferentiableUnivariateExpressionBuilder
+import net.ollie.maths.functions.{DifferentiableUnivariate, DifferentiableUnivariateBuilder}
 import net.ollie.maths.numbers.{NaturalNumber, Precision, RealNumber, Zero}
 
 /**
@@ -16,17 +15,19 @@ import net.ollie.maths.numbers.{NaturalNumber, Precision, RealNumber, Zero}
  */
 object TaylorSeries {
 
-    def apply(expression: Differentiable, at: RealNumber, around: RealNumber): Option[RealNumber] = expression match {
-        case _ if expression.isEmpty => Some(Zero)
-        case n: RealNumber => Some(n)
-        case du: DifferentiableUnivariate => Some(TaylorSeries(du, at, around))
-        case _ if expression.variables.size == 1 => Some(TaylorSeries(new DifferentiableUnivariateWrapper(expression), at, around))
-        case _ => None
+    //    def apply(expression: Differentiable, at: RealNumber, around: RealNumber): Option[RealNumber] = expression match {
+    //        case _ if expression.isEmpty => Some(Zero)
+    //        case n: RealNumber => Some(n)
+    //        case du: DifferentiableUnivariate => Some(TaylorSeries(du, at, around))
+    //        case _ if expression.variables.size == 1 => Some(TaylorSeries(new DifferentiableUnivariateWrapper(expression), at, around))
+    //        case _ => None
+    //    }
+
+    def apply(expression: DifferentiableUnivariate, at: RealNumber, around: RealNumber): RealNumber = {
+        new TaylorSeries(expression, at, around)
     }
 
-    def apply(expression: DifferentiableUnivariate, at: RealNumber, around: RealNumber): RealNumber = new TaylorSeries(expression, at, around)
-
-    def apply(builder: DifferentiableUnivariateExpressionBuilder, at: RealNumber, around: RealNumber): RealNumber = {
+    def apply(builder: DifferentiableUnivariateBuilder, at: RealNumber, around: RealNumber): RealNumber = {
         val x = Variable("$x")
         TaylorSeries(builder(x), at, around)
     }
@@ -64,40 +65,18 @@ private class TaylorSeries(f: DifferentiableUnivariate, val x: RealNumber, a: Re
 
 }
 
-private class DifferentiableUnivariateWrapper(val expression: Differentiable)
-        extends DifferentiableUnivariate {
-
-    require(expression.variables == Set(variable))
-
-    def variable = expression.variables.iterator.next
-
-    def df(x: Variable) = expression.df(x) match {
-        case du: DifferentiableUnivariate => du
-        case otherwise => new DifferentiableUnivariateWrapper(otherwise)
-    }
-
-    def replace(variables: Map[Variable, Expression]) = expression.replace(variables)
-
-    def toConstant = expression.toConstant
-
-    def isEmpty = expression.isEmpty
-
-    override def toString = expression.toString
-
-}
-
 /**
  * Taylor series around zero.
  */
 object MaclaurinSeries {
 
-    def apply(builder: DifferentiableUnivariateExpressionBuilder, at: RealNumber): RealNumber = {
+    def apply(builder: DifferentiableUnivariateBuilder, at: RealNumber): RealNumber = {
         val x = Variable("$x")
         MaclaurinSeries(builder(x), at)
     }
 
     def apply(expression: DifferentiableUnivariate, at: RealNumber): RealNumber = TaylorSeries(expression, at, Zero)
 
-    def apply(expression: Differentiable, at: RealNumber): Option[RealNumber] = TaylorSeries(expression, at, Zero)
+    def apply(expression: Differentiable, at: RealNumber) = TaylorSeries(expression, at, Zero)
 
 }

@@ -67,6 +67,8 @@ trait Quaternion
         case _ => None
     }
 
+    def ?^(that: Number) = ???
+
     override def toString: String = re.toString + " + " + i.toString + " + " + j.toString + " + " + k.toString
 
     override def equals(n: Number) = n match {

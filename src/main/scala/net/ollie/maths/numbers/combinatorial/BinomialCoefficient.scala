@@ -1,6 +1,6 @@
 package net.ollie.maths.numbers.combinatorial
 
-import net.ollie.maths.{Product, Empty, Variable}
+import net.ollie.maths.{Empty, Product, Variable}
 import net.ollie.maths.functions.numeric.{Floor, GreatestCommonDivisor}
 import net.ollie.maths.numbers._
 
@@ -18,13 +18,6 @@ trait BinomialCoefficient
 
     def outcomes = k
 
-    /**
-     * Coefficient is good if LeastPrimeFactor(n choose k) > k
-     * @see http://mathworld.wolfram.com/GoodBinomialCoefficient.html
-     **/
-
-    def isGood: Boolean = k >= 2 && GreatestCommonDivisor(this, k !) == One
-
 }
 
 object BinomialCoefficient {
@@ -35,6 +28,12 @@ object BinomialCoefficient {
     }
 
     def central(n: NaturalNumber) = apply(n, Floor(n / 2))
+
+    /**
+     * Coefficient is good if LeastPrimeFactor(n choose k) > k
+     * @see http://mathworld.wolfram.com/GoodBinomialCoefficient.html
+     **/
+    def isGood(c: BinomialCoefficient): Boolean = c.k >= 2 && GreatestCommonDivisor(c, c.k !) == One
 
     implicit class BinomialCoefficientIntBuilder(n: Int) extends AnyRef {
 

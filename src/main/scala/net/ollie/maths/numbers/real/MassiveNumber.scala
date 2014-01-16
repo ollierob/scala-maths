@@ -20,13 +20,15 @@ trait MassiveNumber
 
     def tryReduce: Option[RealNumber]
 
+    def +(that: MassiveNumber) = MassiveSeries(this, that)
+
+    def *(that: MassiveNumber) = ???
+
     def ?+(that: Number): Option[Number] = None
 
     def ?*(that: Number): Option[Number] = None
 
-    def +(that: MassiveNumber) = MassiveSeries(this, that)
-
-    def *(that: MassiveNumber) = ???
+    def ?^(that: Number) = ???
 
     override def df(x: Variable) = MassiveZero
 

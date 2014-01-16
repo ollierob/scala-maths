@@ -97,6 +97,11 @@ trait RealNumber
 
     def ^(that: IntegerNumber): RealNumber = RealNumber.pow(this, that)
 
+    def ?^(that: Number): Option[Number] = that match {
+        case int: IntegerNumber => Some(this ^ int)
+        case _ => None
+    }
+
     def squared: PositiveRealNumber = (this ^ 2).abs
 
     def >(that: RealNumber): Boolean = this.compareTo(that) > 0

@@ -1,7 +1,6 @@
 package net.ollie.maths.functions
 
 import net.ollie.maths._
-import net.ollie.maths.numbers.RealNumber
 
 /**
  * Created by Ollie on 11/01/14.
@@ -27,11 +26,11 @@ trait DifferentiableExpressionBuilder {
 
     protected[this] def create(diff: Differentiable): Differentiable
 
-    protected[this] def empty: RealNumber
+    protected[this] def empty: Differentiable
 
 }
 
-trait DifferentiableUnivariateExpressionBuilder
+trait DifferentiableUnivariateBuilder
         extends DifferentiableExpressionBuilder {
 
     def apply(variable: Variable): DifferentiableUnivariate

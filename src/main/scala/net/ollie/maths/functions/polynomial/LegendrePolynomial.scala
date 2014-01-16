@@ -8,9 +8,10 @@ import net.ollie.maths.numbers._
  * Created by Ollie on 08/01/14.
  */
 trait LegendrePolynomial
-        extends Polynomial {
+        extends AssociatedLegendrePolynomial
+        with Polynomial {
 
-    def l = degree
+    override def m = Zero
 
     override def df(x: Variable) = l * (x * LegendrePolynomial(l, x) - LegendrePolynomial(l - 1, x)) / ((x ^ 2) + 1)
 
@@ -25,7 +26,7 @@ object LegendrePolynomial {
     def apply(l: NaturalNumber, z: Variable): LegendrePolynomial = l match {
         case Zero => ZeroLegendrePolynomial
         case One => new OneLegendrePolynomial(z)
-        case _ => new SomeLegendrePolynomial(l, z)
+        case _ => new SomeLegendrePolynomial(l)(z)
     }
 
     def apply(l: NaturalNumber, number: RealNumber): RealNumber = apply(l, number.asInstanceOf[Expression]).toConstant match {
@@ -49,7 +50,7 @@ object ZeroLegendrePolynomial
         extends LegendrePolynomial
         with NaturalNumber {
 
-    def degree = Zero
+    def l = Zero
 
     protected[this] def f = One
 
@@ -62,29 +63,30 @@ object ZeroLegendrePolynomial
 }
 
 sealed trait VariateLegendrePolynomial
-        extends LegendrePolynomial {
+        extends LegendrePolynomial
+        with Univariate {
 
-    def x: Variable
+    override def toString = super[LegendrePolynomial].toString + "(" + variable + ")"
 
-    override def variables = Set(x)
-
-    override def toString = super[LegendrePolynomial].toString + "(" + x + ")"
+    override def variables = super[Univariate].variables
 
 }
 
-class OneLegendrePolynomial(val x: Variable)
+class OneLegendrePolynomial(val variable: Variable)
         extends VariateLegendrePolynomial {
 
-    def degree = One
+    def l = One
 
-    protected[this] def f = x
+    protected[this] def f = variable
 
 }
 
-class SomeLegendrePolynomial(val degree: NaturalNumber, val x: Variable)
+class SomeLegendrePolynomial(val l: NaturalNumber)(val x: Variable)
         extends VariateLegendrePolynomial {
 
     require(degree > One)
+
+    def variable = x
 
     protected[this] def f = (((2 * l - 1) * x * LegendrePolynomial(l - 1, x)) - ((l - 1) * LegendrePolynomial(l - 2, x)))
 
