@@ -15,7 +15,7 @@ object EulersNumber extends PositiveRealNumber {
 
     def isEmpty = false
 
-    protected[this] def eval(precision: Precision)(implicit mode: RoundingMode.RoundingMode) = if (precision.value < 50) precision(E50) else ???
+    protected[this] def eval(precision: Precision)(implicit mode: RoundingMode.RoundingMode) = ???
 
     override def toString = "e"
 
