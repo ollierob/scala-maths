@@ -1,6 +1,5 @@
 package net.ollie.maths.numbers.real
 
-import net.ollie.maths.Expression
 import net.ollie.maths.numbers.RealNumber
 
 /**
@@ -13,7 +12,7 @@ class PowerTower(base: RealNumber, tower: RealNumber)
 
     def tryReduce = None
 
-    def inverse: Expression = ???
+    def inverse = ???
 
 }
 

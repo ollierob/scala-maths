@@ -16,6 +16,8 @@ trait Number
 
     def abs: PositiveRealNumber
 
+    def inverse: Number
+
     def ?+(that: Number): Option[Number]
 
     def +[R <: Number, Combined <: Number](that: R)

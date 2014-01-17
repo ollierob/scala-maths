@@ -1,6 +1,6 @@
 package net.ollie.maths
 
-import net.ollie.maths.numbers.IntegerNumber
+import net.ollie.maths.numbers.{IntegerNumber, Zero}
 
 /**
  * Created by Ollie on 01/01/14.
@@ -30,7 +30,7 @@ trait Expression {
 
     def *(that: Expression): Expression = Product(this, that)
 
-    def /(that: Expression): Expression = ???
+    def /(that: Expression): Expression = Expression.divide(that, that)
 
     def ^(that: Expression): Expression = ???
 
@@ -46,6 +46,12 @@ trait Expression {
 object Expression {
 
     def negate(expression: Expression) = new NegatedExpression(expression)
+
+    def divide(numerator: Expression, denominator: Expression): Expression = (numerator, denominator) match {
+        case _ if numerator.isEmpty => Zero
+        case (d1: Differentiable, d2: Differentiable) => d1 / d2
+        case _ => new ExpressionFraction(numerator, denominator)
+    }
 
     implicit def convert(int: Int): IntegerNumber = IntegerNumber(int)
 
@@ -65,6 +71,29 @@ class NegatedExpression(val of: Expression) extends Expression {
     def variables = of.variables
 
     override def toString = "-(" + of + ")"
+
+}
+
+class ExpressionFraction(val numerator: Expression, val denominator: Expression)
+        extends Expression {
+
+    override def unary_-() = (-numerator) / denominator
+
+    def replace(variables: Map[Variable, Expression]) = numerator.replace(variables) / denominator.replace(variables)
+
+    def toConstant = numerator.toConstant match {
+        case Some(n: Number) => denominator.toConstant match {
+            case Some(d: Number) => n ?* d.inverse
+            case _ => None
+        }
+        case _ => None
+    }
+
+    def variables = numerator.variables ++: denominator.variables
+
+    def isEmpty = numerator.isEmpty
+
+    override def toString = s"($numerator/$denominator)"
 
 }
 

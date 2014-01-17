@@ -4,6 +4,7 @@ import scala.math.BigDecimal.RoundingMode.RoundingMode
 
 import net.ollie.maths.functions.numeric.GreatestCommonDivisor
 import net.ollie.maths.methods.ApproximatelyEvaluated
+import net.ollie.maths.DifferentiableFraction
 
 /**
  * A number that can be expressed as an integer divided by another integer.
@@ -73,8 +74,9 @@ object IntegerFraction {
 
 }
 
-class IntegerFraction private[numbers](val numerator: IntegerNumber, val denominator: IntegerNumber)
-        extends RationalNumber
+class IntegerFraction private[numbers](override val numerator: IntegerNumber, override val denominator: IntegerNumber)
+        extends DifferentiableFraction(numerator, denominator)
+        with RationalNumber
         with ApproximatelyEvaluated {
 
     require(!denominator.isEmpty)
@@ -93,6 +95,10 @@ class IntegerFraction private[numbers](val numerator: IntegerNumber, val denomin
         case _ => super./(that)
     }
 
-    override def toString = s"($numerator/$denominator)"
+    override def isEmpty = super[DifferentiableFraction].isEmpty
+
+    override def toConstant = super[RationalNumber].toConstant
+
+    override def variables = super[RationalNumber].variables
 
 }
