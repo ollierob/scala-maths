@@ -1,6 +1,5 @@
 package net.ollie.maths.numbers.real
 
-import scala.math.BigDecimal.RoundingMode
 
 import net.ollie.maths.numbers.{PositiveRealNumber, Precision}
 
@@ -11,7 +10,7 @@ object EulerMascheroniConstant extends PositiveRealNumber {
 
     private final val E50 = BigDecimal("0.57721566490153286060651209008240243104215933593992")
 
-    protected[this] def eval(precision: Precision)(implicit mode: RoundingMode.RoundingMode) = if (precision.value < 50) precision(E50) else ???
+    protected[this] def eval(precision: Precision) = if (precision.value < 50) precision(E50) else ???
 
     def isEmpty = false
 

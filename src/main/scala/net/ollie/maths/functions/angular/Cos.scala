@@ -1,6 +1,5 @@
 package net.ollie.maths.functions.angular
 
-import scala.math.BigDecimal.RoundingMode
 
 import net.ollie.maths._
 import net.ollie.maths.functions.{DifferentiableUnivariate, DifferentiableUnivariateBuilder}
@@ -68,7 +67,7 @@ class RealCos(override val of: RealNumber)
 
     private lazy val series = MaclaurinSeries(Cos, of)
 
-    protected[this] def eval(precision: Precision)(implicit mode: RoundingMode.RoundingMode) = series.evaluate(precision)
+    protected[this] def eval(precision: Precision) = series.evaluate(precision)
 
     override def variables = super[RealNumber].variables
 

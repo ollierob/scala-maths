@@ -231,7 +231,7 @@ class ExactRealNumber(val of: BigDecimal)
 class NegatedRealNumber(val of: RealNumber)
         extends RealNumber {
 
-    protected[this] def eval(precision: Precision)(implicit mode: RoundingMode) = -(of.evaluate(precision))
+    protected[this] def eval(precision: Precision) = -(of.evaluate(precision))
 
     override def variables = super[RealNumber].variables
 
@@ -271,7 +271,7 @@ class InverseRealNumber(val of: RealNumber)
 class AbsRealNumber(val of: RealNumber)
         extends PositiveRealNumber {
 
-    protected[this] def eval(precision: Precision)(implicit mode: RoundingMode) = of.evaluate(precision).abs
+    protected[this] def eval(precision: Precision) = of.evaluate(precision).abs
 
     def isEmpty = of.isEmpty
 

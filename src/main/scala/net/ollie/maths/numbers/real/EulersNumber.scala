@@ -1,6 +1,5 @@
 package net.ollie.maths.numbers.real
 
-import scala.math.BigDecimal.RoundingMode
 
 import net.ollie.maths.numbers._
 
@@ -15,7 +14,7 @@ object EulersNumber extends PositiveRealNumber {
 
     def isEmpty = false
 
-    protected[this] def eval(precision: Precision)(implicit mode: RoundingMode.RoundingMode) = ???
+    protected[this] def eval(precision: Precision) = ???
 
     override def toString = "e"
 

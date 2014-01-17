@@ -1,7 +1,6 @@
 package net.ollie.maths.numbers
 
 import scala.Some
-import scala.math.BigDecimal.RoundingMode
 import scala.math.BigDecimal.RoundingMode._
 
 /**
@@ -15,7 +14,7 @@ trait IntegerNumber
 
     final def denominator = One
 
-    protected override def eval(precision: Precision)(implicit mode: RoundingMode.RoundingMode): BigDecimal = precision(BigDecimal(evaluate))(mode)
+    protected override def eval(precision: Precision): BigDecimal = precision(BigDecimal(evaluate))
 
     override def approximatelyEvaluate(precision: Precision)(implicit mode: RoundingMode) = BigDecimal(evaluate)
 

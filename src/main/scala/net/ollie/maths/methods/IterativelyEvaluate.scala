@@ -47,7 +47,7 @@ object IterativelyEvaluate {
 trait IterativelyEvaluated
         extends Evaluable {
 
-    protected[this] def eval(precision: Precision)(implicit mode: RoundingMode) = IterativelyEvaluate(precision, this)
+    protected[this] def eval(precision: Precision) = IterativelyEvaluate(precision, this)(Precision.DEFAULT_ROUNDING)
 
     def evaluationIterator: EvaluationIterator
 

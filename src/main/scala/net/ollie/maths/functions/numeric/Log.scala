@@ -1,8 +1,6 @@
 package net.ollie.maths.functions.numeric
 
 
-import scala.math.BigDecimal.RoundingMode.RoundingMode
-
 import net.ollie.maths._
 import net.ollie.maths.functions.{DifferentiableUnivariate, DifferentiableUnivariateBuilder}
 import net.ollie.maths.methods.{InfiniteSeries, TaylorSeries}
@@ -114,7 +112,7 @@ class RealLn(override val of: PositiveRealNumber)
 
     override def inverse = super[RealNumber].inverse
 
-    protected[this] def eval(precision: Precision)(implicit mode: RoundingMode) = evaluation.evaluate(precision)
+    protected[this] def eval(precision: Precision) = evaluation.evaluate(precision)
 
     protected def evaluation: RealNumber = evaluator
 

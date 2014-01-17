@@ -1,6 +1,5 @@
 package net.ollie.maths.functions.angular
 
-import scala.math.BigDecimal.RoundingMode.RoundingMode
 
 import net.ollie.maths.functions.angular.Angle.AngleBuilder
 import net.ollie.maths.numbers.{Precision, RealNumber, Zero}
@@ -27,7 +26,7 @@ trait Angle
         }
     }
 
-    protected[this] def eval(precision: Precision)(implicit mode: RoundingMode) = toRadians.evaluate(precision)
+    protected[this] def eval(precision: Precision) = toRadians.evaluate(precision)
 
     override def unary_-(): Angle = ???
 

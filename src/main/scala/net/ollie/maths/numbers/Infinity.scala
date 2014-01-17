@@ -1,6 +1,5 @@
 package net.ollie.maths.numbers
 
-import scala.math.BigDecimal.RoundingMode
 
 import net.ollie.maths.Empty
 
@@ -14,7 +13,7 @@ trait Infinite
 
     def isEmpty = false
 
-    protected[this] def eval(precision: Precision)(implicit mode: RoundingMode.RoundingMode): BigDecimal = ???
+    protected[this] def eval(precision: Precision): BigDecimal = ???
 
     override def abs: PositiveRealNumber with Infinite = Infinity
 

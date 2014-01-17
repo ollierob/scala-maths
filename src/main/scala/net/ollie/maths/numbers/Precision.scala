@@ -17,6 +17,10 @@ trait Precision {
 
     def value: Int
 
+    def getType: Class[_ <: Precision]
+
+    def >(that: Precision): Option[Boolean] = None
+
 }
 
 object Precision {
@@ -56,7 +60,9 @@ object Precision {
 
 }
 
-class DecimalPlaces(val value: Int) extends AnyRef with Precision {
+class DecimalPlaces(val value: Int)
+        extends AnyRef
+        with Precision {
 
     require(value >= 0)
 
@@ -64,7 +70,14 @@ class DecimalPlaces(val value: Int) extends AnyRef with Precision {
 
     def increase = new DecimalPlaces(value + 1)
 
+    override def >(that: Precision) = that match {
+        case d: DecimalPlaces => Some(this.value > d.value)
+        case _ => super.>(that)
+    }
+
     override def toString = value.toString + " decimal places"
+
+    def getType = classOf[DecimalPlaces]
 
 }
 
@@ -80,7 +93,14 @@ class SignificantFigures(val value: Int) extends AnyRef with Precision {
 
     def increase = new SignificantFigures(value + 1)
 
+    override def >(that: Precision) = that match {
+        case s: SignificantFigures => Some(this.value > s.value)
+        case _ => super.>(that)
+    }
+
     override def toString = value.toString + " significant figures"
+
+    def getType = classOf[SignificantFigures]
 
 }
 

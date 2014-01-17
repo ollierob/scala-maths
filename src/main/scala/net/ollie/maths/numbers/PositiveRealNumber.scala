@@ -1,6 +1,5 @@
 package net.ollie.maths.numbers
 
-import scala.math.BigDecimal.RoundingMode
 
 import net.ollie.maths.numbers.real.RealPower
 import org.nevec.rjm.BigDecimalMath
@@ -52,7 +51,7 @@ class PositivePower(val base: PositiveRealNumber, val power: PositiveRealNumber)
         extends PositiveRealNumber
         with RealPower {
 
-    protected[this] def eval(precision: Precision)(implicit mode: RoundingMode.RoundingMode) = {
+    protected[this] def eval(precision: Precision) = {
         BigDecimalMath.pow(base.evaluate(precision).underlying(), power.evaluate(precision).underlying())
     }
 

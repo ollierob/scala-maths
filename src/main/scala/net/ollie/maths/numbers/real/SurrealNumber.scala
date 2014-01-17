@@ -1,6 +1,5 @@
 package net.ollie.maths.numbers.real
 
-import scala.math.BigDecimal.RoundingMode
 
 import net.ollie.maths.{Empty, Variable}
 import net.ollie.maths.numbers._
@@ -17,7 +16,7 @@ trait SurrealNumber
 
     override def unary_-(): SurrealNumber = ???
 
-    protected[this] def eval(precision: Precision)(implicit mode: RoundingMode.RoundingMode) = nearest.evaluate(precision)(mode)
+    protected[this] def eval(precision: Precision) = nearest.evaluate(precision)
 
     override def df(x: Variable) = EmptyForm
 
@@ -65,7 +64,7 @@ object TransfiniteForm
 
     def nearest = Infinity
 
-    protected[this] override def eval(precision: Precision)(implicit mode: RoundingMode.RoundingMode) = Infinity.evaluate(precision)(mode)
+    protected[this] override def eval(precision: Precision) = Infinity.evaluate(precision)
 
 }
 

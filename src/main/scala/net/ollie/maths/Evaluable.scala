@@ -1,6 +1,5 @@
 package net.ollie.maths
 
-import scala.collection.mutable
 import scala.math.BigDecimal.RoundingMode._
 
 import net.ollie.maths.numbers.{DoublePrecision, IntegerPrecision, Precision, SinglePrecision}
@@ -10,25 +9,34 @@ import net.ollie.maths.numbers.{DoublePrecision, IntegerPrecision, Precision, Si
  */
 trait Evaluable {
 
-    private final def cached: mutable.Map[(Precision, RoundingMode), BigDecimal] = new mutable.HashMap()
+    private var max: Option[(Precision, BigDecimal)] = None
 
     final def evaluate(precision: Precision)(implicit mode: RoundingMode = Precision.DEFAULT_ROUNDING): BigDecimal = {
 
-        if (!cache(precision)) return eval(precision)
-
-        val key = (precision, mode)
-        cached.get(key) match {
-            case Some(d) => d
-            case otherwise => {
-                val d = eval(precision)
-                cached.put(key, d)
-                d
+        max match {
+            case Some((prec, value)) => prec > precision match {
+                case Some(true) => return precision(value)(mode)
+                case _ =>
             }
+            case _ =>
         }
+
+        val evaluated = this.eval(precision)
+
+        if (max.isDefined) {
+            precision > max.get._1 match {
+                case Some(true) => max = Some(precision, evaluated)
+                case _ =>
+            }
+        } else {
+            max = Some(precision, evaluated)
+        }
+
+        return precision(evaluated)(mode)
 
     }
 
-    protected[this] def eval(precision: Precision)(implicit mode: RoundingMode): BigDecimal
+    protected[this] def eval(precision: Precision): BigDecimal
 
     def approximatelyEvaluate(precision: Precision)(implicit mode: RoundingMode): BigDecimal = evaluate(precision)
 
