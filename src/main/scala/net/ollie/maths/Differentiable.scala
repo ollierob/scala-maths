@@ -12,6 +12,11 @@ trait Differentiable
 
     override def unary_-(): Differentiable = Differentiable.negate(this)
 
+    override def +(that: Expression) = that match {
+        case d: Differentiable => this + d
+        case _ => super.+(that)
+    }
+
     def +(that: Differentiable): Differentiable = Differentiable.series(this, that)
 
     def -(that: Differentiable): Differentiable = this + (-that)
@@ -51,7 +56,11 @@ object Differentiable {
         case _ => new DifferentiableProduct(terms)
     }
 
-    def fraction(numerator: Differentiable, denominator: Differentiable): Differentiable = if (numerator.isEmpty) Zero else new DifferentiableFraction(numerator, denominator)
+    def fraction(numerator: Differentiable, denominator: Differentiable): Differentiable = (numerator, denominator) match {
+        case _ if numerator.isEmpty => Zero
+        case (frac: DifferentiableFraction, _) => frac * denominator
+        case _ => new DifferentiableFraction(numerator, denominator)
+    }
 
     def power(base: Differentiable, power: Differentiable): Differentiable = new DifferentiablePower(base, power)
 
@@ -122,7 +131,11 @@ class DifferentiableFraction(override val numerator: Differentiable, override va
 
     override def unary_-() = (-numerator) / denominator
 
-    override def *(that: Differentiable) = Differentiable.fraction(numerator * that, denominator)
+    override def *(that: Differentiable) = that match {
+        case _ if that.isEmpty => Zero
+        case frac: DifferentiableFraction => Differentiable.fraction(numerator * frac.numerator, denominator * frac.denominator)
+        case _ => Differentiable.fraction(numerator * that, denominator)
+    }
 
     override def /(that: Differentiable) = Differentiable.fraction(numerator, denominator * that)
 

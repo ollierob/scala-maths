@@ -30,7 +30,7 @@ trait Expression {
 
     def *(that: Expression): Expression = Product(this, that)
 
-    def /(that: Expression): Expression = Expression.divide(that, that)
+    def /(that: Expression): Expression = Expression.divide(this, that)
 
     def ^(that: Expression): Expression = ???
 

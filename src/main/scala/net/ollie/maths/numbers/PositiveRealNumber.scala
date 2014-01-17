@@ -3,6 +3,7 @@ package net.ollie.maths.numbers
 import scala.math.BigDecimal.RoundingMode
 
 import net.ollie.maths.numbers.real.RealPower
+import org.nevec.rjm.BigDecimalMath
 
 /**
  * Numbers known to be equal to or greater than zero at compile time.
@@ -41,10 +42,18 @@ class PositiveRealInverseNumber(val re: PositiveRealNumber)
         extends InverseRealNumber(re)
         with PositiveRealNumber
 
+/**
+ *
+ * @param base
+ * @param power
+ * @see http://arxiv.org/abs/0908.3030v2
+ */
 class PositivePower(val base: PositiveRealNumber, val power: PositiveRealNumber)
         extends PositiveRealNumber
         with RealPower {
 
-    protected[this] def eval(precision: Precision)(implicit mode: RoundingMode.RoundingMode): BigDecimal = ???
+    protected[this] def eval(precision: Precision)(implicit mode: RoundingMode.RoundingMode) = {
+        BigDecimalMath.pow(base.evaluate(precision).underlying(), power.evaluate(precision).underlying())
+    }
 
 }

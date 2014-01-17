@@ -205,21 +205,26 @@ object RealNumber {
 
 }
 
-class ExactRealNumber(val value: BigDecimal)
+class ExactRealNumber(val of: BigDecimal)
         extends AnyRef
         with RealNumber
         with ApproximatelyEvaluated {
 
-    override def ?+(expr: RealNumber) = expr match {
-        case that: ExactRealNumber => Some(RealNumber(this.value + that.value))
-        case _ => None
+    override def ?+(that: RealNumber) = that match {
+        case re: ExactRealNumber => Some(RealNumber(this.of + re.of))
+        case _ => super.?+(that)
     }
 
-    def isEmpty = value == 0
+    override def ?*(that: RealNumber) = that match {
+        case re: ExactRealNumber => Some(RealNumber(this.of * re.of))
+        case _ => super.?*(that)
+    }
 
-    override def toString = value.toString
+    def isEmpty = of == 0
 
-    override def approximatelyEvaluate(precision: Precision)(implicit mode: RoundingMode) = precision(value)
+    override def approximatelyEvaluate(precision: Precision)(implicit mode: RoundingMode) = precision(of)
+
+    override def toString = of.toString
 
 }
 
@@ -257,20 +262,20 @@ class InverseRealNumber(val of: RealNumber)
         case _ => super.?*(that)
     }
 
-    override def toString = "1/" + of.toString
+    override def toString = s"1/$of"
 
     override def approximatelyEvaluate(precision: Precision)(implicit mode: RoundingMode) = 1 / of.evaluate(precision)
 
 }
 
-class AbsRealNumber(val re: RealNumber)
+class AbsRealNumber(val of: RealNumber)
         extends PositiveRealNumber {
 
-    protected[this] def eval(precision: Precision)(implicit mode: RoundingMode) = re.evaluate(precision).abs
+    protected[this] def eval(precision: Precision)(implicit mode: RoundingMode) = of.evaluate(precision).abs
 
-    def isEmpty = re.isEmpty
+    def isEmpty = of.isEmpty
 
-    override def toString = "|" + re.toString + "|"
+    override def toString = s"|$of|"
 
 }
 

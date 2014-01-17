@@ -112,7 +112,7 @@ class RealLn(override val of: PositiveRealNumber)
         extends Ln(of)
         with RealNumber {
 
-    override def inverse: PositiveRealNumber = EulersNumber ^ of
+    override def inverse = super[RealNumber].inverse
 
     protected[this] def eval(precision: Precision)(implicit mode: RoundingMode) = evaluation.evaluate(precision)
 
