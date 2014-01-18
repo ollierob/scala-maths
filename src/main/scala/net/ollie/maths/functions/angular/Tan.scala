@@ -20,11 +20,11 @@ object Tan
         case _ => ???
     }
 
-    def apply(f: RealNumber) = ???
+    def apply(re: RealNumber) = new RealTan(re)
 
-    protected[this] def create(expr: Expression): Expression = ???
+    protected[this] def create(expr: Expression) = new Tan(expr)
 
-    protected[this] def create(diff: Differentiable): Differentiable = ???
+    protected[this] def create(diff: Differentiable) = new DifferentiableTan(diff)
 
     protected[angular] def empty = Zero
 
