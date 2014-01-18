@@ -12,15 +12,15 @@ import net.ollie.maths.numbers.{Precision, RealNumber, Zero}
  */
 object Tan
         extends DifferentiableExpressionBuilder
-        with UnivariateFunction[RealNumber, RealNumber] {
+        with UnivariateFunction[Angle, RealNumber] {
 
     def apply(n: Number): Number = n match {
         case Zero => empty
-        case re: RealNumber => apply(re)
+        case re: RealNumber => apply(Radians(re))
         case _ => ???
     }
 
-    def apply(re: RealNumber) = new RealTan(re)
+    def apply(angle: Angle) = new RealTan(angle)
 
     protected[this] def create(expr: Expression) = new Tan(expr)
 
@@ -49,12 +49,12 @@ class DifferentiableTan(override val of: Differentiable)
 
 }
 
-class RealTan(override val of: RealNumber)
+class RealTan(override val of: Angle)
         extends Tan(of)
         with RealNumber
         with ApproximatelyEvaluated {
 
-    private lazy val f = Sin(of) / Cos(of)
+    private lazy val f: RealNumber = Sin(of) / Cos(of)
 
     override def approx(precision: Precision)(implicit mode: RoundingMode.RoundingMode) = f.approximatelyEvaluate(precision)
 

@@ -13,12 +13,11 @@ object Cos
         extends DifferentiableExpressionBuilder {
 
     def apply(n: Number): Number = n match {
-        case ang: Angle => apply(ang.toRadians)
-        case re: RealNumber => apply(re)
+        case re: RealNumber => apply(Radians(re))
         case _ => ???
     }
 
-    def apply(re: RealNumber): RealNumber = if (re.isEmpty) One else new RealCos(re)
+    def apply(angle: Angle) = if (angle.isEmpty) empty else new RealCos(angle)
 
     protected[this] def create(expr: Expression): Expression = new Cos(expr)
 
@@ -49,11 +48,11 @@ class DifferentiableCos(override val of: Differentiable)
 
 }
 
-class RealCos(override val of: RealNumber)
+class RealCos(override val of: Angle)
         extends DifferentiableCos(of)
         with RealNumber {
 
-    private lazy val series = MaclaurinSeries(Cos, of)
+    private lazy val series = MaclaurinSeries(Cos, of.toRadians)
 
     protected[this] def eval(precision: Precision) = series.evaluate(precision)
 
