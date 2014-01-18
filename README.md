@@ -3,6 +3,13 @@ scala-maths
 
 Symbolic maths library.
 
+Extensible numeric operations:
+
+    val re:RealNumber = 5
+    val z:ComplexNumber = ComplexNumber(1, 2)
+    val q:Quaternion = Quaternion(2, 3, 4, 5)
+    re + z + q shouldBe(Quaternion(8, 5, 4, 5))
+
 Build up expressions in a human-readable manner:
 
     val x = Variable("x")
