@@ -5,6 +5,9 @@ import scala.math.BigDecimal.RoundingMode._
 import net.ollie.maths.numbers.{DoublePrecision, IntegerPrecision, Precision, SinglePrecision}
 
 /**
+ * Something that can be represented as a BigDecimal.
+ * This is more-or-less limited to real numbers.
+ *
  * Created by Ollie on 12/01/14.
  */
 trait Evaluable {

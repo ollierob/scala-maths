@@ -8,6 +8,8 @@ import org.nevec.rjm.BigDecimalMath
 
 /**
  * Created by Ollie on 18/01/14.
+ * @see http://mathworld.wolfram.com/ExponentialFunction.html
+ * @see Ln
  */
 object Exp
         extends DifferentiableExpressionBuilder {

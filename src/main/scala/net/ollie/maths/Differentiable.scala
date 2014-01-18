@@ -5,6 +5,7 @@ import net.ollie.maths.functions.numeric.Ln
 import net.ollie.maths.numbers.Zero
 
 /**
+ * An expression that can be differentiated with respect to a particular variable.
  * Created by Ollie on 03/01/14.
  */
 trait Differentiable
