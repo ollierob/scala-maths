@@ -48,6 +48,7 @@ object LegendrePolynomial {
 
 object ZeroLegendrePolynomial
         extends LegendrePolynomial
+        with DifferentiablePolynomial
         with NaturalNumber {
 
     def l = Zero
@@ -84,7 +85,7 @@ class OneLegendrePolynomial(val variable: Variable)
 class SomeLegendrePolynomial(val l: NaturalNumber)(val x: Variable)
         extends VariateLegendrePolynomial {
 
-    require(degree > One)
+    require(l > One)
 
     def variable = x
 

@@ -2,28 +2,29 @@ package net.ollie.maths.functions.polynomial
 
 import net.ollie.maths._
 import net.ollie.maths.functions.Represented
-import net.ollie.maths.numbers.{NaturalNumber, Zero}
+import net.ollie.maths.numbers.Zero
 
 /**
  * Created by Ollie on 08/01/14.
  */
 trait Polynomial
-        extends Differentiable
-        with Represented {
-
-    def degree: NaturalNumber
+        extends Represented {
 
     protected[this] def f: Differentiable
 
-    def df(variable: Variable) = f.df(variable)
+}
+
+trait DifferentiablePolynomial
+        extends Polynomial
+        with Differentiable {
+
+    def df(x: Variable) = f.df(x)
 
 }
 
 object ZeroPolynomial
-        extends Polynomial
+        extends DifferentiablePolynomial
         with Empty {
-
-    def degree = Zero
 
     protected[this] def f = Zero
 

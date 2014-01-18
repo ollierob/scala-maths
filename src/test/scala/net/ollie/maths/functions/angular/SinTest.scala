@@ -6,6 +6,7 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import net.ollie.maths.numbers.{Zero, Precision}
 import Precision._
+import Angle._
 
 /**
  * Created by Ollie on 03/01/14.
@@ -43,7 +44,7 @@ class SinTest extends FlatSpec with Matchers {
     }
 
     "sin(1)" should "evaluate" in {
-        Sin(1).evaluate(4 dp).toString shouldBe ("0.8415")
+        Sin(1 radian).evaluate(4 dp).toString shouldBe ("0.8415")
     }
 
     //    "sin(2)" should "evaluate" in {

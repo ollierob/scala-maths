@@ -1,14 +1,14 @@
 package net.ollie.maths.functions
 
-import net.ollie.maths.numbers.{IntegerNumber, NaturalNumber}
+import net.ollie.maths.numbers.{NaturalNumber, IntegerNumber}
 
 /**
  * Created by Ollie on 08/01/14.
  */
 trait Modal {
 
-    def degree: NaturalNumber
+    def l: NaturalNumber
 
-    def order: IntegerNumber
+    def m: IntegerNumber
 
 }

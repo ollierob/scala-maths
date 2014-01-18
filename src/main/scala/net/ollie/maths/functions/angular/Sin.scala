@@ -1,6 +1,5 @@
 package net.ollie.maths.functions.angular
 
-
 import net.ollie.maths._
 import net.ollie.maths.functions.{CompositeBuildable, DifferentiableExpressionBuilder, UnivariateFunction}
 import net.ollie.maths.methods.MaclaurinSeries

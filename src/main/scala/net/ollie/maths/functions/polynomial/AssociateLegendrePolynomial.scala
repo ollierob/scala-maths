@@ -11,14 +11,6 @@ trait AssociatedLegendrePolynomial
         extends Modal
         with DifferentiableRepresented {
 
-    def l: NaturalNumber
-
-    def degree = l
-
-    def m: IntegerNumber
-
-    def order = m
-
     override def toString = "P(" + l + "," + m + ")"
 
 }
@@ -40,7 +32,7 @@ class EmptyAssociatedLegendrePolynomial(val l: NaturalNumber, val m: IntegerNumb
         extends AssociatedLegendrePolynomial
         with Empty {
 
-    require(order.abs > degree)
+    require(m.abs > l)
 
     protected[this] def f = Zero
 
@@ -56,7 +48,7 @@ class RegularAssociatedLegendrePolynomial(val l: NaturalNumber, val m: IntegerNu
 
     import net.ollie.maths.functions.polynomial.{AssociatedLegendrePolynomial => Plm}
 
-    require(degree <= order.abs)
+    require(l <= m.abs)
 
     override def variables = super[Univariate].variables
 
