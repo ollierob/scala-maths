@@ -5,7 +5,7 @@ import scala.collection.mutable.ListBuffer
 import scala.math.BigDecimal.RoundingMode
 
 import net.ollie.maths._
-import net.ollie.maths.functions.{DifferentiableUnivariate, DifferentiableUnivariateBuilder}
+import net.ollie.maths.functions.{DifferentiableExpressionBuilder, DifferentiableUnivariate}
 import net.ollie.maths.numbers.{NaturalNumber, Precision, RealNumber, Zero}
 
 /**
@@ -27,7 +27,7 @@ object TaylorSeries {
         new TaylorSeries(expression, at, around)
     }
 
-    def apply(builder: DifferentiableUnivariateBuilder, at: RealNumber, around: RealNumber): RealNumber = {
+    def apply(builder: DifferentiableExpressionBuilder, at: RealNumber, around: RealNumber): RealNumber = {
         val x = Variable("$x")
         TaylorSeries(builder(x), at, around)
     }
@@ -70,7 +70,7 @@ private class TaylorSeries(f: DifferentiableUnivariate, val x: RealNumber, a: Re
  */
 object MaclaurinSeries {
 
-    def apply(builder: DifferentiableUnivariateBuilder, at: RealNumber): RealNumber = {
+    def apply(builder: DifferentiableExpressionBuilder, at: RealNumber): RealNumber = {
         val x = Variable("$x")
         MaclaurinSeries(builder(x), at)
     }

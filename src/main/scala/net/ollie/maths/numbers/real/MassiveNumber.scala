@@ -1,9 +1,9 @@
 package net.ollie.maths.numbers.real
 
+import scala.Some
 
 import net.ollie.maths._
 import net.ollie.maths.numbers.{One, PositiveRealNumber, RealNumber, Zero}
-import scala.Some
 
 /**
  * Real finite numbers that are unlikely to be expressible in decimal form.
@@ -16,15 +16,21 @@ trait MassiveNumber
 
     def abs: PositiveRealNumber = ???
 
+    def inverse: MassiveNumber = ???
+
     override def unary_-(): MassiveNumber = ???
 
     def tryReduce: Option[RealNumber]
 
-    def +(that: MassiveNumber) = MassiveSeries(this, that)
+    def +(that: MassiveNumber) = MassiveNumber.series(this, that)
 
     def *(that: MassiveNumber) = ???
 
-    def ?+(that: Number): Option[Number] = None
+    def ?+(that: Number): Option[Number] = that match {
+        case re: RealNumber => Some(this + MassiveNumber(re))
+        case m: MassiveNumber => Some(this + m)
+        case _ => None
+    }
 
     def ?*(that: Number): Option[Number] = None
 
@@ -37,6 +43,13 @@ trait MassiveNumber
 object MassiveNumber {
 
     implicit def apply(re: RealNumber): MassiveNumber = if (re.isEmpty) MassiveZero else new SomeMassive(re)
+
+    def series(left: MassiveNumber, right: MassiveNumber): MassiveNumber = (left, right) match {
+        case (MassiveZero, MassiveZero) => Zero
+        case (_, MassiveZero) => left
+        case (MassiveZero, _) => right
+        case (_, _) => new MassiveSeries(Seq(left, right))
+    }
 
     implicit object RealMassiveArithmetic
             extends IdentityArithmetic[RealNumber, MassiveNumber]
@@ -77,7 +90,7 @@ object MassiveZero
 
     override def isEmpty = true
 
-    def inverse = Zero.inverse
+    override def inverse = Zero.inverse
 
     override def ?+(that: Number) = Some(that)
 
@@ -91,42 +104,32 @@ object MassiveZero
 
 }
 
-class SomeMassive(re: RealNumber)
+class SomeMassive(val re: RealNumber)
         extends MassiveNumber {
 
-    override def abs: PositiveRealNumber = re.abs
+    override def abs = re.abs
 
     override def inverse = re.inverse
 
     def isEmpty = re.isEmpty
 
+    def tryReduce = Some(re)
+
     override def toString = re.toString
 
     override def hashCode = re.hashCode
 
-    def tryReduce = Some(re)
-
 }
 
-object MassiveSeries {
-
-    def apply(left: MassiveNumber, right: MassiveNumber): MassiveNumber = (left, right) match {
-        case (MassiveZero, MassiveZero) => Zero
-        case (_, MassiveZero) => left
-        case (MassiveZero, _) => right
-        case (_, _) => new MassiveSeries(Seq(left, right))
-    }
-
-}
-
-class MassiveSeries(terms: Seq[MassiveNumber])
+class MassiveSeries(val terms: Seq[MassiveNumber])
         extends MassiveNumber {
 
     private final def series = Series(terms)
 
-    def inverse: MassiveNumber = ???
-
-    def tryReduce: Option[RealNumber] = ???
+    def tryReduce: Option[RealNumber] = terms.map(_.tryReduce) match {
+        case e if e.contains(None) => None
+        case otherwise => Some(otherwise.map(_.get).sum)
+    }
 
     def isEmpty = series.isEmpty
 

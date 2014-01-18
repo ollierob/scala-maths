@@ -2,7 +2,7 @@ package net.ollie.maths.functions.angular
 
 
 import net.ollie.maths._
-import net.ollie.maths.functions.{DifferentiableUnivariate, DifferentiableUnivariateBuilder}
+import net.ollie.maths.functions.DifferentiableExpressionBuilder
 import net.ollie.maths.methods.MaclaurinSeries
 import net.ollie.maths.numbers.{One, Precision, RealNumber}
 
@@ -10,7 +10,7 @@ import net.ollie.maths.numbers.{One, Precision, RealNumber}
  * Created by Ollie on 03/01/14.
  */
 object Cos
-        extends DifferentiableUnivariateBuilder {
+        extends DifferentiableExpressionBuilder {
 
     def apply(n: Number): Number = n match {
         case ang: Angle => apply(ang.toRadians)
@@ -19,8 +19,6 @@ object Cos
     }
 
     def apply(re: RealNumber): RealNumber = if (re.isEmpty) One else new RealCos(re)
-
-    def apply(variable: Variable): DifferentiableUnivariate = new UnivariateCos(variable)
 
     protected[this] def create(expr: Expression): Expression = new Cos(expr)
 
@@ -48,16 +46,6 @@ class DifferentiableCos(override val of: Differentiable)
         with DifferentiableComposite {
 
     protected[this] def df(of: Differentiable) = -Sin(of)
-
-}
-
-private class UnivariateCos(override val variable: Variable)
-        extends DifferentiableCos(variable)
-        with DifferentiableUnivariate {
-
-    override def variables = super[DifferentiableUnivariate].variables
-
-    override def df(x: Variable) = -Sin(x)
 
 }
 

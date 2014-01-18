@@ -2,7 +2,7 @@ package net.ollie.maths.functions.numeric
 
 import net.ollie.maths.{Differentiable, DifferentiableRepresented, Expression, Number}
 import net.ollie.maths.functions.{DifferentiableExpressionBuilder, Represented, UnivariateFunction}
-import net.ollie.maths.numbers.{Zero, RealNumber}
+import net.ollie.maths.numbers.{RealNumber, Zero}
 
 /**
  * Created by Ollie on 11/01/14.

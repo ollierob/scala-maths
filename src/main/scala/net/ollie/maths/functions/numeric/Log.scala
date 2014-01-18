@@ -1,8 +1,7 @@
 package net.ollie.maths.functions.numeric
 
-
 import net.ollie.maths._
-import net.ollie.maths.functions.{DifferentiableUnivariate, DifferentiableUnivariateBuilder}
+import net.ollie.maths.functions.DifferentiableExpressionBuilder
 import net.ollie.maths.methods.{InfiniteSeries, TaylorSeries}
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.real.EulersNumber
@@ -53,7 +52,7 @@ object Log10 {
 }
 
 object Ln
-        extends DifferentiableUnivariateBuilder {
+        extends DifferentiableExpressionBuilder {
 
     def apply(n: Number): Number = n match {
         case Zero => empty
@@ -63,13 +62,19 @@ object Ln
 
     def apply(re: PositiveRealNumber): RealNumber = new RealLn(re)
 
-    protected[this] def create(expr: Expression) = new Ln(expr)
+    protected[this] def create(expr: Expression) = expr match {
+        case Exp(of) => of
+        case _ => new Ln(expr)
+    }
 
-    protected[this] def create(diff: Differentiable) = new DifferentiableLn(diff)
-
-    def apply(variable: Variable) = new LnX(variable)
+    protected[this] def create(diff: Differentiable) = diff match {
+        case exp: DifferentiableExp => exp.of
+        case _ => new DifferentiableLn(diff)
+    }
 
     protected[this] def empty: RealNumber = -Infinity
+
+    def unapply(ln: Ln): Option[Expression] = Some(ln.of)
 
 }
 
@@ -87,22 +92,17 @@ class Ln(val of: Expression)
 
 }
 
+object DifferentiableLn {
+
+    def unapply(ln: DifferentiableLn): Option[Differentiable] = Some(ln.of)
+
+}
+
 class DifferentiableLn(override val of: Differentiable)
         extends Ln(of)
         with DifferentiableComposite {
 
     protected[this] def df(of: Differentiable) = 1 / of
-
-}
-
-class LnX(val variable: Variable)
-        extends DifferentiableLn(variable)
-        with DifferentiableUnivariate
-        with DifferentiableComposite {
-
-    override def variables = super[DifferentiableUnivariate].variables
-
-    override def df(x: Variable): DifferentiableUnivariate = 1 / x
 
 }
 

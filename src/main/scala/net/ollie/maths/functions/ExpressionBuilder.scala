@@ -29,10 +29,3 @@ trait DifferentiableExpressionBuilder {
     protected[this] def empty: Differentiable
 
 }
-
-trait DifferentiableUnivariateBuilder
-        extends DifferentiableExpressionBuilder {
-
-    def apply(variable: Variable): DifferentiableUnivariate
-
-}

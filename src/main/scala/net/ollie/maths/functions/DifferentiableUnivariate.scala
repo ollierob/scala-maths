@@ -20,7 +20,7 @@ trait DifferentiableUnivariate
 
         override def df(x: Variable): DifferentiableUnivariate = -(DifferentiableUnivariate.this.df(x))
 
-        override def toString = "-(" + DifferentiableUnivariate.this.toString + ")"
+        override def toString = s"-(" + DifferentiableUnivariate.this.toString + ")"
 
     }
 
@@ -32,19 +32,7 @@ trait DifferentiableUnivariate
 
 object DifferentiableUnivariate {
 
-    implicit def convert(x: Variable): DifferentiableUnivariate = new DifferentiableUnivariate {
-
-        def df(x: Variable): DifferentiableUnivariate = convert(x.df(x), x)
-
-        def replace(variables: Map[Variable, Expression]) = x.replace(variables)
-
-        def toConstant = x.toConstant
-
-        def isEmpty = x.isEmpty
-
-        def variable = x
-
-    }
+    implicit def convert(x: Variable): DifferentiableUnivariate = new DifferentiableUnivariateWrapper(x)
 
     implicit def convert(expr: Differentiable): DifferentiableUnivariate = {
         if (expr.variables.size != 1) ???

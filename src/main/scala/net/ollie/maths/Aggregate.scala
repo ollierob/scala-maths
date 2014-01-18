@@ -85,10 +85,15 @@ object Product {
 
 }
 
-class Product(val terms: Seq[Expression])
+class Product[+T <: Expression](val terms: Seq[T])
         extends Aggregate {
 
     require(!terms.isEmpty)
+
+    override def *(that: Expression): Expression = terms match {
+        case p: Product[_] => Product(terms ++: p.terms)
+        case _ => Product(terms :+ that)
+    }
 
     protected[this] def apply(expressions: Seq[Expression]): Expression = Product(expressions)
 

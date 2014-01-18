@@ -6,7 +6,7 @@ import scala.math.BigDecimal.RoundingMode.RoundingMode
 
 import net.ollie.maths._
 import net.ollie.maths.methods.ApproximatelyEvaluated
-import net.ollie.maths.numbers.real.RealPower
+import net.ollie.maths.numbers.real.{MassiveNumber, PowerTower, RealPower}
 
 /**
  * Created by Ollie on 01/01/14.
@@ -175,6 +175,7 @@ object RealNumber {
     implicit object RealArithmetic
             extends AdditionArithmetic[RealNumber, RealNumber, RealNumber]
             with MultiplicationArithmetic[RealNumber, RealNumber, RealNumber]
+            with TetrationArithmetic[RealNumber, RealNumber, MassiveNumber]
             with scala.math.Numeric[RealNumber] {
 
         def add(x: RealNumber, y: RealNumber) = plus(x, y)
@@ -200,6 +201,8 @@ object RealNumber {
         def compare(x: RealNumber, y: RealNumber) = x.compareTo(y)
 
         def multiply(left: RealNumber, right: RealNumber) = left * right
+
+        def tetrate(base: RealNumber, tower: RealNumber) = PowerTower(base, tower)
 
     }
 
@@ -352,7 +355,7 @@ object RealProduct {
     def apply(terms: Seq[RealNumber]): RealNumber = terms match {
         case Nil => Zero
         case item :: Nil => item
-        case _ if terms.contains(None) => Zero
+        case _ if terms.contains(Zero) => Zero
         case _ => new RealProduct(terms)
     }
 

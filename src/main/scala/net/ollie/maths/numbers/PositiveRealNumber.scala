@@ -21,7 +21,7 @@ trait PositiveRealNumber
 
     def /(that: PositiveRealNumber): PositiveRealNumber = this * that.inverse
 
-    def ^(that: PositiveRealNumber): PositiveRealNumber = PositiveRealNumber.pow(this, that)
+    def ^(that: RealNumber): PositiveRealNumber = PositiveRealNumber.pow(this, that)
 
     override def isStrictlyPositive = !this.isEmpty
 
@@ -33,7 +33,7 @@ object PositiveRealNumber {
 
     def inverse(re: PositiveRealNumber): PositiveRealNumber = new PositiveRealInverseNumber(re)
 
-    def pow(base: PositiveRealNumber, power: PositiveRealNumber): PositiveRealNumber = new PositivePower(base, power)
+    def pow(base: PositiveRealNumber, power: RealNumber): PositiveRealNumber = new PositiveRealPower(base, power)
 
 }
 
@@ -47,7 +47,7 @@ class PositiveRealInverseNumber(val re: PositiveRealNumber)
  * @param power
  * @see http://arxiv.org/abs/0908.3030v2
  */
-class PositivePower(val base: PositiveRealNumber, val power: PositiveRealNumber)
+class PositiveRealPower(val base: PositiveRealNumber, val power: RealNumber)
         extends PositiveRealNumber
         with RealPower {
 

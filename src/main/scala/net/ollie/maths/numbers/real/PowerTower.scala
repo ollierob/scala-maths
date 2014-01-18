@@ -5,17 +5,19 @@ import net.ollie.maths.numbers.RealNumber
 /**
  * Created by Ollie on 12/01/14.
  */
-class PowerTower(base: RealNumber, tower: RealNumber)
+object PowerTower {
+
+    def apply(base: RealNumber, tower: RealNumber): MassiveNumber = new PowerTower(base, tower)
+
+}
+
+class PowerTower(val base: RealNumber, val tower: RealNumber)
         extends MassiveNumber {
 
     def isEmpty = false
 
     def tryReduce = None
 
-    def inverse = ???
-
-}
-
-object PowerTower {
+    override def toString = s"$base ↑↑ $tower"
 
 }
