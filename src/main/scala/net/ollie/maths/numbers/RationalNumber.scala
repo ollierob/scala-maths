@@ -2,9 +2,9 @@ package net.ollie.maths.numbers
 
 import scala.math.BigDecimal.RoundingMode.RoundingMode
 
+import net.ollie.maths.DifferentiableFraction
 import net.ollie.maths.functions.numeric.GreatestCommonDivisor
 import net.ollie.maths.methods.ApproximatelyEvaluated
-import net.ollie.maths.DifferentiableFraction
 
 /**
  * A number that can be expressed as an integer divided by another integer.
@@ -100,5 +100,9 @@ class IntegerFraction private[numbers](override val numerator: IntegerNumber, ov
     override def toConstant = super[RationalNumber].toConstant
 
     override def variables = super[RationalNumber].variables
+
+    override def approximatelyEvaluate(precision: Precision)(implicit mode: RoundingMode) = super[RationalNumber].approximatelyEvaluate(precision)(mode)
+
+    protected[this] def approx(precision: Precision)(implicit mode: RoundingMode) = approximatelyEvaluate(precision)(mode)
 
 }

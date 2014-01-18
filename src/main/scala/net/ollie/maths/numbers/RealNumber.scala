@@ -225,7 +225,7 @@ class ExactRealNumber(val of: BigDecimal)
 
     def isEmpty = of == 0
 
-    override def approximatelyEvaluate(precision: Precision)(implicit mode: RoundingMode) = precision(of)
+    override def approx(precision: Precision)(implicit mode: RoundingMode) = precision(of)
 
     override def toString = of.toString
 
@@ -267,7 +267,7 @@ class InverseRealNumber(val of: RealNumber)
 
     override def toString = s"1/$of"
 
-    override def approximatelyEvaluate(precision: Precision)(implicit mode: RoundingMode) = 1 / of.evaluate(precision)
+    override def approx(precision: Precision)(implicit mode: RoundingMode) = 1 / of.evaluate(precision)
 
 }
 
@@ -306,7 +306,7 @@ class RealSeries private(val terms: Seq[RealNumber])
 
     override def toConstant = super[RealNumber].toConstant
 
-    override def approximatelyEvaluate(precision: Precision)(implicit mode: RoundingMode) = {
+    override def approx(precision: Precision)(implicit mode: RoundingMode) = {
         terms.map(_.approximatelyEvaluate(precision)).sum
     }
 
@@ -369,7 +369,7 @@ class RealProduct private(val terms: Seq[RealNumber])
 
     private final def product = Product(terms)
 
-    override def approximatelyEvaluate(precision: Precision)(implicit mode: RoundingMode) = {
+    override def approx(precision: Precision)(implicit mode: RoundingMode) = {
         terms.map(_.approximatelyEvaluate(precision)).product
     }
 

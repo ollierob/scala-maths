@@ -73,4 +73,8 @@ trait ApproximatelyEvaluated
 
     final def evaluationIterator = it
 
+    override def approximatelyEvaluate(precision: Precision)(implicit mode: RoundingMode): BigDecimal = approx(precision)(mode)
+
+    protected[this] def approx(precision: Precision)(implicit mode: RoundingMode): BigDecimal
+
 }

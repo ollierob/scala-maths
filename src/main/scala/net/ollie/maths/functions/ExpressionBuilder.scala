@@ -19,7 +19,7 @@ trait DifferentiableExpressionBuilder {
     protected[this] def create(expr: Expression): Expression
 
     def apply(diff: Differentiable): Differentiable = diff match {
-        case e if diff.isEmpty => empty
+        case _ if diff.isEmpty => empty
         case n: Number => apply(n)
         case _ => create(diff)
     }
@@ -27,5 +27,16 @@ trait DifferentiableExpressionBuilder {
     protected[this] def create(diff: Differentiable): Differentiable
 
     protected[this] def empty: Differentiable
+
+}
+
+trait CompositeBuildable
+        extends Composite {
+
+    protected[this] def builder: DifferentiableExpressionBuilder
+
+    protected[this] def at(n: Number) = builder(n)
+
+    protected[this] def apply(expr: Expression) = builder(expr)
 
 }

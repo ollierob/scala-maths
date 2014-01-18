@@ -30,7 +30,7 @@ class PositiveSquareRoot(val of: PositiveRealNumber)
         with PositiveRealNumber
         with ApproximatelyEvaluated {
 
-    override def approximatelyEvaluate(precision: Precision)(implicit mode: RoundingMode.RoundingMode) = {
+    override def approx(precision: Precision)(implicit mode: RoundingMode.RoundingMode) = {
         if (precision.value < 16) Math.sqrt(of.approximatelyEvaluate(precision).toDouble)
         else ???
     }

@@ -61,7 +61,7 @@ private class RealToIntegerPower(val base: RealNumber, val power: IntegerNumber)
         case _ => super.?*(that)
     }
 
-    override def approximatelyEvaluate(precision: Precision)(implicit mode: RoundingMode.RoundingMode) = {
+    override def approx(precision: Precision)(implicit mode: RoundingMode.RoundingMode) = {
         if (precision.value < 16) Math.pow(base.evaluate(precision).toDouble, power.evaluate(precision).toDouble)
         else throw new UnsupportedOperationException(s"Precision $precision unsupported for evaluation of $this")
     }

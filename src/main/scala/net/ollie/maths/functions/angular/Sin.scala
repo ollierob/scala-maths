@@ -2,7 +2,7 @@ package net.ollie.maths.functions.angular
 
 
 import net.ollie.maths._
-import net.ollie.maths.functions.{DifferentiableExpressionBuilder, UnivariateFunction}
+import net.ollie.maths.functions.{CompositeBuildable, DifferentiableExpressionBuilder, UnivariateFunction}
 import net.ollie.maths.methods.MaclaurinSeries
 import net.ollie.maths.numbers.{Precision, RealNumber, Zero}
 
@@ -25,16 +25,14 @@ object Sin
 
     protected[this] def create(diff: Differentiable): Differentiable = new DifferentiableSin(diff)
 
-    protected[this] def empty = Zero
+    protected[angular] def empty = Zero
 
 }
 
 private class Sin(val of: Expression)
-        extends Composite {
+        extends CompositeBuildable {
 
-    protected[this] def at(n: Number) = Sin(n)
-
-    protected[this] def apply(expr: Expression) = Sin(expr)
+    protected[this] def builder = Sin
 
     def isEmpty = of.isEmpty
 
@@ -66,4 +64,16 @@ private class RealSin(override val of: RealNumber)
 
     override def toConstant = Some(this)
 
+}
+
+object Cosec
+        extends DifferentiableExpressionBuilder {
+
+    def apply(n: Number) = Sin(n).inverse
+
+    protected[this] def create(expr: Expression) = 1 / Sin(expr)
+
+    protected[this] def create(diff: Differentiable) = 1 / Sin(diff)
+
+    protected[this] def empty = Sin.empty.inverse
 }

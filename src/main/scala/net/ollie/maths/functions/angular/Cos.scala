@@ -24,7 +24,7 @@ object Cos
 
     protected[this] def create(diff: Differentiable): Differentiable = new DifferentiableCos(diff)
 
-    protected[this] def empty = One
+    protected[angular] def empty = One
 
 }
 
@@ -60,5 +60,18 @@ class RealCos(override val of: RealNumber)
     override def variables = super[RealNumber].variables
 
     override def toConstant = Some(this)
+
+}
+
+object Sec
+        extends DifferentiableExpressionBuilder {
+
+    def apply(n: Number) = Cos(n).inverse
+
+    protected[this] def create(expr: Expression) = 1 / Cos(expr)
+
+    protected[this] def create(diff: Differentiable) = 1 / Cos(diff)
+
+    protected[this] def empty = Cos.empty.inverse
 
 }
