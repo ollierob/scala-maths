@@ -1,6 +1,6 @@
 package net.ollie.maths.numbers
 
-import net.ollie.maths.{Variable, Empty}
+import net.ollie.maths.{Empty, Variable}
 
 /**
  * Empty real number.
@@ -17,6 +17,8 @@ object Zero
     override def variables = super[Empty].variables
 
     override def isEmpty = super[Empty].isEmpty
+
+    override def isEven = true
 
     override def inverse = UnsignedInfinity
 

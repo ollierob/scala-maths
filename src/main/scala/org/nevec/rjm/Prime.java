@@ -16,11 +16,12 @@ import java.util.Vector;
  * @author Richard J. Mathar
  * @since 2006-08-11
  */
-class Prime {
+@Deprecated //Not thread-safe
+public class Prime {
     /**
      * The list of all numbers as a vector.
      */
-    static Vector<BigInteger> a = new Vector<BigInteger>();
+    static final Vector<BigInteger> a = new Vector<BigInteger>();
 
     /**
      * The maximum integer covered by the high end of the list.
