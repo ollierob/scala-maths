@@ -12,6 +12,8 @@ object Prime {
 
     private val DEFAULT_CALCULATOR = RjmPrimes
 
+    def apply(n: NaturalNumber): Option[Prime] = if (is(n)) Some(new KnownPrime(n)) else None
+
     def is(n: NaturalNumber)(implicit calculator: PrimeCalculator = DEFAULT_CALCULATOR): Boolean = n match {
         case p: Prime => true
         case _ if n.isEven => false
@@ -34,6 +36,14 @@ private class NextPrime(val n: NaturalNumber)(implicit calculator: PrimeCalculat
     private lazy val evaluated = calculator.next(n.evaluate)
 
     def evaluate = evaluated
+
+}
+
+private class KnownPrime(val n: NaturalNumber)
+        extends AnyRef
+        with Prime {
+
+    def evaluate = n.evaluate
 
 }
 
@@ -87,14 +97,6 @@ object RjmPrimes
 //
 //    def max: Prime = {
 //        primes.get(primes.keys.max).get
-//    }
-//
-//    private class KnownPrime(val n: NaturalNumber)
-//            extends AnyRef
-//            with Prime {
-//
-//        def evaluate = n.evaluate
-//
 //    }
 //
 //}
