@@ -10,4 +10,4 @@ Build up expressions in a human-readable manner:
     val df = ex.df(x)
     val sin = Sin(df)
     val n = sin.replace(x, Pi).toConstant.get
-    n.evaluate(4 dp) shouldBe(BigDecimal("0.9978"))
+    n.evaluate(4 decimalPlaces) shouldBe(BigDecimal("0.9978"))
