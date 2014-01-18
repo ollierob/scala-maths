@@ -1,21 +1,28 @@
 package net.ollie.maths.numbers
 
-
 import net.ollie.maths.Empty
+
 
 /**
  * Basic implementations of infinity.
  * Created by Ollie on 05/01/14.
  * @see http://mathworld.wolfram.com/AffinelyExtendedRealNumbers.html
  */
-trait Infinite
-        extends RealNumber {
+trait Infinite {
 
     def isEmpty = false
 
     protected[this] def eval(precision: Precision): BigDecimal = ???
 
-    override def abs: PositiveRealNumber with Infinite = Infinity
+    def abs: PositiveRealNumber with Infinite = Infinity
+
+}
+
+trait RealInfinity
+        extends Infinite
+        with RealNumber {
+
+    override def abs = Infinity
 
     override def inverse: RealNumber with Empty = Zero
 
@@ -38,7 +45,7 @@ trait Infinite
 
 object Infinity
         extends PositiveRealNumber
-        with Infinite {
+        with RealInfinity {
 
     override def abs = this
 
@@ -55,7 +62,7 @@ object Infinity
 }
 
 object NegativeInfinity
-        extends Infinite {
+        extends RealInfinity {
 
     override def abs = Infinity
 
@@ -71,7 +78,9 @@ object NegativeInfinity
 
 object UnsignedInfinity
         extends PositiveRealNumber
-        with Infinite {
+        with RealInfinity {
+
+    override def abs = super[RealInfinity].abs
 
     override def unary_-() = this
 

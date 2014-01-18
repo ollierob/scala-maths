@@ -60,11 +60,15 @@ object TransfiniteForm
         extends SurrealNumber
         with Infinite {
 
-    override def toString = "ω"
+    override def abs = super[Infinite].abs
+
+    override def unary_-() = ???
 
     def nearest = Infinity
 
     protected[this] override def eval(precision: Precision) = Infinity.evaluate(precision)
+
+    override def toString = "ω"
 
 }
 

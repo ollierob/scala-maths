@@ -2,6 +2,8 @@ package net.ollie.maths.numbers
 
 import scala.collection.mutable
 
+import net.ollie.maths.Number
+
 /**
  * Positive integer classes.
  * Created by Ollie on 02/01/14.
@@ -12,13 +14,25 @@ trait NaturalNumber
 
     override def abs: NaturalNumber = this
 
+    final override def +(that: IntegerNumber): IntegerNumber = that match {
+        case n: NaturalNumber => this + n
+        case _ => super.+(that)
+    }
+
     def +(that: NaturalNumber): NaturalNumber = NaturalNumber(this.evaluate + that.evaluate)
+
+    def +(that: Int): NaturalNumber = this + NaturalNumber(that) //Required to clarify implicit lookup
 
     override def inverse = NaturalNumber.inverse(this)
 
     def succ: NaturalNumber = this + One
 
     def decr: NaturalNumber = NaturalNumber(this.evaluate - 1)
+
+    final override def *(that: IntegerNumber): IntegerNumber = that match {
+        case n: NaturalNumber => this * n
+        case _ => super.*(that)
+    }
 
     def *(that: NaturalNumber): NaturalNumber = NaturalNumber(this.evaluate * that.evaluate)
 
@@ -68,6 +82,8 @@ object One
     override def ! = this
 
     override def decr = Zero
+
+    override def ?*(that: Number): Option[Number] = Some(that)
 
     override def *(that: NaturalNumber) = that
 

@@ -32,13 +32,9 @@ object Zero
 
     override def ?+(that: RealNumber) = Some(that)
 
-    override def +(that: IntegerNumber) = that
-
     override def +(that: NaturalNumber) = that
 
     override def ?*(that: RealNumber) = Some(this)
-
-    override def *(that: IntegerNumber) = this
 
     override def *(that: NaturalNumber) = this
 

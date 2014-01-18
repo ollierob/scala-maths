@@ -14,9 +14,13 @@ object ComplexInfinity
 
     def im = UnsignedInfinity
 
+    override def unary_-() = this
+
     override def abs = super[Infinite].abs
 
     def arg = ?!?
+
+    override def isEmpty = super[Infinite].isEmpty
 
     override def toString = "Z∞"
 
