@@ -1,6 +1,5 @@
 package net.ollie.maths.numbers.complex
 
-
 /**
  * Created by Ollie on 04/01/14.
  */

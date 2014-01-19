@@ -1,6 +1,5 @@
 package net.ollie.maths
 
-
 import net.ollie.maths.functions.numeric.Ln
 import net.ollie.maths.numbers.Zero
 

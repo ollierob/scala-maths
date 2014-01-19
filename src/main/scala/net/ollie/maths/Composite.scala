@@ -2,7 +2,9 @@ package net.ollie.maths
 
 /**
  * This expression is composed with another expression. (Most are!)
+ *
  * Created by Ollie on 05/01/14.
+ *
  * @see http://mathworld.wolfram.com/Composition.html
  */
 trait Composite

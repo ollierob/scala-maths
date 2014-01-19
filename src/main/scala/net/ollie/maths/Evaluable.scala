@@ -6,7 +6,8 @@ import net.ollie.maths.numbers.{DoublePrecision, IntegerPrecision, Precision, Si
 
 /**
  * Something that can be represented as a BigDecimal.
- * This is more-or-less limited to real numbers.
+ *
+ * This is more-or-less limited to the (finite) real numbers.
  *
  * Created by Ollie on 12/01/14.
  */
