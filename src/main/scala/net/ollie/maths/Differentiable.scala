@@ -75,6 +75,11 @@ class DifferentiableNegatedExpression(of: Differentiable)
 
 }
 
+/**
+ * @param terms
+ * @tparam T
+ * @see [[net.ollie.maths.functions.numeric.Sum]] to generate a series from a function and range.
+ */
 class DifferentiableSeries[+T <: Differentiable](override val terms: Seq[T])
         extends Series(terms)
         with Differentiable {

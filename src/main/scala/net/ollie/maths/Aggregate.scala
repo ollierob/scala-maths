@@ -1,5 +1,6 @@
 package net.ollie.maths
 
+
 import net.ollie.maths.numbers.{IntegerNumber, One, Zero}
 
 /**
@@ -36,7 +37,7 @@ object Series {
 }
 
 class Series[+T <: Expression](val terms: Seq[T])
-extends Aggregate {
+        extends Aggregate {
 
     protected[this] def apply(expressions: Seq[Expression]) = Series(expressions)
 

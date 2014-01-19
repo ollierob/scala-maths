@@ -2,7 +2,7 @@ package net.ollie.maths.functions.polynomial
 
 import net.ollie.maths.{Differentiable, Variable}
 import net.ollie.maths.functions.numeric.{Floor, Sum}
-import net.ollie.maths.numbers.{NaturalNumber, One, Zero}
+import net.ollie.maths.numbers.{IntegerNumber, NaturalNumber, One, Zero}
 import net.ollie.maths.numbers.combinatorial.BinomialCoefficient
 
 /**
@@ -109,9 +109,9 @@ private class UAny(override val n: NaturalNumber, val of: Differentiable)
 
     protected[this] def f = Sum(nth, Zero, Floor(n / 2))
 
-    private val nth = new ((NaturalNumber) => Differentiable) {
+    private val nth = new ((IntegerNumber) => Differentiable) {
 
-        def apply(r: NaturalNumber) = ((-One) ^ r) * BinomialCoefficient(n - r, r) * ((2 * of) ^ (n - (2 * r)))
+        def apply(r: IntegerNumber) = ((-One) ^ r) * BinomialCoefficient(n - r, r) * ((2 * of) ^ (n - (2 * r)))
 
         override def toString = s"(-1)^r (n-r choose r) (2x)^(n-2r)"
 
