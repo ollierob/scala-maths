@@ -1,4 +1,4 @@
-package net.ollie.maths.numbers.combinatorial
+package net.ollie.maths.numbers.real
 
 import net.ollie.maths.numbers.{Zero, NaturalNumber, One}
 import org.scalatest.{FlatSpec, Matchers}
