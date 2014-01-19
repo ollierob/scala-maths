@@ -8,22 +8,10 @@ import net.ollie.maths.numbers.Zero
  * Created by Ollie on 08/01/14.
  */
 trait Polynomial
-        extends Represented {
-
-    protected[this] def f: Differentiable
-
-}
-
-trait DifferentiablePolynomial
-        extends Polynomial
-        with Differentiable {
-
-    def df(x: Variable) = f.df(x)
-
-}
+        extends Represented
 
 object ZeroPolynomial
-        extends DifferentiablePolynomial
+        extends Polynomial
         with Empty {
 
     protected[this] def f = Zero

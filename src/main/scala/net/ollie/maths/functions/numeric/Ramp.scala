@@ -1,7 +1,7 @@
 package net.ollie.maths.functions.numeric
 
-import net.ollie.maths.{Differentiable, DifferentiableRepresented, Expression, Number}
-import net.ollie.maths.functions.{DifferentiableExpressionBuilder, Represented, UnivariateFunction}
+import net.ollie.maths.{Expression, Number}
+import net.ollie.maths.functions.{ExpressionBuilder, Represented, UnivariateFunction}
 import net.ollie.maths.numbers.{RealNumber, Zero}
 
 /**
@@ -9,7 +9,7 @@ import net.ollie.maths.numbers.{RealNumber, Zero}
  */
 object Ramp
         extends UnivariateFunction[RealNumber, RealNumber]
-        with DifferentiableExpressionBuilder {
+        with ExpressionBuilder {
 
     def apply(n: Number): Number = n match {
         case re: RealNumber => apply(re)
@@ -23,8 +23,6 @@ object Ramp
 
     protected[this] def create(expr: Expression) = new Ramp(expr)
 
-    protected[this] def create(diff: Differentiable) = new DifferentiableRamp(diff)
-
     protected[this] def empty = Zero
 
     override def toString = "Ramp(?)"
@@ -37,13 +35,5 @@ class Ramp(val expression: Expression)
     protected[this] def f = expression * Heaviside(expression)
 
     override def toString = s"Ramp($expression)"
-
-}
-
-class DifferentiableRamp(override val expression: Differentiable)
-        extends Ramp(expression)
-        with DifferentiableRepresented {
-
-    override def f = expression * Heaviside(expression)
 
 }

@@ -2,7 +2,7 @@ package net.ollie.maths.numbers
 
 import scala.math.BigDecimal.RoundingMode.RoundingMode
 
-import net.ollie.maths.DifferentiableFraction
+import net.ollie.maths.ExpressionFraction
 import net.ollie.maths.functions.numeric.GreatestCommonDivisor
 import net.ollie.maths.methods.ApproximatelyEvaluated
 
@@ -23,11 +23,6 @@ trait RationalNumber
     def isEmpty: Boolean = numerator.isEmpty
 
     override def approximatelyEvaluate(precision: Precision)(implicit mode: RoundingMode): BigDecimal = numerator.evaluate(precision) / denominator.evaluate(precision)
-
-    //    override def ?+(that: RealNumber) = that match {
-    //        case r: RationalNumber => Some(IntegerFraction((numerator * r.numerator) + (r.numerator * denominator), denominator * r.denominator))
-    //        case _ => super.?+(that)
-    //    }
 
     override def ?*(that: RealNumber) = that match {
         case r: RationalNumber => Some(IntegerFraction(r.numerator * numerator, r.denominator * denominator))
@@ -75,7 +70,7 @@ object IntegerFraction {
 }
 
 class IntegerFraction private[numbers](override val numerator: IntegerNumber, override val denominator: IntegerNumber)
-        extends DifferentiableFraction(numerator, denominator)
+        extends ExpressionFraction(numerator, denominator)
         with RationalNumber
         with ApproximatelyEvaluated {
 
@@ -95,7 +90,7 @@ class IntegerFraction private[numbers](override val numerator: IntegerNumber, ov
         case _ => super./(that)
     }
 
-    override def isEmpty = super[DifferentiableFraction].isEmpty
+    override def isEmpty = super[ExpressionFraction].isEmpty
 
     override def toConstant = super[RationalNumber].toConstant
 

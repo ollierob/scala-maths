@@ -1,6 +1,6 @@
 package net.ollie.maths.functions.angular
 
-import net.ollie.maths.{Differentiable, Variable}
+import net.ollie.maths.{Expression, Variable}
 import net.ollie.maths.functions.{Modal, Represented}
 import net.ollie.maths.numbers._
 
@@ -8,8 +8,8 @@ import net.ollie.maths.numbers._
  * Created by Ollie on 08/01/14.
  */
 trait SphericalHarmonic
-        extends Modal
-        with Differentiable {
+        extends Expression
+        with Modal {
 
     require(l >= m.abs)
 
@@ -29,11 +29,7 @@ trait SphericalHarmonic
 
     def order = m
 
-    protected[this] def f: Differentiable
-
-    def df(x: Variable) = f.df(x)
-
-    override def toString = "Y(" + l + "," + m + ")"
+    override def toString = s"Y($l,$m)"
 
 }
 

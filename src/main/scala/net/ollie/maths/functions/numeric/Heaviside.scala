@@ -1,7 +1,7 @@
 package net.ollie.maths.functions.numeric
 
 import net.ollie.maths._
-import net.ollie.maths.functions.{DifferentiableExpressionBuilder, UnivariateFunction}
+import net.ollie.maths.functions.{ExpressionBuilder, UnivariateFunction}
 import net.ollie.maths.numbers.{One, RealNumber, Zero}
 
 /**
@@ -9,7 +9,7 @@ import net.ollie.maths.numbers.{One, RealNumber, Zero}
  */
 object Heaviside
         extends UnivariateFunction[RealNumber, RealNumber]
-        with DifferentiableExpressionBuilder {
+        with ExpressionBuilder {
 
     def apply(n: Number): Number = n match {
         case re: RealNumber => apply(re)
@@ -23,8 +23,6 @@ object Heaviside
     }
 
     protected[this] def create(expr: Expression) = new Heaviside(expr)
-
-    protected[this] def create(diff: Differentiable) = new DifferentiableHeaviside(diff)
 
     override def toString = "Heaviside(?)"
 
@@ -48,14 +46,6 @@ class Heaviside(val expr: Expression)
 
     override def toString = s"Heaviside($of)"
 
-}
-
-class DifferentiableHeaviside(val diff: Differentiable)
-        extends Heaviside(diff)
-        with DifferentiableComposite {
-
-    override def of = diff
-
-    protected[this] def df(of: Differentiable) = DiracDelta(of)
+    protected[this] def derivative(at: Expression) = DiracDelta(at)
 
 }

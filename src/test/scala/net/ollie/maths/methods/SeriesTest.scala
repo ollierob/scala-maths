@@ -1,15 +1,13 @@
-package net.ollie.maths
+package net.ollie.maths.methods
 
-import net.ollie.maths.numbers.RealNumber
-import net.ollie.maths.numbers.complex.ComplexNumber
-import org.junit.runner.RunWith
+import net.ollie.maths.{Expression, Variable}
+import net.ollie.maths.numbers.{RealNumber, IntegerNumber, NaturalNumber}
 import org.scalatest.{FlatSpec, Matchers}
-import org.scalatest.junit.JUnitRunner
+import net.ollie.maths.numbers.complex.ComplexNumber
 
 /**
- * Created by Ollie on 12/01/14.
+ * Created by Ollie on 19/01/14.
  */
-@RunWith(classOf[JUnitRunner])
 class SeriesTest extends FlatSpec with Matchers {
 
     val x = Variable("x")
@@ -32,6 +30,17 @@ class SeriesTest extends FlatSpec with Matchers {
         series.replace(x, r).toConstant shouldBe (None)
         series.replace(y, r).toConstant shouldBe (None)
         series.replace(Map(x -> r, y -> r)).toConstant shouldBe (Some(r + r))
+    }
+
+    "Sum of n*x from 0 to 5" should "be 15*x" in {
+        def f(n: IntegerNumber): Expression = n * x
+        val sum = Series(f, 0, 5)
+        println(sum)
+        sum.isEmpty shouldBe (false)
+        sum.variables shouldBe (Set(x))
+        sum.df(x).toConstant shouldBe (Some(NaturalNumber(15)))
+        sum.replace(x, 1).toConstant shouldBe (Some(NaturalNumber(15)))
+        sum.replace(x, 2).toConstant shouldBe (Some(NaturalNumber(30)))
     }
 
 }

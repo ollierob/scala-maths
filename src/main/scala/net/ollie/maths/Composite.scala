@@ -21,6 +21,10 @@ trait Composite
 
     def replace(variables: Map[Variable, Expression]) = apply(of.replace(variables))
 
-    protected[this] def apply(expr: Expression): Expression
+    def df(x: Variable) = of.df(x) * derivative(of)
+
+    protected[this] def derivative(at: Expression): Expression
+
+    protected[this] def apply(at: Expression): Expression
 
 }

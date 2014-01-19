@@ -1,8 +1,9 @@
 package net.ollie.maths.numbers.combinatorial
 
-import net.ollie.maths.{Empty, Product, Variable}
+import net.ollie.maths.{Empty, Variable}
 import net.ollie.maths.functions.numeric.{Floor, GreatestCommonDivisor}
 import net.ollie.maths.numbers._
+import net.ollie.maths.methods.Product
 
 /**
  * Created by Ollie on 11/01/14.

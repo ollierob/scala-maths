@@ -15,7 +15,7 @@ import net.ollie.maths.numbers.Zero
  * @see Zero
  */
 trait Empty
-        extends Differentiable {
+        extends Expression {
 
     def isEmpty = true
 
@@ -25,11 +25,7 @@ trait Empty
 
     override def +(that: Expression) = that
 
-    override def +(that: Differentiable) = that
-
     override def *(that: Expression) = Zero
-
-    override def *(that: Differentiable) = Zero
 
     override def toString = "0"
 

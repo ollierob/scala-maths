@@ -5,6 +5,7 @@ import org.scalatest.{FlatSpec, Matchers}
 import net.ollie.maths.numbers.complex.ComplexNumber
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
+import net.ollie.maths.methods.Product
 
 /**
  * Created by Ollie on 11/01/14.

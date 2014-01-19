@@ -36,7 +36,7 @@ class LnTest extends FlatSpec with Matchers {
     }
 
     "Ln(Exp(x))" should "be x" in {
-        Ln(Exp(x)) shouldBe (x)
+        Ln(Exp(x)) shouldBe x
     }
 
 }

@@ -23,7 +23,7 @@ trait LegendrePolynomial
 
 object LegendrePolynomial {
 
-    def apply(l: NaturalNumber, z: Variable): LegendrePolynomial = l match {
+    def apply(l: NaturalNumber, z: Expression): LegendrePolynomial = l match {
         case Zero => ZeroLegendrePolynomial
         case One => new OneLegendrePolynomial(z)
         case _ => new SomeLegendrePolynomial(l)(z)
@@ -32,11 +32,6 @@ object LegendrePolynomial {
     def apply(l: NaturalNumber, number: RealNumber): RealNumber = apply(l, number.asInstanceOf[Expression]).toConstant match {
         case Some(re: RealNumber) => re
         case _ => ???
-    }
-
-    def apply(l: NaturalNumber, expression: Expression): Expression = {
-        val z = new Variable("$z")
-        apply(l, z).replace(z, expression)
     }
 
     def apply(l: NaturalNumber, expression: Differentiable): Differentiable = apply(l, expression) match {
@@ -48,7 +43,6 @@ object LegendrePolynomial {
 
 object ZeroLegendrePolynomial
         extends LegendrePolynomial
-        with DifferentiablePolynomial
         with NaturalNumber {
 
     def l = Zero
@@ -61,34 +55,28 @@ object ZeroLegendrePolynomial
 
     override def variables = super[NaturalNumber].variables
 
-}
-
-sealed trait VariateLegendrePolynomial
-        extends LegendrePolynomial
-        with Univariate {
-
-    override def toString = super[LegendrePolynomial].toString + "(" + variable + ")"
-
-    override def variables = super[Univariate].variables
+    override def toString = "LegendreP(0)"
 
 }
 
-class OneLegendrePolynomial(val variable: Variable)
-        extends VariateLegendrePolynomial {
+class OneLegendrePolynomial(val of: Expression)
+        extends LegendrePolynomial {
 
     def l = One
 
-    protected[this] def f = variable
+    protected[this] def f = of
+
+    override def toString = s"LegendreP(1)($of)"
 
 }
 
-class SomeLegendrePolynomial(val l: NaturalNumber)(val x: Variable)
-        extends VariateLegendrePolynomial {
+class SomeLegendrePolynomial(val l: NaturalNumber)(val x: Expression)
+        extends LegendrePolynomial {
 
     require(l > One)
 
-    def variable = x
-
     protected[this] def f = (((2 * l - 1) * x * LegendrePolynomial(l - 1, x)) - ((l - 1) * LegendrePolynomial(l - 2, x)))
+
+    override def toString = s"LegendreP($l)($x)"
 
 }

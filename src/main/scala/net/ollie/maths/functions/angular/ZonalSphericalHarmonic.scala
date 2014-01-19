@@ -1,6 +1,6 @@
 package net.ollie.maths.functions.angular
 
-import net.ollie.maths.{Differentiable, Variable}
+import net.ollie.maths.{Expression, Variable}
 import net.ollie.maths.functions.numeric.PositiveSquareRoot
 import net.ollie.maths.functions.polynomial.LegendrePolynomial
 import net.ollie.maths.numbers._
@@ -37,7 +37,7 @@ class LZeroHarmonic(val l: NaturalNumber, val theta: Variable)
         with ZonalSphericalHarmonic
         with Represented {
 
-    private val func: Differentiable = PositiveSquareRoot(((2 * l + 1) !) / (Pi * NaturalNumber(4))) * LegendrePolynomial(l, Cos(theta))
+    private val func: Expression = PositiveSquareRoot(((2 * l + 1) !) / (Pi * NaturalNumber(4))) * LegendrePolynomial(l, Cos(theta))
 
     protected[this] def f = func
 

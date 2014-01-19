@@ -1,7 +1,8 @@
 package net.ollie.maths.functions.polynomial
 
-import net.ollie.maths.{Differentiable, Variable}
-import net.ollie.maths.functions.numeric.{Floor, Sum}
+import net.ollie.maths.{Expression, Variable}
+import net.ollie.maths.functions.numeric.Floor
+import net.ollie.maths.methods.Series
 import net.ollie.maths.numbers.{IntegerNumber, NaturalNumber, One, Zero}
 import net.ollie.maths.numbers.combinatorial.BinomialCoefficient
 
@@ -9,7 +10,7 @@ import net.ollie.maths.numbers.combinatorial.BinomialCoefficient
  * Created by Ollie on 18/01/14.
  */
 sealed trait ChebyshevPolynomial
-        extends DifferentiablePolynomial {
+        extends Polynomial {
 
     def n: NaturalNumber
 
@@ -23,7 +24,7 @@ trait ChebyshevFirstKind
 
 object ChebyshevFirstKind {
 
-    def apply(n: NaturalNumber)(expression: Differentiable): ChebyshevFirstKind = n match {
+    def apply(n: NaturalNumber)(expression: Expression): ChebyshevFirstKind = n match {
         case Zero => TZero
         case One => new TOne(expression)
         case _ => new TAny(n, expression)
@@ -44,7 +45,7 @@ private object TZero
 
 }
 
-private class TOne(val of: Differentiable)
+private class TOne(val of: Expression)
         extends ChebyshevFirstKind {
 
     def n = One
@@ -55,7 +56,7 @@ private class TOne(val of: Differentiable)
 
 }
 
-private class TAny(val n: NaturalNumber, val of: Differentiable)
+private class TAny(val n: NaturalNumber, val of: Expression)
         extends ChebyshevFirstKind {
 
     protected[this] def f = (2 * of * ChebyshevFirstKind(n - 1)(of)) - ChebyshevFirstKind(n - 2)(of)
@@ -74,7 +75,7 @@ trait ChebyshevSecondKind
 
 object ChebyshevSecondKind {
 
-    def apply(n: NaturalNumber)(diff: Differentiable): ChebyshevSecondKind = n match {
+    def apply(n: NaturalNumber)(diff: Expression): ChebyshevSecondKind = n match {
         case Zero => UZero
         case One => new UOne(diff)
         case _ => new RecursiveUAny(n, diff)
@@ -93,7 +94,7 @@ private object UZero
 
 }
 
-private class UOne(val of: Differentiable)
+private class UOne(val of: Expression)
         extends ChebyshevSecondKind {
 
     def n = One
@@ -104,12 +105,12 @@ private class UOne(val of: Differentiable)
 
 }
 
-private class UAny(override val n: NaturalNumber, val of: Differentiable)
+private class UAny(override val n: NaturalNumber, val of: Expression)
         extends ChebyshevSecondKind {
 
-    protected[this] def f = Sum(nth, Zero, Floor(n / 2))
+    protected[this] def f = Series(nth, Zero, Floor(n / 2))
 
-    private val nth = new ((IntegerNumber) => Differentiable) {
+    private val nth = new ((IntegerNumber) => Expression) {
 
         def apply(r: IntegerNumber) = ((-One) ^ r) * BinomialCoefficient(n - r, r) * ((2 * of) ^ (n - (2 * r)))
 
@@ -119,7 +120,7 @@ private class UAny(override val n: NaturalNumber, val of: Differentiable)
 
 }
 
-private class RecursiveUAny(override val n: NaturalNumber, val of: Differentiable)
+private class RecursiveUAny(override val n: NaturalNumber, val of: Expression)
         extends ChebyshevSecondKind {
 
     protected[this] def f = (2 * of * ChebyshevSecondKind(n - 1)(of)) - ChebyshevSecondKind(n - 2)(of)

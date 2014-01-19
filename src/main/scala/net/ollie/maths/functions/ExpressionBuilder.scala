@@ -5,35 +5,26 @@ import net.ollie.maths._
 /**
  * Created by Ollie on 11/01/14.
  */
-trait DifferentiableExpressionBuilder {
+trait ExpressionBuilder {
 
     def apply(n: Number): Number
 
     def apply(expression: Expression): Expression = expression match {
         case e if e.isEmpty => empty
         case n: Number => apply(n)
-        case d: Differentiable => apply(d)
         case _ => create(expression)
     }
 
     protected[this] def create(expr: Expression): Expression
 
-    def apply(diff: Differentiable): Differentiable = diff match {
-        case _ if diff.isEmpty => empty
-        case n: Number => apply(n)
-        case _ => create(diff)
-    }
-
-    protected[this] def create(diff: Differentiable): Differentiable
-
-    protected[this] def empty: Differentiable
+    protected[this] def empty: Expression
 
 }
 
 trait CompositeBuildable
         extends Composite {
 
-    protected[this] def builder: DifferentiableExpressionBuilder
+    protected[this] def builder: ExpressionBuilder
 
     protected[this] def at(n: Number) = builder(n)
 

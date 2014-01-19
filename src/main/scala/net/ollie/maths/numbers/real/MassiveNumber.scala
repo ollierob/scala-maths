@@ -3,6 +3,7 @@ package net.ollie.maths.numbers.real
 import scala.Some
 
 import net.ollie.maths._
+import net.ollie.maths.methods.Series
 import net.ollie.maths.numbers.{One, PositiveRealNumber, RealNumber, Zero}
 
 /**

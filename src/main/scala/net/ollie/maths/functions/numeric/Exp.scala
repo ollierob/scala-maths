@@ -1,7 +1,7 @@
 package net.ollie.maths.functions.numeric
 
 import net.ollie.maths._
-import net.ollie.maths.functions.DifferentiableExpressionBuilder
+import net.ollie.maths.functions.ExpressionBuilder
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.real.EulersNumber
 import org.nevec.rjm.BigDecimalMath
@@ -12,7 +12,7 @@ import org.nevec.rjm.BigDecimalMath
  * @see Ln
  */
 object Exp
-        extends DifferentiableExpressionBuilder {
+        extends ExpressionBuilder {
 
     def apply(n: Number): Number = n match {
         case re: RealNumber => apply(re)
@@ -32,11 +32,6 @@ object Exp
         case _ => new Exp(expr)
     }
 
-    protected[this] def create(diff: Differentiable) = diff match {
-        case DifferentiableLn(of) => of
-        case _ => new DifferentiableExp(diff)
-    }
-
     protected[this] def empty = One
 
 }
@@ -49,27 +44,13 @@ class Exp(val of: Expression)
 
     protected[this] def at(n: Number) = Exp(n)
 
-    protected[this] def apply(expr: Expression) = Exp(expr)
+    protected[this] def apply(at: Expression) = Exp(at)
 
     override def toString = s"Exp($of)"
 
-    def inverse: Expression = Ln(of)
+    def inverse = Ln(of)
 
-}
-
-object DifferentiableExp {
-
-    def unapply(exp: DifferentiableExp): Option[Differentiable] = Some(exp.of)
-
-}
-
-class DifferentiableExp(override val of: Differentiable)
-        extends Exp(of)
-        with DifferentiableComposite {
-
-    protected[this] def df(of: Differentiable) = Exp(of)
-
-    override def inverse: Differentiable = Ln(of)
+    protected[this] def derivative(at: Expression) = Exp(at)
 
 }
 

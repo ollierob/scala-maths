@@ -5,7 +5,7 @@ import scala.collection.mutable.ListBuffer
 import scala.math.BigDecimal.RoundingMode
 
 import net.ollie.maths._
-import net.ollie.maths.functions.{DifferentiableExpressionBuilder, DifferentiableUnivariate}
+import net.ollie.maths.functions.ExpressionBuilder
 import net.ollie.maths.numbers.{NaturalNumber, Precision, RealNumber, Zero}
 
 /**
@@ -23,18 +23,18 @@ object TaylorSeries {
     //        case _ => None
     //    }
 
-    def apply(expression: DifferentiableUnivariate, at: RealNumber, around: RealNumber): RealNumber = {
+    def apply(expression: Univariate, at: RealNumber, around: RealNumber): RealNumber = {
         new TaylorSeries(expression, at, around)
     }
 
-    def apply(builder: DifferentiableExpressionBuilder, at: RealNumber, around: RealNumber): RealNumber = {
+    def apply(builder: ExpressionBuilder, at: RealNumber, around: RealNumber): RealNumber = {
         val x = Variable("$x")
         TaylorSeries(builder(x), at, around)
     }
 
 }
 
-private class TaylorSeries(f: DifferentiableUnivariate, val x: RealNumber, a: RealNumber)(implicit conversion: IdentityArithmetic[Number, RealNumber])
+private class TaylorSeries(f: Univariate, val x: RealNumber, a: RealNumber)(implicit conversion: IdentityArithmetic[Number, RealNumber])
         extends RealNumber
         with IterativelyEvaluated {
 
@@ -44,7 +44,7 @@ private class TaylorSeries(f: DifferentiableUnivariate, val x: RealNumber, a: Re
 
         val xMinusA = x - a
         val terms: mutable.Buffer[RealNumber] = new ListBuffer[RealNumber]()
-        var fNDash: DifferentiableUnivariate = f
+        var fNDash: Univariate = f
 
         def next(n: NaturalNumber, precision: Precision)(implicit mode: RoundingMode.RoundingMode): BigDecimal = {
             terms += nthTerm(n)
@@ -70,13 +70,11 @@ private class TaylorSeries(f: DifferentiableUnivariate, val x: RealNumber, a: Re
  */
 object MaclaurinSeries {
 
-    def apply(builder: DifferentiableExpressionBuilder, at: RealNumber): RealNumber = {
+    def apply(builder: ExpressionBuilder, at: RealNumber): RealNumber = {
         val x = Variable("$x")
         MaclaurinSeries(builder(x), at)
     }
 
-    def apply(expression: DifferentiableUnivariate, at: RealNumber): RealNumber = TaylorSeries(expression, at, Zero)
-
-    def apply(expression: Differentiable, at: RealNumber) = TaylorSeries(expression, at, Zero)
+    def apply(expression: Univariate, at: RealNumber): RealNumber = TaylorSeries(expression, at, Zero)
 
 }

@@ -19,4 +19,6 @@ trait Represented
 
     def isEmpty = f.isEmpty
 
+    def df(x: Variable): Expression = f.df(x)
+
 }

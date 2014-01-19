@@ -2,8 +2,8 @@ package net.ollie.maths.functions.angular
 
 import scala.math.BigDecimal.RoundingMode
 
-import net.ollie.maths.{Differentiable, Expression, Number, Variable}
-import net.ollie.maths.functions.{CompositeBuildable, DifferentiableExpressionBuilder, UnivariateFunction}
+import net.ollie.maths.{Expression, Number}
+import net.ollie.maths.functions.{CompositeBuildable, ExpressionBuilder, UnivariateFunction}
 import net.ollie.maths.methods.ApproximatelyEvaluated
 import net.ollie.maths.numbers.{Precision, RealNumber, Zero}
 
@@ -11,7 +11,7 @@ import net.ollie.maths.numbers.{Precision, RealNumber, Zero}
  * Created by Ollie on 18/01/14.
  */
 object Tan
-        extends DifferentiableExpressionBuilder
+        extends ExpressionBuilder
         with UnivariateFunction[Angle, RealNumber] {
 
     def apply(n: Number): Number = n match {
@@ -24,8 +24,6 @@ object Tan
 
     protected[this] def create(expr: Expression) = new Tan(expr)
 
-    protected[this] def create(diff: Differentiable) = new DifferentiableTan(diff)
-
     protected[angular] def empty = Zero
 
 }
@@ -37,15 +35,9 @@ class Tan(val of: Expression)
 
     def isEmpty = of.isEmpty
 
+    def derivative(x: Expression) = Sec(x) ^ 2
+
     override def toString = s"Tan($of)"
-
-}
-
-class DifferentiableTan(override val of: Differentiable)
-        extends Tan(of)
-        with Differentiable {
-
-    def df(x: Variable) = Sec(x) ^ 2
 
 }
 
@@ -65,13 +57,11 @@ class RealTan(override val of: Angle)
 }
 
 object Cotan
-        extends DifferentiableExpressionBuilder {
+        extends ExpressionBuilder {
 
     def apply(n: Number) = Tan(n).inverse
 
     protected[this] def create(expr: Expression) = 1 / Tan(expr)
-
-    protected[this] def create(diff: Differentiable) = 1 / Tan(diff)
 
     protected[this] def empty = Tan.empty.inverse
 }

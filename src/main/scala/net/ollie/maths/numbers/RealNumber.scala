@@ -5,7 +5,7 @@ import scala.collection.mutable
 import scala.math.BigDecimal.RoundingMode.RoundingMode
 
 import net.ollie.maths._
-import net.ollie.maths.methods.ApproximatelyEvaluated
+import net.ollie.maths.methods.{Series, Product, ApproximatelyEvaluated}
 import net.ollie.maths.numbers.real.{MassiveNumber, PowerTower, RealPower}
 
 /**

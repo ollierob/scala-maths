@@ -1,7 +1,7 @@
 package net.ollie.maths.functions.polynomial
 
 import net.ollie.maths._
-import net.ollie.maths.functions.Modal
+import net.ollie.maths.functions.{Represented, Modal}
 import net.ollie.maths.numbers.{IntegerNumber, NaturalNumber, Zero}
 
 /**
@@ -9,7 +9,7 @@ import net.ollie.maths.numbers.{IntegerNumber, NaturalNumber, Zero}
  */
 trait AssociatedLegendrePolynomial
         extends Modal
-        with DifferentiableRepresented {
+        with Represented {
 
     override def toString = "P(" + l + "," + m + ")"
 
@@ -17,7 +17,7 @@ trait AssociatedLegendrePolynomial
 
 object AssociatedLegendrePolynomial {
 
-    def apply(l: NaturalNumber, m: IntegerNumber, x: Variable): AssociatedLegendrePolynomial = m match {
+    def apply(l: NaturalNumber, m: IntegerNumber, x: Expression): AssociatedLegendrePolynomial = m match {
         case Zero => LegendrePolynomial(l, x)
         case _ if m.abs > l => new EmptyAssociatedLegendrePolynomial(l, m)
         case _ => new RegularAssociatedLegendrePolynomial(l, m)(x)
@@ -42,17 +42,12 @@ class EmptyAssociatedLegendrePolynomial(val l: NaturalNumber, val m: IntegerNumb
 
 }
 
-class RegularAssociatedLegendrePolynomial(val l: NaturalNumber, val m: IntegerNumber)(val x: Variable)
-        extends AssociatedLegendrePolynomial
-        with Univariate {
+class RegularAssociatedLegendrePolynomial(val l: NaturalNumber, val m: IntegerNumber)(val x: Expression)
+        extends AssociatedLegendrePolynomial {
 
     import net.ollie.maths.functions.polynomial.{AssociatedLegendrePolynomial => Plm}
 
     require(l <= m.abs)
-
-    override def variables = super[Univariate].variables
-
-    def variable = x
 
     protected[this] def f = (((2 * l - 1) * Plm(l - 1, m, x)) - ((l + m) * Plm(l - 2, m, x))) / (l - m + 1)
 

@@ -13,7 +13,7 @@ object Variable {
 
 class Variable(val name: String)
         extends AnyRef
-        with Differentiable {
+        with Expression {
 
     def isEmpty = false
 

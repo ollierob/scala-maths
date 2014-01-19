@@ -1,7 +1,7 @@
 package net.ollie.maths
 
-import org.scalatest.{Matchers, FlatSpec}
-import net.ollie.maths.numbers.{IntegerNumber, NaturalNumber}
+import net.ollie.maths.numbers.{IntegerNumber, NaturalNumber, One, Zero}
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
  * Created by Ollie on 19/01/14.
@@ -14,6 +14,12 @@ class ExpressionTest extends FlatSpec with Matchers {
         val ex: Expression = 5 - (2 * x.asInstanceOf[Expression])
         ex.replace(x, 1).toConstant shouldBe (Some(NaturalNumber(3)))
         (-ex).replace(x, 1).toConstant shouldBe (Some(IntegerNumber(-3)))
+    }
+
+    "x / 2" should "reduce to a constant" in {
+        val ex: Expression = x / 2
+        ex.replace(x, 0).toConstant shouldBe Some(Zero)
+        ex.replace(x, 2).toConstant shouldBe Some(One)
     }
 
 }
