@@ -43,15 +43,15 @@ object Differentiable {
 
     def series(left: Differentiable, right: Differentiable): Differentiable = if (left.isEmpty) right else if (left.isEmpty) right else new DifferentiableSeries(Seq(left, right))
 
-    def series(terms: Seq[Differentiable]): Differentiable = terms.filter(!_.isEmpty) match {
+    def series[T <: Differentiable](terms: Iterable[T]): Differentiable = terms.filter(!_.isEmpty) match {
         case Nil => Zero
         case term :: Nil => term
-        case otherwise => new DifferentiableSeries(otherwise)
+        case otherwise => new DifferentiableSeries(otherwise.toSeq)
     }
 
     def product(left: Differentiable, right: Differentiable): Differentiable = if (left.isEmpty || right.isEmpty) Zero else product(Seq(left, right))
 
-    def product(terms: Seq[Differentiable]): Differentiable = terms match {
+    def product[T <: Differentiable](terms: Seq[T]): Differentiable = terms match {
         case Nil => Zero
         case diff :: Nil => diff
         case _ => new DifferentiableProduct(terms)
@@ -75,52 +75,58 @@ class DifferentiableNegatedExpression(of: Differentiable)
 
 }
 
-class DifferentiableSeries(terms: Seq[Differentiable])
-        extends Differentiable {
+class DifferentiableSeries[+T <: Differentiable](override val terms: Seq[T])
+        extends Series(terms)
+        with Differentiable {
 
     def df(x: Variable) = Differentiable.series(terms.map(_.df(x)))
 
-    private final val series = Series(terms)
+    override def +(that: Expression) = that match {
+        case d: Differentiable => this + d
+        case _ => super.*(that)
+    }
 
-    def replace(variables: Map[Variable, Expression]) = series.replace(variables)
-
-    def toConstant = series.toConstant
-
-    def variables = series.variables
-
-    def isEmpty = series.isEmpty
+    override def +(that: Differentiable) = that match {
+        case _ if that.isEmpty => this
+        case s: DifferentiableSeries[_] => Differentiable.series(terms ++: s.terms)
+        case _ => Differentiable.series(terms :+ that)
+    }
 
 }
 
-class DifferentiableProduct(expressions: Seq[Differentiable])
-        extends Differentiable {
-
-    require(!expressions.isEmpty)
+class DifferentiableProduct[+T <: Differentiable](val terms: Seq[T])
+        extends Differentiable
+        with Aggregate {
 
     def df(x: Variable) = {
         var sum: Differentiable = Zero
-        for (i <- 0 to expressions.length - 1) {
-            val d: Differentiable = expressions(i).df(x)
-            if (!d.isEmpty) sum = sum + Differentiable.product(expressions.updated(i, d))
+        for (i <- 0 to terms.length - 1) {
+            val d: Differentiable = terms(i).df(x)
+            if (!d.isEmpty) sum = sum + Differentiable.product(terms.updated(i, d))
         }
         sum
     }
 
-    private final val product = Product(expressions)
+    override def *(that: Expression) = that match {
+        case d: Differentiable => this * d
+        case _ => super.*(that)
+    }
 
-    def replace(variables: Map[Variable, Expression]) = product.replace(variables)
+    override def *(that: Differentiable) = that match {
+        case _ if that.isEmpty => Zero
+        case p: DifferentiableProduct[_] => Differentiable.product(terms ++: p.terms)
+        case _ => Differentiable.product(terms :+ that)
+    }
+
+    protected[this] def apply(expressions: Seq[Expression]) = Product(expressions)
+
+    private lazy val product = Product(terms)
 
     def toConstant = product.toConstant
 
-    def variables = product.variables
-
     def isEmpty = product.isEmpty
 
-    override def *(that: Expression) = product * that
-
-    override def *(that: Differentiable) = if (that.isEmpty) Zero else Differentiable.product(expressions :+ that)
-
-    override def toString = product.toString
+    override def toString = s"d$product"
 
 }
 

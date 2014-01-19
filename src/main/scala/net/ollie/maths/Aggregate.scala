@@ -27,7 +27,7 @@ object Series {
 
     def apply(left: Expression, right: Expression): Expression = if (left.isEmpty) right else if (right.isEmpty) left else new Series(Seq(left, right))
 
-    def apply(terms: Seq[Expression]): Expression = terms.filter(!_.isEmpty) match {
+    def apply(terms: Seq[Expression]): Expression = terms.filterNot(_.isEmpty) match {
         case Nil => Zero
         case expr :: Nil => expr
         case otherwise => new Series(otherwise)
@@ -35,8 +35,8 @@ object Series {
 
 }
 
-class Series(val terms: Seq[Expression])
-        extends Aggregate {
+class Series[+T <: Expression](val terms: Seq[T])
+extends Aggregate {
 
     protected[this] def apply(expressions: Seq[Expression]) = Series(expressions)
 
@@ -95,7 +95,7 @@ class Product[+T <: Expression](val terms: Seq[T])
         case _ => Product(terms :+ that)
     }
 
-    protected[this] def apply(expressions: Seq[Expression]): Expression = Product(expressions)
+    protected[this] def apply(expressions: Seq[Expression]) = Product(expressions)
 
     def isEmpty = terms.exists(_.isEmpty)
 

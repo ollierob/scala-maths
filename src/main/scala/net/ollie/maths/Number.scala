@@ -14,6 +14,8 @@ trait Number
 
     final def narrow: System = this
 
+    override def unary_-(): System = ??? //FIXME override Differentiable.unary_-()
+
     def abs: PositiveRealNumber
 
     def inverse: Number

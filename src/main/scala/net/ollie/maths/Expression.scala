@@ -14,7 +14,7 @@ trait Expression {
         case _ => this
     }
 
-    def replace(variable: Variable, expression: Expression): Expression = replace(Map((variable, expression)))
+    def replace(variable: Variable, expression: Expression): Expression = if (variable == expression) this else replace(Map((variable, expression)))
 
     def replace(variables: Map[Variable, Expression]): Expression
 
@@ -63,8 +63,8 @@ class NegatedExpression(val of: Expression) extends Expression {
 
     def isEmpty = of.isEmpty
 
-    override def toConstant = of.toConstant match {
-        case Some(n: Number) => Some(n)
+    override def toConstant: Option[Number] = of.toConstant match {
+        case Some(n) => Some(-n)
         case _ => None
     }
 

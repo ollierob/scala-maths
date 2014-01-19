@@ -15,7 +15,7 @@ class ChebyshevFirstKindTest extends FlatSpec with Matchers {
 
     {
 
-        val t2 = ChebyshevFirstKind(2, x)
+        val t2 = ChebyshevFirstKind(2)(x)
 
         it should "evaluate" in {
             t2.replace(x, One).toConstant shouldBe (Some(One))

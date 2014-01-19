@@ -44,11 +44,15 @@ trait NaturalNumber
 
 object NaturalNumber {
 
-    implicit def apply(int: Int): NaturalNumber = apply(BigInt(int))
+    implicit def apply(int: Int): NaturalNumber = int match {
+        case 0 => Zero
+        case 1 => One
+        case _ => new ExactNaturalNumber(int)
+    }
 
     implicit def convert(int: IntegerNumber): NaturalNumber = apply(int).right.get
 
-    def apply(int: BigInt): NaturalNumber = if (int == 0) Zero else new ExactNaturalNumber(int)
+    def apply(int: BigInt): NaturalNumber = if (int == 0) Zero else new ExactBigNaturalNumber(int)
 
     def apply(int: IntegerNumber): Either[IntegerNumber, NaturalNumber] = int.evaluate match {
         case p if p >= 0 => Right(apply(p))
@@ -81,6 +85,8 @@ object One
 
     override def ! = this
 
+    override def unary_-() = MinusOne
+
     override def decr = Zero
 
     override def ?*(that: Number): Option[Number] = Some(that)
@@ -91,8 +97,25 @@ object One
 
 }
 
-class ExactNaturalNumber(int: BigInt)
+object MinusOne
+        extends ExactInteger(-1) {
+
+    override def unary_-() = One
+
+    override def ^(that: IntegerNumber) = if (that.isEven) One else this
+
+}
+
+class ExactNaturalNumber(int: Int)
         extends ExactInteger(int)
+        with NaturalNumber {
+
+    require(int >= 0)
+
+}
+
+class ExactBigNaturalNumber(int: BigInt)
+        extends ExactBigInteger(int)
         with NaturalNumber {
 
     require(int >= 0)

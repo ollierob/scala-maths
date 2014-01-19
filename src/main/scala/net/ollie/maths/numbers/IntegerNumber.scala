@@ -77,7 +77,7 @@ object IntegerNumber {
         case _ => new ExactInteger(int)
     }
 
-    implicit def apply(int: BigInt): IntegerNumber = if (int == 0) Zero else new ExactInteger(int)
+    implicit def apply(int: BigInt): IntegerNumber = if (int == 0) Zero else new ExactBigInteger(int)
 
     def negate(i: IntegerNumber): IntegerNumber = new NegatedInteger(i)
 
@@ -94,13 +94,28 @@ object IntegerNumber {
 
 }
 
-class ExactInteger(val evaluate: BigInt)
+class ExactInteger(val int: Int)
+        extends AnyRef
+        with IntegerNumber {
+
+    private lazy val evaluated: BigInt = int
+
+    def evaluate = evaluated
+
+    override def unary_-(): IntegerNumber = new ExactInteger(-int)
+
+}
+
+class ExactBigInteger(val evaluate: BigInt)
         extends AnyRef
         with IntegerNumber
 
 object NegatedInteger {
 
-    def unapply(negated: NegatedInteger): Option[IntegerNumber] = Some(negated.i)
+    def unapply(negated: NegatedInteger): Option[Int] = negated.evaluate match {
+        case i if i.isValidInt => Some(i.toInt)
+        case _ => None
+    }
 
 }
 
@@ -110,7 +125,9 @@ class NegatedInteger(val i: IntegerNumber)
 
     override def unary_-() = i
 
-    def evaluate = -(i.evaluate)
+    private lazy val evaluated = -(i.evaluate)
+
+    def evaluate = evaluated
 
     override def isEmpty = super[NegatedRealNumber].isEmpty
 
