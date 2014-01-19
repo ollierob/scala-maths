@@ -2,7 +2,7 @@ package net.ollie.maths.numbers
 
 import scala.collection.mutable
 
-import net.ollie.maths.Number
+import net.ollie.maths.{IdentityArithmetic, Number}
 
 /**
  * Positive integer classes.
@@ -54,8 +54,10 @@ object NaturalNumber {
 
     def apply(int: BigInt): NaturalNumber = if (int == 0) Zero else new ExactBigNaturalNumber(int)
 
-    def apply(int: IntegerNumber): Either[IntegerNumber, NaturalNumber] = int.evaluate match {
-        case p if p >= 0 => Right(apply(p))
+    def apply(int: IntegerNumber): Either[IntegerNumber, NaturalNumber] = int match {
+        case Zero => Right(Zero)
+        case n: NaturalNumber => Right(n)
+        case _ if int.isStrictlyPositive => Right(NaturalNumber(int.evaluate))
         case _ => Left(int)
     }
 
@@ -75,6 +77,15 @@ object NaturalNumber {
                 factorials.put(n, f)
                 f
             }
+        }
+    }
+
+    implicit object IntegerToNaturalNumber
+            extends IdentityArithmetic[IntegerNumber, NaturalNumber] {
+
+        def convert(i: IntegerNumber) = NaturalNumber(i) match {
+            case r if r.isRight => Some(r.right.get)
+            case _ => None
         }
     }
 
@@ -142,7 +153,6 @@ object NaturalNumberFraction {
             case _ => new NaturalNumberFraction(n1, n2)
         }
     }
-
 
 }
 
