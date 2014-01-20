@@ -111,7 +111,6 @@ object TrapezoidalIntegrationMethod
                     totalArea += t
                 }
                 totalArea *= delta / (2 * N)
-                println(s"TOTAL AREA WITH $N = $totalArea ~= " + totalArea.approximatelyEvaluate(precision))
                 N += 1
                 totalArea.approximatelyEvaluate(precision)
             }
@@ -175,9 +174,9 @@ object SimpsonsIntegrationMethod
 
         }
 
-        def isEmpty: Boolean = ???
+        def isEmpty = false
 
-        def variable: Variable = ???
+        def variable = of.variable
 
     }
 
