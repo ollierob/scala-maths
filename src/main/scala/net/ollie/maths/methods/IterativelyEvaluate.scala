@@ -1,9 +1,5 @@
 package net.ollie.maths.methods
 
-
-import scala.math.BigDecimal.RoundingMode
-import scala.math.BigDecimal.RoundingMode.RoundingMode
-
 import net.ollie.maths.Evaluable
 import net.ollie.maths.numbers.{NaturalNumber, Precision, Zero}
 
@@ -12,13 +8,13 @@ import net.ollie.maths.numbers.{NaturalNumber, Precision, Zero}
  */
 object IterativelyEvaluate {
 
-    def apply(precision: Precision, f: IterativelyEvaluated)(implicit mode: RoundingMode): BigDecimal = {
+    def apply(precision: Precision, f: IterativelyEvaluated): BigDecimal = {
         var previous: BigInt = 0
         var current: BigDecimal = 0
         var continue = true
         var currentPrecision = precision
         var n: NaturalNumber = Zero
-        val iterator = f.evaluationIterator
+        val iterator = f.evaluationIterator(precision)
         var life = true
         while (continue) {
             current = iterator.next(n, currentPrecision)
@@ -47,15 +43,15 @@ object IterativelyEvaluate {
 trait IterativelyEvaluated
         extends Evaluable {
 
-    protected[this] def eval(precision: Precision) = IterativelyEvaluate(precision, this)(Precision.DEFAULT_ROUNDING)
+    protected[this] def eval(precision: Precision) = IterativelyEvaluate(precision, this)
 
-    def evaluationIterator: EvaluationIterator
+    def evaluationIterator(startPrecision: Precision): EvaluationIterator
 
 }
 
 trait EvaluationIterator {
 
-    def next(nth: NaturalNumber, precision: Precision)(implicit mode: RoundingMode): BigDecimal
+    def next(nth: NaturalNumber, precision: Precision): BigDecimal
 
 }
 
@@ -67,14 +63,14 @@ trait ApproximatelyEvaluated
 
     private lazy val it = new EvaluationIterator {
 
-        def next(nth: NaturalNumber, precision: Precision)(implicit mode: RoundingMode.RoundingMode) = approximatelyEvaluate(precision)
+        def next(nth: NaturalNumber, precision: Precision) = approximatelyEvaluate(precision)
 
     }
 
-    final def evaluationIterator = it
+    final def evaluationIterator(startPrecision: Precision) = it
 
-    override def approximatelyEvaluate(precision: Precision)(implicit mode: RoundingMode): BigDecimal = approx(precision)(mode)
+    override def approximatelyEvaluate(precision: Precision): BigDecimal = approx(precision)
 
-    protected[this] def approx(precision: Precision)(implicit mode: RoundingMode): BigDecimal
+    protected[this] def approx(precision: Precision): BigDecimal
 
 }

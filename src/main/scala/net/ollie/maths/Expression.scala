@@ -1,5 +1,6 @@
 package net.ollie.maths
 
+import net.ollie.maths.functions.numeric.Ln
 import net.ollie.maths.methods.{Product, Series}
 import net.ollie.maths.numbers.{IntegerNumber, Zero}
 
@@ -34,7 +35,7 @@ trait Expression
 
     def /(that: Expression): Expression = Expression.divide(this, that)
 
-    def ^(that: Expression): Expression = ??? //TODO
+    def ^(that: Expression): Expression = Expression.power(this, that)
 
     override def df(x: Variable): Expression
 
@@ -49,11 +50,16 @@ trait Expression
 
 object Expression {
 
-    def negate(expression: Expression) = new NegatedExpression(expression)
+    def negate(expr: Expression) = new NegatedExpression(expr)
 
     def divide(numerator: Expression, denominator: Expression): Expression = (numerator, denominator) match {
         case _ if numerator.isEmpty => Zero
         case _ => new ExpressionFraction(numerator, denominator)
+    }
+
+    def power(base: Expression, power: Expression) = (base, power) match {
+        case (Zero, _) => Zero
+        case _ => new ExpressionPower(base, power)
     }
 
     def series(e1: Expression, e2: Expression) = Series(e1, e2)
@@ -108,10 +114,33 @@ class ExpressionFraction(val numerator: Expression, val denominator: Expression)
 
 }
 
+class ExpressionPower(val base: Expression, val power: Expression)
+        extends Expression {
+
+    def replace(variables: Map[Variable, Expression]) = base.replace(variables) ^ power.replace(variables)
+
+    def toConstant = base.toConstant match {
+        case Some(n) => power.toConstant match {
+            case Some(m) => n ?^ m
+            case _ => None
+        }
+        case _ => None
+    }
+
+    def variables = base.variables ++: power.variables
+
+    def isEmpty = base.isEmpty
+
+    override def df(x: Variable) = (base ^ (power - 1)) * ((base.df(x) * power) + (base * Ln(base))) * power.df(x)
+
+}
+
 trait Nonvariate
         extends Expression {
 
     def variables = Set()
+
+    //def /(that: Univariate): Univariate = ???
 
 }
 
@@ -122,12 +151,11 @@ object Univariate {
         case _ => new UnivariateWrapper(expression)
     }
 
-    private class UnivariateWrapper(expression: Expression)
-            extends Univariate {
+    private class UnivariateWrapper(val expression: Expression)
+            extends AnyRef
+            with Univariate {
 
         require(expression.variables.size == 1)
-
-        final val x = expression.variables.iterator.next()
 
         def replace(variables: Map[Variable, Expression]) = expression.replace(variables)
 
@@ -135,7 +163,15 @@ object Univariate {
 
         def isEmpty = expression.isEmpty
 
-        def variable = x
+        def variable = expression.variables.iterator.next()
+
+        override def +(that: Expression) = expression + that
+
+        override def *(that: Expression) = expression * that
+
+        override def /(that: Expression) = expression / that
+
+        override def ^(that: Expression) = expression ^ that
 
         override def df(x: Variable) = expression.df(x)
 
@@ -151,6 +187,8 @@ trait Univariate
     def variables = Set(variable)
 
     def apply[N <: Number](n: N)(implicit conversion: IdentityArithmetic[Number, N#System]): N#System = conversion.convert(replace(variable, n).toConstant).get
+
+    def apply(u: Univariate): Univariate = replace(variable, u)
 
     def dx: Univariate = df(variable)
 

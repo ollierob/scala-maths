@@ -1,7 +1,5 @@
 package net.ollie.maths.numbers
 
-import scala.math.BigDecimal.RoundingMode.RoundingMode
-
 import net.ollie.maths.ExpressionFraction
 import net.ollie.maths.functions.numeric.GreatestCommonDivisor
 import net.ollie.maths.methods.ApproximatelyEvaluated
@@ -22,7 +20,7 @@ trait RationalNumber
 
     def isEmpty: Boolean = numerator.isEmpty
 
-    override def approximatelyEvaluate(precision: Precision)(implicit mode: RoundingMode): BigDecimal = numerator.evaluate(precision) / denominator.evaluate(precision)
+    override def approximatelyEvaluate(precision: Precision): BigDecimal = numerator.evaluate(precision) / denominator.evaluate(precision)
 
     override def ?*(that: RealNumber) = that match {
         case r: RationalNumber => Some(IntegerFraction(r.numerator * numerator, r.denominator * denominator))
@@ -80,6 +78,11 @@ class IntegerFraction private[numbers](override val numerator: IntegerNumber, ov
 
     override def squared = NaturalNumberFraction(numerator.squared, denominator.squared)
 
+    override def ?+(that: RealNumber) = that match {
+        case r: RationalNumber => Some(((this.numerator * r.denominator) + (r.numerator * this.denominator)) / (this.denominator * r.denominator))
+        case _ => None
+    }
+
     override def ?*(that: RealNumber) = numerator ?* that match {
         case Some(m: IntegerNumber) => Some(IntegerFraction(m, denominator))
         case _ => super.?*(that)
@@ -96,8 +99,8 @@ class IntegerFraction private[numbers](override val numerator: IntegerNumber, ov
 
     override def variables = super[RationalNumber].variables
 
-    override def approximatelyEvaluate(precision: Precision)(implicit mode: RoundingMode) = super[RationalNumber].approximatelyEvaluate(precision)(mode)
+    override def approximatelyEvaluate(precision: Precision) = super[RationalNumber].approximatelyEvaluate(precision)
 
-    protected[this] def approx(precision: Precision)(implicit mode: RoundingMode) = approximatelyEvaluate(precision)(mode)
+    protected[this] def approx(precision: Precision) = approximatelyEvaluate(precision)
 
 }

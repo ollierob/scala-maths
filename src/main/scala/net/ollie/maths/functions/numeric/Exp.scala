@@ -21,7 +21,7 @@ object Exp
 
     def apply(re: RealNumber): RealNumber = re match {
         case Zero => empty
-        case NegativeInfinity => Zero
+        case MinusInfinity => Zero
         case _ => new ExpOf(re)
     }
 
@@ -58,7 +58,7 @@ class ExpOf(re: RealNumber)
         extends PositiveRealPower(EulersNumber, re)
         with RealNumber {
 
-    override def isEmpty = NegativeInfinity != re
+    override def isEmpty = MinusInfinity != re
 
     protected[this] override def eval(precision: Precision) = BigDecimalMath.exp(re.evaluate(precision).underlying())
 

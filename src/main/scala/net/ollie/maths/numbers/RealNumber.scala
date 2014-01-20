@@ -2,10 +2,9 @@ package net.ollie.maths.numbers
 
 import scala.Some
 import scala.collection.mutable
-import scala.math.BigDecimal.RoundingMode.RoundingMode
 
 import net.ollie.maths._
-import net.ollie.maths.methods.{Series, Product, ApproximatelyEvaluated}
+import net.ollie.maths.methods.{ApproximatelyEvaluated, Product, Series}
 import net.ollie.maths.numbers.real.{MassiveNumber, PowerTower, RealPower}
 
 /**
@@ -68,7 +67,6 @@ trait RealNumber
         case One => Some(this)
         case _ => None
     }
-
 
     /**
      * Shortcut for this ?* that and that ?* this
@@ -225,7 +223,7 @@ class ExactRealNumber(val of: BigDecimal)
 
     def isEmpty = of == 0
 
-    override def approx(precision: Precision)(implicit mode: RoundingMode) = precision(of)
+    override def approx(precision: Precision) = precision(of)
 
     override def toString = of.toString
 
@@ -267,7 +265,7 @@ class InverseRealNumber(val of: RealNumber)
 
     override def toString = s"1/$of"
 
-    override def approx(precision: Precision)(implicit mode: RoundingMode) = 1 / of.evaluate(precision)
+    override def approx(precision: Precision) = 1 / of.evaluate(precision)
 
 }
 
@@ -306,9 +304,7 @@ class RealSeries private(val terms: Seq[RealNumber])
 
     override def toConstant = super[RealNumber].toConstant
 
-    override def approx(precision: Precision)(implicit mode: RoundingMode) = {
-        terms.map(_.approximatelyEvaluate(precision)).sum
-    }
+    override protected[this] def approx(precision: Precision) = terms.map(_.approximatelyEvaluate(precision)).sum
 
     override def ?+(that: RealNumber) = {
         if (that.isEmpty) this
@@ -369,9 +365,7 @@ class RealProduct private(val terms: Seq[RealNumber])
 
     private final def product = Product(terms)
 
-    override def approx(precision: Precision)(implicit mode: RoundingMode) = {
-        terms.map(_.approximatelyEvaluate(precision)).product
-    }
+    override protected[this] def approx(precision: Precision) = terms.map(_.approximatelyEvaluate(precision)).product
 
     override def ?*(that: RealNumber) = {
         if (that.isEmpty) Some(Zero)

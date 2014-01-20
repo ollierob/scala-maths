@@ -1,7 +1,5 @@
 package net.ollie.maths.functions.numeric
 
-import scala.math.BigDecimal.RoundingMode
-
 import net.ollie.maths.functions.UnivariateFunction
 import net.ollie.maths.methods.ApproximatelyEvaluated
 import net.ollie.maths.numbers.{PositiveRealNumber, Precision, RealNumber, Zero}
@@ -30,7 +28,7 @@ class PositiveSquareRoot(val of: PositiveRealNumber)
         with PositiveRealNumber
         with ApproximatelyEvaluated {
 
-    override def approx(precision: Precision)(implicit mode: RoundingMode.RoundingMode) = {
+    override def approx(precision: Precision) = {
         if (precision.value < 16) Math.sqrt(of.approximatelyEvaluate(precision).toDouble)
         else ???
     }

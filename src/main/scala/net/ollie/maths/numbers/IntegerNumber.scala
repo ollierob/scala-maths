@@ -1,7 +1,6 @@
 package net.ollie.maths.numbers
 
 import scala.Some
-import scala.math.BigDecimal.RoundingMode._
 
 /**
  * Integer classes.
@@ -16,7 +15,7 @@ trait IntegerNumber
 
     protected override def eval(precision: Precision): BigDecimal = precision(BigDecimal(evaluate))
 
-    override def approximatelyEvaluate(precision: Precision)(implicit mode: RoundingMode) = BigDecimal(evaluate)
+    override def approximatelyEvaluate(precision: Precision) = BigDecimal(evaluate)
 
     def evaluate: BigInt
 

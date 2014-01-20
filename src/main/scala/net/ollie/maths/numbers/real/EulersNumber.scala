@@ -1,10 +1,11 @@
 package net.ollie.maths.numbers.real
 
-import net.ollie.maths.numbers._
 import net.ollie.maths.methods.Series
+import net.ollie.maths.numbers._
 
 /**
  * Created by Ollie on 18/12/13.
+ * @see http://mathworld.wolfram.com/e.html
  */
 object EulersNumber
         extends PositiveRealNumber {

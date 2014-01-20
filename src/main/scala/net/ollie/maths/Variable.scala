@@ -13,11 +13,11 @@ object Variable {
 
 class Variable(val name: String)
         extends AnyRef
-        with Expression {
+        with Univariate {
+
+    def variable = this
 
     def isEmpty = false
-
-    def variables = Set(this)
 
     def toConstant = None
 

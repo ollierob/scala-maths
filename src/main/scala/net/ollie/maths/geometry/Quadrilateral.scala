@@ -21,7 +21,7 @@ object Quadrilateral {
 object Trapezoid {
 
     def area(side1: PositiveRealNumber, side2: PositiveRealNumber, h: PositiveRealNumber): PositiveRealNumber = {
-        (side1 + side2) / (2 * h)
+        h * (side1 + side2) / 2
     }
 
 }

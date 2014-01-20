@@ -2,7 +2,6 @@ package net.ollie.maths.numbers
 
 import net.ollie.maths.Empty
 
-
 /**
  * Basic implementations of infinity.
  * Created by Ollie on 05/01/14.
@@ -49,7 +48,7 @@ object Infinity
 
     override def abs = this
 
-    override def unary_-() = NegativeInfinity
+    override def unary_-() = MinusInfinity
 
     override def inverse = Zero
 
@@ -61,7 +60,7 @@ object Infinity
 
 }
 
-object NegativeInfinity
+object MinusInfinity
         extends RealInfinity {
 
     override def abs = Infinity

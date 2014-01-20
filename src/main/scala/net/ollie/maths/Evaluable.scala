@@ -42,7 +42,7 @@ trait Evaluable {
 
     protected[this] def eval(precision: Precision): BigDecimal
 
-    def approximatelyEvaluate(precision: Precision)(implicit mode: RoundingMode): BigDecimal = evaluate(precision)
+    def approximatelyEvaluate(precision: Precision): BigDecimal = evaluate(precision)
 
     protected[this] def cache(precision: Precision): Boolean = true //Evaluable.DO_CACHE.contains(precision)
 

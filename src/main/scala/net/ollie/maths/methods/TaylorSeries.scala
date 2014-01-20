@@ -2,7 +2,6 @@ package net.ollie.maths.methods
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
-import scala.math.BigDecimal.RoundingMode
 
 import net.ollie.maths._
 import net.ollie.maths.functions.ExpressionBuilder
@@ -40,19 +39,16 @@ private class TaylorSeries(f: Univariate, val x: RealNumber, a: RealNumber)(impl
 
     def isEmpty = false //TODO?
 
-    def evaluationIterator = new EvaluationIterator {
+    def evaluationIterator(startPrecision: Precision) = new EvaluationIterator {
 
         val xMinusA = x - a
         val terms: mutable.Buffer[RealNumber] = new ListBuffer[RealNumber]()
         var fNDash: Univariate = f
 
-        def next(n: NaturalNumber, precision: Precision)(implicit mode: RoundingMode.RoundingMode): BigDecimal = {
+        def next(n: NaturalNumber, precision: Precision): BigDecimal = {
             terms += nthTerm(n)
             fNDash = fNDash.dx
-            terms.map(_ match {
-                case approx: ApproximatelyEvaluated => approx.approximatelyEvaluate(precision)
-                case otherwise => otherwise.evaluate(precision)
-            }).sum
+            terms.map(_.approximatelyEvaluate(precision)).sum
         }
 
         def nthTerm(n: NaturalNumber): RealNumber = fNDash(a) * (xMinusA ^ n) / (n !)

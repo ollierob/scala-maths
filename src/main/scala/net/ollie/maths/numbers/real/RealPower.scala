@@ -1,8 +1,5 @@
 package net.ollie.maths.numbers.real
 
-
-import scala.math.BigDecimal.RoundingMode
-
 import net.ollie.maths.methods.ApproximatelyEvaluated
 import net.ollie.maths.numbers._
 
@@ -61,7 +58,7 @@ private class RealToIntegerPower(val base: RealNumber, val power: IntegerNumber)
         case _ => super.?*(that)
     }
 
-    override def approx(precision: Precision)(implicit mode: RoundingMode.RoundingMode) = {
+    override def approx(precision: Precision) = {
         if (precision.value < 16) Math.pow(base.evaluate(precision).toDouble, power.evaluate(precision).toDouble)
         else throw new UnsupportedOperationException(s"Precision $precision unsupported for evaluation of $this")
     }

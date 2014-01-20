@@ -1,7 +1,5 @@
 package net.ollie.maths.functions.angular
 
-import scala.math.BigDecimal.RoundingMode
-
 import net.ollie.maths.{Expression, Number}
 import net.ollie.maths.functions.{CompositeBuildable, ExpressionBuilder, UnivariateFunction}
 import net.ollie.maths.methods.ApproximatelyEvaluated
@@ -48,7 +46,7 @@ class RealTan(override val of: Angle)
 
     private lazy val f: RealNumber = Sin(of) / Cos(of)
 
-    override def approx(precision: Precision)(implicit mode: RoundingMode.RoundingMode) = f.approximatelyEvaluate(precision)
+    override def approx(precision: Precision) = f.approximatelyEvaluate(precision)
 
     override def toConstant = Some(this)
 

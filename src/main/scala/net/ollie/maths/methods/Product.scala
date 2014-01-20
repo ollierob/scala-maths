@@ -67,7 +67,7 @@ class Product[+T <: Expression](val terms: Seq[T])
         sum
     }
 
-    override def toString = terms.mkString("Π(", " * ", ")")
+    override def toString = terms.mkString("(", " * ", ")")
 
     override def hashCode = terms.hashCode
 

@@ -3,7 +3,6 @@ package net.ollie.maths.methods
 import scala.Some
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
-import scala.math.BigDecimal.RoundingMode
 
 import net.ollie.maths._
 import net.ollie.maths.numbers._
@@ -57,7 +56,7 @@ class Series[+T <: Expression](val terms: Seq[T])
 
     def isEmpty = terms.forall(_.isEmpty)
 
-    override def toString = terms.mkString("Σ(", " + ", ")")
+    override def toString = terms.mkString("(", " + ", ")")
 
     override def hashCode = terms.hashCode
 
@@ -94,11 +93,11 @@ class InfiniteSum(f: NaturalNumber => RealNumber, start: NaturalNumber)
 
     def isEmpty = false;
 
-    def evaluationIterator = new EvaluationIterator() {
+    def evaluationIterator(startPrecision: Precision) = new EvaluationIterator() {
 
         val terms: ListBuffer[RealNumber] = new ListBuffer[RealNumber]()
 
-        def next(nth: NaturalNumber, precision: Precision)(implicit mode: RoundingMode.RoundingMode) = {
+        def next(nth: NaturalNumber, precision: Precision) = {
             val n: NaturalNumber = nth + start
             terms += f(n)
             terms.map(_.approximatelyEvaluate(precision)).sum
