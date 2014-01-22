@@ -17,8 +17,8 @@ class ComplexConjugate(val of: ComplexNumber)
 
     override def toString = "(" + of + ")*"
 
-    def abs = of.abs
+    override def abs = of.abs
 
-    def arg = -of.arg
+    override def arg = -of.arg
 
 }

@@ -1,7 +1,7 @@
 package net.ollie.maths.functions.angular
 
 import net.ollie.maths.{Expression, Number}
-import net.ollie.maths.functions.{CompositeBuildable, ExpressionBuilder, UnivariateFunction}
+import net.ollie.maths.functions.{CompositeBuilder, ExpressionBuilder, UnivariateFunction}
 import net.ollie.maths.methods.ApproximatelyEvaluated
 import net.ollie.maths.numbers.{Precision, RealNumber, Zero}
 
@@ -27,7 +27,7 @@ object Tan
 }
 
 class Tan(val of: Expression)
-        extends CompositeBuildable {
+        extends CompositeBuilder {
 
     protected[this] def builder = Tan
 
@@ -62,4 +62,17 @@ object Cotan
     protected[this] def create(expr: Expression) = 1 / Tan(expr)
 
     protected[this] def empty = Tan.empty.inverse
+}
+
+object ArcTan
+        extends ExpressionBuilder {
+
+    def apply(n: Number): Number = ???
+
+    def apply(re: RealNumber): Angle = ???
+
+    protected[this] def create(expr: Expression): Expression = ???
+
+    protected[this] def empty: Expression = ???
+
 }

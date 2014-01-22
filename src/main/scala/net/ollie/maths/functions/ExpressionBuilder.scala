@@ -21,7 +21,7 @@ trait ExpressionBuilder {
 
 }
 
-trait CompositeBuildable
+trait CompositeBuilder
         extends Composite {
 
     protected[this] def builder: ExpressionBuilder

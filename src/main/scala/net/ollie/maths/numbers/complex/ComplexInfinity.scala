@@ -1,6 +1,6 @@
 package net.ollie.maths.numbers.complex
 
-import net.ollie.maths.Operation.?!?
+import net.ollie.maths.Operation.indeterminate
 import net.ollie.maths.numbers.{Infinite, UnsignedInfinity}
 
 /**
@@ -18,7 +18,7 @@ object ComplexInfinity
 
     override def abs = super[Infinite].abs
 
-    def arg = ?!?
+    override def arg = indeterminate
 
     override def isEmpty = super[Infinite].isEmpty
 

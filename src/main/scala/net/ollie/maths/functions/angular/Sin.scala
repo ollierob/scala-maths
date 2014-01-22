@@ -1,7 +1,7 @@
 package net.ollie.maths.functions.angular
 
 import net.ollie.maths._
-import net.ollie.maths.functions.{CompositeBuildable, ExpressionBuilder, UnivariateFunction}
+import net.ollie.maths.functions.{CompositeBuilder, ExpressionBuilder, UnivariateFunction}
 import net.ollie.maths.methods.MaclaurinSeries
 import net.ollie.maths.numbers.{Precision, RealNumber, Zero}
 
@@ -27,7 +27,7 @@ object Sin
 }
 
 private class Sin(val of: Expression)
-        extends CompositeBuildable {
+        extends CompositeBuilder {
 
     protected[this] def builder = Sin
 

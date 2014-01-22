@@ -3,7 +3,9 @@ package net.ollie.maths.numbers.complex
 import scala.Some
 
 import net.ollie.maths._
-import net.ollie.maths.functions.angular.Angle
+import net.ollie.maths.Operation.indeterminate
+import net.ollie.maths.functions.angular.{Angle, ArcTan}
+import net.ollie.maths.functions.numeric.PositiveSquareRoot
 import net.ollie.maths.numbers.{One, PositiveRealNumber, RealNumber, Zero}
 
 /**
@@ -26,9 +28,9 @@ trait ComplexNumber
 
     override def df(x: Variable) = ComplexZero
 
-    def abs: PositiveRealNumber
+    def abs: PositiveRealNumber = PositiveSquareRoot(re.squared + im.re.squared)
 
-    def arg: Angle
+    def arg: Angle = ArcTan(im.re / re)
 
     def isEmpty: Boolean = re.isEmpty && im.isEmpty
 
@@ -148,8 +150,8 @@ object ComplexZero
 
     override def toString = super[Empty].toString
 
-    def abs = Zero
+    override def abs = Zero
 
-    def arg = ???
+    override def arg = indeterminate
 
 }

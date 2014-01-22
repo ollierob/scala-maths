@@ -19,9 +19,9 @@ class ImaginaryNumber(val coefficient: RealNumber)
 
     override def unary_-(): ImaginaryNumber = -coefficient
 
-    def abs = coefficient.abs
+    override def abs = coefficient.abs
 
-    def arg = RightAngle * Signum(coefficient)
+    override def arg = RightAngle * Signum(coefficient)
 
     def +(that: ImaginaryNumber): ImaginaryNumber = coefficient + that.coefficient
 
