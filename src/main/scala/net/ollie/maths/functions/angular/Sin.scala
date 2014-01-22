@@ -1,9 +1,14 @@
 package net.ollie.maths.functions.angular
 
+import scala.Some
+
+import Angle._
 import net.ollie.maths._
 import net.ollie.maths.functions.{CompositeBuilder, ExpressionBuilder, UnivariateFunction}
-import net.ollie.maths.methods.MaclaurinSeries
-import net.ollie.maths.numbers.{Precision, RealNumber, Zero}
+import net.ollie.maths.methods.{MaclaurinSeries, Series}
+import net.ollie.maths.numbers._
+import net.ollie.maths.numbers.real.combinatorial.BinomialCoefficient
+import net.ollie.maths.functions.numeric.Signum
 
 /**
  * Created by Ollie on 02/01/14.
@@ -27,7 +32,8 @@ object Sin
 }
 
 private class Sin(val of: Expression)
-        extends CompositeBuilder {
+        extends CompositeBuilder
+        with Invertible {
 
     protected[this] def builder = Sin
 
@@ -37,15 +43,16 @@ private class Sin(val of: Expression)
 
     override def toString = s"Sin($of)"
 
+    def inverse = ArcSin(of)
+
 }
 
 /**
  * TODO periodicity
  * @param of
  */
-private class RealSin(override val of: Angle)
-        extends Sin(of)
-        with RealNumber {
+private class RealSin(val of: Angle)
+        extends RealNumber {
 
     private lazy val series = MaclaurinSeries(Sin, of.toRadians)
 
@@ -54,6 +61,10 @@ private class RealSin(override val of: Angle)
     override def variables = super[RealNumber].variables
 
     override def toConstant = Some(this)
+
+    def isEmpty = of.isEmpty
+
+    override def toString = s"Sin($of)"
 
 }
 
@@ -65,4 +76,54 @@ object Cosec
     protected[this] def create(expr: Expression) = 1 / Sin(expr)
 
     protected[this] def empty = Sin.empty.inverse
+
+}
+
+object ArcSin
+        extends ExpressionBuilder
+        with UnivariateFunction[RealNumber, Angle] {
+
+    def apply(n: Number) = n match {
+        case re: RealNumber => apply(re)
+        case _ => ???
+    }
+
+    def apply(d: BigDecimal): Angle = apply(RealNumber(d))
+
+    def apply(re: RealNumber): Angle = re match {
+        case _ if re.abs < One => new RealArcSin(re) radians
+        case _ if re.abs == One => Signum(re) * One radians
+        case _ => Operation.undefined
+    }
+
+    protected[this] def empty = Zero
+
+    protected[this] def create(expr: Expression) = new ArcSin(expr)
+
+}
+
+class ArcSin(val of: Expression)
+        extends CompositeBuilder {
+
+    def isEmpty = of.isEmpty
+
+    protected[this] def builder = ArcSin
+
+    protected[this] def derivative(z: Expression) = ??? //TODO sqrt
+
+    override def toString = s"ArcSin($of)"
+
+}
+
+class RealArcSin(val x: RealNumber)
+        extends RealNumber {
+
+    private lazy val series = Series(nth _, Zero)
+
+    private def nth(n: NaturalNumber): RealNumber = BinomialCoefficient(2 * n, n) * (x ^ (2 * n + 1)) / ((4 ^ n) * (2 * n + 1))
+
+    protected[this] def eval(precision: Precision) = series.evaluate(precision)
+
+    def isEmpty = x.isEmpty
+
 }

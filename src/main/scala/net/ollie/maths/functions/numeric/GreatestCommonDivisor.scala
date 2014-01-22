@@ -1,7 +1,7 @@
 package net.ollie.maths.functions.numeric
 
 import net.ollie.maths.functions.BivariateFunction
-import net.ollie.maths.numbers.{IntegerNumber, NaturalNumber, Zero}
+import net.ollie.maths.numbers.{One, IntegerNumber, NaturalNumber, Zero}
 
 /**
  * Created by Ollie on 04/01/14.
@@ -31,7 +31,10 @@ object GreatestCommonDivisor extends BivariateFunction[IntegerNumber, IntegerNum
 
         private implicit class Mod(val a: IntegerNumber) extends AnyRef {
 
-            def mod(b: NaturalNumber): NaturalNumber = a - (b * Floor(a.evaluate(ONE_DP) / b.evaluate(ONE_DP)))
+            def mod(b: NaturalNumber): NaturalNumber = {
+                if (b eq One) a
+                else NaturalNumber(a.evaluate % b.evaluate)
+            }
 
         }
 

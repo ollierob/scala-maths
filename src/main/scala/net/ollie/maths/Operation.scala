@@ -9,6 +9,8 @@ object Operation {
 
     def indeterminate = throw new IndeterminateOperationException
 
+    def illegal(message: String) = throw new IllegalOperationException(message)
+
     def ?!? = undefined
 
 }
@@ -16,3 +18,5 @@ object Operation {
 class UndefinedOperationException extends Exception
 
 class IndeterminateOperationException extends Exception
+
+class IllegalOperationException(message: String) extends Exception(message)

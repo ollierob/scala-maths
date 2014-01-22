@@ -2,7 +2,8 @@ package net.ollie.maths.numbers
 
 import scala.collection.mutable
 
-import net.ollie.maths.{IdentityArithmetic, Number}
+import net.ollie.maths.{Operation, IdentityArithmetic, Number}
+import net.ollie.maths.numbers.real.RealToIntegerPower
 
 /**
  * Positive integer classes.
@@ -38,6 +39,8 @@ trait NaturalNumber
 
     def /(that: NaturalNumber): PositiveRealNumber = NaturalNumber.divide(this, that)
 
+    def ^(that: NaturalNumber): NaturalNumber = NaturalNumber.power(this, that)
+
     def ! : NaturalNumber = NaturalNumber.factorial(this)
 
 }
@@ -50,7 +53,7 @@ object NaturalNumber {
         case _ => new ExactNaturalNumber(int)
     }
 
-    implicit def convert(int: IntegerNumber): NaturalNumber = apply(int).right.get
+    implicit def convert(int: IntegerNumber): NaturalNumber = apply(int).right.getOrElse(Operation.illegal(s"Int $int is negative!"))
 
     def apply(int: BigInt): NaturalNumber = if (int == 0) Zero else new ExactBigNaturalNumber(int)
 
@@ -64,6 +67,8 @@ object NaturalNumber {
     def divide(numerator: NaturalNumber, denominator: NaturalNumber): PositiveRealNumber = NaturalNumberFraction(numerator, denominator)
 
     def inverse(n: NaturalNumber): PositiveRealNumber = divide(One, n)
+
+    def power(base: NaturalNumber, power: NaturalNumber): NaturalNumber = new NaturalNumberPower(base, power)
 
     private val factorials: mutable.Map[NaturalNumber, NaturalNumber] = new mutable.HashMap()
 
@@ -163,5 +168,16 @@ class NaturalNumberFraction(override val numerator: NaturalNumber, override val 
     override def abs = this
 
     override def inverse = NaturalNumberFraction(denominator, numerator)
+
+}
+
+class NaturalNumberPower(override val base: NaturalNumber, override val power: NaturalNumber)
+        extends RealToIntegerPower(base, power)
+        with NaturalNumber {
+
+    def evaluate = power.toInt match {
+        case Some(i: Int) => base.evaluate.pow(i)
+        case _ => ??? //TODO
+    }
 
 }

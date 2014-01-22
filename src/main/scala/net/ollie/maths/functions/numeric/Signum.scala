@@ -2,7 +2,7 @@ package net.ollie.maths.functions.numeric
 
 import net.ollie.maths.Number
 import net.ollie.maths.functions.UnivariateFunction
-import net.ollie.maths.numbers.{IntegerNumber, RealNumber, Zero}
+import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.complex.ComplexNumber
 
 /**
@@ -20,7 +20,8 @@ object Signum
 
     def apply(re: RealNumber): IntegerNumber = re match {
         case Zero => Zero
-        case _ => ??? //TODO
+        case _ if re.isStrictlyPositive => One
+        case _ => MinusOne
     }
 
     def apply(z: ComplexNumber): IntegerNumber = ComplexSignum(z)

@@ -47,7 +47,7 @@ object RealPower {
 
 }
 
-private class RealToIntegerPower(val base: RealNumber, val power: IntegerNumber)
+class RealToIntegerPower(val base: RealNumber, val power: IntegerNumber)
         extends RealPower
         with ApproximatelyEvaluated {
 

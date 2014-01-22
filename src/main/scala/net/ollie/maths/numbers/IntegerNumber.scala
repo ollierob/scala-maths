@@ -70,8 +70,6 @@ trait IntegerNumber
 object IntegerNumber {
 
     implicit def apply(int: Int): IntegerNumber = int match {
-        case 0 => Zero
-        case 1 => One
         case _ if int > 0 => NaturalNumber(int)
         case _ => new ExactInteger(int)
     }
@@ -106,7 +104,7 @@ class ExactInteger(val int: Int)
         case _ => super.?+(that)
     }
 
-    override def unary_-(): IntegerNumber = new ExactInteger(-int)
+    override def unary_-(): IntegerNumber = IntegerNumber(-int)
 
 }
 
