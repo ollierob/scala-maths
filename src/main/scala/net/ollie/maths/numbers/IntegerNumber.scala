@@ -76,7 +76,7 @@ object IntegerNumber {
         case _ => new ExactInteger(int)
     }
 
-    implicit def apply(int: BigInt): IntegerNumber = if (int == 0) Zero else new ExactBigInteger(int)
+    implicit def apply(int: BigInt): IntegerNumber = if (int == 0) Zero else if (int > 0) NaturalNumber(int) else new ExactBigInteger(int)
 
     def negate(i: IntegerNumber): IntegerNumber = new NegatedInteger(i)
 
@@ -100,6 +100,11 @@ class ExactInteger(val int: Int)
     private lazy val evaluated: BigInt = int
 
     def evaluate = evaluated
+
+    override def ?+(that: RealNumber) = that match {
+        case exact: ExactRealNumber => Some(RealNumber(BigDecimal(evaluate) + exact.of))
+        case _ => super.?+(that)
+    }
 
     override def unary_-(): IntegerNumber = new ExactInteger(-int)
 

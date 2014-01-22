@@ -4,40 +4,20 @@ import net.ollie.maths.{Expression, Univariate, Variable}
 import net.ollie.maths.numbers._
 
 /**
+ * Real integrals.
  * Created by Ollie on 19/01/14.
  */
 object Integral {
 
-    val DEFAULT_INTEGRATION_METHOD: NumericalIntegrationMethod = SimpsonsIntegrationMethod
-
-    def apply(fn: Variable => Univariate, from: RealNumber, to: RealNumber)(implicit method: NumericalIntegrationMethod = DEFAULT_INTEGRATION_METHOD): RealNumber = {
-        integrate(build(fn), from, to)
+    def apply(fn: Variable => Univariate, from: RealNumber, to: RealNumber)(implicit method: NumericalIntegrationMethod): RealNumber = {
+        if (from >= to) Zero
+        else method(fn, from, to)
     }
 
-    def integrate(expression: Univariate, from: RealNumber, to: RealNumber)(implicit method: NumericalIntegrationMethod = DEFAULT_INTEGRATION_METHOD): RealNumber = (from, to) match {
-        case (MinusInfinity, Infinity) => ???
-        case (_, Infinity) => toInfinity(expression, from)
-        case (MinusInfinity, _) => ???
-        case _ => proper(expression, from, to)
+    def apply(expression: Univariate, from: RealNumber, to: RealNumber)(implicit method: NumericalIntegrationMethod): RealNumber = {
+        if (from >= to) Zero
+        else method(expression, from, to)
     }
-
-    def toInfinity(ex: Univariate, from: RealNumber)(implicit method: NumericalIntegrationMethod = DEFAULT_INTEGRATION_METHOD): RealNumber = {
-        require(isProper(from))
-        new UpperInfiniteIntegral(ex, from)
-    }
-
-    def proper(ex: Univariate, from: RealNumber, to: RealNumber)(implicit method: NumericalIntegrationMethod = DEFAULT_INTEGRATION_METHOD): RealNumber = {
-        require(isProper(from) && isProper(to))
-        if (to <= from) Zero
-        else method(ex, from, to)
-    }
-
-    private implicit def build(fn: Variable => Univariate): Univariate = {
-        val x = new Variable("$x")
-        fn(x)
-    }
-
-    private def isProper(re: RealNumber): Boolean = !re.isInstanceOf[Infinite]
 
 }
 
@@ -56,41 +36,44 @@ trait DefiniteIntegral
         extends Integral
         with RealNumber {
 
+    def of: Univariate
+
+    def variable = of.variable
+
     def from: RealNumber
 
     def to: RealNumber
+
+    def isEmpty = false //this.evaluate(SinglePrecision) == 0
 
     override def toString = s"∫($from:$to)($of) d($variable)"
 
 }
 
-private class UpperInfiniteIntegral(val of: Univariate, val from: RealNumber)(implicit method: NumericalIntegrationMethod)
-        extends DefiniteIntegral {
-
-    def isEmpty = of.isEmpty
-
-    def variable = of.variable
-
-    def to = Infinity
-
-    private val t = Variable("$t")
-
-    private lazy val transformed = Integral.proper(of(1 / t) / (t ^ 2), Zero, 1 / from)
-
-    protected[this] def eval(precision: Precision) = transformed.evaluate(precision)
-
-}
-
 trait NumericalIntegrationMethod {
 
-    def apply(of: Univariate, from: RealNumber, to: RealNumber): DefiniteIntegral
+    def apply(of: Univariate, from: RealNumber, to: RealNumber): DefiniteIntegral = (from, to) match {
+        case (_, Infinity) => toInfinity(of, from)
+        case _ => finite(of, from, to)
+    }
+
+    def apply(fn: Variable => Univariate, from: RealNumber, to: RealNumber): DefiniteIntegral = {
+        val t = Variable("$t")
+        apply(fn(t), from, to)
+    }
+
+    def finite(of: Univariate, from: RealNumber, to: RealNumber): DefiniteIntegral
+
+    def toInfinity(of: Univariate, from: RealNumber): DefiniteIntegral = ??? //new InfiniteIntegral(of, from)(this)
+
+    def betweenInfinities(of: Univariate): DefiniteIntegral = ???
 
 }
 
 object TrapezoidalIntegrationMethod
         extends NumericalIntegrationMethod {
 
-    def apply(of: Univariate, from: RealNumber, to: RealNumber): DefiniteIntegral = new ProperIntegral(of, from, to)
+    def finite(of: Univariate, from: RealNumber, to: RealNumber): DefiniteIntegral = new ProperIntegral(of, from, to)
 
     private class ProperIntegral(val of: Univariate, val from: RealNumber, val to: RealNumber)
             extends DefiniteIntegral
@@ -100,7 +83,7 @@ object TrapezoidalIntegrationMethod
 
         def evaluationIterator(startPrecision: Precision) = new EvaluationIterator() {
 
-            var N: Int = Math.max(1, startPrecision.value)
+            var N: Int = Math.max(4, startPrecision.value)
 
             def next(nth: NaturalNumber, precision: Precision): BigDecimal = {
                 val h = delta / N
@@ -125,10 +108,6 @@ object TrapezoidalIntegrationMethod
 
         }
 
-        def isEmpty = of.isEmpty
-
-        def variable = of.variable
-
     }
 
 }
@@ -139,19 +118,22 @@ object TrapezoidalIntegrationMethod
 object SimpsonsIntegrationMethod
         extends NumericalIntegrationMethod {
 
-    def apply(of: Univariate, from: RealNumber, to: RealNumber): DefiniteIntegral = new ProperIntegral(of, from, to)
+    def finite(of: Univariate, from: RealNumber, to: RealNumber): DefiniteIntegral = new ProperIntegral(of, from, to)
 
     private class ProperIntegral(val of: Univariate, val from: RealNumber, val to: RealNumber)
             extends DefiniteIntegral
             with IterativelyEvaluated {
 
+        println(s"Simpsons method of $of over $from:$to (" + of.getClass + ")")
+
+        val interval = to - from
+
         def evaluationIterator(startPrecision: Precision) = new EvaluationIterator() {
 
-            val delta = to - from
-            var n: Int = even(Math.max(2, startPrecision.value))
+            var n: Int = even(Math.max(4, startPrecision.value))
 
             def next(nth: NaturalNumber, precision: Precision) = {
-                val h = delta / n
+                val h = interval / n
                 val terms = split(h)
                 var totalArea: RealNumber = of(terms(0)) + of(terms.last)
                 for (i <- 1 to n - 1) {
@@ -159,7 +141,9 @@ object SimpsonsIntegrationMethod
                 }
                 totalArea *= h / 3
                 n += 2
-                totalArea.approximatelyEvaluate(precision)
+                val evaluated = totalArea.approximatelyEvaluate(precision)
+                println(s"Total area with $n segments = $evaluated")
+                evaluated
             }
 
             private def split(h: RealNumber): IndexedSeq[RealNumber] = {
@@ -174,9 +158,21 @@ object SimpsonsIntegrationMethod
 
         }
 
-        def isEmpty = false
+    }
 
-        def variable = of.variable
+}
+
+class InfiniteIntegral(val of: Univariate, val from: RealNumber)(implicit method: NumericalIntegrationMethod)
+        extends DefiniteIntegral
+        with IterativelyEvaluated {
+
+    final def to = Infinity
+
+    protected[this] def upperLimit(n: NaturalNumber): RealNumber = 10 * (n.succ)
+
+    def evaluationIterator(startPrecision: Precision) = new EvaluationIterator() {
+
+        def next(nth: NaturalNumber, precision: Precision) = Integral(of, from, upperLimit(nth))(method).evaluate(precision)
 
     }
 

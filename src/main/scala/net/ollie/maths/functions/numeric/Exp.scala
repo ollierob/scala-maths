@@ -58,7 +58,7 @@ class ExpOf(re: RealNumber)
         extends PositiveRealPower(EulersNumber, re)
         with RealNumber {
 
-    override def isEmpty = MinusInfinity != re
+    override def isEmpty = MinusInfinity == re
 
     protected[this] override def eval(precision: Precision) = BigDecimalMath.exp(re.evaluate(precision).underlying())
 

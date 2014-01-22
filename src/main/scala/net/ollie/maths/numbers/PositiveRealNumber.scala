@@ -1,6 +1,5 @@
 package net.ollie.maths.numbers
 
-
 import net.ollie.maths.numbers.real.RealPower
 import org.nevec.rjm.BigDecimalMath
 

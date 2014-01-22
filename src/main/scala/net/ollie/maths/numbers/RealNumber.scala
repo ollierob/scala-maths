@@ -97,6 +97,7 @@ trait RealNumber
 
     def ?^(that: Number): Option[Number] = that match {
         case int: IntegerNumber => Some(this ^ int)
+        case re: RealNumber if this.isStrictlyPositive => Some(this.abs ^ re)
         case _ => None
     }
 
@@ -115,7 +116,7 @@ trait RealNumber
         else this.tryCompareTo(that) match {
             case Some(i) => i
             case _ => that.tryCompareTo(this) match {
-                case Some(j) => j
+                case Some(j) => -j
                 case _ => this.evaluate(SinglePrecision).compare(that.evaluate(SinglePrecision))
             }
         }
@@ -167,6 +168,8 @@ object RealNumber {
             case re: RealNumber => Some(re)
             case _ => None
         }
+
+        override def toString = "Number -> Real"
 
     }
 
@@ -329,7 +332,7 @@ class RealSeries private(val terms: Seq[RealNumber])
             }
             case _ => seq :+ next
         })
-        if (!simplified) current +=: series
+        if (!simplified) series += current;
         series.toSeq
     }
 

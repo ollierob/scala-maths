@@ -96,7 +96,7 @@ class ExpressionFraction(val numerator: Expression, val denominator: Expression)
 
     def replace(variables: Map[Variable, Expression]) = numerator.replace(variables) / denominator.replace(variables)
 
-    def toConstant = numerator.toConstant match {
+    def toConstant: Option[Number] = numerator.toConstant match {
         case Some(n: Number) => denominator.toConstant match {
             case Some(d: Number) => n ?* d.inverse
             case _ => None
@@ -132,6 +132,8 @@ class ExpressionPower(val base: Expression, val power: Expression)
     def isEmpty = base.isEmpty
 
     override def df(x: Variable) = (base ^ (power - 1)) * ((base.df(x) * power) + (base * Ln(base))) * power.df(x)
+
+    override def toString = s"($base ^ $power)"
 
 }
 
@@ -175,6 +177,8 @@ object Univariate {
 
         override def df(x: Variable) = expression.df(x)
 
+        override def toString = expression.toString
+
     }
 
 }
@@ -186,7 +190,10 @@ trait Univariate
 
     def variables = Set(variable)
 
-    def apply[N <: Number](n: N)(implicit conversion: IdentityArithmetic[Number, N#System]): N#System = conversion.convert(replace(variable, n).toConstant).get
+    def apply[N <: Number](n: N)(implicit conversion: IdentityArithmetic[Number, N#System]): N#System = {
+        val replaced: Option[Number] = replace(variable, n).toConstant
+        conversion.convert(replaced).get
+    }
 
     def apply(u: Univariate): Univariate = replace(variable, u)
 

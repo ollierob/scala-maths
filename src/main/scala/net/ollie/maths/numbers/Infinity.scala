@@ -52,7 +52,10 @@ object Infinity
 
     override def inverse = Zero
 
-    override def compareTo(that: RealNumber) = 1
+    override def compareTo(that: RealNumber) = that match {
+        case Infinity => 0
+        case _ => 1
+    }
 
     override def isStrictlyPositive = true
 
@@ -67,7 +70,10 @@ object MinusInfinity
 
     override def unary_-() = Infinity
 
-    override def compareTo(that: RealNumber) = -1
+    override def compareTo(that: RealNumber) = that match {
+        case MinusInfinity => 0
+        case _ => -1
+    }
 
     override def isStrictlyPositive = false
 

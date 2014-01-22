@@ -32,4 +32,11 @@ class InfinityTest extends FlatSpec with Matchers {
         Infinity * -Infinity shouldBe (-Infinity)
     }
 
+    it should "compare to finite numbers" in {
+        Infinity > 0 shouldBe true
+        Infinity >= 0 shouldBe true
+        0 < Infinity shouldBe true
+        0 <= Infinity shouldBe true
+    }
+
 }
