@@ -4,7 +4,7 @@ import net.ollie.maths.{Expression, Variable}
 import net.ollie.maths.functions.numeric.Floor
 import net.ollie.maths.methods.Series
 import net.ollie.maths.numbers.{IntegerNumber, NaturalNumber, One, Zero}
-import net.ollie.maths.numbers.real.BinomialCoefficient
+import net.ollie.maths.numbers.real.combinatorial.BinomialCoefficient
 
 /**
  * Created by Ollie on 18/01/14.
@@ -112,7 +112,7 @@ private class UAny(override val n: NaturalNumber, val of: Expression)
 
     private val nth = new ((IntegerNumber) => Expression) {
 
-        def apply(r: IntegerNumber) = ((-One) ^ r) * BinomialCoefficient(n - r, r) * ((2 * of) ^ (n - (2 * r)))
+        def apply(r: IntegerNumber): Expression = ((-One) ^ r) * BinomialCoefficient(n - r, r) * ((2 * of) ^ (n - (2 * r)))
 
         override def toString = s"(-1)^r (n-r choose r) (2x)^(n-2r)"
 

@@ -25,7 +25,7 @@ object Series {
         else new FiniteSum(f, start, end)
     }
 
-    def apply(f: NaturalNumber => RealNumber, start: NaturalNumber): RealNumber = new InfiniteSum(f, start)
+    def apply(f: (NaturalNumber) => RealNumber, start: NaturalNumber): RealNumber = new InfiniteSum(f, start)
 
 }
 
@@ -98,7 +98,7 @@ class InfiniteSum(f: NaturalNumber => RealNumber, start: NaturalNumber)
         val terms: ListBuffer[RealNumber] = new ListBuffer[RealNumber]()
 
         def next(nth: NaturalNumber, precision: Precision) = {
-            val n: NaturalNumber = nth + start
+            val n: IntegerNumber = nth + start
             terms += f(n)
             terms.map(_.approximatelyEvaluate(precision)).sum
         }

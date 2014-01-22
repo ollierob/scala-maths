@@ -17,12 +17,16 @@ object Gamma
 
     def apply(n: Number): Number = n match {
         case Zero => empty
-        case n: NaturalNumber => (n.decr) !
         case re: RealNumber => apply(re)
         case _ => ???
     }
 
-    def apply(re: RealNumber) = new RealGamma(re)
+    def apply(re: RealNumber) = re match {
+        case n: NaturalNumber => apply(n)
+        case _ => new RealGamma(re)
+    }
+
+    def apply(n: NaturalNumber) = (n.decr) !
 
     protected[this] def create(expr: Expression) = new Gamma(expr)
 

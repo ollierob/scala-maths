@@ -13,7 +13,10 @@ object Polygamma {
 
     def apply(order: NaturalNumber, n: Number): Number = ???
 
-    def apply(order: NaturalNumber, expression: Expression) = new Polygamma(order, expression)
+    def apply(order: NaturalNumber, expression: Expression) = order match {
+        case Zero => Digamma(expression)
+        case _ => new Polygamma(order, expression)
+    }
 
 }
 
@@ -24,7 +27,7 @@ class Polygamma(val order: NaturalNumber, val of: Expression)
 
     protected[this] def apply(expr: Expression) = Polygamma(order, expr)
 
-    def isEmpty = ???
+    def isEmpty = false //TODO
 
     override def toString = s"Polygamma($order)($of)"
 
@@ -37,8 +40,15 @@ object Digamma
 
     def apply(n: Number): Number = Polygamma(Zero, n)
 
-    protected[this] def create(expr: Expression) = Polygamma(Zero, expr)
+    protected[this] def create(expr: Expression) = new Digamma(expr)
 
     protected[this] def empty = ComplexInfinity
+
+}
+
+class Digamma(override val of: Expression)
+        extends Polygamma(0, of) {
+
+    override def toString = s"Digamma($of)"
 
 }

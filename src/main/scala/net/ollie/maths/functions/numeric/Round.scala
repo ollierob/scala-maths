@@ -1,6 +1,5 @@
 package net.ollie.maths.functions.numeric
 
-
 import scala.math.BigDecimal.RoundingMode
 import scala.math.BigDecimal.RoundingMode.RoundingMode
 

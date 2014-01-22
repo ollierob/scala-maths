@@ -1,4 +1,4 @@
-package net.ollie.maths.numbers.real
+package net.ollie.maths.numbers.real.combinatorial
 
 import net.ollie.maths.{Empty, Variable}
 import net.ollie.maths.functions.numeric.{Floor, GreatestCommonDivisor}
@@ -23,12 +23,19 @@ trait BinomialCoefficient
 
 object BinomialCoefficient {
 
+    def apply(i: Int, j: Int): BinomialCoefficient = apply(NaturalNumber(i), NaturalNumber(j))
+
+    def apply(n: IntegerNumber, k: IntegerNumber): RealNumber = n match {
+        case m: NaturalNumber => apply(m, k)
+        case _ => (MinusOne ^ k) * Multiset(n.abs, k)
+    }
+
     def apply(n: NaturalNumber, k: NaturalNumber): BinomialCoefficient = {
         if (n >= k) new BinomialAny(n, k)
         else new BinomialZero(n, k)
     }
 
-    def central(n: NaturalNumber) = apply(n, Floor(n / 2))
+    def central(n: IntegerNumber): RealNumber = apply(n, Floor(n / 2))
 
     /**
      * Coefficient is good if LeastPrimeFactor(n choose k) > k

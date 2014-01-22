@@ -1,8 +1,10 @@
 package net.ollie.maths.methods
 
-import net.ollie.maths._
-import net.ollie.maths.numbers.{IntegerNumber, One, Zero}
 import scala.Some
+
+import net.ollie.maths._
+import net.ollie.maths.numbers._
+import scala.collection.mutable.ArrayBuffer
 
 /**
  * Created by Ollie on 19/01/14.
@@ -28,6 +30,8 @@ object Product {
     def apply[N <: Number](f: (IntegerNumber) => N, min: IntegerNumber, max: IntegerNumber)(implicit multiplication: MultiplicationArithmetic[N#System, N#System, N#System]): N#System = {
         apply(f, min.toInt.get to max.toInt.get)(multiplication)
     }
+
+    def apply(fn: (NaturalNumber) => RealNumber, start: NaturalNumber): RealNumber = new InfiniteRealProduct(fn, start)
 
 }
 
@@ -70,5 +74,25 @@ class Product[+T <: Expression](val terms: Seq[T])
     override def toString = terms.mkString("(", " * ", ")")
 
     override def hashCode = terms.hashCode
+
+}
+
+class InfiniteRealProduct(f: (NaturalNumber) => RealNumber, start: NaturalNumber)
+        extends RealNumber
+        with IterativelyEvaluated {
+
+    def evaluationIterator(startPrecision: Precision) = new EvaluationIterator() {
+
+        private val terms: ArrayBuffer[RealNumber] = new ArrayBuffer[RealNumber]()
+
+        def next(nth: NaturalNumber, precision: Precision) = {
+            val n: NaturalNumber = nth + start
+            terms += f(n)
+            terms.map(_.approximatelyEvaluate(precision)).product
+        }
+
+    }
+
+    def isEmpty = f(0).isEmpty || f(1).isEmpty //TODO more terms!
 
 }
