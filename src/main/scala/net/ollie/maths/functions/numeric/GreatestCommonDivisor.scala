@@ -32,7 +32,7 @@ object GreatestCommonDivisor extends BivariateFunction[IntegerNumber, IntegerNum
         private implicit class Mod(val a: IntegerNumber) extends AnyRef {
 
             def mod(b: NaturalNumber): NaturalNumber = {
-                if (b eq One) a
+                if (One == b) Zero
                 else NaturalNumber(a.evaluate % b.evaluate)
             }
 

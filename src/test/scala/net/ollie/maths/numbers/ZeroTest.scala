@@ -22,4 +22,11 @@ class ZeroTest extends FlatSpec with Matchers {
         i + 1 shouldBe i
     }
 
+    "N(0)" should "equal 0" in {
+        val i: Int = 0
+        NaturalNumber(i) shouldBe Zero
+        val i2: BigInt = 0
+        NaturalNumber(i2) shouldBe Zero
+    }
+
 }

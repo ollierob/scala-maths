@@ -47,6 +47,9 @@ trait NaturalNumber
 
 object NaturalNumber {
 
+    private val ZERO = BigInt(0)
+    private val ONE = BigInt(1)
+
     implicit def apply(int: Int): NaturalNumber = int match {
         case 0 => Zero
         case 1 => One
@@ -55,11 +58,7 @@ object NaturalNumber {
 
     implicit def convert(int: IntegerNumber): NaturalNumber = apply(int).right.getOrElse(Operation.illegal(s"Int $int is negative!"))
 
-    def apply(int: BigInt): NaturalNumber = int match {
-        case 0 => Zero
-        case 1 => One
-        case _ => new ExactBigNaturalNumber(int)
-    }
+    def apply(int: BigInt): NaturalNumber = if (int == ZERO) Zero else if (int == ONE) One else new ExactBigNaturalNumber(int);
 
     def apply(int: IntegerNumber): Either[IntegerNumber, NaturalNumber] = int match {
         case Zero => Right(Zero)

@@ -69,17 +69,15 @@ trait IntegerNumber
 
 object IntegerNumber {
 
+    private val MINUS_ONE = BigInt(-1)
+
     implicit def apply(int: Int): IntegerNumber = int match {
         case _ if int > 0 => NaturalNumber(int)
         case -1 => MinusOne
         case _ => new ExactInteger(int)
     }
 
-    implicit def apply(int: BigInt): IntegerNumber = int match {
-        case _ if int > 0 => NaturalNumber(int)
-        case -1 => MinusOne
-        case _ => new ExactBigInteger(int)
-    }
+    implicit def apply(int: BigInt): IntegerNumber = if (int > 0) NaturalNumber(int) else if (int == MINUS_ONE) MinusOne else new ExactBigInteger(int)
 
     def negate(i: IntegerNumber): IntegerNumber = new NegatedInteger(i)
 

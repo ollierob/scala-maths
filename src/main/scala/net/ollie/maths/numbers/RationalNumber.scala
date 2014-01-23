@@ -73,8 +73,6 @@ class IntegerFraction private[numbers](override val numerator: IntegerNumber, ov
         with RationalNumber
         with ApproximatelyEvaluated {
 
-    println(s"INTEGER FRACTION $numerator / $denominator")
-
     require(!denominator.isEmpty)
 
     override def unary_-() = IntegerFraction(-numerator, denominator)
