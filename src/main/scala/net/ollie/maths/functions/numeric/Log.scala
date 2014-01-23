@@ -51,7 +51,7 @@ object Ln
 
     def apply(n: Number): Number = n match {
         case Zero => empty
-        case p: PositiveRealNumber => apply(p)
+        case re: RealNumber if re.isStrictlyPositive => apply(re.abs)
         case _ => ???
     }
 

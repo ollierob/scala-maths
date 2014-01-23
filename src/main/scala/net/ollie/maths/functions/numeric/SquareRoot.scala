@@ -11,7 +11,6 @@ object PositiveSquareRoot
         extends UnivariateFunction[PositiveRealNumber, PositiveRealNumber] {
 
     def apply(f: RealNumber): Option[PositiveRealNumber] = f match {
-        case p: PositiveRealNumber => Some(apply(p))
         case Zero => Some(Zero)
         case _ if f.isStrictlyPositive => Some(apply(f.abs))
         case _ => None
