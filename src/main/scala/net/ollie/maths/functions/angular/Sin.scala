@@ -5,10 +5,10 @@ import scala.Some
 import Angle._
 import net.ollie.maths._
 import net.ollie.maths.functions.{CompositeBuilder, ExpressionBuilder, UnivariateFunction}
+import net.ollie.maths.functions.numeric.Signum
 import net.ollie.maths.methods.{MaclaurinSeries, Series}
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.real.combinatorial.BinomialCoefficient
-import net.ollie.maths.functions.numeric.Signum
 
 /**
  * Created by Ollie on 02/01/14.
@@ -21,6 +21,11 @@ object Sin
         case Zero => empty
         case re: RealNumber => Sin(Radians(re))
         case _ => ???
+    }
+
+    def apply(re: RealNumber): RealNumber = re match {
+        case angle: Angle => apply(angle)
+        case _ => apply(re radians)
     }
 
     def apply(angle: Angle) = if (angle.isEmpty) empty else new RealSin(angle)

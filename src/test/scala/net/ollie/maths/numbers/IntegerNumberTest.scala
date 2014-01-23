@@ -43,8 +43,12 @@ class IntegerNumberTest extends FlatSpec with Matchers {
 
     behavior of "-2"
 
+    it should "not be positive" in {
+        IntegerNumber(-2).isStrictlyPositive shouldBe false
+    }
+
     it should "be even" in {
-        IntegerNumber(-2).isEven shouldBe (true)
+        IntegerNumber(-2).isEven shouldBe true
     }
 
 }
