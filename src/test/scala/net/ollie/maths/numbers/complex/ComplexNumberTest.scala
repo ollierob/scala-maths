@@ -4,6 +4,7 @@ import org.junit.runner.RunWith
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.junit.JUnitRunner
 import net.ollie.maths.numbers.IntegerNumber
+import net.ollie.maths.functions.numeric.PositiveSquareRoot
 
 /**
  * Created by Ollie on 14/01/14.
@@ -16,6 +17,22 @@ class ComplexNumberTest extends FlatSpec with Matchers {
     {
 
         val z = ComplexNumber(2, 3)
+
+        it should "have re() = 2" in {
+            z.re shouldBe IntegerNumber(2)
+        }
+
+        it should "have im().re() = 3" in {
+            z.im.coefficient shouldBe IntegerNumber(3)
+        }
+
+        it should "not be empty" in {
+            z.isEmpty shouldBe false
+        }
+
+        it should "abs" in {
+            z.abs shouldBe PositiveSquareRoot(13)
+        }
 
         it should "invert" in {
             z.inverse shouldBe (ComplexNumber(IntegerNumber(2) / IntegerNumber(13), IntegerNumber(-3) / IntegerNumber(13)))

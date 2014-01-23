@@ -11,6 +11,10 @@ import net.ollie.maths.numbers.{One, RealNumber, Zero}
 class ImaginaryNumber(val coefficient: RealNumber)
         extends ComplexNumber {
 
+    /**
+     * This is not the coefficient!
+     * @return
+     */
     def re: RealNumber with Empty = Zero
 
     def im = this

@@ -41,6 +41,6 @@ class PositiveSquareRoot(val of: PositiveRealNumber)
         case _ => super.?*(that)
     }
 
-    override def toString = "+√(" + of + ")"
+    override def toString = s"+√($of)"
 
 }

@@ -28,7 +28,7 @@ trait ComplexNumber
 
     override def df(x: Variable) = ComplexZero
 
-    def abs: PositiveRealNumber = PositiveSquareRoot(re.squared + im.re.squared)
+    def abs: PositiveRealNumber = PositiveSquareRoot(re.squared + im.coefficient.squared)
 
     def arg: Angle = ArcTan(im.re / re)
 
