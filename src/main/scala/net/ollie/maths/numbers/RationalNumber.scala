@@ -54,6 +54,7 @@ object IntegerFraction {
         case (_, Zero) => Some(numerator * denominator.inverse)
         case (Zero, _) => Some(Zero)
         case (_, One) => Some(numerator)
+        case (_, MinusOne) => Some(-numerator)
         case _ if numerator == denominator => Some(One)
         case _ => None
     }
@@ -71,6 +72,8 @@ class IntegerFraction private[numbers](override val numerator: IntegerNumber, ov
         extends ExpressionFraction(numerator, denominator)
         with RationalNumber
         with ApproximatelyEvaluated {
+
+    println(s"INTEGER FRACTION $numerator / $denominator")
 
     require(!denominator.isEmpty)
 

@@ -21,7 +21,7 @@ trait RealInfinity
         extends Infinite
         with RealNumber {
 
-    override def abs = Infinity
+    override def abs: PositiveRealNumber with Infinite = Infinity
 
     override def inverse: RealNumber with Empty = Zero
 
@@ -66,8 +66,6 @@ object Infinity
 object MinusInfinity
         extends RealInfinity {
 
-    override def abs = Infinity
-
     override def unary_-() = Infinity
 
     override def compareTo(that: RealNumber) = that match {
@@ -85,7 +83,7 @@ object UnsignedInfinity
         extends PositiveRealNumber
         with RealInfinity {
 
-    override def abs = super[RealInfinity].abs
+    override def abs = Infinity
 
     override def unary_-() = this
 
@@ -100,6 +98,16 @@ object UnsignedInfinity
         case i: Infinite => ???
         case Zero => ???
         case _ => Some(this)
+    }
+
+    override def +(that: PositiveRealNumber) = that match {
+        case i: Infinite => ???
+        case _ => this
+    }
+
+    override def *(that: PositiveRealNumber) = that match {
+        case i: Infinite => ???
+        case _ => this
     }
 
     override def toString = "±∞"

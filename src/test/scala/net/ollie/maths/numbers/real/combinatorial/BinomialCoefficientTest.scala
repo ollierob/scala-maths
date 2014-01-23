@@ -2,10 +2,13 @@ package net.ollie.maths.numbers.real.combinatorial
 
 import net.ollie.maths.numbers.{Zero, NaturalNumber, One}
 import org.scalatest.{FlatSpec, Matchers}
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
 /**
  * Created by Ollie on 11/01/14.
  */
+@RunWith(classOf[JUnitRunner])
 class BinomialCoefficientTest extends FlatSpec with Matchers {
 
     import BinomialCoefficient._

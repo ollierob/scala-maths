@@ -2,7 +2,7 @@ package net.ollie.maths.numbers
 
 import scala.collection.mutable
 
-import net.ollie.maths.{Operation, IdentityArithmetic, Number}
+import net.ollie.maths.{IdentityArithmetic, Number, Operation}
 import net.ollie.maths.numbers.real.RealToIntegerPower
 
 /**
@@ -55,7 +55,11 @@ object NaturalNumber {
 
     implicit def convert(int: IntegerNumber): NaturalNumber = apply(int).right.getOrElse(Operation.illegal(s"Int $int is negative!"))
 
-    def apply(int: BigInt): NaturalNumber = if (int == 0) Zero else new ExactBigNaturalNumber(int)
+    def apply(int: BigInt): NaturalNumber = int match {
+        case 0 => Zero
+        case 1 => One
+        case _ => new ExactBigNaturalNumber(int)
+    }
 
     def apply(int: IntegerNumber): Either[IntegerNumber, NaturalNumber] = int match {
         case Zero => Right(Zero)
@@ -119,6 +123,8 @@ object MinusOne
     override def unary_-() = One
 
     override def ^(that: IntegerNumber) = if (that.isEven) One else this
+
+    override def equals(re: RealNumber) = (this eq re) || super.equals(re)
 
 }
 

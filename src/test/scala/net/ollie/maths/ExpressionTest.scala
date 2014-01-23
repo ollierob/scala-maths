@@ -2,10 +2,13 @@ package net.ollie.maths
 
 import net.ollie.maths.numbers.{IntegerNumber, NaturalNumber, One, Zero}
 import org.scalatest.{FlatSpec, Matchers}
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
 /**
  * Created by Ollie on 19/01/14.
  */
+@RunWith(classOf[JUnitRunner])
 class ExpressionTest extends FlatSpec with Matchers {
 
     val x: Variable = Variable("x")

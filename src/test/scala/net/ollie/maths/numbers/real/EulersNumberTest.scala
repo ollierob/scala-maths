@@ -1,11 +1,14 @@
 package net.ollie.maths.numbers.real
 
-import org.scalatest.{Matchers, FlatSpec}
 import net.ollie.maths.numbers.Precision._
+import org.junit.runner.RunWith
+import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.junit.JUnitRunner
 
 /**
  * Created by Ollie on 19/01/14.
  */
+@RunWith(classOf[JUnitRunner])
 class EulersNumberTest extends FlatSpec with Matchers {
 
     behavior of "e"
