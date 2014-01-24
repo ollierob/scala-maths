@@ -1,12 +1,23 @@
 package net.ollie.maths.functions.numeric
 
+import scala.Some
+
+import net.ollie.maths.Expression
 import net.ollie.maths.functions.UnivariateFunction
 import net.ollie.maths.methods.ApproximatelyEvaluated
-import net.ollie.maths.numbers.{PositiveRealNumber, Precision, RealNumber, Zero}
+import net.ollie.maths.numbers._
 
 /**
  * Created by Ollie on 08/01/14.
  */
+object SquareRoot {
+
+    private val HALF: RealNumber = One / 2
+
+    def apply(x: Expression): Expression = x ^ HALF
+
+}
+
 object PositiveSquareRoot
         extends UnivariateFunction[PositiveRealNumber, PositiveRealNumber] {
 

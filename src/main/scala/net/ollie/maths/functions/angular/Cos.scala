@@ -1,10 +1,11 @@
 package net.ollie.maths.functions.angular
 
-
 import net.ollie.maths._
 import net.ollie.maths.functions.ExpressionBuilder
+import net.ollie.maths.functions.numeric.SquareRoot
 import net.ollie.maths.methods.MaclaurinSeries
 import net.ollie.maths.numbers.{One, Precision, RealNumber}
+import net.ollie.maths.numbers.real.Pi
 
 /**
  * Created by Ollie on 03/01/14.
@@ -19,22 +20,23 @@ object Cos
 
     def apply(angle: Angle) = if (angle.isEmpty) empty else new RealCos(angle)
 
-    protected[this] def create(expr: Expression): Expression = new Cos(expr)
+    protected[this] def create(expr: Expression): Cos = new Cos(expr)
 
     protected[angular] def empty = One
 
 }
 
 class Cos(val of: Expression)
-        extends Composite {
+        extends CompositeBuilder
+        with Invertible {
 
-    protected[this] def at(n: Number) = Cos(n)
+    protected[this] def builder = Cos
 
-    protected[this] def apply(expr: Expression) = Cos(expr)
+    protected[this] def derivative(x: Expression) = -Sin(x)
 
-    def isEmpty = false //TODO
+    def inverse = ArcCos(of)
 
-    protected[this] def derivative(at: Expression) = -Sin(at)
+    def isEmpty = false
 
     override def toString = s"Cos($of)"
 
@@ -62,5 +64,29 @@ object Sec
     protected[this] def create(expr: Expression) = 1 / Cos(expr)
 
     protected[this] def empty = Cos.empty.inverse
+
+}
+
+object ArcCos
+        extends ExpressionBuilder {
+
+    def apply(n: Number): Number = ??? //TODO
+
+    protected[this] def create(x: Expression) = new ArcCos(x)
+
+    protected[this] def empty = Pi / 2
+
+}
+
+class ArcCos(val of: Expression)
+        extends CompositeBuilder {
+
+    protected[this] def builder = ArcCos
+
+    protected[this] def derivative(x: Expression) = -1 / SquareRoot(1 - (x ^ 2))
+
+    def isEmpty = false
+
+    override def toString = s"ArcCos($of)"
 
 }

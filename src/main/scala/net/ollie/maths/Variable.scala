@@ -35,4 +35,6 @@ class Variable(val name: String)
         case _ => super.equals(expression)
     }
 
+    override def hashCode = name.hashCode
+
 }

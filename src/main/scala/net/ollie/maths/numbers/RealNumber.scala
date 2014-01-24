@@ -126,9 +126,9 @@ trait RealNumber
 
     protected def tryCompareTo(that: RealNumber): Option[Int] = None
 
-    override def equals(expression: Number) = expression match {
+    override def equals(number: Number) = number match {
         case re: RealNumber => this.equals(re)
-        case _ => super.equals(expression)
+        case _ => super.equals(number)
     }
 
     def equals(that: RealNumber): Boolean = super.equals(that) || (this ?== that match {

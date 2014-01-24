@@ -27,9 +27,9 @@ trait Composite
 
     def df(x: Variable) = of.df(x) * derivative(of)
 
-    protected[this] def derivative(at: Expression): Expression
+    protected[this] def derivative(x: Expression): Expression
 
-    protected[this] def apply(at: Expression): Expression
+    protected[this] def apply(x: Expression): Expression
 
 }
 
@@ -40,7 +40,7 @@ trait CompositeBuilder
 
     protected[this] def at(n: Number) = builder(n)
 
-    protected[this] def apply(expr: Expression) = builder(expr)
+    protected[this] def apply(x: Expression) = builder(expr)
 
 }
 

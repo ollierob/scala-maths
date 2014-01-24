@@ -5,7 +5,7 @@ import scala.Some
 import Angle._
 import net.ollie.maths._
 import net.ollie.maths.functions.{ExpressionBuilder, UnivariateFunction}
-import net.ollie.maths.functions.numeric.Signum
+import net.ollie.maths.functions.numeric.{Signum, SquareRoot}
 import net.ollie.maths.functions.special.Sinc
 import net.ollie.maths.methods.{MaclaurinSeries, Series}
 import net.ollie.maths.numbers._
@@ -117,7 +117,7 @@ class ArcSin(val of: Expression)
 
     protected[this] def builder = ArcSin
 
-    protected[this] def derivative(z: Expression) = ??? //TODO sqrt
+    protected[this] def derivative(x: Expression) = 1 / SquareRoot(1 - (x ^ 2))
 
     override def toString = s"ArcSin($of)"
 
