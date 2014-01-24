@@ -110,6 +110,12 @@ class ExpressionFraction(val numerator: Expression, val denominator: Expression)
 
     override def df(x: Variable) = (numerator.df(x) / denominator) - (denominator.df(x) * numerator / denominator)
 
+    override def *(that: Expression) = that match {
+        case _ if denominator equals that => numerator
+        case ef: ExpressionFraction => (numerator * ef.numerator) / (denominator * ef.denominator)
+        case _ => super.*(that)
+    }
+
     override def toString = s"($numerator/$denominator)"
 
 }

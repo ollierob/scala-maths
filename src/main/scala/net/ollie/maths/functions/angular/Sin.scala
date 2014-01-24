@@ -4,8 +4,9 @@ import scala.Some
 
 import Angle._
 import net.ollie.maths._
-import net.ollie.maths.functions.{CompositeBuilder, ExpressionBuilder, UnivariateFunction}
+import net.ollie.maths.functions.{ExpressionBuilder, UnivariateFunction}
 import net.ollie.maths.functions.numeric.Signum
+import net.ollie.maths.functions.special.Sinc
 import net.ollie.maths.methods.{MaclaurinSeries, Series}
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.real.combinatorial.BinomialCoefficient
@@ -46,9 +47,11 @@ private class Sin(val of: Expression)
 
     protected[this] def derivative(at: Expression) = Cos(at)
 
-    override def toString = s"Sin($of)"
-
     def inverse = ArcSin(of)
+
+    override def /(that: Expression) = if (that equals of) Sinc(of) else super./(that)
+
+    override def toString = s"Sin($of)"
 
 }
 

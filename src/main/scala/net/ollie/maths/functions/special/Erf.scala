@@ -1,7 +1,7 @@
 package net.ollie.maths.functions.special
 
-import net.ollie.maths.{Expression, Number}
-import net.ollie.maths.functions.{CompositeBuilder, ExpressionBuilder, Represented, UnivariateFunction}
+import net.ollie.maths.{CompositeBuilder, Expression, Number}
+import net.ollie.maths.functions.{ExpressionBuilder, Represented, UnivariateFunction}
 import net.ollie.maths.functions.numeric.{Exp, PositiveSquareRoot}
 import net.ollie.maths.methods.{Integral, SimpsonsIntegrationMethod}
 import net.ollie.maths.numbers.{Precision, RealNumber, Zero}

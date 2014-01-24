@@ -4,10 +4,13 @@ import org.scalatest.{Matchers, FlatSpec}
 import net.ollie.maths.Variable
 import net.ollie.maths.numbers.{Zero, One}
 import net.ollie.maths.numbers.real.Pi
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
 /**
  * Created by Ollie on 09/01/14.
  */
+@RunWith(classOf[JUnitRunner])
 class LegendrePolynomialTest extends FlatSpec with Matchers {
 
     val x = Variable("x")
@@ -19,13 +22,13 @@ class LegendrePolynomialTest extends FlatSpec with Matchers {
         val p1 = LegendrePolynomial(1, x)
 
         it should "be x" in {
-            LegendrePolynomial(1, Zero) shouldBe (Zero)
-            LegendrePolynomial(1, Pi) shouldBe (Pi)
-            LegendrePolynomial(1, x).replace(x, Pi) shouldBe (Pi)
+            LegendrePolynomial(1, Zero) shouldBe Zero
+            LegendrePolynomial(1, Pi) shouldBe Pi
+            LegendrePolynomial(1, x).replace(x, Pi).toConstant shouldBe Some(Pi)
         }
 
         it should "differentiate" in {
-            LegendrePolynomial(1, x).df(x) shouldBe (One)
+            LegendrePolynomial(1, x).df(x) shouldBe One
         }
 
     }
@@ -36,9 +39,9 @@ class LegendrePolynomialTest extends FlatSpec with Matchers {
 
         val p2 = LegendrePolynomial(2, x)
 
-        it should "(3x^2 - 1)/2" in {
-            p2.replace(x, Zero) shouldBe (-One / 2)
-            p2.replace(x, One) shouldBe (One)
+        it should "be (3x^2 - 1)/2" in {
+            p2.replace(x, Zero).toConstant shouldBe Some(-One / 2)
+            p2.replace(x, One).toConstant shouldBe Some(One)
         }
 
         it should "differentiate" in {

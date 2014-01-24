@@ -20,7 +20,7 @@ object AssociatedLegendrePolynomial {
     def apply(l: NaturalNumber, m: IntegerNumber, x: Expression): AssociatedLegendrePolynomial = m match {
         case Zero => LegendrePolynomial(l, x)
         case _ if m.abs > l => new EmptyAssociatedLegendrePolynomial(l, m)
-        case _ => new RegularAssociatedLegendrePolynomial(l, m)(x)
+        case _ => new RegularAssociatedLegendrePolynomial(l, m, x)
     }
 
 }
@@ -42,7 +42,7 @@ class EmptyAssociatedLegendrePolynomial(val l: NaturalNumber, val m: IntegerNumb
 
 }
 
-class RegularAssociatedLegendrePolynomial(val l: NaturalNumber, val m: IntegerNumber)(val x: Expression)
+class RegularAssociatedLegendrePolynomial(val l: NaturalNumber, val m: IntegerNumber, val x: Expression)
         extends AssociatedLegendrePolynomial {
 
     import net.ollie.maths.functions.polynomial.{AssociatedLegendrePolynomial => Plm}

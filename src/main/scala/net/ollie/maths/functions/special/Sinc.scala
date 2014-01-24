@@ -1,13 +1,15 @@
 package net.ollie.maths.functions.special
 
-import net.ollie.maths.{Expression, Number}
+import net.ollie.maths.{Expression, Number, Variable}
 import net.ollie.maths.functions.{ExpressionBuilder, Represented, UnivariateFunction}
 import net.ollie.maths.functions.angular.Sin
 import net.ollie.maths.methods.ApproximatelyEvaluated
 import net.ollie.maths.numbers.{One, Precision, RealNumber, Zero}
+import net.ollie.maths.numbers.real.Pi
 
 /**
  * Created by Ollie on 23/01/14.
+ * @see http://mathworld.wolfram.com/SincFunction.html
  */
 object Sinc
         extends ExpressionBuilder
@@ -19,11 +21,15 @@ object Sinc
         case _ => ???
     }
 
-    def apply(f: RealNumber): RealNumber = new RealSinc(f)
+    def apply(f: RealNumber): RealNumber = if (f.isEmpty) empty else new RealSinc(f)
+
+    def normalized(expr: Expression) = apply(Pi * expr)
+
+    def normalized(re: RealNumber) = apply(Pi * re)
 
     protected[this] def create(expr: Expression) = new Sinc(expr)
 
-    protected[this] def empty = One
+    protected[special] def empty = One
 
 }
 
@@ -32,7 +38,16 @@ class Sinc(val of: Expression)
 
     protected[this] def f = Sin(of) / of
 
+    override def replace(variables: Map[Variable, Expression]) = {
+        val d = of.replace(variables)
+        if (d.isEmpty) singularityValue else Sin(of).replace(variables) / d
+    }
+
+    override def isEmpty = Sin(of).isEmpty
+
     override def toString = s"Sinc($of)"
+
+    def singularityValue = Sinc.empty
 
 }
 
@@ -47,5 +62,7 @@ class RealSinc(val x: RealNumber)
     def isEmpty = empty
 
     protected[this] def approx(precision: Precision): BigDecimal = if (isEmpty) 0 else Sin(x).approximatelyEvaluate(precision) / x.approximatelyEvaluate(precision)
+
+    override def toString = s"Sinc($x)"
 
 }

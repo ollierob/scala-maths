@@ -1,7 +1,7 @@
 package net.ollie.maths.functions.angular
 
-import net.ollie.maths.{Expression, Number}
-import net.ollie.maths.functions.{CompositeBuilder, ExpressionBuilder, UnivariateFunction}
+import net.ollie.maths.{CompositeBuilder, Expression, Number}
+import net.ollie.maths.functions.{ExpressionBuilder, UnivariateFunction}
 import net.ollie.maths.methods.ApproximatelyEvaluated
 import net.ollie.maths.numbers.{Precision, RealNumber, Zero}
 

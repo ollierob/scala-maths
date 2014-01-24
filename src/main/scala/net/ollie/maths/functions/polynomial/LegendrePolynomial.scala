@@ -1,6 +1,5 @@
 package net.ollie.maths.functions.polynomial
 
-
 import net.ollie.maths._
 import net.ollie.maths.numbers._
 
@@ -12,8 +11,6 @@ trait LegendrePolynomial
         with Polynomial {
 
     override def m = Zero
-
-    override def df(x: Variable) = l * (x * LegendrePolynomial(l, x) - LegendrePolynomial(l - 1, x)) / ((x ^ 2) + 1)
 
     override def isEmpty = false
 
@@ -29,14 +26,11 @@ object LegendrePolynomial {
         case _ => new SomeLegendrePolynomial(l)(z)
     }
 
-    def apply(l: NaturalNumber, number: RealNumber): RealNumber = apply(l, number.asInstanceOf[Expression]).toConstant match {
-        case Some(re: RealNumber) => re
-        case _ => ???
-    }
-
-    def apply(l: NaturalNumber, expression: Differentiable): Differentiable = apply(l, expression) match {
-        case d: Differentiable => d
-        case _ => ???
+    def apply(l: NaturalNumber, re: RealNumber): RealNumber = {
+        LegendrePolynomial(l, re.asInstanceOf[Expression]).toConstant match {
+            case Some(re: RealNumber) => re
+            case _ => ???
+        }
     }
 
 }
@@ -55,7 +49,7 @@ object ZeroLegendrePolynomial
 
     override def variables = super[NaturalNumber].variables
 
-    override def toString = "LegendreP(0)"
+    override def toString = "LegendreP(0)()"
 
 }
 
@@ -75,7 +69,9 @@ class SomeLegendrePolynomial(val l: NaturalNumber)(val x: Expression)
 
     require(l > One)
 
-    protected[this] def f = (((2 * l - 1) * x * LegendrePolynomial(l - 1, x)) - ((l - 1) * LegendrePolynomial(l - 2, x)))
+    protected[this] def f = ((((2 * l) - 1) * x * LegendrePolynomial(l - 1, x)) - ((l - 1) * LegendrePolynomial(l - 2, x))) / l
+
+    override def df(x: Variable) = l * (x * LegendrePolynomial(l, x) - LegendrePolynomial(l - 1, x)) / ((x ^ 2) + 1)
 
     override def toString = s"LegendreP($l)($x)"
 

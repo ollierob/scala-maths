@@ -1,5 +1,7 @@
 package net.ollie.maths
 
+import net.ollie.maths.functions.ExpressionBuilder
+
 /**
  * This expression is composed with another expression. (Most are!)
  *
@@ -30,3 +32,15 @@ trait Composite
     protected[this] def apply(at: Expression): Expression
 
 }
+
+trait CompositeBuilder
+        extends Composite {
+
+    protected[this] def builder: ExpressionBuilder
+
+    protected[this] def at(n: Number) = builder(n)
+
+    protected[this] def apply(expr: Expression) = builder(expr)
+
+}
+

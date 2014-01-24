@@ -1,11 +1,11 @@
 package net.ollie.maths.functions.angular
 
 import net.ollie.maths.{Expression, Variable}
+import net.ollie.maths.functions.Represented
 import net.ollie.maths.functions.numeric.PositiveSquareRoot
 import net.ollie.maths.functions.polynomial.LegendrePolynomial
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.real.Pi
-import net.ollie.maths.functions.Represented
 
 /**
  * Order-less spherical harmonics.
