@@ -52,7 +52,7 @@ trait ComplexNumber
         case _ => None
     }
 
-    def ?*(that: Number) = that match {
+    override def ?*(that: Number)(leftToRight: Boolean) = that match {
         case re: RealNumber => Some(this * ComplexNumber(re))
         case z: ComplexNumber => Some(this * z)
         case _ => None
@@ -90,7 +90,7 @@ object ComplexNumber {
     def i(re: RealNumber): ImaginaryNumber = ImaginaryNumber(re)
 
     implicit object NumberToComplex
-            extends IdentityArithmetic[Number, ComplexNumber] {
+            extends NumberIdentityArithmetic[ComplexNumber] {
 
         def convert(from: Number) = from match {
             case re: RealNumber => Some(re)
@@ -104,7 +104,7 @@ object ComplexNumber {
             with AdditionArithmetic[RealNumber, ComplexNumber, ComplexNumber]
             with MultiplicationArithmetic[RealNumber, ComplexNumber, ComplexNumber] {
 
-        def convert(re: RealNumber): Option[ComplexNumber] = Some(ComplexNumber(re))
+        def convert(re: RealNumber) = re
 
         def add(left: RealNumber, right: ComplexNumber) = ComplexNumber(left) + right
 
@@ -134,7 +134,7 @@ object ComplexNumber {
 
 object ComplexZero
         extends ComplexNumber
-        with Empty {
+        with EmptyNumber {
 
     def re = Zero
 
@@ -142,16 +142,12 @@ object ComplexZero
 
     override def unary_-() = this
 
-    override def isEmpty = super[Empty].isEmpty
-
-    override def variables = super[Empty].variables
-
     override def df(x: Variable) = this
-
-    override def toString = super[Empty].toString
 
     override def abs = Zero
 
     override def arg = indeterminate
+
+    override def toString = super[EmptyNumber].toString
 
 }

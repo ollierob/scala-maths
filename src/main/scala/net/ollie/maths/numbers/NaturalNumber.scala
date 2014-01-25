@@ -2,7 +2,7 @@ package net.ollie.maths.numbers
 
 import scala.collection.mutable
 
-import net.ollie.maths.{IdentityArithmetic, Number, Operation}
+import net.ollie.maths.{Number, Operation}
 import net.ollie.maths.numbers.real.RealToIntegerPower
 
 /**
@@ -88,15 +88,6 @@ object NaturalNumber {
         }
     }
 
-    implicit object IntegerToNaturalNumber
-            extends IdentityArithmetic[IntegerNumber, NaturalNumber] {
-
-        def convert(i: IntegerNumber) = NaturalNumber(i) match {
-            case r if r.isRight => Some(r.right.get)
-            case _ => None
-        }
-    }
-
 }
 
 object One
@@ -108,7 +99,7 @@ object One
 
     override def decr = Zero
 
-    override def ?*(that: Number): Option[Number] = Some(that)
+    override def ?*(that: Number)(leftToRight: Boolean): Option[Number] = Some(that)
 
     override def *(that: NaturalNumber) = that
 

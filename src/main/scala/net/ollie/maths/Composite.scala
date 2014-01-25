@@ -40,7 +40,7 @@ trait CompositeBuilder
 
     protected[this] def at(n: Number) = builder(n)
 
-    protected[this] def apply(x: Expression) = builder(expr)
+    protected[this] def apply(x: Expression) = builder(x)
 
 }
 

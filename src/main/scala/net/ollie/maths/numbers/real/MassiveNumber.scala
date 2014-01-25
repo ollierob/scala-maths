@@ -33,7 +33,10 @@ trait MassiveNumber
         case _ => None
     }
 
-    def ?*(that: Number): Option[Number] = None
+    protected def ?*(that: Number)(leftToRight: Boolean) = that match {
+        case m: MassiveNumber => Some(m)
+        case _ => None
+    }
 
     def ?^(that: Number) = ???
 
@@ -61,7 +64,7 @@ object MassiveNumber {
 
         def one = One
 
-        def convert(from: RealNumber) = Some(from)
+        def convert(from: RealNumber) = from
 
         def add(left: RealNumber, right: MassiveNumber) = MassiveNumber(left) + right
 
@@ -95,7 +98,7 @@ object MassiveZero
 
     override def ?+(that: Number) = Some(that)
 
-    override def ?*(that: Number) = Some(this)
+    override def ?*(that: Number)(leftToRight: Boolean) = Some(this)
 
     override def variables = super[Empty].variables
 

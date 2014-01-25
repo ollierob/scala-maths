@@ -1,11 +1,11 @@
 package net.ollie.maths
 
-import net.ollie.maths.numbers.{IntegerNumber, NaturalNumber, RealNumber}
-import org.scalatest.{FlatSpec, Matchers}
-import net.ollie.maths.numbers.complex.ComplexNumber
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
 import net.ollie.maths.methods.Product
+import net.ollie.maths.numbers.{IntegerNumber, NaturalNumber, One, RealNumber}
+import org.junit.runner.RunWith
+import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.junit.JUnitRunner
+import net.ollie.maths.numbers.complex.ComplexNumber
 
 /**
  * Created by Ollie on 11/01/14.
@@ -37,7 +37,7 @@ class ProductTest extends FlatSpec with Matchers {
         val x = Variable("x")
         val product = Product(2, x)
         product.toConstant shouldBe (None)
-        product.replace(x, 3).toConstant shouldBe (Some(NaturalNumber(6)))
+        product.replace(x, 3).toConstant shouldBe Some(NaturalNumber(6))
     }
 
     it should "convert to constant across different number systems" in {
@@ -46,12 +46,42 @@ class ProductTest extends FlatSpec with Matchers {
         val x = Variable("x")
         val y = Variable("y")
         val product = Product(x, y)
-        product.replace(Map(x -> r, y -> z)).toConstant shouldBe (Some(ComplexNumber(35, 55)))
+        product.replace(Map(x -> r, y -> z)).toConstant shouldBe Some(ComplexNumber(35, 55))
     }
 
     it should "multiply numeric terms" in {
         val product = Product(-1, 5)
         product.toConstant shouldBe (Some(IntegerNumber(-5)))
+    }
+
+    "x * 1" should "simplify when x is replaced" in {
+        val x = Variable("x")
+        val product = Product(x, One)
+        product.replace(x, One) shouldBe One
+    }
+
+    behavior of "x * y * z"
+
+    {
+
+        val x = Variable("x")
+        val y = Variable("y")
+        val z = Variable("z")
+        val p = Product(Seq(x, y, z))
+
+        it should "simplify when variables are replaced" in {
+            p.replace(x, 3).replace(y, 1).replace(z, 2).toConstant shouldBe Some(NaturalNumber(1 * 2 * 3))
+        }
+
+        it should "have variables" in {
+            p.variables shouldBe Set(x, y, z)
+        }
+
+        it should "replace variables" in {
+            p.replace(z, x).variables shouldBe Set(x, y)
+            p.replace(z, y).replace(y, x).variables shouldBe Set(x)
+        }
+
     }
 
 }

@@ -2,9 +2,9 @@ package net.ollie.maths.functions.numeric
 
 import net.ollie.maths._
 import net.ollie.maths.functions.ExpressionBuilder
-import net.ollie.maths.methods.{Series, TaylorSeries}
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.real.EulersNumber
+import org.nevec.rjm.BigDecimalMath
 
 /**
  * Created by Ollie on 16/01/14.
@@ -52,7 +52,7 @@ object Ln
     def apply(n: Number): Number = n match {
         case Zero => empty
         case re: RealNumber if re.isStrictlyPositive => apply(re.abs)
-        case _ => ???
+        case _ => Operation.illegal(s"Number $n was not a real, positive number!")
     }
 
     def apply(re: PositiveRealNumber): RealNumber = new RealLn(re)
@@ -88,16 +88,11 @@ class RealLn(override val of: PositiveRealNumber)
         extends Ln(of)
         with RealNumber {
 
+    println(s"Created $this")
+
     override def inverse = super[RealNumber].inverse
 
-    protected[this] def eval(precision: Precision) = evaluation.evaluate(precision)
-
-    protected def evaluation: RealNumber = evaluator
-
-    private lazy val evaluator: RealNumber = {
-        if (of <= One) TaylorSeries(Ln, of, -1)
-        else Series(n => 1 / (n * ((of / (of - 1)) ^ n)), One)
-    }
+    protected[this] def eval(precision: Precision) = BigDecimalMath.log(of.evaluate(precision).underlying())
 
     override def toConstant = super[RealNumber].toConstant
 

@@ -1,6 +1,6 @@
 package net.ollie.maths.numbers
 
-import net.ollie.maths.{Empty, Variable}
+import net.ollie.maths.{EmptyNumber, Variable}
 
 /**
  * Empty real number.
@@ -8,15 +8,13 @@ import net.ollie.maths.{Empty, Variable}
  */
 object Zero
         extends NaturalNumber
-        with Empty {
+        with EmptyNumber {
 
     private lazy val evaluated: BigInt = 0
 
     def evaluate = evaluated
 
-    override def variables = super[Empty].variables
-
-    override def isEmpty = super[Empty].isEmpty
+    override def isEmpty = super[EmptyNumber].isEmpty
 
     override def isEven = true
 
@@ -37,5 +35,7 @@ object Zero
     override def ?*(that: RealNumber) = Some(this)
 
     override def *(that: NaturalNumber) = this
+
+    override def toString = super[EmptyNumber].toString
 
 }

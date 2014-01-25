@@ -7,9 +7,9 @@ import net.ollie.maths._
 import net.ollie.maths.functions.{ExpressionBuilder, UnivariateFunction}
 import net.ollie.maths.functions.numeric.{Signum, SquareRoot}
 import net.ollie.maths.functions.special.Sinc
-import net.ollie.maths.methods.{MaclaurinSeries, Series}
+import net.ollie.maths.methods.MaclaurinSeries
 import net.ollie.maths.numbers._
-import net.ollie.maths.numbers.real.combinatorial.BinomialCoefficient
+import org.nevec.rjm.BigDecimalMath
 
 /**
  * Created by Ollie on 02/01/14.
@@ -126,11 +126,11 @@ class ArcSin(val of: Expression)
 class RealArcSin(val x: RealNumber)
         extends RealNumber {
 
-    private lazy val series = Series(nth _, Zero)
+    //private lazy val series = Series(nth _, Zero)
 
-    private def nth(n: NaturalNumber): RealNumber = BinomialCoefficient(2 * n, n) * (x ^ (2 * n + 1)) / ((4 ^ n) * (2 * n + 1))
+    //private def nth(n: NaturalNumber): RealNumber = BinomialCoefficient(2 * n, n) * (x ^ (2 * n + 1)) / ((4 ^ n) * (2 * n + 1))
 
-    protected[this] def eval(precision: Precision) = series.evaluate(precision)
+    protected[this] def eval(precision: Precision) = BigDecimalMath.asin(x.approximatelyEvaluate(precision).underlying())
 
     def isEmpty = x.isEmpty
 

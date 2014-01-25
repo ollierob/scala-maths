@@ -28,7 +28,7 @@ trait Quaternion
 
     def isEmpty = re.isEmpty && i.isEmpty && j.isEmpty && k.isEmpty
 
-    def inverse: Quaternion = conjugate / (norm.squared)
+    def inverse: Quaternion = conjugate / Quaternion.RealQuaternionArithmetic.convert(norm.squared)
 
     def conjugate: Quaternion = Quaternion.conjugate(this)
 
@@ -60,7 +60,7 @@ trait Quaternion
         case _ => None
     }
 
-    def ?*(that: Number): Option[Number] = that match {
+    def ?*(that: Number)(leftToRight: Boolean): Option[Number] = that match {
         case re: RealNumber => Some(this * Quaternion(re))
         case z: ComplexNumber => Some(this * Quaternion(z))
         case q: Quaternion => Some(this * q)
@@ -105,7 +105,7 @@ object Quaternion {
     def one: Quaternion = Quaternion(One)
 
     implicit object NumberToQuaternion
-            extends IdentityArithmetic[Number, Quaternion] {
+            extends NumberIdentityArithmetic[Quaternion] {
 
         def convert(from: Number) = from match {
             case re: RealNumber => Some(Quaternion(re))
@@ -124,7 +124,7 @@ object Quaternion {
 
         def multiply(left: RealNumber, right: Quaternion) = Quaternion(left) * right
 
-        def convert(re: RealNumber) = Some(Quaternion(re))
+        def convert(re: RealNumber) = Quaternion(re)
 
         def zero = Quaternion.zero
 
@@ -141,7 +141,7 @@ object Quaternion {
 
         def multiply(z: ComplexNumber, q: Quaternion) = Quaternion(z) * q
 
-        def convert(z: ComplexNumber) = Some(z)
+        def convert(z: ComplexNumber) = z
 
         def zero = Quaternion.zero
 

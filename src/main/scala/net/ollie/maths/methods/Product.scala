@@ -1,10 +1,10 @@
 package net.ollie.maths.methods
 
 import scala.Some
+import scala.collection.mutable.{ArrayBuffer, ListBuffer}
 
 import net.ollie.maths._
 import net.ollie.maths.numbers._
-import scala.collection.mutable.ArrayBuffer
 
 /**
  * Created by Ollie on 19/01/14.
@@ -40,12 +40,55 @@ class Product[+T <: Expression](val terms: Seq[T])
 
     require(!terms.isEmpty)
 
-    override def *(that: Expression): Expression = terms match {
-        case p: Product[_] => Product(terms ++: p.terms)
-        case _ => Product(terms :+ that)
+    override def ?*(that: Expression)(leftToRight: Boolean) = Some(if (leftToRight) tailTimes(that) else headTimes(that))
+
+    /**
+     * Tail * that
+     * @param that
+     * @return
+     */
+    protected[this] def tailTimes(that: Expression): Expression = terms.last.?*(that)(true) match {
+        case Some(x) => apply(terms.dropRight(1) :+ x)
+        case _ => that match {
+            case p: Product[_] => apply(terms ++: p.terms)
+            case _ => apply(terms :+ that)
+        }
     }
 
-    protected[this] def apply(expressions: Seq[Expression]) = Product(expressions)
+    /**
+     * That * head
+     * @param that
+     * @return
+     */
+    protected[this] def headTimes(that: Expression): Expression = that.?*(terms.head)(true) match {
+        case Some(x) => apply(x +: terms.tail)
+        case _ => that match {
+            case p: Product[_] => apply(p.terms ++: terms)
+            case _ => apply(that +: terms)
+        }
+    }
+
+    protected[this] def simplify(terms: Seq[Expression]): Seq[Expression] = {
+        val simplified = new ListBuffer[Expression]()
+        var head: Expression = null
+        terms.tail.foldLeft(terms.head)((result, current) => {
+            result ?*? current match {
+                case Some(m) => {
+                    head = m
+                    m
+                }
+                case _ => {
+                    simplified += result
+                    head = current
+                    current
+                }
+            }
+        })
+        simplified += head
+        simplified.toSeq
+    }
+
+    protected[this] def apply(expressions: Seq[Expression]) = Product(simplify(expressions))
 
     def isEmpty = terms.exists(_.isEmpty)
 
@@ -56,17 +99,15 @@ class Product[+T <: Expression](val terms: Seq[T])
     }
 
     private def multiply(result: Option[Number], current: Option[Number]): Option[Number] = {
-        if (!result.isDefined || !current.isDefined) return None //TODO use option foldLeft?
-        val n = result.get ?* current.get
-        if (n.isDefined) n
-        else current.get ?* result.get
+        if (!result.isDefined || !current.isDefined) return None
+        result.get ?*? current.get
     }
 
     def df(x: Variable) = {
         var sum: Expression = Zero
         for (i <- 0 to terms.length - 1) {
             val d: Expression = terms(i).df(x)
-            if (!d.isEmpty) sum = sum + Product(terms.updated(i, d))
+            if (!d.isEmpty) sum = sum + apply(terms.updated(i, d))
         }
         sum
     }
@@ -93,6 +134,6 @@ class InfiniteRealProduct(f: (NaturalNumber) => RealNumber, start: NaturalNumber
 
     }
 
-    def isEmpty = f(0).isEmpty || f(1).isEmpty //TODO more terms!
+    def isEmpty = f(0).isEmpty || f(1).isEmpty //TODO more terms?
 
 }

@@ -25,8 +25,23 @@ trait Empty
 
     override def +(that: Expression) = that
 
-    override def *(that: Expression) = Zero
+    override def ?*(that: Expression)(leftToRight: Boolean) = Some(this)
 
     override def toString = "0"
 
+}
+
+trait EmptyNumber
+        extends Empty
+        with Number {
+
+    override def unary_-() = this
+
+    override def variables = super[Number].variables
+
+    override def isEmpty = super[Empty].isEmpty
+
+    override def toString = super[Empty].toString
+
+    override def ?*(that: Expression)(leftToRight: Boolean) = super[Empty].?*(that)(leftToRight)
 }

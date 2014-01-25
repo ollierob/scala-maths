@@ -22,10 +22,15 @@ trait RationalNumber
 
     override def approximatelyEvaluate(precision: Precision): BigDecimal = numerator.evaluate(precision) / denominator.evaluate(precision)
 
-    override def ?*(that: RealNumber) = that match {
-        case r: RationalNumber => Some(IntegerFraction(r.numerator * numerator, r.denominator * denominator))
-        case d: RealNumber if d == denominator => Some(numerator)
-        case _ => super.?*(that)
+    override def ?*(that: RealNumber) = {
+        println(s"RATIONAL $this * $that")
+        that match {
+            case r: RationalNumber => Some(IntegerFraction(r.numerator * numerator, r.denominator * denominator))
+            case _ if that == denominator => {
+                println(s"FOUND DENOMINATOR $that == $denominator"); Some(numerator)
+            }
+            case _ => super.?*(that)
+        }
     }
 
     override def ?==(that: RealNumber) = that match {

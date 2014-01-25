@@ -14,14 +14,6 @@ import net.ollie.maths.numbers.{NaturalNumber, Precision, RealNumber, Zero}
  */
 object TaylorSeries {
 
-    //    def apply(expression: Differentiable, at: RealNumber, around: RealNumber): Option[RealNumber] = expression match {
-    //        case _ if expression.isEmpty => Some(Zero)
-    //        case n: RealNumber => Some(n)
-    //        case du: DifferentiableUnivariate => Some(TaylorSeries(du, at, around))
-    //        case _ if expression.variables.size == 1 => Some(TaylorSeries(new DifferentiableUnivariateWrapper(expression), at, around))
-    //        case _ => None
-    //    }
-
     def apply(expression: Univariate, at: RealNumber, around: RealNumber): RealNumber = {
         new TaylorSeries(expression, at, around)
     }
@@ -33,7 +25,7 @@ object TaylorSeries {
 
 }
 
-private class TaylorSeries(f: Univariate, val x: RealNumber, a: RealNumber)(implicit conversion: IdentityArithmetic[Number, RealNumber])
+private class TaylorSeries(val f: Univariate, val x: RealNumber, val a: RealNumber)(implicit conversion: NumberIdentityArithmetic[RealNumber])
         extends RealNumber
         with IterativelyEvaluated {
 
@@ -47,7 +39,9 @@ private class TaylorSeries(f: Univariate, val x: RealNumber, a: RealNumber)(impl
 
         def next(n: NaturalNumber, precision: Precision): BigDecimal = {
             terms += nthTerm(n)
+            println(s"$fNDash at $a => " + fNDash(a))
             fNDash = fNDash.dx
+            println(s"Nth $n => $terms => " + terms.map(_.approximatelyEvaluate(precision)).sum)
             terms.map(_.approximatelyEvaluate(precision)).sum
         }
 

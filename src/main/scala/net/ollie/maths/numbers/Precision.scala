@@ -89,7 +89,9 @@ class SignificantFigures(val value: Int) extends AnyRef with Precision {
 
     require(value > 0)
 
-    def apply(bd: BigDecimal)(implicit mode: RoundingMode = Precision.DEFAULT_ROUNDING) = bd.round(new MathContext(value, mode))
+    def apply(bd: BigDecimal)(implicit mode: RoundingMode = Precision.DEFAULT_ROUNDING) = {
+        bd.setScale(value, mode).round(new MathContext(value, mode))
+    }
 
     def increase = new SignificantFigures(value + 1)
 

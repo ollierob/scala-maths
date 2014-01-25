@@ -15,7 +15,7 @@ trait Evaluable {
 
     private var max: Option[(Precision, BigDecimal)] = None
 
-    final def evaluate(precision: Precision)(implicit mode: RoundingMode = Precision.DEFAULT_ROUNDING): BigDecimal = {
+    def evaluate(precision: Precision)(implicit mode: RoundingMode = Precision.DEFAULT_ROUNDING): BigDecimal = {
 
         max match {
             case Some((prec, value)) => prec > precision match {

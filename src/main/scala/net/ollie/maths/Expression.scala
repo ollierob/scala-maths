@@ -31,7 +31,37 @@ trait Expression
 
     def -(that: Expression): Expression = this + (-that)
 
-    def *(that: Expression): Expression = Expression.product(this, that)
+    /**
+     * This times that. Will create an expression product if the multiplication cannot be simplified.
+     * @param that
+     * @return
+     */
+    final def *(that: Expression): Expression = this ?*? that match {
+        case Some(x) => x
+        case _ => Expression.product(this, that)
+    }
+
+    /**
+     * This try-times-try that.
+     * Attempts to simplify to a single term, where possible, by multiplying this by the right term,
+     * then the right term multiplied by this on the left.
+     * @param that
+     * @return
+     */
+    final def ?*?(that: Expression): Option[Expression] = this.?*(that)(true) match {
+        case Some(x) => Some(x)
+        case _ => that.?*(this)(false) match {
+            case Some(x) => Some(x)
+            case _ => None
+        }
+    }
+
+    /**
+     * This try-times that.
+     * @param that
+     * @return
+     */
+    def ?*(that: Expression)(leftToRight: Boolean): Option[Expression] = None
 
     def /(that: Expression): Expression = Expression.divide(this, that)
 
@@ -98,7 +128,7 @@ class ExpressionFraction(val numerator: Expression, val denominator: Expression)
 
     def toConstant: Option[Number] = numerator.toConstant match {
         case Some(n: Number) => denominator.toConstant match {
-            case Some(d: Number) => n ?* d.inverse
+            case Some(d: Number) => n ?*? d.inverse
             case _ => None
         }
         case _ => None
@@ -108,12 +138,22 @@ class ExpressionFraction(val numerator: Expression, val denominator: Expression)
 
     def isEmpty = numerator.isEmpty
 
-    override def df(x: Variable) = (numerator.df(x) / denominator) - (denominator.df(x) * numerator / denominator)
+    override def df(x: Variable) = (numerator.df(x) / denominator) - (numerator * denominator.df(x) / (denominator ^ 2))
 
-    override def *(that: Expression) = that match {
-        case _ if denominator equals that => numerator
-        case ef: ExpressionFraction => (numerator * ef.numerator) / (denominator * ef.denominator)
-        case _ => super.*(that)
+    /**
+     * A fraction times something is a fraction.
+     * @param that
+     * @return
+     */
+    override def ?*(that: Expression)(leftToRight: Boolean): Option[Expression] = that match {
+        case _ if denominator equals that => Some(numerator)
+        case ef: ExpressionFraction => Some(this.?*(ef)(leftToRight))
+        case _ => super.?*(that)(leftToRight)
+    }
+
+    protected def ?*(that: ExpressionFraction)(leftToRight: Boolean): Expression = {
+        if (leftToRight) (this.numerator * that.numerator) / (this.denominator * that.denominator)
+        else (that.numerator * this.numerator) / (that.denominator * numerator)
     }
 
     override def toString = s"($numerator/$denominator)"
@@ -137,7 +177,11 @@ class ExpressionPower(val base: Expression, val power: Expression)
 
     def isEmpty = base.isEmpty
 
-    override def df(x: Variable) = (base ^ (power - 1)) * ((base.df(x) * power) + (base * Ln(base))) * power.df(x)
+    override def ^(x: Expression) = base ^ (power + x)
+
+    override def df(x: Variable) = {
+        (base ^ (power - 1)) * ((base.df(x) * power) + (base * Ln(base) * power.df(x)))
+    }
 
     override def toString = s"($base ^ $power)"
 
@@ -155,15 +199,41 @@ trait Nonvariate
 object Univariate {
 
     implicit def convert(expression: Expression): Univariate = expression match {
+        case n: Number => new NonvariateWrapper(n)
         case u: Univariate => u
-        case _ => new UnivariateWrapper(expression)
+        case _ if (expression.variables.size == 1) => new UnivariateWrapper(expression)
+        case _ => ???
+    }
+
+    private class NonvariateWrapper(val expression: Number)
+            extends AnyRef
+            with Univariate {
+
+        def replace(variables: Map[Variable, Expression]) = this
+
+        def toConstant: Option[Number] = expression.toConstant
+
+        def isEmpty = expression.isEmpty
+
+        override def df(x: Variable) = Zero
+
+        def variable = ???
+
+        override def apply[N <: Number](n: N)(implicit conversion: NumberIdentityArithmetic[N#System]): N#System = {
+            conversion.convert(expression).get
+        }
+
+        override def dx = Zero
+
+        override def toString = expression.toString
+
     }
 
     private class UnivariateWrapper(val expression: Expression)
             extends AnyRef
             with Univariate {
 
-        require(expression.variables.size == 1)
+        require(expression.variables.size == 1, "Require 1 variable but " + expression + " had " + expression.variables)
 
         def replace(variables: Map[Variable, Expression]) = expression.replace(variables)
 
@@ -175,7 +245,7 @@ object Univariate {
 
         override def +(that: Expression) = expression + that
 
-        override def *(that: Expression) = expression * that
+        override def ?*(that: Expression)(leftToRight: Boolean) = expression.?*(that)(leftToRight)
 
         override def /(that: Expression) = expression / that
 
@@ -196,7 +266,7 @@ trait Univariate
 
     def variables = Set(variable)
 
-    def apply[N <: Number](n: N)(implicit conversion: IdentityArithmetic[Number, N#System]): N#System = {
+    def apply[N <: Number](n: N)(implicit conversion: NumberIdentityArithmetic[N#System]): N#System = {
         val replaced: Option[Number] = replace(variable, n).toConstant
         conversion.convert(replaced).get
     }

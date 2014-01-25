@@ -54,11 +54,20 @@ trait RealNumber
 
     def -(that: RealNumber): RealNumber = this + (-that)
 
-    def *(that: RealNumber): RealNumber = this ?* that match {
-        case Some(n) => n
-        case _ => that ?* this match {
-            case Some(m) => m
-            case _ => RealProduct(this, that)
+    def *(that: RealNumber): RealNumber = {
+        println(s"EXECUTING $this * $that")
+        this ?* that match {
+            case Some(n) => {
+                println(s"n=>$n FROM " + this.getClass); n
+            }
+            case _ => that ?* this match {
+                case Some(m) => {
+                    println(s"m=>$m FROM " + that.getClass); m
+                }
+                case _ => {
+                    println("product"); RealProduct(this, that)
+                }
+            }
         }
     }
 
@@ -69,7 +78,7 @@ trait RealNumber
     }
 
     /**
-     * Shortcut for this ?* that and that ?* this
+     * Shortcut for this ?* that and that ?* this. Note that real multiplication is commutative.
      * @param that
      * @return
      */
@@ -86,7 +95,7 @@ trait RealNumber
      * @param that
      * @return
      */
-    def ?*(that: Number) = that match {
+    override def ?*(that: Number)(leftToRight: Boolean) = that match {
         case re: RealNumber => Some(this * re)
         case _ => None
     }
@@ -162,7 +171,7 @@ object RealNumber {
     def pow(base: RealNumber, power: IntegerNumber): RealNumber = RealPower(base, power)
 
     implicit object NumberToReal
-            extends IdentityArithmetic[Number, RealNumber] {
+            extends NumberIdentityArithmetic[RealNumber] {
 
         def convert(from: Number): Option[RealNumber] = from match {
             case re: RealNumber => Some(re)
@@ -363,6 +372,8 @@ object RealProduct {
 class RealProduct private(val terms: Seq[RealNumber])
         extends RealNumber
         with ApproximatelyEvaluated {
+
+    println(s"CREATED REAL PRODUCT $terms")
 
     require(!terms.isEmpty)
 

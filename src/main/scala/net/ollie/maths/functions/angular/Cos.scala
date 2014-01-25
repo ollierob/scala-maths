@@ -1,11 +1,14 @@
 package net.ollie.maths.functions.angular
 
+import scala.Some
+
 import net.ollie.maths._
-import net.ollie.maths.functions.ExpressionBuilder
+import net.ollie.maths.functions.{ExpressionBuilder, UnivariateFunction}
 import net.ollie.maths.functions.numeric.SquareRoot
 import net.ollie.maths.methods.MaclaurinSeries
 import net.ollie.maths.numbers.{One, Precision, RealNumber}
 import net.ollie.maths.numbers.real.Pi
+import org.nevec.rjm.BigDecimalMath
 
 /**
  * Created by Ollie on 03/01/14.
@@ -50,6 +53,8 @@ class RealCos(override val of: Angle)
 
     protected[this] def eval(precision: Precision) = series.evaluate(precision)
 
+    override def inverse = super[RealNumber].inverse
+
     override def variables = super[RealNumber].variables
 
     override def toConstant = Some(this)
@@ -67,10 +72,22 @@ object Sec
 
 }
 
+/**
+ *
+ * @see http://mathworld.wolfram.com/InverseCosine.html
+ */
 object ArcCos
-        extends ExpressionBuilder {
+        extends ExpressionBuilder
+        with UnivariateFunction[RealNumber, Angle] {
 
-    def apply(n: Number): Number = ??? //TODO
+    import Angle._
+
+    def apply(n: Number) = n match {
+        case re: RealNumber => apply(re)
+        case _ => ???
+    }
+
+    def apply(f: RealNumber): Angle = new RealArcCos(f) radians
 
     protected[this] def create(x: Expression) = new ArcCos(x)
 
@@ -79,14 +96,33 @@ object ArcCos
 }
 
 class ArcCos(val of: Expression)
-        extends CompositeBuilder {
+        extends CompositeBuilder
+        with Invertible {
 
     protected[this] def builder = ArcCos
 
     protected[this] def derivative(x: Expression) = -1 / SquareRoot(1 - (x ^ 2))
 
+    def inverse = Cos(of)
+
     def isEmpty = false
 
     override def toString = s"ArcCos($of)"
+
+}
+
+class RealArcCos(override val of: RealNumber)
+        extends ArcCos(of)
+        with RealNumber {
+
+    protected[this] def eval(precision: Precision) = BigDecimalMath.acos(of.approximatelyEvaluate(precision).underlying())
+
+    override def isEmpty = of == One
+
+    override def variables = super[RealNumber].variables
+
+    override def toConstant = super[RealNumber].toConstant
+
+    override def inverse = super[RealNumber].inverse
 
 }

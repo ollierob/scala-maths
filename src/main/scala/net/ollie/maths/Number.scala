@@ -27,7 +27,20 @@ trait Number
         addition.add(this, that.narrow)
     }
 
-    def ?*(that: Number): Option[Number]
+    override def ?*(that: Expression)(leftToRight: Boolean) = that match {
+        case n: Number => this.?*(n)(leftToRight)
+        case _ => super.?*(that)(leftToRight)
+    }
+
+    final def ?*?(that: Number): Option[Number] = this.?*(that)(true) match {
+        case Some(n) => Some(n)
+        case _ => that.?*(this)(false) match {
+            case Some(n) => Some(n)
+            case _ => None
+        }
+    }
+
+    protected def ?*(that: Number)(leftToRight: Boolean): Option[Number]
 
     def *[R <: Number, Combined <: Number](that: R)
                                           (implicit multiplication: MultiplicationArithmetic[System, R#System, Combined]): Combined = {

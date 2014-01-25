@@ -36,9 +36,20 @@ trait TetrationArithmetic[-Left, -Right, +Combined] {
 
 trait IdentityArithmetic[-From, +To] {
 
-    def convert(from: From): Option[To]
+    def convert(from: From): To
 
     def convert(from: Option[From]): Option[To] = from match {
+        case Some(f) => Some(convert(f))
+        case _ => None
+    }
+
+}
+
+trait NumberIdentityArithmetic[To] {
+
+    def convert(from: Number): Option[To]
+
+    def convert(from: Option[Number]): Option[To] = from match {
         case Some(f) => convert(f)
         case _ => None
     }
