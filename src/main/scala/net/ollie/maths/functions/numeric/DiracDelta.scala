@@ -8,10 +8,10 @@ import net.ollie.maths.numbers._
  * Created by Ollie on 05/01/14.
  */
 object DiracDelta
-        extends UnivariateFunction[Number, PositiveRealNumber]
+        extends UnivariateFunction[Number, PositiveReal]
         with ExpressionBuilder {
 
-    def apply(n: Number): PositiveRealNumber = if (n.isEmpty) Infinity else Zero
+    def apply(n: Number): PositiveReal = if (n.isEmpty) Infinity else Zero
 
     protected[this] def create(expr: Expression) = new DiracDelta(expr)
 

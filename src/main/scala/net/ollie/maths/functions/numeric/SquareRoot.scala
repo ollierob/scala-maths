@@ -12,30 +12,30 @@ import net.ollie.maths.numbers._
  */
 object SquareRoot {
 
-    private val HALF: RealNumber = One / 2
+    private val HALF: Real = One / 2
 
     def apply(x: Expression): Expression = x ^ HALF
 
 }
 
 object PositiveSquareRoot
-        extends UnivariateFunction[PositiveRealNumber, PositiveRealNumber] {
+        extends UnivariateFunction[PositiveReal, PositiveReal] {
 
-    def apply(f: RealNumber): Option[PositiveRealNumber] = f match {
+    def apply(f: Real): Option[PositiveReal] = f match {
         case Zero => Some(Zero)
         case _ if f.isStrictlyPositive => Some(apply(f.abs))
         case _ => None
     }
 
-    def apply(f: PositiveRealNumber): PositiveRealNumber = if (f.isEmpty) Zero else new PositiveSquareRoot(f)
+    def apply(f: PositiveReal): PositiveReal = if (f.isEmpty) Zero else new PositiveSquareRoot(f)
 
-    def unapply(root: PositiveSquareRoot): Option[PositiveRealNumber] = Some(root.of)
+    def unapply(root: PositiveSquareRoot): Option[PositiveReal] = Some(root.of)
 
 }
 
-class PositiveSquareRoot(val of: PositiveRealNumber)
+class PositiveSquareRoot(val of: PositiveReal)
         extends AnyRef
-        with PositiveRealNumber
+        with PositiveReal
         with ApproximatelyEvaluated {
 
     override def approx(precision: Precision) = {
@@ -47,7 +47,7 @@ class PositiveSquareRoot(val of: PositiveRealNumber)
 
     override def squared = of
 
-    override def ?*(that: RealNumber) = that match {
+    override def ?*(that: Real) = that match {
         case PositiveSquareRoot(fo) => Some(PositiveSquareRoot(of * fo))
         case _ => super.?*(that)
     }

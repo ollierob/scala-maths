@@ -2,18 +2,18 @@ package net.ollie.maths.functions.angular
 
 import net.ollie.maths.Empty
 import net.ollie.maths.functions.angular.Angle.AngleBuilder
-import net.ollie.maths.numbers.{Precision, RealNumber, Zero}
+import net.ollie.maths.numbers.{Precision, Real, Zero}
 import net.ollie.maths.numbers.real.Pi
 
 trait Angle
-        extends RealNumber {
+        extends Real {
 
-    def toRadians: RealNumber
+    def toRadians: Real
 
     def isEmpty = toRadians.isEmpty
 
     def classify = {
-        val rads: RealNumber = toRadians.abs
+        val rads: Real = toRadians.abs
         rads match {
             case _ if rads < (Pi / 2) => Classification.Acute
             case _ if rads == Pi / 2 => Classification.Right
@@ -35,14 +35,14 @@ trait Angle
 
     def -(that: Angle): Angle = builder.create(this.toRadians - that.toRadians)
 
-    override def *(that: RealNumber): Angle = builder.create(this.toRadians * that)
+    override def *(that: Real): Angle = builder.create(this.toRadians * that)
 
-    override def ?+(that: RealNumber) = that match {
+    override def ?+(that: Real) = that match {
         case angle: Angle => Some(Radians(this.toRadians + angle.toRadians))
         case _ => super.?+(that)
     }
 
-    override def ?*(that: RealNumber) = that match {
+    override def ?*(that: Real) = that match {
         case angle: Angle => Some(Radians(toRadians * angle.toRadians))
         case _ => Some(Radians(toRadians * that))
     }
@@ -53,14 +53,14 @@ object Angle extends Enumeration {
 
     trait AngleBuilder {
 
-        def create(radians: RealNumber): Angle
+        def create(radians: Real): Angle
 
     }
 
     implicit class AngularInt(val int: Int)
             extends Angular(int)
 
-    implicit class Angular(val value: RealNumber) {
+    implicit class Angular(val value: Real) {
 
         def radians: Radians = Radians(value)
 
@@ -131,7 +131,7 @@ object EmptyAngle
 
 }
 
-class Radians(val value: RealNumber)
+class Radians(val value: Real)
         extends AnyRef
         with Angle {
 
@@ -150,7 +150,7 @@ class Radians(val value: RealNumber)
 
 object Radians {
 
-    implicit def apply(re: RealNumber): Radians = re match {
+    implicit def apply(re: Real): Radians = re match {
         case Zero => EmptyAngle
         case rad: Radians => rad
         case angle: Angle => new Radians(angle.toRadians)
@@ -159,13 +159,13 @@ object Radians {
 
     implicit object Builder extends AngleBuilder {
 
-        def create(radians: RealNumber) = Radians(radians)
+        def create(radians: Real) = Radians(radians)
 
     }
 
 }
 
-class Degrees(val value: RealNumber)
+class Degrees(val value: Real)
         extends AnyRef
         with Angle {
 
@@ -185,7 +185,7 @@ class Degrees(val value: RealNumber)
 
 object Degrees {
 
-    def apply(re: RealNumber): Degrees = re match {
+    def apply(re: Real): Degrees = re match {
         case deg: Degrees => deg
         case _ => new Degrees(re * 180 / Pi)
     }
@@ -193,13 +193,13 @@ object Degrees {
     implicit object Builder
             extends AngleBuilder {
 
-        def create(radians: RealNumber) = apply(radians)
+        def create(radians: Real) = apply(radians)
 
     }
 
 }
 
-class Grads(val value: RealNumber) extends AnyRef with Angle {
+class Grads(val value: Real) extends AnyRef with Angle {
 
     def toRadians = value * Pi / 200
 
@@ -211,7 +211,7 @@ class Grads(val value: RealNumber) extends AnyRef with Angle {
 
 }
 
-class Turns(val value: RealNumber) extends AnyRef with Angle {
+class Turns(val value: Real) extends AnyRef with Angle {
 
     def toRadians = value * 2 * Pi
 

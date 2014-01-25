@@ -1,6 +1,6 @@
 package net.ollie.maths
 
-import net.ollie.maths.numbers.PositiveRealNumber
+import net.ollie.maths.numbers.PositiveReal
 
 /**
  * Created by Ollie on 02/01/14.
@@ -16,7 +16,7 @@ trait Number
 
     override def unary_-(): System = ??? //FIXME override Differentiable.unary_-()
 
-    def abs: PositiveRealNumber
+    def abs: PositiveReal
 
     def inverse: Number
 

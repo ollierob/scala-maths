@@ -1,13 +1,13 @@
 package net.ollie.maths.numbers.complex
 
 import net.ollie.maths.functions.angular.{Angle, Cos, Sin}
-import net.ollie.maths.numbers.RealNumber
+import net.ollie.maths.numbers.Real
 
 /**
  * Created by Ollie on 12/01/14.
  */
-class PolarComplexNumber(val r: RealNumber, val theta: Angle)
-        extends ComplexNumber {
+class PolarComplex(val r: Real, val theta: Angle)
+        extends Complex {
 
     def re = r * Cos(theta)
 

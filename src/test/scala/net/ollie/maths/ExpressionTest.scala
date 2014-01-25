@@ -1,6 +1,6 @@
 package net.ollie.maths
 
-import net.ollie.maths.numbers.{IntegerNumber, NaturalNumber, One, Zero}
+import net.ollie.maths.numbers.{Integer, Natural, One, Zero}
 import org.scalatest.{FlatSpec, Matchers}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
@@ -15,8 +15,8 @@ class ExpressionTest extends FlatSpec with Matchers {
 
     "5 - 2x" should "reduce to constant" in {
         val ex: Expression = 5 - (2 * x.asInstanceOf[Expression])
-        ex.replace(x, 1).toConstant shouldBe (Some(NaturalNumber(3)))
-        (-ex).replace(x, 1).toConstant shouldBe (Some(IntegerNumber(-3)))
+        ex.replace(x, 1).toConstant shouldBe (Some(Natural(3)))
+        (-ex).replace(x, 1).toConstant shouldBe (Some(Integer(-3)))
     }
 
     "x / 2" should "reduce to a constant" in {

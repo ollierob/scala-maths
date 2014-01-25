@@ -19,7 +19,7 @@ object Product {
         case _ => new Product(expressions)
     }
 
-    def apply[N <: Number](f: (IntegerNumber) => N, range: Range)(implicit multiplication: MultiplicationArithmetic[N#System, N#System, N#System]): N#System = {
+    def apply[N <: Number](f: (Integer) => N, range: Range)(implicit multiplication: MultiplicationArithmetic[N#System, N#System, N#System]): N#System = {
         var product: N#System = multiplication.one
         for (j <- range) {
             product = multiplication.multiply(product, f(j).narrow)
@@ -27,11 +27,11 @@ object Product {
         product
     }
 
-    def apply[N <: Number](f: (IntegerNumber) => N, min: IntegerNumber, max: IntegerNumber)(implicit multiplication: MultiplicationArithmetic[N#System, N#System, N#System]): N#System = {
+    def apply[N <: Number](f: (Integer) => N, min: Integer, max: Integer)(implicit multiplication: MultiplicationArithmetic[N#System, N#System, N#System]): N#System = {
         apply(f, min.toInt.get to max.toInt.get)(multiplication)
     }
 
-    def apply(fn: (NaturalNumber) => RealNumber, start: NaturalNumber): RealNumber = new InfiniteRealProduct(fn, start)
+    def apply(fn: (Natural) => Real, start: Natural): Real = new InfiniteRealProduct(fn, start)
 
 }
 
@@ -118,16 +118,16 @@ class Product[+T <: Expression](val terms: Seq[T])
 
 }
 
-class InfiniteRealProduct(f: (NaturalNumber) => RealNumber, start: NaturalNumber)
-        extends RealNumber
+class InfiniteRealProduct(f: (Natural) => Real, start: Natural)
+        extends Real
         with IterativelyEvaluated {
 
     def evaluationIterator(startPrecision: Precision) = new EvaluationIterator() {
 
-        private val terms: ArrayBuffer[RealNumber] = new ArrayBuffer[RealNumber]()
+        private val terms: ArrayBuffer[Real] = new ArrayBuffer[Real]()
 
-        def next(nth: NaturalNumber, precision: Precision) = {
-            val n: NaturalNumber = nth + start
+        def next(nth: Natural, precision: Precision) = {
+            val n: Natural = nth + start
             terms += f(n)
             terms.map(_.approximatelyEvaluate(precision)).product
         }

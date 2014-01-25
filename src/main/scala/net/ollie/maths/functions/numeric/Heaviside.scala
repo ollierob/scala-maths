@@ -2,21 +2,21 @@ package net.ollie.maths.functions.numeric
 
 import net.ollie.maths._
 import net.ollie.maths.functions.{ExpressionBuilder, UnivariateFunction}
-import net.ollie.maths.numbers.{One, RealNumber, Zero}
+import net.ollie.maths.numbers.{One, Real, Zero}
 
 /**
  * Created by Ollie on 10/01/14.
  */
 object Heaviside
-        extends UnivariateFunction[RealNumber, RealNumber]
+        extends UnivariateFunction[Real, Real]
         with ExpressionBuilder {
 
     def apply(n: Number): Number = n match {
-        case re: RealNumber => apply(re)
+        case re: Real => apply(re)
         case _ => ???
     }
 
-    def apply(f: RealNumber): RealNumber = f match {
+    def apply(f: Real): Real = f match {
         case Zero => empty
         case _ if f.isStrictlyPositive => One
         case _ => Zero

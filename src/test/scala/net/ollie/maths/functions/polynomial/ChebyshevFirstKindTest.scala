@@ -1,9 +1,9 @@
 package net.ollie.maths.functions.polynomial
 
-import org.scalatest.{Matchers, FlatSpec}
 import net.ollie.maths.Variable
-import net.ollie.maths.numbers.{Zero, NaturalNumber, One}
+import net.ollie.maths.numbers.{Integer, One, Zero}
 import org.junit.runner.RunWith
+import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.junit.JUnitRunner
 
 /**
@@ -28,9 +28,25 @@ class ChebyshevFirstKindTest extends FlatSpec with Matchers {
         it should "differentiate to 4x" in {
             val df = f.df(x)
             df.replace(x, Zero).toConstant shouldBe Some(Zero)
-            println(f.replace(x, Variable("y")))
-            println(df)
-            df.replace(x, One).toConstant shouldBe Some(NaturalNumber(4))
+            df.replace(x, One).toConstant shouldBe Some(Integer(4))
+        }
+
+    }
+
+    behavior of "T(3)(x)"
+
+    {
+
+        val f = ChebyshevFirstKind(3)(x) //4x^3 - 3x
+
+        it should "evaluate" in {
+            f.replace(x, One).toConstant shouldBe Some(One)
+        }
+
+        it should "differentiate to 12x^2 - 3" in {
+            val df = f.df(x)
+            df.replace(x, Zero).toConstant shouldBe Some(Integer(-3))
+            df.replace(x, One).toConstant shouldBe Some(Integer(9))
         }
 
     }

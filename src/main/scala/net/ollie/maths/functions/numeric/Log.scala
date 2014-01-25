@@ -12,7 +12,7 @@ import org.nevec.rjm.BigDecimalMath
 trait Log
         extends Invertible {
 
-    def base: RealNumber
+    def base: Real
 
     def of: Expression
 
@@ -26,7 +26,7 @@ trait Log
 
 object Log {
 
-    def apply(of: PositiveRealNumber, base: RealNumber): RealNumber = {
+    def apply(of: PositiveReal, base: Real): Real = {
         if (of.isEmpty) -Infinity
         else base match {
             case _ if base.isStrictlyPositive => Ln(of) / Ln(base.abs)
@@ -34,13 +34,13 @@ object Log {
         }
     }
 
-    def apply(of: Expression, base: RealNumber): Expression = Ln(of) / Ln(base)
+    def apply(of: Expression, base: Real): Expression = Ln(of) / Ln(base)
 
 }
 
 object Log10 {
 
-    def apply(of: PositiveRealNumber): RealNumber = Log(of, 10)
+    def apply(of: PositiveReal): Real = Log(of, 10)
 
     def apply(expr: Expression): Expression = Log(expr, 10)
 
@@ -51,18 +51,18 @@ object Ln
 
     def apply(n: Number): Number = n match {
         case Zero => empty
-        case re: RealNumber if re.isStrictlyPositive => apply(re.abs)
+        case re: Real if re.isStrictlyPositive => apply(re.abs)
         case _ => Operation.illegal(s"Number $n was not a real, positive number!")
     }
 
-    def apply(re: PositiveRealNumber): RealNumber = new RealLn(re)
+    def apply(re: PositiveReal): Real = new RealLn(re)
 
     protected[this] def create(expr: Expression) = expr match {
         case Exp(of) => of
         case _ => new Ln(expr)
     }
 
-    protected[this] def empty: RealNumber = -Infinity
+    protected[this] def empty: Real = -Infinity
 
     def unapply(ln: Ln): Option[Expression] = Some(ln.of)
 
@@ -84,16 +84,16 @@ class Ln(val of: Expression)
 
 }
 
-class RealLn(override val of: PositiveRealNumber)
+class RealLn(override val of: PositiveReal)
         extends Ln(of)
-        with RealNumber {
+        with Real {
 
-    override def inverse = super[RealNumber].inverse
+    override def inverse = super[Real].inverse
 
     protected[this] def eval(precision: Precision) = BigDecimalMath.log(of.evaluate(precision).underlying())
 
-    override def toConstant = super[RealNumber].toConstant
+    override def toConstant = super[Real].toConstant
 
-    override def variables = super[RealNumber].variables
+    override def variables = super[Real].variables
 
 }

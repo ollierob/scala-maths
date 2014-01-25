@@ -3,18 +3,18 @@ package net.ollie.maths.functions.angular
 import net.ollie.maths.{CompositeBuilder, Expression, Number}
 import net.ollie.maths.functions.{ExpressionBuilder, UnivariateFunction}
 import net.ollie.maths.methods.ApproximatelyEvaluated
-import net.ollie.maths.numbers.{Precision, RealNumber, Zero}
+import net.ollie.maths.numbers.{Precision, Real, Zero}
 
 /**
  * Created by Ollie on 18/01/14.
  */
 object Tan
         extends ExpressionBuilder
-        with UnivariateFunction[Angle, RealNumber] {
+        with UnivariateFunction[Angle, Real] {
 
     def apply(n: Number): Number = n match {
         case Zero => empty
-        case re: RealNumber => apply(Radians(re))
+        case re: Real => apply(Radians(re))
         case _ => ???
     }
 
@@ -41,16 +41,16 @@ class Tan(val of: Expression)
 
 class RealTan(override val of: Angle)
         extends Tan(of)
-        with RealNumber
+        with Real
         with ApproximatelyEvaluated {
 
-    private lazy val f: RealNumber = Sin(of) / Cos(of)
+    private lazy val f: Real = Sin(of) / Cos(of)
 
     override def approx(precision: Precision) = f.approximatelyEvaluate(precision)
 
     override def toConstant = Some(this)
 
-    override def variables = super[RealNumber].variables
+    override def variables = super[Real].variables
 
 }
 
@@ -69,7 +69,7 @@ object ArcTan
 
     def apply(n: Number): Number = ???
 
-    def apply(re: RealNumber): Angle = ???
+    def apply(re: Real): Angle = ???
 
     protected[this] def create(expr: Expression): Expression = ???
 

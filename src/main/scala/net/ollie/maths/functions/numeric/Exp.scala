@@ -15,11 +15,11 @@ object Exp
         extends ExpressionBuilder {
 
     def apply(n: Number): Number = n match {
-        case re: RealNumber => apply(re)
+        case re: Real => apply(re)
         case _ => ???
     }
 
-    def apply(re: RealNumber): RealNumber = re match {
+    def apply(re: Real): Real = re match {
         case Zero => empty
         case MinusInfinity => Zero
         case _ => new ExpOf(re)
@@ -54,9 +54,9 @@ class Exp(val of: Expression)
 
 }
 
-class ExpOf(re: RealNumber)
+class ExpOf(re: Real)
         extends PositiveRealPower(EulersNumber, re)
-        with RealNumber {
+        with Real {
 
     override def isEmpty = MinusInfinity == re
 

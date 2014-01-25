@@ -1,7 +1,7 @@
 package net.ollie.maths.functions.numeric
 
 import net.ollie.maths.Variable
-import net.ollie.maths.numbers.{Infinity, IntegerNumber, One, Zero}
+import net.ollie.maths.numbers.{Infinity, Integer, One, Zero}
 import org.scalatest.{FlatSpec, Matchers}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
@@ -37,7 +37,7 @@ class ExpTest extends FlatSpec with Matchers {
     }
 
     "Exp(2x)" should "differentiate to 2 Exp(2x)" in {
-        val two = IntegerNumber(2)
+        val two = Integer(2)
         val exp = Exp(two * x)
         val d = exp.df(x)
         println(d)

@@ -2,7 +2,7 @@ package net.ollie.maths.functions.polynomial
 
 import net.ollie.maths._
 import net.ollie.maths.functions.{Represented, Modal}
-import net.ollie.maths.numbers.{IntegerNumber, NaturalNumber, Zero}
+import net.ollie.maths.numbers.{Integer, Natural, Zero}
 
 /**
  * Created by Ollie on 08/01/14.
@@ -17,7 +17,7 @@ trait AssociatedLegendrePolynomial
 
 object AssociatedLegendrePolynomial {
 
-    def apply(l: NaturalNumber, m: IntegerNumber, x: Expression): AssociatedLegendrePolynomial = m match {
+    def apply(l: Natural, m: Integer, x: Expression): AssociatedLegendrePolynomial = m match {
         case Zero => LegendrePolynomial(l, x)
         case _ if m.abs > l => new EmptyAssociatedLegendrePolynomial(l, m)
         case _ => new RegularAssociatedLegendrePolynomial(l, m, x)
@@ -28,7 +28,7 @@ object AssociatedLegendrePolynomial {
 /**
  * When |m| > l the polynomial is empty.
  */
-class EmptyAssociatedLegendrePolynomial(val l: NaturalNumber, val m: IntegerNumber)
+class EmptyAssociatedLegendrePolynomial(val l: Natural, val m: Integer)
         extends AssociatedLegendrePolynomial
         with Empty {
 
@@ -42,7 +42,7 @@ class EmptyAssociatedLegendrePolynomial(val l: NaturalNumber, val m: IntegerNumb
 
 }
 
-class RegularAssociatedLegendrePolynomial(val l: NaturalNumber, val m: IntegerNumber, val x: Expression)
+class RegularAssociatedLegendrePolynomial(val l: Natural, val m: Integer, val x: Expression)
         extends AssociatedLegendrePolynomial {
 
     import net.ollie.maths.functions.polynomial.{AssociatedLegendrePolynomial => Plm}

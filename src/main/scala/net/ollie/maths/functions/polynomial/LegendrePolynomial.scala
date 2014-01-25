@@ -20,15 +20,15 @@ trait LegendrePolynomial
 
 object LegendrePolynomial {
 
-    def apply(l: NaturalNumber, z: Expression): LegendrePolynomial = l match {
+    def apply(l: Natural, z: Expression): LegendrePolynomial = l match {
         case Zero => ZeroLegendrePolynomial
         case One => new OneLegendrePolynomial(z)
         case _ => new SomeLegendrePolynomial(l)(z)
     }
 
-    def apply(l: NaturalNumber, re: RealNumber): RealNumber = {
+    def apply(l: Natural, re: Real): Real = {
         LegendrePolynomial(l, re.asInstanceOf[Expression]).toConstant match {
-            case Some(re: RealNumber) => re
+            case Some(re: Real) => re
             case _ => ???
         }
     }
@@ -37,7 +37,7 @@ object LegendrePolynomial {
 
 object ZeroLegendrePolynomial
         extends LegendrePolynomial
-        with NaturalNumber {
+        with Natural {
 
     def l = Zero
 
@@ -45,9 +45,9 @@ object ZeroLegendrePolynomial
 
     def evaluate = f.evaluate
 
-    override def toConstant = super[NaturalNumber].toConstant
+    override def toConstant = super[Natural].toConstant
 
-    override def variables = super[NaturalNumber].variables
+    override def variables = super[Natural].variables
 
     override def toString = "LegendreP(0)()"
 
@@ -64,7 +64,7 @@ class OneLegendrePolynomial(val of: Expression)
 
 }
 
-class SomeLegendrePolynomial(val l: NaturalNumber)(val x: Expression)
+class SomeLegendrePolynomial(val l: Natural)(val x: Expression)
         extends LegendrePolynomial {
 
     require(l > One)

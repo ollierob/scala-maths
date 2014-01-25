@@ -7,7 +7,7 @@ import net.ollie.maths.{EmptyNumber, Variable}
  * Created by Ollie on 01/01/14.
  */
 object Zero
-        extends NaturalNumber
+        extends Natural
         with EmptyNumber {
 
     private lazy val evaluated: BigInt = 0
@@ -28,13 +28,13 @@ object Zero
 
     override def df(x: Variable) = this
 
-    override def ?+(that: RealNumber) = Some(that)
+    override def ?+(that: Real) = Some(that)
 
-    override def +(that: NaturalNumber) = that
+    override def +(that: Natural) = that
 
-    override def ?*(that: RealNumber) = Some(this)
+    override def ?*(that: Real) = Some(this)
 
-    override def *(that: NaturalNumber) = this
+    override def *(that: Natural) = this
 
     override def toString = super[EmptyNumber].toString
 

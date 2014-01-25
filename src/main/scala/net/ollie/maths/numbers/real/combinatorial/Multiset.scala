@@ -1,18 +1,18 @@
 package net.ollie.maths.numbers.real.combinatorial
 
-import net.ollie.maths.numbers.{NaturalNumber, Precision, RealNumber}
+import net.ollie.maths.numbers.{Natural, Precision, Real}
 
 /**
  * Created by Ollie on 22/01/14.
  */
 object Multiset {
 
-    def apply(n: NaturalNumber, k: NaturalNumber): RealNumber = new Multiset(n, k)
+    def apply(n: Natural, k: Natural): Real = new Multiset(n, k)
 
 }
 
-class Multiset(val n: NaturalNumber, k: NaturalNumber)
-        extends RealNumber {
+class Multiset(val n: Natural, k: Natural)
+        extends Real {
 
     private val binomial = BinomialCoefficient(n + k - 1, k)
 

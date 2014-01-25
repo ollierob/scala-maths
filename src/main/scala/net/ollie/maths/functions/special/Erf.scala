@@ -4,8 +4,8 @@ import net.ollie.maths.{CompositeBuilder, Expression, Number}
 import net.ollie.maths.functions.{ExpressionBuilder, Represented, UnivariateFunction}
 import net.ollie.maths.functions.numeric.{Exp, PositiveSquareRoot}
 import net.ollie.maths.methods.{Integral, SimpsonsIntegrationMethod}
-import net.ollie.maths.numbers.{Precision, RealNumber, Zero}
-import net.ollie.maths.numbers.complex.{ComplexNumber, ImaginaryUnit => i}
+import net.ollie.maths.numbers.{Precision, Real, Zero}
+import net.ollie.maths.numbers.complex.{Complex, ImaginaryUnit => i}
 import net.ollie.maths.numbers.real.Pi
 
 /**
@@ -14,15 +14,15 @@ import net.ollie.maths.numbers.real.Pi
  */
 object Erf
         extends ExpressionBuilder
-        with UnivariateFunction[RealNumber, RealNumber] {
+        with UnivariateFunction[Real, Real] {
 
     def apply(n: Number): Number = n match {
-        case re: RealNumber => apply(re)
-        case z: ComplexNumber => apply(z.toReal.getOrElse(???))
+        case re: Real => apply(re)
+        case z: Complex => apply(z.toReal.getOrElse(???))
         case _ => ???
     }
 
-    def apply(re: RealNumber) = re match {
+    def apply(re: Real) = re match {
         case Zero => empty
         case _ => new RealErf(re)
     }
@@ -47,8 +47,8 @@ class Erf(val of: Expression)
 
 }
 
-class RealErf(val x: RealNumber)
-        extends RealNumber {
+class RealErf(val x: Real)
+        extends Real {
 
     private lazy val integral = 2 * Integral(t => Exp(-(t ^ 2)), 0, x)(SimpsonsIntegrationMethod) / PositiveSquareRoot(Pi)
 
@@ -66,15 +66,15 @@ class RealErf(val x: RealNumber)
  */
 object Erfi
         extends ExpressionBuilder
-        with UnivariateFunction[ComplexNumber, ComplexNumber] {
+        with UnivariateFunction[Complex, Complex] {
 
     def apply(n: Number) = n match {
-        case re: RealNumber => apply(ComplexNumber(re))
-        case z: ComplexNumber => apply(z)
+        case re: Real => apply(Complex(re))
+        case z: Complex => apply(z)
         case _ => ???
     }
 
-    def apply(f: ComplexNumber): ComplexNumber = ???
+    def apply(f: Complex): Complex = ???
 
     protected[this] def create(expr: Expression) = new Erfi(expr)
 

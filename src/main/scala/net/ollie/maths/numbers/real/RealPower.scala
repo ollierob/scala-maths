@@ -7,11 +7,11 @@ import net.ollie.maths.numbers._
  * Created by Ollie on 12/01/14.
  */
 trait RealPower
-        extends RealNumber {
+        extends Real {
 
-    protected def base: RealNumber
+    protected def base: Real
 
-    protected def power: RealNumber
+    protected def power: Real
 
     override def isEmpty = base.isEmpty
 
@@ -21,7 +21,7 @@ trait RealPower
 
 object RealPower {
 
-    def apply(base: RealNumber, power: IntegerNumber)(implicit convention: ZeroToPowerZeroConvention = ZeroToPowerZeroIsOne): RealNumber = (base, power) match {
+    def apply(base: Real, power: Integer)(implicit convention: ZeroToPowerZeroConvention = ZeroToPowerZeroIsOne): Real = (base, power) match {
         case (Zero, Zero) => convention.value
         case (Zero, _) if power > Zero => Zero
         case (Zero, _) if power < Zero => Zero.inverse
@@ -47,11 +47,11 @@ object RealPower {
 
 }
 
-class RealToIntegerPower(val base: RealNumber, val power: IntegerNumber)
+class RealToIntegerPower(val base: Real, val power: Integer)
         extends RealPower
         with ApproximatelyEvaluated {
 
-    override def ?*(that: RealNumber) = that match {
+    override def ?*(that: Real) = that match {
         case pow: RealToIntegerPower if base == pow.base => Some(RealPower(base, power + pow.power))
         case _ if that == base => Some(RealPower(base, power + 1))
         case _ if that == -base => Some(-RealPower(base, power + 1))
@@ -63,7 +63,7 @@ class RealToIntegerPower(val base: RealNumber, val power: IntegerNumber)
         else throw new UnsupportedOperationException(s"Precision $precision unsupported for evaluation of $this")
     }
 
-    override def ?==(that: RealNumber) = that match {
+    override def ?==(that: Real) = that match {
         case pow: RealToIntegerPower if base == pow.base => Some(power == pow.power)
         case _ => super.?==(that)
     }
@@ -72,7 +72,7 @@ class RealToIntegerPower(val base: RealNumber, val power: IntegerNumber)
 
 trait ZeroToPowerZeroConvention {
 
-    def value: RealNumber
+    def value: Real
 
 }
 

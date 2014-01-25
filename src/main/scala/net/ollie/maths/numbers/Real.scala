@@ -5,28 +5,28 @@ import scala.collection.mutable
 
 import net.ollie.maths._
 import net.ollie.maths.methods.{ApproximatelyEvaluated, Product, Series}
-import net.ollie.maths.numbers.real.{MassiveNumber, PowerTower, RealPower}
+import net.ollie.maths.numbers.real.{Massive, PowerTower, RealPower}
 
 /**
  * Created by Ollie on 01/01/14.
  */
-trait RealNumber
+trait Real
         extends Number
         with Evaluable {
 
-    final type System = RealNumber
+    final type System = Real
 
     override def replace(variables: Map[Variable, Expression]) = this
 
-    override def unary_-(): RealNumber = RealNumber.negate(this)
+    override def unary_-(): Real = Real.negate(this)
 
-    override def df(x: Variable): RealNumber with Empty = Zero
+    override def df(x: Variable): Real with Empty = Zero
 
-    def inverse: RealNumber = RealNumber.inverse(this)
+    def inverse: Real = Real.inverse(this)
 
-    def abs = RealNumber.abs(this)
+    def abs = Real.abs(this)
 
-    def +(that: RealNumber): RealNumber = this ?+ that match {
+    def +(that: Real): Real = this ?+ that match {
         case Some(n) => n
         case _ => that ?+ this match {
             case Some(m) => m
@@ -34,12 +34,12 @@ trait RealNumber
         }
     }
 
-    def ?+(that: RealNumber): Option[RealNumber] = that match {
+    def ?+(that: Real): Option[Real] = that match {
         case Zero => Some(this)
         case _ => None
     }
 
-    def ?+?(that: RealNumber): Option[RealNumber] = this ?+ that match {
+    def ?+?(that: Real): Option[Real] = this ?+ that match {
         case Some(m) => Some(m)
         case _ => that ?+ this match {
             case Some(m) => Some(m)
@@ -48,13 +48,13 @@ trait RealNumber
     }
 
     def ?+(that: Number) = that match {
-        case re: RealNumber => Some(this + re)
+        case re: Real => Some(this + re)
         case _ => None
     }
 
-    def -(that: RealNumber): RealNumber = this + (-that)
+    def -(that: Real): Real = this + (-that)
 
-    def *(that: RealNumber): RealNumber = {
+    def *(that: Real): Real = {
         this ?* that match {
             case Some(n) => n
             case _ => that ?* this match {
@@ -64,7 +64,7 @@ trait RealNumber
         }
     }
 
-    def ?*(that: RealNumber): Option[RealNumber] = that match {
+    def ?*(that: Real): Option[Real] = that match {
         case Zero => Some(Zero)
         case One => Some(this)
         case _ => None
@@ -75,7 +75,7 @@ trait RealNumber
      * @param that
      * @return
      */
-    def ?*?(that: RealNumber): Option[RealNumber] = this ?* that match {
+    def ?*?(that: Real): Option[Real] = this ?* that match {
         case Some(m) => Some(m)
         case _ => that ?* this match {
             case Some(m) => Some(m)
@@ -89,31 +89,31 @@ trait RealNumber
      * @return
      */
     override def ?*(that: Number)(leftToRight: Boolean) = that match {
-        case re: RealNumber => Some(this * re)
+        case re: Real => Some(this * re)
         case _ => None
     }
 
-    def /(that: RealNumber): RealNumber = this * that.inverse
+    def /(that: Real): Real = this * that.inverse
 
-    def ^(that: IntegerNumber): RealNumber = RealNumber.pow(this, that)
+    def ^(that: Integer): Real = Real.pow(this, that)
 
     def ?^(that: Number): Option[Number] = that match {
-        case int: IntegerNumber => Some(this ^ int)
-        case re: RealNumber if this.isStrictlyPositive => Some(this.abs ^ re)
+        case int: Integer => Some(this ^ int)
+        case re: Real if this.isStrictlyPositive => Some(this.abs ^ re)
         case _ => None
     }
 
-    def squared: PositiveRealNumber = (this ^ 2).abs
+    def squared: PositiveReal = (this ^ 2).abs
 
-    def >(that: RealNumber): Boolean = this.compareTo(that) > 0
+    def >(that: Real): Boolean = this.compareTo(that) > 0
 
-    def >=(that: RealNumber): Boolean = this.compareTo(that) >= 0
+    def >=(that: Real): Boolean = this.compareTo(that) >= 0
 
-    def <(that: RealNumber): Boolean = this.compareTo(that) < 0
+    def <(that: Real): Boolean = this.compareTo(that) < 0
 
-    def <=(that: RealNumber): Boolean = this.compareTo(that) <= 0
+    def <=(that: Real): Boolean = this.compareTo(that) <= 0
 
-    def compareTo(that: RealNumber): Int = {
+    def compareTo(that: Real): Int = {
         if (this eq that) 0
         else this.tryCompareTo(that) match {
             case Some(i) => i
@@ -126,14 +126,14 @@ trait RealNumber
 
     def isStrictlyPositive: Boolean = this > 0
 
-    protected def tryCompareTo(that: RealNumber): Option[Int] = None
+    protected def tryCompareTo(that: Real): Option[Int] = None
 
     override def equals(number: Number) = number match {
-        case re: RealNumber => this.equals(re)
+        case re: Real => this.equals(re)
         case _ => super.equals(number)
     }
 
-    def equals(that: RealNumber): Boolean = super.equals(that) || (this ?== that match {
+    def equals(that: Real): Boolean = super.equals(that) || (this ?== that match {
         case Some(b) => b
         case _ => that ?== this match {
             case Some(b) => b
@@ -141,33 +141,33 @@ trait RealNumber
         }
     })
 
-    def ?==(that: RealNumber): Option[Boolean] = None
+    def ?==(that: Real): Option[Boolean] = None
 
 }
 
-object RealNumber {
+object Real {
 
-    implicit def apply(int: Int): RealNumber = IntegerNumber(int)
+    implicit def apply(int: Int): Real = Integer(int)
 
-    def apply(value: BigDecimal): RealNumber = if (value == 0) Zero else new ExactRealNumber(value)
+    def apply(value: BigDecimal): Real = if (value == 0) Zero else new ExactReal(value)
 
-    def negate(re: RealNumber) = if (re.isEmpty) Zero else new NegatedRealNumber(re)
+    def negate(re: Real) = if (re.isEmpty) Zero else new NegatedReal(re)
 
-    def inverse(re: RealNumber) = new InverseRealNumber(re)
+    def inverse(re: Real) = new InverseReal(re)
 
-    def abs(re: RealNumber): PositiveRealNumber = re match {
+    def abs(re: Real): PositiveReal = re match {
         case Zero => Zero
-        case p: PositiveRealNumber => p
-        case _ => new AbsRealNumber(re)
+        case p: PositiveReal => p
+        case _ => new AbsReal(re)
     }
 
-    def pow(base: RealNumber, power: IntegerNumber): RealNumber = RealPower(base, power)
+    def pow(base: Real, power: Integer): Real = RealPower(base, power)
 
     implicit object NumberToReal
-            extends NumberIdentityArithmetic[RealNumber] {
+            extends NumberIdentityArithmetic[Real] {
 
-        def convert(from: Number): Option[RealNumber] = from match {
-            case re: RealNumber => Some(re)
+        def convert(from: Number): Option[Real] = from match {
+            case re: Real => Some(re)
             case _ => None
         }
 
@@ -176,53 +176,53 @@ object RealNumber {
     }
 
     implicit object RealArithmetic
-            extends AdditionArithmetic[RealNumber, RealNumber, RealNumber]
-            with MultiplicationArithmetic[RealNumber, RealNumber, RealNumber]
-            with TetrationArithmetic[RealNumber, RealNumber, MassiveNumber]
-            with scala.math.Numeric[RealNumber] {
+            extends AdditionArithmetic[Real, Real, Real]
+            with MultiplicationArithmetic[Real, Real, Real]
+            with TetrationArithmetic[Real, Real, Massive]
+            with scala.math.Numeric[Real] {
 
-        def add(x: RealNumber, y: RealNumber) = plus(x, y)
+        def add(x: Real, y: Real) = plus(x, y)
 
-        def plus(x: RealNumber, y: RealNumber) = x + y
+        def plus(x: Real, y: Real) = x + y
 
-        def minus(x: RealNumber, y: RealNumber) = x - y
+        def minus(x: Real, y: Real) = x - y
 
-        def times(x: RealNumber, y: RealNumber) = ???
+        def times(x: Real, y: Real) = ???
 
-        def negate(x: RealNumber) = -x
+        def negate(x: Real) = -x
 
-        def fromInt(x: Int) = RealNumber(x)
+        def fromInt(x: Int) = Real(x)
 
-        def toInt(x: RealNumber) = x.evaluate(IntegerPrecision).toInt
+        def toInt(x: Real) = x.evaluate(IntegerPrecision).toInt
 
-        def toLong(x: RealNumber) = x.evaluate(IntegerPrecision).toLong
+        def toLong(x: Real) = x.evaluate(IntegerPrecision).toLong
 
-        def toFloat(x: RealNumber) = x.evaluate(SinglePrecision).toFloat
+        def toFloat(x: Real) = x.evaluate(SinglePrecision).toFloat
 
-        def toDouble(x: RealNumber) = x.evaluate(DoublePrecision).toDouble
+        def toDouble(x: Real) = x.evaluate(DoublePrecision).toDouble
 
-        def compare(x: RealNumber, y: RealNumber) = x.compareTo(y)
+        def compare(x: Real, y: Real) = x.compareTo(y)
 
-        def multiply(left: RealNumber, right: RealNumber) = left * right
+        def multiply(left: Real, right: Real) = left * right
 
-        def tetrate(base: RealNumber, tower: RealNumber) = PowerTower(base, tower)
+        def tetrate(base: Real, tower: Real) = PowerTower(base, tower)
 
     }
 
 }
 
-class ExactRealNumber(val of: BigDecimal)
+class ExactReal(val of: BigDecimal)
         extends AnyRef
-        with RealNumber
+        with Real
         with ApproximatelyEvaluated {
 
-    override def ?+(that: RealNumber) = that match {
-        case re: ExactRealNumber => Some(RealNumber(this.of + re.of))
+    override def ?+(that: Real) = that match {
+        case re: ExactReal => Some(Real(this.of + re.of))
         case _ => super.?+(that)
     }
 
-    override def ?*(that: RealNumber) = that match {
-        case re: ExactRealNumber => Some(RealNumber(this.of * re.of))
+    override def ?*(that: Real) = that match {
+        case re: ExactReal => Some(Real(this.of * re.of))
         case _ => super.?*(that)
     }
 
@@ -234,12 +234,12 @@ class ExactRealNumber(val of: BigDecimal)
 
 }
 
-class NegatedRealNumber(val of: RealNumber)
-        extends RealNumber {
+class NegatedReal(val of: Real)
+        extends Real {
 
     protected[this] def eval(precision: Precision) = -(of.evaluate(precision))
 
-    override def variables = super[RealNumber].variables
+    override def variables = super[Real].variables
 
     override def unary_-() = of
 
@@ -253,8 +253,8 @@ class NegatedRealNumber(val of: RealNumber)
 
 }
 
-class InverseRealNumber(val of: RealNumber)
-        extends RealNumber
+class InverseReal(val of: Real)
+        extends Real
         with ApproximatelyEvaluated {
 
     require(!of.isEmpty)
@@ -263,8 +263,8 @@ class InverseRealNumber(val of: RealNumber)
 
     def isEmpty = false
 
-    override def ?*(that: RealNumber) = that match {
-        case real: RealNumber if of == real => Some(One)
+    override def ?*(that: Real) = that match {
+        case real: Real if of == real => Some(One)
         case _ => super.?*(that)
     }
 
@@ -274,8 +274,8 @@ class InverseRealNumber(val of: RealNumber)
 
 }
 
-class AbsRealNumber(val of: RealNumber)
-        extends PositiveRealNumber {
+class AbsReal(val of: Real)
+        extends PositiveReal {
 
     protected[this] def eval(precision: Precision) = of.evaluate(precision).abs
 
@@ -287,13 +287,13 @@ class AbsRealNumber(val of: RealNumber)
 
 object RealSeries {
 
-    def apply(left: RealNumber, right: RealNumber): RealNumber = (left, right) match {
+    def apply(left: Real, right: Real): Real = (left, right) match {
         case (Zero, _) => right
         case (_, Zero) => left
         case _ => new RealSeries(Seq(left, right))
     }
 
-    def apply(terms: Seq[RealNumber]): RealNumber = terms.filterNot(_.isEmpty) match {
+    def apply(terms: Seq[Real]): Real = terms.filterNot(_.isEmpty) match {
         case Nil => Zero
         case term :: Nil => term
         case _ => new RealSeries(terms)
@@ -301,17 +301,17 @@ object RealSeries {
 
 }
 
-class RealSeries private(val terms: Seq[RealNumber])
-        extends RealNumber
+class RealSeries private(val terms: Seq[Real])
+        extends Real
         with ApproximatelyEvaluated {
 
     private final def series = Series(terms)
 
-    override def toConstant = super[RealNumber].toConstant
+    override def toConstant = super[Real].toConstant
 
     override protected[this] def approx(precision: Precision) = terms.map(_.approximatelyEvaluate(precision)).sum
 
-    override def ?+(that: RealNumber) = {
+    override def ?+(that: Real) = {
         if (that.isEmpty) this
         Some(RealSeries(that match {
             case series: RealSeries => simplify(this.terms, series.terms)
@@ -319,14 +319,14 @@ class RealSeries private(val terms: Seq[RealNumber])
         }))
     }
 
-    private def simplify(left: Seq[RealNumber], right: Seq[RealNumber]): Seq[RealNumber] = {
+    private def simplify(left: Seq[Real], right: Seq[Real]): Seq[Real] = {
         left.foldLeft(right)((seq, next) => simplify(next, seq))
     }
 
-    private def simplify(term: RealNumber, terms: Seq[RealNumber]): Seq[RealNumber] = {
+    private def simplify(term: Real, terms: Seq[Real]): Seq[Real] = {
         var simplified = false
         var current = term
-        val series = terms.foldLeft(new mutable.ListBuffer[RealNumber]())((seq, next) => next ?+? current match {
+        val series = terms.foldLeft(new mutable.ListBuffer[Real]())((seq, next) => next ?+? current match {
             case Some(m) => {
                 simplified = true
                 current = m
@@ -342,7 +342,7 @@ class RealSeries private(val terms: Seq[RealNumber])
 
     override def toString = series.toString
 
-    override def equals(that: RealNumber) = that match {
+    override def equals(that: Real) = that match {
         case series: RealSeries => this.terms == series.terms || super.equals(series)
         case _ => super.equals(that)
     }
@@ -351,9 +351,9 @@ class RealSeries private(val terms: Seq[RealNumber])
 
 object RealProduct {
 
-    def apply(left: RealNumber, right: RealNumber): RealNumber = if (left.isEmpty || right.isEmpty) Zero else new RealProduct(Seq(left, right))
+    def apply(left: Real, right: Real): Real = if (left.isEmpty || right.isEmpty) Zero else new RealProduct(Seq(left, right))
 
-    def apply(terms: Seq[RealNumber]): RealNumber = terms match {
+    def apply(terms: Seq[Real]): Real = terms match {
         case Nil => Zero
         case item :: Nil => item
         case _ if terms.contains(Zero) => Zero
@@ -362,8 +362,8 @@ object RealProduct {
 
 }
 
-class RealProduct private(val terms: Seq[RealNumber])
-        extends RealNumber
+class RealProduct private(val terms: Seq[Real])
+        extends Real
         with ApproximatelyEvaluated {
 
     require(!terms.isEmpty)
@@ -372,7 +372,7 @@ class RealProduct private(val terms: Seq[RealNumber])
 
     override protected[this] def approx(precision: Precision) = terms.map(_.approximatelyEvaluate(precision)).product
 
-    override def ?*(that: RealNumber) = {
+    override def ?*(that: Real) = {
         if (that.isEmpty) Some(Zero)
         else Some(RealProduct(that match {
             case product: RealProduct => simplify(product.terms, this.terms)
@@ -380,14 +380,14 @@ class RealProduct private(val terms: Seq[RealNumber])
         }))
     }
 
-    private def simplify(left: Seq[RealNumber], right: Seq[RealNumber]): Seq[RealNumber] = {
+    private def simplify(left: Seq[Real], right: Seq[Real]): Seq[Real] = {
         left.foldLeft(right)((seq, next) => simplify(next, seq))
     }
 
-    private def simplify(term: RealNumber, terms: Seq[RealNumber]): Seq[RealNumber] = {
+    private def simplify(term: Real, terms: Seq[Real]): Seq[Real] = {
         var simplified = false
         var current = term
-        val product = terms.foldLeft(new mutable.ListBuffer[RealNumber]())((seq, next) => next ?*? current match {
+        val product = terms.foldLeft(new mutable.ListBuffer[Real]())((seq, next) => next ?*? current match {
             case Some(m) => {
                 simplified = true
                 current = m
@@ -403,7 +403,7 @@ class RealProduct private(val terms: Seq[RealNumber])
 
     override def toString = product.toString
 
-    override def equals(that: RealNumber) = that match {
+    override def equals(that: Real) = that match {
         case product: RealProduct => this.terms == product.terms || super.equals(product)
         case _ => super.equals(that)
     }

@@ -13,37 +13,37 @@ trait Infinite {
 
     protected[this] def eval(precision: Precision): BigDecimal = ???
 
-    def abs: PositiveRealNumber with Infinite = Infinity
+    def abs: PositiveReal with Infinite = Infinity
 
 }
 
 trait RealInfinity
         extends Infinite
-        with RealNumber {
+        with Real {
 
-    override def abs: PositiveRealNumber with Infinite = Infinity
+    override def abs: PositiveReal with Infinite = Infinity
 
-    override def inverse: RealNumber with Empty = Zero
+    override def inverse: Real with Empty = Zero
 
-    override def ?+(that: RealNumber) = that match {
+    override def ?+(that: Real) = that match {
         case i: Infinite if i == -this => ???
         case _ => Some(this)
     }
 
-    override def ?*(that: RealNumber) = that match {
+    override def ?*(that: Real) = that match {
         case Zero => ???
         case _ if (that > 0) => Some(this)
         case _ => Some(-this)
     }
 
-    override def tryCompareTo(that: RealNumber) = Some(this.compareTo(that))
+    override def tryCompareTo(that: Real) = Some(this.compareTo(that))
 
-    override def ?==(that: RealNumber) = Some(this eq that)
+    override def ?==(that: Real) = Some(this eq that)
 
 }
 
 object Infinity
-        extends PositiveRealNumber
+        extends PositiveReal
         with RealInfinity {
 
     override def abs = this
@@ -52,7 +52,7 @@ object Infinity
 
     override def inverse = Zero
 
-    override def compareTo(that: RealNumber) = that match {
+    override def compareTo(that: Real) = that match {
         case Infinity => 0
         case _ => 1
     }
@@ -68,7 +68,7 @@ object MinusInfinity
 
     override def unary_-() = Infinity
 
-    override def compareTo(that: RealNumber) = that match {
+    override def compareTo(that: Real) = that match {
         case MinusInfinity => 0
         case _ => -1
     }
@@ -80,7 +80,7 @@ object MinusInfinity
 }
 
 object UnsignedInfinity
-        extends PositiveRealNumber
+        extends PositiveReal
         with RealInfinity {
 
     override def abs = Infinity
@@ -89,23 +89,23 @@ object UnsignedInfinity
 
     override def inverse = Zero
 
-    override def ?+(that: RealNumber) = that match {
+    override def ?+(that: Real) = that match {
         case i: Infinite => ???
         case _ => Some(this)
     }
 
-    override def ?*(that: RealNumber) = that match {
+    override def ?*(that: Real) = that match {
         case i: Infinite => ???
         case Zero => ???
         case _ => Some(this)
     }
 
-    override def +(that: PositiveRealNumber) = that match {
+    override def +(that: PositiveReal) = that match {
         case i: Infinite => ???
         case _ => this
     }
 
-    override def *(that: PositiveRealNumber) = that match {
+    override def *(that: PositiveReal) = that match {
         case i: Infinite => ???
         case _ => this
     }

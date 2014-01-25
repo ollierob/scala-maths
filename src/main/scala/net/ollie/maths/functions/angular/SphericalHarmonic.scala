@@ -17,7 +17,7 @@ trait SphericalHarmonic
      * The degree.
      * @return
      */
-    def l: NaturalNumber
+    def l: Natural
 
     def degree = l
 
@@ -25,7 +25,7 @@ trait SphericalHarmonic
      * The order. Should satisfy |m| <= l.
      * @return
      */
-    def m: IntegerNumber
+    def m: Integer
 
     def order = m
 
@@ -35,19 +35,19 @@ trait SphericalHarmonic
 
 object SphericalHarmonic {
 
-    def apply(l: NaturalNumber, m: IntegerNumber, theta: Variable, phi: Variable): SphericalHarmonic = (l, m) match {
+    def apply(l: Natural, m: Integer, theta: Variable, phi: Variable): SphericalHarmonic = (l, m) match {
         case (_, Zero) => apply(l, theta)
         case _ => new LMHarmonic(l, m, theta, phi)
     }
 
-    def apply(l: NaturalNumber, theta: Variable): ZonalSphericalHarmonic = l match {
+    def apply(l: Natural, theta: Variable): ZonalSphericalHarmonic = l match {
         case Zero => ZeroZeroHarmonic
         case _ => new LZeroHarmonic(l, theta)
     }
 
 }
 
-class LMHarmonic(val l: NaturalNumber, val m: IntegerNumber, val theta: Variable, val phi: Variable)
+class LMHarmonic(val l: Natural, val m: Integer, val theta: Variable, val phi: Variable)
         extends SphericalHarmonic
         with Represented {
 

@@ -4,7 +4,7 @@ import scala.math.BigDecimal.RoundingMode
 import scala.math.BigDecimal.RoundingMode.RoundingMode
 
 import net.ollie.maths.functions.UnivariateFunction
-import net.ollie.maths.numbers.{IntegerNumber, IntegerPrecision, RealNumber}
+import net.ollie.maths.numbers.{Integer, IntegerPrecision, Real}
 
 /**
  * Created by Ollie on 04/01/14.
@@ -22,12 +22,12 @@ object Floor extends Round {
 }
 
 trait Round
-        extends UnivariateFunction[RealNumber, IntegerNumber] {
+        extends UnivariateFunction[Real, Integer] {
 
     protected[this] def mode: RoundingMode
 
-    def apply(d: BigDecimal): IntegerNumber = IntegerPrecision(d)(mode).toBigInt
+    def apply(d: BigDecimal): Integer = IntegerPrecision(d)(mode).toBigInt
 
-    def apply(re: RealNumber): IntegerNumber = IntegerNumber(re.evaluate(IntegerPrecision)(mode).toBigInt())
+    def apply(re: Real): Integer = Integer(re.evaluate(IntegerPrecision)(mode).toBigInt())
 
 }

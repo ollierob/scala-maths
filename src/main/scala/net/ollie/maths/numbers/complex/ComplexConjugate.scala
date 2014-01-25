@@ -3,9 +3,9 @@ package net.ollie.maths.numbers.complex
 /**
  * Created by Ollie on 04/01/14.
  */
-class ComplexConjugate(val of: ComplexNumber)
+class ComplexConjugate(val of: Complex)
         extends AnyRef
-        with ComplexNumber {
+        with Complex {
 
     override def unary_-() = new ComplexConjugate(-of)
 

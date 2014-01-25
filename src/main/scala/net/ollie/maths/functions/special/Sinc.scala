@@ -4,7 +4,7 @@ import net.ollie.maths.{Expression, Number, Variable}
 import net.ollie.maths.functions.{ExpressionBuilder, Represented, UnivariateFunction}
 import net.ollie.maths.functions.angular.Sin
 import net.ollie.maths.methods.ApproximatelyEvaluated
-import net.ollie.maths.numbers.{One, Precision, RealNumber, Zero}
+import net.ollie.maths.numbers.{One, Precision, Real, Zero}
 import net.ollie.maths.numbers.real.Pi
 
 /**
@@ -13,19 +13,19 @@ import net.ollie.maths.numbers.real.Pi
  */
 object Sinc
         extends ExpressionBuilder
-        with UnivariateFunction[RealNumber, RealNumber] {
+        with UnivariateFunction[Real, Real] {
 
     def apply(n: Number) = n match {
         case Zero => empty
-        case re: RealNumber => apply(re)
+        case re: Real => apply(re)
         case _ => ???
     }
 
-    def apply(f: RealNumber): RealNumber = if (f.isEmpty) empty else new RealSinc(f)
+    def apply(f: Real): Real = if (f.isEmpty) empty else new RealSinc(f)
 
     def normalized(expr: Expression) = apply(Pi * expr)
 
-    def normalized(re: RealNumber) = apply(Pi * re)
+    def normalized(re: Real) = apply(Pi * re)
 
     protected[this] def create(expr: Expression) = new Sinc(expr)
 
@@ -51,8 +51,8 @@ class Sinc(val of: Expression)
 
 }
 
-class RealSinc(val x: RealNumber)
-        extends RealNumber
+class RealSinc(val x: Real)
+        extends Real
         with ApproximatelyEvaluated {
 
     require(!x.isEmpty)

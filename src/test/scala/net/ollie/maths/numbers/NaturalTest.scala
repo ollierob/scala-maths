@@ -9,13 +9,13 @@ import org.scalatest.junit.JUnitRunner
  * Created by Ollie on 12/01/14.
  */
 @RunWith(classOf[JUnitRunner])
-class NaturalNumberTest extends FlatSpec with Matchers {
+class NaturalTest extends FlatSpec with Matchers {
 
     behavior of "11!"
 
     {
 
-        val n = NaturalNumber(11) !
+        val n = Natural(11) !
 
         it should "invert" in {
             val i = n.inverse

@@ -1,7 +1,7 @@
 package net.ollie.maths.functions.polynomial
 
 import net.ollie.maths.Variable
-import net.ollie.maths.numbers.{One, Zero, NaturalNumber}
+import net.ollie.maths.numbers.{One, Zero, Natural}
 import org.scalatest.{FlatSpec, Matchers}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
@@ -21,7 +21,7 @@ class ChebyshevSecondKindTest extends FlatSpec with Matchers {
         val u2 = ChebyshevSecondKind(2)(x)
 
         it should "evaluate" in {
-            u2.replace(x, One).toConstant shouldBe Some(NaturalNumber(4 - 1))
+            u2.replace(x, One).toConstant shouldBe Some(Natural(4 - 1))
         }
 
         it should "not be empty" in {
@@ -46,7 +46,7 @@ class ChebyshevSecondKindTest extends FlatSpec with Matchers {
             val y = Variable("y")
             println(u3.replace(x, y))
             u3.replace(x, 0).toConstant shouldBe Some(Zero)
-            u3.replace(x, 1).toConstant shouldBe Some(NaturalNumber(8 - 4))
+            u3.replace(x, 1).toConstant shouldBe Some(Natural(8 - 4))
         }
 
     }

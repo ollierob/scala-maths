@@ -20,12 +20,12 @@ object Series {
         case otherwise => new Series(otherwise.toSeq)
     }
 
-    def apply(f: (IntegerNumber) => Expression, start: IntegerNumber, end: IntegerNumber): Expression = {
+    def apply(f: (Integer) => Expression, start: Integer, end: Integer): Expression = {
         if (end < start) Zero
         else new FiniteSum(f, start, end)
     }
 
-    def apply(f: (NaturalNumber) => RealNumber, start: NaturalNumber): RealNumber = new InfiniteSum(f, start)
+    def apply(f: (Natural) => Real, start: Natural): Real = new InfiniteSum(f, start)
 
 }
 
@@ -62,7 +62,7 @@ class Series[+T <: Expression](val terms: Seq[T])
 
 }
 
-class FiniteSum(f: (IntegerNumber) => Expression, start: IntegerNumber, end: IntegerNumber)
+class FiniteSum(f: (Integer) => Expression, start: Integer, end: Integer)
         extends Expression {
 
     private val size = (end - start).toInt.get
@@ -87,18 +87,18 @@ class FiniteSum(f: (IntegerNumber) => Expression, start: IntegerNumber, end: Int
 
 }
 
-class InfiniteSum(f: NaturalNumber => RealNumber, start: NaturalNumber)
-        extends RealNumber
+class InfiniteSum(f: Natural => Real, start: Natural)
+        extends Real
         with IterativelyEvaluated {
 
     def isEmpty = false;
 
     def evaluationIterator(startPrecision: Precision) = new EvaluationIterator() {
 
-        val terms: ListBuffer[RealNumber] = new ListBuffer[RealNumber]()
+        val terms: ListBuffer[Real] = new ListBuffer[Real]()
 
-        def next(nth: NaturalNumber, precision: Precision) = {
-            val n: IntegerNumber = nth + start
+        def next(nth: Natural, precision: Precision) = {
+            val n: Integer = nth + start
             terms += f(n)
             terms.map(_.approximatelyEvaluate(precision)).sum
         }

@@ -2,7 +2,7 @@ package net.ollie.maths.functions.hypergeometric
 
 import net.ollie.maths._
 import net.ollie.maths.functions.ExpressionBuilder
-import net.ollie.maths.numbers.{NaturalNumber, Zero}
+import net.ollie.maths.numbers.{Natural, Zero}
 import net.ollie.maths.numbers.complex.ComplexInfinity
 
 /**
@@ -11,16 +11,16 @@ import net.ollie.maths.numbers.complex.ComplexInfinity
  */
 object Polygamma {
 
-    def apply(order: NaturalNumber, n: Number): Number = ???
+    def apply(order: Natural, n: Number): Number = ???
 
-    def apply(order: NaturalNumber, expression: Expression) = order match {
+    def apply(order: Natural, expression: Expression) = order match {
         case Zero => Digamma(expression)
         case _ => new Polygamma(order, expression)
     }
 
 }
 
-class Polygamma(val order: NaturalNumber, val of: Expression)
+class Polygamma(val order: Natural, val of: Expression)
         extends Composite {
 
     protected[this] def at(n: Number) = Polygamma(order, n)

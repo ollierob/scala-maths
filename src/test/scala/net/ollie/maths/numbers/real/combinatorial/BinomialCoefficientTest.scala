@@ -1,6 +1,6 @@
 package net.ollie.maths.numbers.real.combinatorial
 
-import net.ollie.maths.numbers.{Zero, NaturalNumber, One}
+import net.ollie.maths.numbers.{Zero, Natural, One}
 import org.scalatest.{FlatSpec, Matchers}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
@@ -14,8 +14,8 @@ class BinomialCoefficientTest extends FlatSpec with Matchers {
     import BinomialCoefficient._
 
     "5 choose 2" should "equal 10" in {
-        BinomialCoefficient(5, 2) shouldBe (NaturalNumber(10))
-        5 choose 2 shouldBe (NaturalNumber(10))
+        BinomialCoefficient(5, 2) shouldBe (Natural(10))
+        5 choose 2 shouldBe (Natural(10))
     }
 
     "5 choose 6" should "equal 0" in {

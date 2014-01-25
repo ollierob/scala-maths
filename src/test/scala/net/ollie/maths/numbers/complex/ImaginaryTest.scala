@@ -9,7 +9,7 @@ import net.ollie.maths.numbers.Zero
  * Created by Ollie on 12/01/14.
  */
 @RunWith(classOf[JUnitRunner])
-class ImaginaryNumberTest extends FlatSpec with Matchers {
+class ImaginaryTest extends FlatSpec with Matchers {
 
     behavior of "i"
 
@@ -19,12 +19,12 @@ class ImaginaryNumberTest extends FlatSpec with Matchers {
 
         it should "be equal to itself" in {
             i == i shouldBe (true)
-            i == ComplexNumber(0, 1) shouldBe (true)
-            ComplexNumber(0, 1) == i shouldBe (true)
+            i == Complex(0, 1) shouldBe (true)
+            Complex(0, 1) == i shouldBe (true)
         }
 
         it should "not be equal to something else" in {
-            val j = ImaginaryNumber(2)
+            val j = Imaginary(2)
             i == j shouldBe (false)
             j == i shouldBe (false)
         }

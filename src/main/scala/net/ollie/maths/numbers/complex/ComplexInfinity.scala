@@ -8,7 +8,7 @@ import net.ollie.maths.numbers.{Infinite, UnsignedInfinity}
  */
 object ComplexInfinity
         extends Infinite
-        with ComplexNumber {
+        with Complex {
 
     def re = UnsignedInfinity
 

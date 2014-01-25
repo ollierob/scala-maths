@@ -5,7 +5,7 @@ import scala.collection.mutable.ListBuffer
 
 import net.ollie.maths._
 import net.ollie.maths.functions.ExpressionBuilder
-import net.ollie.maths.numbers.{NaturalNumber, Precision, RealNumber, Zero}
+import net.ollie.maths.numbers.{Natural, Precision, Real, Zero}
 
 /**
  * Evaluates a univariate expression at a value, using the derivatives at another value (whose value is, ideally, already explicitly known).
@@ -14,19 +14,19 @@ import net.ollie.maths.numbers.{NaturalNumber, Precision, RealNumber, Zero}
  */
 object TaylorSeries {
 
-    def apply(expression: Univariate, at: RealNumber, around: RealNumber): RealNumber = {
+    def apply(expression: Univariate, at: Real, around: Real): Real = {
         new TaylorSeries(expression, at, around)
     }
 
-    def apply(builder: ExpressionBuilder, at: RealNumber, around: RealNumber): RealNumber = {
+    def apply(builder: ExpressionBuilder, at: Real, around: Real): Real = {
         val x = Variable("$x")
         TaylorSeries(builder(x), at, around)
     }
 
 }
 
-private class TaylorSeries(val f: Univariate, val x: RealNumber, val a: RealNumber)(implicit conversion: NumberIdentityArithmetic[RealNumber])
-        extends RealNumber
+private class TaylorSeries(val f: Univariate, val x: Real, val a: Real)(implicit conversion: NumberIdentityArithmetic[Real])
+        extends Real
         with IterativelyEvaluated {
 
     def isEmpty = false //TODO?
@@ -34,10 +34,10 @@ private class TaylorSeries(val f: Univariate, val x: RealNumber, val a: RealNumb
     def evaluationIterator(startPrecision: Precision) = new EvaluationIterator {
 
         val xMinusA = x - a
-        val terms: mutable.Buffer[RealNumber] = new ListBuffer[RealNumber]()
+        val terms: mutable.Buffer[Real] = new ListBuffer[Real]()
         var fNDash: Univariate = f
 
-        def next(n: NaturalNumber, precision: Precision): BigDecimal = {
+        def next(n: Natural, precision: Precision): BigDecimal = {
             terms += nthTerm(n)
             println(s"$fNDash at $a => " + fNDash(a))
             fNDash = fNDash.dx
@@ -45,9 +45,9 @@ private class TaylorSeries(val f: Univariate, val x: RealNumber, val a: RealNumb
             terms.map(_.approximatelyEvaluate(precision)).sum
         }
 
-        def nthTerm(n: NaturalNumber): RealNumber = fNDash(a) * (xMinusA ^ n) / (n !)
+        def nthTerm(n: Natural): Real = fNDash(a) * (xMinusA ^ n) / (n !)
 
-        implicit def convert(n: Number): RealNumber = conversion.convert(n).get
+        implicit def convert(n: Number): Real = conversion.convert(n).get
 
     }
 
@@ -60,11 +60,11 @@ private class TaylorSeries(val f: Univariate, val x: RealNumber, val a: RealNumb
  */
 object MaclaurinSeries {
 
-    def apply(builder: ExpressionBuilder, at: RealNumber): RealNumber = {
+    def apply(builder: ExpressionBuilder, at: Real): Real = {
         val x = Variable("$x")
         MaclaurinSeries(builder(x), at)
     }
 
-    def apply(expression: Univariate, at: RealNumber): RealNumber = TaylorSeries(expression, at, Zero)
+    def apply(expression: Univariate, at: Real): Real = TaylorSeries(expression, at, Zero)
 
 }

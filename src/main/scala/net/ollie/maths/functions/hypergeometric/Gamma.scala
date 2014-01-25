@@ -5,7 +5,7 @@ import net.ollie.maths.functions.{ExpressionBuilder, UnivariateFunction}
 import net.ollie.maths.functions.numeric.Exp
 import net.ollie.maths.methods.{Integral, SimpsonsIntegrationMethod}
 import net.ollie.maths.numbers._
-import net.ollie.maths.numbers.complex.{ComplexInfinity, ComplexNumber}
+import net.ollie.maths.numbers.complex.{ComplexInfinity, Complex}
 
 /**
  * Created by Ollie on 18/01/14.
@@ -13,20 +13,20 @@ import net.ollie.maths.numbers.complex.{ComplexInfinity, ComplexNumber}
  */
 object Gamma
         extends ExpressionBuilder
-        with UnivariateFunction[RealNumber, RealNumber] {
+        with UnivariateFunction[Real, Real] {
 
     def apply(n: Number): Number = n match {
         case Zero => empty
-        case re: RealNumber => apply(re)
+        case re: Real => apply(re)
         case _ => ???
     }
 
-    def apply(re: RealNumber) = re match {
-        case n: NaturalNumber => apply(n)
+    def apply(re: Real) = re match {
+        case n: Natural => apply(n)
         case _ => new RealGamma(re)
     }
 
-    def apply(n: NaturalNumber) = (n.decr) !
+    def apply(n: Natural) = (n.decr) !
 
     protected[this] def create(expr: Expression) = new Gamma(expr)
 
@@ -49,9 +49,9 @@ class Gamma(val of: Expression)
 
 }
 
-class RealGamma(val z: ComplexNumber)
+class RealGamma(val z: Complex)
         extends Gamma(z)
-        with RealNumber {
+        with Real {
 
     private lazy val integral = Integral(t => (t ^ (z - 1)) * Exp(-t), Zero, Infinity)(SimpsonsIntegrationMethod)
 
@@ -59,8 +59,8 @@ class RealGamma(val z: ComplexNumber)
 
     override def isEmpty = false //Gamma is not zero anywhere.
 
-    override def toConstant = super[RealNumber].toConstant
+    override def toConstant = super[Real].toConstant
 
-    override def variables = super[RealNumber].variables
+    override def variables = super[Real].variables
 
 }

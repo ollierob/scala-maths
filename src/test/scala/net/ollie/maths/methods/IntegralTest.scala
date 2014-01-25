@@ -1,7 +1,7 @@
 package net.ollie.maths.methods
 
 import org.scalatest.{Matchers, FlatSpec}
-import net.ollie.maths.numbers.{Precision, RealNumber, One, Zero}
+import net.ollie.maths.numbers.{Precision, Real, One, Zero}
 import Precision._
 
 /**
@@ -10,7 +10,7 @@ import Precision._
 class IntegralTest extends FlatSpec with Matchers {
 
     "Integral of x from 0 to 1" should "equal 1/2" in {
-        val integral: RealNumber = Integral(x => x, Zero, One)(SimpsonsIntegrationMethod)
+        val integral: Real = Integral(x => x, Zero, One)(SimpsonsIntegrationMethod)
         integral.evaluate(4 dp) shouldBe BigDecimal("0.5000")
     }
 

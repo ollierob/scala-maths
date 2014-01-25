@@ -1,35 +1,34 @@
 package net.ollie.maths.numbers.real
 
-
-import net.ollie.maths.numbers.NaturalNumber
+import net.ollie.maths.numbers.Natural
 
 /**
  * Created by Ollie on 18/01/14.
  */
-trait Prime extends NaturalNumber
+trait Prime extends Natural
 
 object Prime {
 
     private val DEFAULT_CALCULATOR = RjmPrimes
 
-    def apply(n: NaturalNumber): Option[Prime] = if (is(n)) Some(new KnownPrime(n)) else None
+    def apply(n: Natural): Option[Prime] = if (is(n)) Some(new KnownPrime(n)) else None
 
-    def is(n: NaturalNumber)(implicit calculator: PrimeCalculator = DEFAULT_CALCULATOR): Boolean = n match {
+    def is(n: Natural)(implicit calculator: PrimeCalculator = DEFAULT_CALCULATOR): Boolean = n match {
         case p: Prime => true
         case _ if n.isEven => false
         case _ => n == new NextPrime(n)
     }
 
-    def next(n: NaturalNumber)(implicit calculator: PrimeCalculator = DEFAULT_CALCULATOR): Prime = n match {
+    def next(n: Natural)(implicit calculator: PrimeCalculator = DEFAULT_CALCULATOR): Prime = n match {
         case p: Prime => p
         case _ => new NextPrime(if (n.isEven) n.succ else n)
     }
 
-    def pi(n: NaturalNumber)(implicit calculator: PrimeCalculator = DEFAULT_CALCULATOR): NaturalNumber = NaturalNumber(calculator.pi(n.evaluate))
+    def pi(n: Natural)(implicit calculator: PrimeCalculator = DEFAULT_CALCULATOR): Natural = Natural(calculator.pi(n.evaluate))
 
 }
 
-private class NextPrime(val n: NaturalNumber)(implicit calculator: PrimeCalculator)
+private class NextPrime(val n: Natural)(implicit calculator: PrimeCalculator)
         extends AnyRef
         with Prime {
 
@@ -39,7 +38,7 @@ private class NextPrime(val n: NaturalNumber)(implicit calculator: PrimeCalculat
 
 }
 
-private class KnownPrime(val n: NaturalNumber)
+private class KnownPrime(val n: Natural)
         extends AnyRef
         with Prime {
 

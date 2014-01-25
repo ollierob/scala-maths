@@ -1,20 +1,19 @@
 package net.ollie.maths.numbers.real
 
-
 import net.ollie.maths.{Empty, Variable}
 import net.ollie.maths.numbers._
 
 /**
  * Created by Ollie on 06/01/14.
  */
-trait SurrealNumber
-        extends RealNumber {
+trait Surreal
+        extends Real {
 
-    def nearest: RealNumber
+    def nearest: Real
 
     override def abs = nearest.abs
 
-    override def unary_-(): SurrealNumber = ???
+    override def unary_-(): Surreal = ???
 
     protected[this] def eval(precision: Precision) = nearest.evaluate(precision)
 
@@ -22,7 +21,7 @@ trait SurrealNumber
 
 }
 
-trait SurrealForm extends SurrealNumber {
+trait SurrealForm extends Surreal {
 
     def left: NumberSet
 
@@ -57,7 +56,7 @@ object EmptyForm
 }
 
 object TransfiniteForm
-        extends SurrealNumber
+        extends Surreal
         with Infinite {
 
     override def abs = super[Infinite].abs
@@ -73,7 +72,7 @@ object TransfiniteForm
 }
 
 object InfinitesimalForm
-        extends SurrealNumber {
+        extends Surreal {
 
     def isEmpty = false
 

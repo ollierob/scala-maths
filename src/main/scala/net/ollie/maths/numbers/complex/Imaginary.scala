@@ -3,44 +3,44 @@ package net.ollie.maths.numbers.complex
 import net.ollie.maths.Empty
 import net.ollie.maths.functions.angular.RightAngle
 import net.ollie.maths.functions.numeric.Signum
-import net.ollie.maths.numbers.{One, RealNumber, Zero}
+import net.ollie.maths.numbers.{One, Real, Zero}
 
 /**
  * Created by Ollie on 12/01/14.
  */
-class ImaginaryNumber(val coefficient: RealNumber)
-        extends ComplexNumber {
+class Imaginary(val coefficient: Real)
+        extends Complex {
 
     /**
      * This is not the coefficient!
      * @return
      */
-    def re: RealNumber with Empty = Zero
+    def re: Real with Empty = Zero
 
     def im = this
 
     override def isEmpty = coefficient.isEmpty
 
-    override def unary_-(): ImaginaryNumber = -coefficient
+    override def unary_-(): Imaginary = -coefficient
 
     override def abs = coefficient.abs
 
     override def arg = RightAngle * Signum(coefficient)
 
-    def +(that: ImaginaryNumber): ImaginaryNumber = coefficient + that.coefficient
+    def +(that: Imaginary): Imaginary = coefficient + that.coefficient
 
-    def -(that: ImaginaryNumber): ImaginaryNumber = coefficient - that.coefficient
+    def -(that: Imaginary): Imaginary = coefficient - that.coefficient
 
-    def *(that: ImaginaryNumber): RealNumber = -(coefficient * that.coefficient)
+    def *(that: Imaginary): Real = -(coefficient * that.coefficient)
 
-    def /(that: ImaginaryNumber): RealNumber = coefficient / that.coefficient
+    def /(that: Imaginary): Real = coefficient / that.coefficient
 
-    def *(that: RealNumber): ImaginaryNumber = coefficient * that
+    def *(that: Real): Imaginary = coefficient * that
 
-    override def /(that: RealNumber): ImaginaryNumber = coefficient / that
+    override def /(that: Real): Imaginary = coefficient / that
 
-    override def equals(that: ComplexNumber): Boolean = that match {
-        case i: ImaginaryNumber => this.coefficient == i.coefficient
+    override def equals(that: Complex): Boolean = that match {
+        case i: Imaginary => this.coefficient == i.coefficient
         case _ => that.re == Zero && coefficient == that.im.coefficient
     }
 
@@ -50,18 +50,18 @@ class ImaginaryNumber(val coefficient: RealNumber)
 
 }
 
-object ImaginaryNumber {
+object Imaginary {
 
-    implicit def apply(re: RealNumber): ImaginaryNumber = re match {
+    implicit def apply(re: Real): Imaginary = re match {
         case Zero => ImaginaryZero
         case One => ImaginaryUnit
-        case _ => new ImaginaryNumber(re)
+        case _ => new Imaginary(re)
     }
 
 }
 
 object ImaginaryZero
-        extends ImaginaryNumber(Zero)
+        extends Imaginary(Zero)
         with Empty {
 
     override def arg = ???
@@ -79,7 +79,7 @@ object ImaginaryZero
 }
 
 object ImaginaryUnit
-        extends ImaginaryNumber(One) {
+        extends Imaginary(One) {
 
     override def toString = "i"
 

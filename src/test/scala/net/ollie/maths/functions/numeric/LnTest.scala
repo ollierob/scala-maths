@@ -48,7 +48,7 @@ class LnTest extends FlatSpec with Matchers {
 
     "Ln(Ln(4))" should "evaluate" in {
         val r = Ln(Ln(4))
-        val re: RealNumber = RealNumber.NumberToReal.convert(r).get
+        val re: Real = Real.NumberToReal.convert(r).get
         re.evaluate(4 dp) shouldBe BigDecimal("0.3266")
     }
 
@@ -73,7 +73,7 @@ class LnTest extends FlatSpec with Matchers {
     }
 
     "Ln(2x)" should "differentiate to 1/x" in {
-        val two = IntegerNumber(2)
+        val two = Integer(2)
         val ln = Ln(two * x)
         ln.df(x).replace(x, One).toConstant shouldBe (Some(One))
     }

@@ -9,13 +9,13 @@ import net.ollie.maths.methods.Product
  * Created by Ollie on 11/01/14.
  */
 trait BinomialCoefficient
-        extends NaturalNumber {
+        extends Natural {
 
-    def n: NaturalNumber
+    def n: Natural
 
     def possibilities = n
 
-    def k: NaturalNumber
+    def k: Natural
 
     def outcomes = k
 
@@ -23,19 +23,19 @@ trait BinomialCoefficient
 
 object BinomialCoefficient {
 
-    def apply(i: Int, j: Int): BinomialCoefficient = apply(NaturalNumber(i), NaturalNumber(j))
+    def apply(i: Int, j: Int): BinomialCoefficient = apply(Natural(i), Natural(j))
 
-    def apply(n: IntegerNumber, k: IntegerNumber): RealNumber = n match {
-        case m: NaturalNumber => apply(m, k)
+    def apply(n: Integer, k: Integer): Real = n match {
+        case m: Natural => apply(m, k)
         case _ => (MinusOne ^ k) * Multiset(n.abs, k)
     }
 
-    def apply(n: NaturalNumber, k: NaturalNumber): BinomialCoefficient = {
+    def apply(n: Natural, k: Natural): BinomialCoefficient = {
         if (n >= k) new BinomialAny(n, k)
         else new BinomialZero(n, k)
     }
 
-    def central(n: IntegerNumber): RealNumber = apply(n, Floor(n / 2))
+    def central(n: Integer): Real = apply(n, Floor(n / 2))
 
     /**
      * Coefficient is good if LeastPrimeFactor(n choose k) > k
@@ -49,15 +49,15 @@ object BinomialCoefficient {
 
     }
 
-    implicit class BinomialCoefficientBuilder(n: NaturalNumber) extends AnyRef {
+    implicit class BinomialCoefficientBuilder(n: Natural) extends AnyRef {
 
-        def choose(k: NaturalNumber): BinomialCoefficient = BinomialCoefficient(n, k)
+        def choose(k: Natural): BinomialCoefficient = BinomialCoefficient(n, k)
 
     }
 
 }
 
-class BinomialZero(val n: NaturalNumber, val k: NaturalNumber)
+class BinomialZero(val n: Natural, val k: Natural)
         extends BinomialCoefficient
         with Empty {
 
@@ -75,14 +75,14 @@ class BinomialZero(val n: NaturalNumber, val k: NaturalNumber)
 
 }
 
-class BinomialAny(val n: NaturalNumber, val k: NaturalNumber)
+class BinomialAny(val n: Natural, val k: Natural)
         extends BinomialCoefficient {
 
     require(n >= k)
 
-    def nMinusK: NaturalNumber = NaturalNumber(n - k).right.get
+    def nMinusK: Natural = Natural(n - k).right.get
 
-    private def multiplicative(i: IntegerNumber): RealNumber = (n - k + i) / i
+    private def multiplicative(i: Integer): Real = (n - k + i) / i
 
     private lazy val evaluated: BigInt = Product(multiplicative, 1, k).evaluate(IntegerPrecision).toBigIntExact.get
 

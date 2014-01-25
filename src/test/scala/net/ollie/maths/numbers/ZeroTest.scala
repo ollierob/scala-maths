@@ -24,9 +24,9 @@ class ZeroTest extends FlatSpec with Matchers {
 
     "N(0)" should "equal 0" in {
         val i: Int = 0
-        NaturalNumber(i) shouldBe Zero
+        Natural(i) shouldBe Zero
         val i2: BigInt = 0
-        NaturalNumber(i2) shouldBe Zero
+        Natural(i2) shouldBe Zero
     }
 
 }

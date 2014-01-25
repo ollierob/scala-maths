@@ -4,24 +4,24 @@ import net.ollie.maths.Expression
 import net.ollie.maths.functions.{Represented, SymmetricBivariateFunction}
 import net.ollie.maths.methods.Product
 import net.ollie.maths.numbers._
-import net.ollie.maths.numbers.complex.{ComplexInfinity, ComplexNumber}
+import net.ollie.maths.numbers.complex.{ComplexInfinity, Complex}
 
 /**
  * Created by Ollie on 22/01/14.
  * @see http://mathworld.wolfram.com/BetaFunction.html
  */
 object Beta
-        extends SymmetricBivariateFunction[RealNumber, ComplexNumber] {
+        extends SymmetricBivariateFunction[Real, Complex] {
 
     def apply(x: Expression, y: Expression): Expression = new Beta(x, y)
 
-    def apply(x: RealNumber, y: RealNumber): ComplexNumber = (x, y) match {
+    def apply(x: Real, y: Real): Complex = (x, y) match {
         case (Zero, Zero) => empty
-        case (n1: NaturalNumber, n2: NaturalNumber) => apply(n1, n2)
+        case (n1: Natural, n2: Natural) => apply(n1, n2)
         case _ => new RealBeta(x, y)
     }
 
-    def apply(n1: NaturalNumber, n2: NaturalNumber) = Gamma(n1) * Gamma(n2) / Gamma(n1 + n2.decr)
+    def apply(n1: Natural, n2: Natural) = Gamma(n1) * Gamma(n2) / Gamma(n1 + n2.decr)
 
     protected[this] def empty = ComplexInfinity
 
@@ -44,18 +44,18 @@ class Beta(val x: Expression, val y: Expression)
 
 }
 
-class RealBeta(override val x: RealNumber, override val y: RealNumber)
+class RealBeta(override val x: Real, override val y: Real)
         extends Beta(x, y)
-        with RealNumber {
+        with Real {
 
-    private val series: RealNumber = (x + y) * Product(nth _, One) / (x * y)
+    private val series: Real = (x + y) * Product(nth _, One) / (x * y)
 
-    private def nth(n: NaturalNumber): RealNumber = (1 + ((x * y) / (n * (x + y + n)))).inverse
+    private def nth(n: Natural): Real = (1 + ((x * y) / (n * (x + y + n)))).inverse
 
     protected[this] def eval(precision: Precision) = series.evaluate(precision)
 
-    override def toConstant = super[RealNumber].toConstant
+    override def toConstant = super[Real].toConstant
 
-    override def variables = super[RealNumber].variables
+    override def variables = super[Real].variables
 
 }

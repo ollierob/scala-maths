@@ -1,7 +1,7 @@
 package net.ollie.maths.geometry
 
 import net.ollie.maths.functions.numeric.PositiveSquareRoot
-import net.ollie.maths.numbers.PositiveRealNumber
+import net.ollie.maths.numbers.PositiveReal
 
 /**
  * Created by Ollie on 19/01/14.
@@ -20,16 +20,16 @@ object Quadrilateral {
  */
 object Trapezoid {
 
-    def area(side1: PositiveRealNumber, side2: PositiveRealNumber, h: PositiveRealNumber): PositiveRealNumber = {
+    def area(side1: PositiveReal, side2: PositiveReal, h: PositiveReal): PositiveReal = {
         h * (side1 + side2) / 2
     }
 
 }
 
-class Trapezoid(a: PositiveRealNumber, b: PositiveRealNumber, h: PositiveRealNumber)
+class Trapezoid(a: PositiveReal, b: PositiveReal, h: PositiveReal)
         extends Quadrilateral {
 
-    lazy val g: PositiveRealNumber = PositiveSquareRoot((a - b).squared + h.squared)
+    lazy val g: PositiveReal = PositiveSquareRoot((a - b).squared + h.squared)
 
     def area = Trapezoid.area(a, b, h)
 

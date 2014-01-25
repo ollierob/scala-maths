@@ -1,18 +1,18 @@
 package net.ollie.maths.numbers.real
 
-import net.ollie.maths.numbers.RealNumber
+import net.ollie.maths.numbers.Real
 
 /**
  * Created by Ollie on 12/01/14.
  */
 object PowerTower {
 
-    def apply(base: RealNumber, tower: RealNumber): MassiveNumber = new PowerTower(base, tower)
+    def apply(base: Real, tower: Real): Massive = new PowerTower(base, tower)
 
 }
 
-class PowerTower(val base: RealNumber, val tower: RealNumber)
-        extends MassiveNumber {
+class PowerTower(val base: Real, val tower: Real)
+        extends Massive {
 
     def isEmpty = false
 

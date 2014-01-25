@@ -1,6 +1,6 @@
 package net.ollie.maths
 
-import net.ollie.maths.numbers.{One, RealNumber, Zero}
+import net.ollie.maths.numbers.{One, Real, Zero}
 
 /**
  * Created by Ollie on 02/01/14.
@@ -26,7 +26,7 @@ class Variable(val name: String)
         case _ => this
     }
 
-    def df(x: Variable): RealNumber = if (this == x) One else Zero
+    def df(x: Variable): Real = if (this == x) One else Zero
 
     override def toString = name
 

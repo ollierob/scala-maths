@@ -1,6 +1,6 @@
 package net.ollie.maths.geometry
 
-import net.ollie.maths.numbers.PositiveRealNumber
+import net.ollie.maths.numbers.PositiveReal
 
 /**
  * Created by Ollie on 19/01/14.
@@ -8,10 +8,10 @@ import net.ollie.maths.numbers.PositiveRealNumber
 trait Polygon
         extends Shape {
 
-    def area: PositiveRealNumber
+    def area: PositiveReal
 
-    def perimeter: PositiveRealNumber
+    def perimeter: PositiveReal
 
-    def semiperimeter: PositiveRealNumber = perimeter / 2
+    def semiperimeter: PositiveReal = perimeter / 2
 
 }

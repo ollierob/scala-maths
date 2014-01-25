@@ -1,7 +1,7 @@
 package net.ollie.maths.numbers.quaternion
 
 import net.ollie.maths.numbers.One
-import net.ollie.maths.numbers.complex.ComplexNumber
+import net.ollie.maths.numbers.complex.Complex
 import org.junit.runner.RunWith
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.junit.JUnitRunner
@@ -51,13 +51,13 @@ class QuaternionTest extends FlatSpec with Matchers {
         }
 
         it should "add 11 + 13i" in {
-            val i = ComplexNumber(11, 13)
+            val i = Complex(11, 13)
             (q + i) shouldBe (Quaternion(13, 16, 5, 7))
             (i + q) shouldBe (q + i)
         }
 
         it should "multiply by 11 + 13i" in {
-            val i = ComplexNumber(11, 13)
+            val i = Complex(11, 13)
             (q * i) shouldBe (Quaternion(-17, 59, 146, 12))
         }
 

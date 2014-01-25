@@ -2,7 +2,7 @@ package net.ollie.maths
 
 import net.ollie.maths.functions.numeric.Ln
 import net.ollie.maths.methods.{Product, Series}
-import net.ollie.maths.numbers.{IntegerNumber, Zero}
+import net.ollie.maths.numbers.{Integer, Zero}
 
 /**
  * Created by Ollie on 01/01/14.
@@ -96,7 +96,7 @@ object Expression {
 
     def product(e1: Expression, e2: Expression) = Product(e1, e2)
 
-    implicit def convert(int: Int): IntegerNumber = IntegerNumber(int)
+    implicit def convert(int: Int): Integer = Integer(int)
 
 }
 

@@ -1,7 +1,7 @@
 package net.ollie.maths.methods
 
 import net.ollie.maths.Evaluable
-import net.ollie.maths.numbers.{NaturalNumber, Precision, Zero}
+import net.ollie.maths.numbers.{Natural, Precision, Zero}
 
 /**
  * Created by Ollie on 12/01/14.
@@ -13,7 +13,7 @@ object IterativelyEvaluate {
         var current: BigDecimal = 0
         var continue = true
         var currentPrecision = precision
-        var n: NaturalNumber = Zero
+        var n: Natural = Zero
         val iterator = f.evaluationIterator(precision)
         var life = true
         while (continue) {
@@ -51,7 +51,7 @@ trait IterativelyEvaluated
 
 trait EvaluationIterator {
 
-    def next(nth: NaturalNumber, precision: Precision): BigDecimal
+    def next(nth: Natural, precision: Precision): BigDecimal
 
 }
 
@@ -63,7 +63,7 @@ trait ApproximatelyEvaluated
 
     private lazy val it = new EvaluationIterator {
 
-        def next(nth: NaturalNumber, precision: Precision) = approximatelyEvaluate(precision)
+        def next(nth: Natural, precision: Precision) = approximatelyEvaluate(precision)
 
     }
 

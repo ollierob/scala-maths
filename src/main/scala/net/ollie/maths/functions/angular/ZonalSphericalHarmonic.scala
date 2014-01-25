@@ -26,18 +26,18 @@ object ZeroZeroHarmonic
 
     def l = Zero
 
-    private final val value: RealNumber = PositiveSquareRoot(One / Pi) / 2
+    private final val value: Real = PositiveSquareRoot(One / Pi) / 2
 
     protected[this] def f = value
 
 }
 
-class LZeroHarmonic(val l: NaturalNumber, val theta: Variable)
+class LZeroHarmonic(val l: Natural, val theta: Variable)
         extends AnyRef
         with ZonalSphericalHarmonic
         with Represented {
 
-    private val func: Expression = PositiveSquareRoot(((2 * l + 1) !) / (Pi * NaturalNumber(4))) * LegendrePolynomial(l, Cos(theta))
+    private val func: Expression = PositiveSquareRoot(((2 * l + 1) !) / (Pi * Natural(4))) * LegendrePolynomial(l, Cos(theta))
 
     protected[this] def f = func
 

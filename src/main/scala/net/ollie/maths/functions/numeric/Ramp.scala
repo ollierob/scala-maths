@@ -2,21 +2,21 @@ package net.ollie.maths.functions.numeric
 
 import net.ollie.maths.{Expression, Number}
 import net.ollie.maths.functions.{ExpressionBuilder, Represented, UnivariateFunction}
-import net.ollie.maths.numbers.{RealNumber, Zero}
+import net.ollie.maths.numbers.{Real, Zero}
 
 /**
  * Created by Ollie on 11/01/14.
  */
 object Ramp
-        extends UnivariateFunction[RealNumber, RealNumber]
+        extends UnivariateFunction[Real, Real]
         with ExpressionBuilder {
 
     def apply(n: Number): Number = n match {
-        case re: RealNumber => apply(re)
+        case re: Real => apply(re)
         case _ => ???
     }
 
-    def apply(re: RealNumber) = re match {
+    def apply(re: Real) = re match {
         case _ if re >= 0 => re
         case _ => 0
     }

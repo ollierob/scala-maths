@@ -12,24 +12,24 @@ class IntegerFractionTest extends FlatSpec with Matchers {
 
     import Precision._
 
-    val ONE: IntegerNumber = 1
-    val TWO: IntegerNumber = 2
-    val THREE: IntegerNumber = 3
-    val FOUR: IntegerNumber = 4
-    val FIVE: IntegerNumber = 5
+    val ONE: Integer = 1
+    val TWO: Integer = 2
+    val THREE: Integer = 3
+    val FOUR: Integer = 4
+    val FIVE: Integer = 5
 
     "4/1" should "reduce" in {
-        var r: RealNumber = FOUR / 1
+        var r: Real = FOUR / 1
         r shouldBe (FOUR)
     }
 
     "4/2" should "reduce" in {
-        val r: RealNumber = FOUR / TWO
+        val r: Real = FOUR / TWO
         r shouldBe (TWO)
     }
 
     "2/4" should "reduce" in {
-        val r: RealNumber = TWO / FOUR
+        val r: Real = TWO / FOUR
         r.evaluate(2 dp).toString shouldBe ("0.50")
         r shouldBe (ONE / TWO)
     }
@@ -37,13 +37,13 @@ class IntegerFractionTest extends FlatSpec with Matchers {
     behavior of "4/5"
 
     it should "multiply" in {
-        val r: RealNumber = FOUR / FIVE
+        val r: Real = FOUR / FIVE
         r.evaluate(2 dp).toString shouldBe ("0.80")
         r * 5 shouldBe (FOUR)
     }
 
     it should "evaluate" in {
-        val r: RealNumber = FOUR / FIVE
+        val r: Real = FOUR / FIVE
     }
 
     behavior of "1/3"

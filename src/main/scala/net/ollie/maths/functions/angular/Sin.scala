@@ -15,16 +15,16 @@ import org.nevec.rjm.BigDecimalMath
  * Created by Ollie on 02/01/14.
  */
 object Sin
-        extends UnivariateFunction[Angle, RealNumber]
+        extends UnivariateFunction[Angle, Real]
         with ExpressionBuilder {
 
     def apply(n: Number): Number = n match {
         case Zero => empty
-        case re: RealNumber => Sin(Radians(re))
+        case re: Real => Sin(Radians(re))
         case _ => ???
     }
 
-    def apply(re: RealNumber): RealNumber = re match {
+    def apply(re: Real): Real = re match {
         case angle: Angle => apply(angle)
         case _ => apply(re radians)
     }
@@ -60,13 +60,13 @@ private class Sin(val of: Expression)
  * @param of
  */
 private class RealSin(val of: Angle)
-        extends RealNumber {
+        extends Real {
 
     private lazy val series = MaclaurinSeries(Sin, of.toRadians)
 
     protected[this] def eval(precision: Precision) = series.evaluate(precision)
 
-    override def variables = super[RealNumber].variables
+    override def variables = super[Real].variables
 
     override def toConstant = Some(this)
 
@@ -89,16 +89,16 @@ object Cosec
 
 object ArcSin
         extends ExpressionBuilder
-        with UnivariateFunction[RealNumber, Angle] {
+        with UnivariateFunction[Real, Angle] {
 
     def apply(n: Number) = n match {
-        case re: RealNumber => apply(re)
+        case re: Real => apply(re)
         case _ => ???
     }
 
-    def apply(d: BigDecimal): Angle = apply(RealNumber(d))
+    def apply(d: BigDecimal): Angle = apply(Real(d))
 
-    def apply(re: RealNumber): Angle = re match {
+    def apply(re: Real): Angle = re match {
         case _ if re.abs < One => new RealArcSin(re) radians
         case _ if re.abs == One => Signum(re) * One radians
         case _ => Operation.undefined
@@ -123,8 +123,8 @@ class ArcSin(val of: Expression)
 
 }
 
-class RealArcSin(val x: RealNumber)
-        extends RealNumber {
+class RealArcSin(val x: Real)
+        extends Real {
 
     //private lazy val series = Series(nth _, Zero)
 

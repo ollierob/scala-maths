@@ -9,12 +9,12 @@ import net.ollie.maths.numbers._
  */
 object Integral {
 
-    def apply(fn: Variable => Univariate, from: RealNumber, to: RealNumber)(implicit method: NumericalIntegrationMethod): RealNumber = {
+    def apply(fn: Variable => Univariate, from: Real, to: Real)(implicit method: NumericalIntegrationMethod): Real = {
         if (from >= to) Zero
         else method(fn, from, to)
     }
 
-    def apply(expression: Univariate, from: RealNumber, to: RealNumber)(implicit method: NumericalIntegrationMethod): RealNumber = {
+    def apply(expression: Univariate, from: Real, to: Real)(implicit method: NumericalIntegrationMethod): Real = {
         if (from >= to) Zero
         else method(expression, from, to)
     }
@@ -22,7 +22,7 @@ object Integral {
 }
 
 trait Integral
-        extends RealNumber {
+        extends Real {
 
     def of: Expression
 
@@ -34,15 +34,15 @@ trait Integral
 
 trait DefiniteIntegral
         extends Integral
-        with RealNumber {
+        with Real {
 
     def of: Univariate
 
     def variable = of.variable
 
-    def from: RealNumber
+    def from: Real
 
-    def to: RealNumber
+    def to: Real
 
     def isEmpty = false //this.evaluate(SinglePrecision) == 0
 
@@ -52,19 +52,19 @@ trait DefiniteIntegral
 
 trait NumericalIntegrationMethod {
 
-    def apply(of: Univariate, from: RealNumber, to: RealNumber): DefiniteIntegral = (from, to) match {
+    def apply(of: Univariate, from: Real, to: Real): DefiniteIntegral = (from, to) match {
         case (_, Infinity) => toInfinity(of, from)
         case _ => finite(of, from, to)
     }
 
-    def apply(fn: Variable => Univariate, from: RealNumber, to: RealNumber): DefiniteIntegral = {
+    def apply(fn: Variable => Univariate, from: Real, to: Real): DefiniteIntegral = {
         val t = Variable("$t")
         apply(fn(t), from, to)
     }
 
-    def finite(of: Univariate, from: RealNumber, to: RealNumber): DefiniteIntegral
+    def finite(of: Univariate, from: Real, to: Real): DefiniteIntegral
 
-    def toInfinity(of: Univariate, from: RealNumber): DefiniteIntegral = ??? //new InfiniteIntegral(of, from)(this)
+    def toInfinity(of: Univariate, from: Real): DefiniteIntegral = ??? //new InfiniteIntegral(of, from)(this)
 
     def betweenInfinities(of: Univariate): DefiniteIntegral = ???
 
@@ -73,9 +73,9 @@ trait NumericalIntegrationMethod {
 object TrapezoidalIntegrationMethod
         extends NumericalIntegrationMethod {
 
-    def finite(of: Univariate, from: RealNumber, to: RealNumber): DefiniteIntegral = new ProperIntegral(of, from, to)
+    def finite(of: Univariate, from: Real, to: Real): DefiniteIntegral = new ProperIntegral(of, from, to)
 
-    private class ProperIntegral(val of: Univariate, val from: RealNumber, val to: RealNumber)
+    private class ProperIntegral(val of: Univariate, val from: Real, val to: Real)
             extends DefiniteIntegral
             with IterativelyEvaluated {
 
@@ -85,10 +85,10 @@ object TrapezoidalIntegrationMethod
 
             var N: Int = Math.max(4, startPrecision.value)
 
-            def next(nth: NaturalNumber, precision: Precision): BigDecimal = {
+            def next(nth: Natural, precision: Precision): BigDecimal = {
                 val h = delta / N
                 val terms = split(h)
-                var totalArea: RealNumber = Zero
+                var totalArea: Real = Zero
                 for (i <- 1 to N) {
                     val t = of(terms(i - 1)) + of(terms(i))
                     totalArea += t
@@ -98,7 +98,7 @@ object TrapezoidalIntegrationMethod
                 totalArea.approximatelyEvaluate(precision)
             }
 
-            private def split(h: RealNumber): IndexedSeq[RealNumber] = {
+            private def split(h: Real): IndexedSeq[Real] = {
                 var n: Int = -1
                 Iterable.fill(N + 1)({
                     n = n + 1
@@ -118,9 +118,9 @@ object TrapezoidalIntegrationMethod
 object SimpsonsIntegrationMethod
         extends NumericalIntegrationMethod {
 
-    def finite(of: Univariate, from: RealNumber, to: RealNumber): DefiniteIntegral = new ProperIntegral(of, from, to)
+    def finite(of: Univariate, from: Real, to: Real): DefiniteIntegral = new ProperIntegral(of, from, to)
 
-    private class ProperIntegral(val of: Univariate, val from: RealNumber, val to: RealNumber)
+    private class ProperIntegral(val of: Univariate, val from: Real, val to: Real)
             extends DefiniteIntegral
             with IterativelyEvaluated {
 
@@ -130,10 +130,10 @@ object SimpsonsIntegrationMethod
 
             var n: Int = even(Math.max(4, startPrecision.value))
 
-            def next(nth: NaturalNumber, precision: Precision) = {
+            def next(nth: Natural, precision: Precision) = {
                 val h = interval / n
                 val terms = split(h)
-                var totalArea: RealNumber = of(terms(0)) + of(terms.last)
+                var totalArea: Real = of(terms(0)) + of(terms.last)
                 for (i <- 1 to n - 1) {
                     totalArea += of(terms(i)) * (if (i % 2 == 0) 2 else 4)
                 }
@@ -143,7 +143,7 @@ object SimpsonsIntegrationMethod
                 evaluated
             }
 
-            private def split(h: RealNumber): IndexedSeq[RealNumber] = {
+            private def split(h: Real): IndexedSeq[Real] = {
                 var i: Int = -1
                 Iterable.fill(n + 1)({
                     i = i + 1
@@ -159,17 +159,17 @@ object SimpsonsIntegrationMethod
 
 }
 
-class InfiniteIntegral(val of: Univariate, val from: RealNumber)(implicit method: NumericalIntegrationMethod)
+class InfiniteIntegral(val of: Univariate, val from: Real)(implicit method: NumericalIntegrationMethod)
         extends DefiniteIntegral
         with IterativelyEvaluated {
 
     final def to = Infinity
 
-    protected[this] def upperLimit(n: NaturalNumber): RealNumber = 10 * (n.succ)
+    protected[this] def upperLimit(n: Natural): Real = 10 * (n.succ)
 
     def evaluationIterator(startPrecision: Precision) = new EvaluationIterator() {
 
-        def next(nth: NaturalNumber, precision: Precision) = Integral(of, from, upperLimit(nth))(method).evaluate(precision)
+        def next(nth: Natural, precision: Precision) = Integral(of, from, upperLimit(nth))(method).evaluate(precision)
 
     }
 

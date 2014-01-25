@@ -6,7 +6,7 @@ import net.ollie.maths._
 import net.ollie.maths.functions.{ExpressionBuilder, UnivariateFunction}
 import net.ollie.maths.functions.numeric.SquareRoot
 import net.ollie.maths.methods.MaclaurinSeries
-import net.ollie.maths.numbers.{One, Precision, RealNumber}
+import net.ollie.maths.numbers.{One, Precision, Real}
 import net.ollie.maths.numbers.real.Pi
 import org.nevec.rjm.BigDecimalMath
 
@@ -17,7 +17,7 @@ object Cos
         extends ExpressionBuilder {
 
     def apply(n: Number): Number = n match {
-        case re: RealNumber => apply(Radians(re))
+        case re: Real => apply(Radians(re))
         case _ => ???
     }
 
@@ -47,15 +47,15 @@ class Cos(val of: Expression)
 
 class RealCos(override val of: Angle)
         extends Cos(of)
-        with RealNumber {
+        with Real {
 
     private lazy val series = MaclaurinSeries(Cos, of.toRadians)
 
     protected[this] def eval(precision: Precision) = series.evaluate(precision)
 
-    override def inverse = super[RealNumber].inverse
+    override def inverse = super[Real].inverse
 
-    override def variables = super[RealNumber].variables
+    override def variables = super[Real].variables
 
     override def toConstant = Some(this)
 
@@ -78,16 +78,16 @@ object Sec
  */
 object ArcCos
         extends ExpressionBuilder
-        with UnivariateFunction[RealNumber, Angle] {
+        with UnivariateFunction[Real, Angle] {
 
     import Angle._
 
     def apply(n: Number) = n match {
-        case re: RealNumber => apply(re)
+        case re: Real => apply(re)
         case _ => ???
     }
 
-    def apply(f: RealNumber): Angle = new RealArcCos(f) radians
+    def apply(f: Real): Angle = new RealArcCos(f) radians
 
     protected[this] def create(x: Expression) = new ArcCos(x)
 
@@ -111,18 +111,18 @@ class ArcCos(val of: Expression)
 
 }
 
-class RealArcCos(override val of: RealNumber)
+class RealArcCos(override val of: Real)
         extends ArcCos(of)
-        with RealNumber {
+        with Real {
 
     protected[this] def eval(precision: Precision) = BigDecimalMath.acos(of.approximatelyEvaluate(precision).underlying())
 
     override def isEmpty = of == One
 
-    override def variables = super[RealNumber].variables
+    override def variables = super[Real].variables
 
-    override def toConstant = super[RealNumber].toConstant
+    override def toConstant = super[Real].toConstant
 
-    override def inverse = super[RealNumber].inverse
+    override def inverse = super[Real].inverse
 
 }

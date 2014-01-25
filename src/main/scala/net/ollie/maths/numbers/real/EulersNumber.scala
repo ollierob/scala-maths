@@ -8,7 +8,7 @@ import net.ollie.maths.numbers._
  * @see http://mathworld.wolfram.com/e.html
  */
 object EulersNumber
-        extends PositiveRealNumber {
+        extends PositiveReal {
 
     private final val E50 = BigDecimal("2.71828182845904523536028747135266249775724709369995")
 
