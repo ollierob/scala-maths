@@ -61,7 +61,7 @@ private class TAny(val n: NaturalNumber, val of: Expression)
 
     protected[this] def f = (2 * of * ChebyshevFirstKind(n - 1)(of)) - ChebyshevFirstKind(n - 2)(of)
 
-    override def df(x: Variable) = (n - 1) * ChebyshevSecondKind(n - 1)(x)
+    override def df(x: Variable) = n * ChebyshevSecondKind(n - 1)(x)
 
     override def toString = s"Chebyshev1($n)($of)"
 

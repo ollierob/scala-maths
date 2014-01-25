@@ -2,7 +2,7 @@ package net.ollie.maths.functions.polynomial
 
 import org.scalatest.{Matchers, FlatSpec}
 import net.ollie.maths.Variable
-import net.ollie.maths.numbers.One
+import net.ollie.maths.numbers.{Zero, NaturalNumber, One}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 
@@ -18,17 +18,20 @@ class ChebyshevFirstKindTest extends FlatSpec with Matchers {
 
     {
 
-        val t2 = ChebyshevFirstKind(2)(x) //2x^2 -1
+        val f = ChebyshevFirstKind(2)(x) //2x^2 -1
 
         it should "evaluate" in {
-            println(t2.replace(x, x))
-            t2.replace(x, One).toConstant shouldBe Some(One)
+            f.replace(x, Zero).toConstant shouldBe Some(-One)
+            f.replace(x, One).toConstant shouldBe Some(One)
         }
 
-        //        it should "differentiate to 4x" in {
-        //            val df = t2.df(x)
-        //            df.replace(x, One).toConstant shouldBe NaturalNumber(4)
-        //        }
+        it should "differentiate to 4x" in {
+            val df = f.df(x)
+            df.replace(x, Zero).toConstant shouldBe Some(Zero)
+            println(f.replace(x, Variable("y")))
+            println(df)
+            df.replace(x, One).toConstant shouldBe Some(NaturalNumber(4))
+        }
 
     }
 
