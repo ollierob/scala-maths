@@ -88,8 +88,6 @@ class RealLn(override val of: PositiveRealNumber)
         extends Ln(of)
         with RealNumber {
 
-    println(s"Created $this")
-
     override def inverse = super[RealNumber].inverse
 
     protected[this] def eval(precision: Precision) = BigDecimalMath.log(of.evaluate(precision).underlying())

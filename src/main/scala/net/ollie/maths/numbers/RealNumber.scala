@@ -55,18 +55,11 @@ trait RealNumber
     def -(that: RealNumber): RealNumber = this + (-that)
 
     def *(that: RealNumber): RealNumber = {
-        println(s"EXECUTING $this * $that")
         this ?* that match {
-            case Some(n) => {
-                println(s"n=>$n FROM " + this.getClass); n
-            }
+            case Some(n) => n
             case _ => that ?* this match {
-                case Some(m) => {
-                    println(s"m=>$m FROM " + that.getClass); m
-                }
-                case _ => {
-                    println("product"); RealProduct(this, that)
-                }
+                case Some(m) => m
+                case _ => RealProduct(this, that)
             }
         }
     }
@@ -372,8 +365,6 @@ object RealProduct {
 class RealProduct private(val terms: Seq[RealNumber])
         extends RealNumber
         with ApproximatelyEvaluated {
-
-    println(s"CREATED REAL PRODUCT $terms")
 
     require(!terms.isEmpty)
 

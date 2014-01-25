@@ -124,8 +124,6 @@ object SimpsonsIntegrationMethod
             extends DefiniteIntegral
             with IterativelyEvaluated {
 
-        println(s"Simpsons method of $of over $from:$to (" + of.getClass + ")")
-
         val interval = to - from
 
         def evaluationIterator(startPrecision: Precision) = new EvaluationIterator() {
@@ -142,7 +140,6 @@ object SimpsonsIntegrationMethod
                 totalArea *= h / 3
                 n += 2
                 val evaluated = totalArea.approximatelyEvaluate(precision)
-                println(s"Total area with $n segments = $evaluated")
                 evaluated
             }
 

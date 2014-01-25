@@ -44,11 +44,8 @@ trait IntegerNumber
     def *(that: IntegerNumber): IntegerNumber = IntegerNumber(this.evaluate * that.evaluate)
 
     override def ?*(that: RealNumber) = {
-        println(s"INTEGERNUMBER $this * $that")
         that match {
-            case int: IntegerNumber => {
-                println(s"THAT $that IS INT"); Some(this * int)
-            }
+            case int: IntegerNumber => Some(this * int)
             case _ => super.?*(that)
         }
     }
