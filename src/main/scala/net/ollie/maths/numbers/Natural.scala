@@ -67,7 +67,13 @@ object Natural {
         case _ => Left(int)
     }
 
-    def divide(numerator: Natural, denominator: Natural): PositiveReal = NaturalFraction(numerator, denominator)
+    def divide(numerator: Natural, denominator: Natural): PositiveReal = IntegerFraction.common(numerator, denominator) match {
+        case Some(m) => m.abs
+        case _ => IntegerFraction.reduce(numerator, denominator) match {
+            case Some((i1, i2)) => divide(i1.abs, i2.abs)
+            case _ => new NaturalFraction(numerator, denominator)
+        }
+    }
 
     def inverse(n: Natural): PositiveReal = divide(One, n)
 
@@ -145,25 +151,13 @@ class Factorial(val n: Natural)
 
 }
 
-object NaturalFraction {
-
-    def apply(n1: Natural, n2: Natural): PositiveReal = IntegerFraction.common(n1, n2) match {
-        case Some(m) => m.abs
-        case _ => IntegerFraction.reduce(n1, n2) match {
-            case Some((i1, i2)) => apply(i1.abs, i2.abs)
-            case _ => new NaturalFraction(n1, n2)
-        }
-    }
-
-}
-
 class NaturalFraction(override val numerator: Natural, override val denominator: Natural)
         extends IntegerFraction(numerator, denominator)
         with PositiveReal {
 
     override def abs = this
 
-    override def inverse = NaturalFraction(denominator, numerator)
+    override def inverse = Natural.divide(denominator, numerator)
 
 }
 

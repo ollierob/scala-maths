@@ -40,4 +40,9 @@ class NaturalTest extends FlatSpec with Matchers {
 
     }
 
+    "8/4" should "reduce" in {
+        val fraction = Natural(8) / Natural(4)
+        fraction shouldBe Natural(2)
+    }
+
 }

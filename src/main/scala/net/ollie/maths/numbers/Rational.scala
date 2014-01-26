@@ -44,7 +44,7 @@ object IntegerFraction {
     def apply(numerator: Integer, denominator: Integer): Real = common(numerator, denominator) match {
         case Some(m) => m
         case _ => (numerator, denominator) match {
-            case (n1: Natural, n2: Natural) => NaturalFraction(n1, n2)
+            case (n1: Natural, n2: Natural) => Natural.divide(n1, n2)
             case _ => reduce(numerator, denominator) match {
                 case Some((n, d)) => apply(n, d)
                 case _ => new IntegerFraction(numerator, denominator)
@@ -79,7 +79,7 @@ class IntegerFraction private[numbers](override val numerator: Integer, override
 
     override def unary_-() = IntegerFraction(-numerator, denominator)
 
-    override def squared = NaturalFraction(numerator.squared, denominator.squared)
+    override def squared = Natural.divide(numerator.squared, denominator.squared)
 
     override def ?+(that: Real) = that match {
         case r: Rational => Some(((this.numerator * r.denominator) + (r.numerator * this.denominator)) / (this.denominator * r.denominator))
