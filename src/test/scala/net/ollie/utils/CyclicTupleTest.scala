@@ -19,17 +19,17 @@ class CyclicTupleTest extends FlatSpec with Matchers {
             t._3 shouldBe 3
         }
 
-        it should "cycle" in {
-            t.cycle._1 shouldBe 2
-            t.cycle._2 shouldBe 3
-            t.cycle._3 shouldBe 1
-            t.cycle shouldBe CyclicTuple(2, 3, 1)
+        it should "cycle left" in {
+            t.cycleLeft._1 shouldBe 2
+            t.cycleLeft._2 shouldBe 3
+            t.cycleLeft._3 shouldBe 1
+            t.cycleLeft shouldBe CyclicTuple(2, 3, 1)
         }
 
         it should "be contained in cycles" in {
             t.cycles contains t shouldBe true
-            t.cycles contains t.cycle shouldBe true
-            t.cycles contains t.cycle.cycle shouldBe true
+            t.cycles contains t.cycleLeft shouldBe true
+            t.cycles contains t.cycleLeft.cycleLeft shouldBe true
         }
 
         it should "not contain antisymmetric cycles" in {

@@ -6,7 +6,9 @@ package net.ollie.utils
 trait CyclicTuple
         extends Product {
 
-    def cycle: CyclicTuple
+    def cycleLeft: CyclicTuple
+
+    def cycleRight: CyclicTuple
 
     def cycles: Set[_ <: CyclicTuple]
 
@@ -22,9 +24,11 @@ class CyclicTuple3[+T1, +T2, +T3](override val _1: T1, override val _2: T2, over
         extends Tuple3(_1, _2, _3)
         with CyclicTuple {
 
-    def cycle: CyclicTuple3[T2, T3, T1] = new CyclicTuple3(_2, _3, _1)
+    def cycleLeft: CyclicTuple3[T2, T3, T1] = new CyclicTuple3(_2, _3, _1)
 
-    def cycles: Set[CyclicTuple3[_, _, _]] = Set(this, cycle, cycle.cycle)
+    def cycleRight: CyclicTuple3[T3, T1, T2] = new CyclicTuple3(_3, _1, _2)
+
+    def cycles: Set[CyclicTuple3[_, _, _]] = Set(this, cycleLeft, cycleLeft.cycleLeft)
 
     override def equals(that: Any) = that match {
         case t: Tuple3[_, _, _] => _1 == t._1 && _2 == t._2 && _3 == t._3
