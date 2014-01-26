@@ -2,7 +2,7 @@ package net.ollie.maths.methods
 
 import scala.Some
 import scala.collection.mutable
-import scala.collection.mutable.ListBuffer
+import scala.collection.mutable.{ArrayBuffer, ListBuffer}
 
 import net.ollie.maths._
 import net.ollie.maths.numbers._
@@ -22,10 +22,12 @@ object Series {
 
     def apply(f: (Integer) => Expression, start: Integer, end: Integer): Expression = {
         if (end < start) Zero
-        else new FiniteSum(f, start, end)
+        else new FiniteIncrementalSum(f, start, end)
     }
 
     def apply(f: (Natural) => Real, start: Natural): Real = new InfiniteSum(f, start)
+
+    def apply[N <: Integer](f: (N) => Real, over: Seq[N]) = if (over.isEmpty) Zero else new SumOver(f, over)
 
 }
 
@@ -62,7 +64,7 @@ class Series[+T <: Expression](val terms: Seq[T])
 
 }
 
-class FiniteSum(f: (Integer) => Expression, start: Integer, end: Integer)
+private class FiniteIncrementalSum(f: (Integer) => Expression, start: Integer, end: Integer)
         extends Expression {
 
     private val size = (end - start).toInt.get
@@ -87,13 +89,13 @@ class FiniteSum(f: (Integer) => Expression, start: Integer, end: Integer)
 
 }
 
-class InfiniteSum(f: Natural => Real, start: Natural)
+private class InfiniteSum(f: Natural => Real, start: Natural)
         extends Real
         with IterativelyEvaluated {
 
-    def isEmpty = false;
+    def isEmpty = false
 
-    def evaluationIterator(startPrecision: Precision) = new EvaluationIterator() {
+    def evaluationIterator(startPrecision: Precision) = new EvaluationIterator {
 
         val terms: ListBuffer[Real] = new ListBuffer[Real]()
 
@@ -104,5 +106,22 @@ class InfiniteSum(f: Natural => Real, start: Natural)
         }
 
     }
+
+}
+
+private class SumOver[N <: Integer](f: N => Real, over: Seq[N])
+        extends Real {
+
+    private val series: Iterable[Real] = {
+        val terms = new ArrayBuffer[Real](over.size)
+        for (i <- over) terms += f(i)
+        terms
+    }
+
+    protected[this] def eval(precision: Precision) = series.sum.evaluate(precision)
+
+    def isEmpty = over.isEmpty || series.forall(_.isEmpty)
+
+    override def toString = s"Σ(over $over)($f)"
 
 }

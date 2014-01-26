@@ -120,7 +120,7 @@ object MinusOne
 
     override def unary_-() = One
 
-    override def ^(that: Integer): Integer = if (that.isEmpty) Zero else if (that.isEven) One else this
+    override def ^(that: Integer): Integer = if (that.isEven) One else this
 
     override def equals(re: Real) = (this eq re) || super.equals(re)
 

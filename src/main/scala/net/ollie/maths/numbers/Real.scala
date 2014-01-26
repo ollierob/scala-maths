@@ -12,7 +12,8 @@ import net.ollie.maths.numbers.real.{Massive, PowerTower, RealPower}
  */
 trait Real
         extends Number
-        with Evaluable {
+        with Evaluable
+        with Ordered[Real] {
 
     final type System = Real
 
@@ -105,15 +106,7 @@ trait Real
 
     def squared: PositiveReal = (this ^ 2).abs
 
-    def >(that: Real): Boolean = this.compareTo(that) > 0
-
-    def >=(that: Real): Boolean = this.compareTo(that) >= 0
-
-    def <(that: Real): Boolean = this.compareTo(that) < 0
-
-    def <=(that: Real): Boolean = this.compareTo(that) <= 0
-
-    def compareTo(that: Real): Int = {
+    def compare(that: Real): Int = {
         if (this eq that) 0
         else this.tryCompareTo(that) match {
             case Some(i) => i
@@ -124,7 +117,7 @@ trait Real
         }
     }
 
-    def isStrictlyPositive: Boolean = this > 0
+    def isStrictlyPositive: Boolean = Zero < this
 
     protected def tryCompareTo(that: Real): Option[Int] = None
 

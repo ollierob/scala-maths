@@ -16,8 +16,10 @@ object EulersNumber
 
     protected[this] def eval(precision: Precision) = {
         if (precision.value < 50) precision(E50)
-        else Series(n => 1 / (n.abs !), Zero).evaluate(precision)
+        else Series(nth _, Zero).evaluate(precision)
     }
+
+    private def nth(n: Natural): Real = 1 / (n !)
 
     override def toString = "e"
 

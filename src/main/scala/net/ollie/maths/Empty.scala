@@ -44,7 +44,8 @@ trait EmptyNumber
 
     override def toString = super[Empty].toString
 
-    protected[this] def eval(precision: Precision) = BigDecimal(0) to precision
+    protected def eval(precision: Precision) = BigDecimal(0) to precision
 
     override def ?*(that: Expression)(leftToRight: Boolean) = super[Empty].?*(that)(leftToRight)
+
 }

@@ -94,6 +94,31 @@ object Integer {
         case _ => None
     }
 
+    implicit object IntegerArithmetic
+            extends Numeric[Integer] {
+
+        def plus(x: Integer, y: Integer) = x + y
+
+        def minus(x: Integer, y: Integer) = x - y
+
+        def times(x: Integer, y: Integer) = x * y
+
+        def negate(x: Integer): Integer = -x
+
+        def fromInt(x: Int): Integer = x
+
+        def toInt(x: Integer) = x.toInt.get
+
+        def toLong(x: Integer): Long = x.toInt.get.toLong
+
+        def toFloat(x: Integer): Float = x.toInt.get.toFloat
+
+        def toDouble(x: Integer): Double = x.toInt.get.toDouble
+
+        def compare(x: Integer, y: Integer) = x compare y
+
+    }
+
 }
 
 class ExactInteger(val int: Int)
