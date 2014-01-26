@@ -37,6 +37,8 @@ trait Natural
 
     def *(that: Natural): Natural = Natural(this.evaluate * that.evaluate)
 
+    def *(i: Int): Integer = this * Integer(i) //Helps resolve ambiguous reference errors
+
     def /(that: Natural): PositiveReal = Natural.divide(this, that)
 
     def ^(that: Natural): Natural = Natural.power(this, that)
@@ -63,7 +65,7 @@ object Natural {
     def apply(int: Integer): Either[Integer, Natural] = int match {
         case Zero => Right(Zero)
         case n: Natural => Right(n)
-        case _ if int.isStrictlyPositive => Right(Natural(int.evaluate))
+        case _ if int.isStrictlyPositive => Right(int.abs)
         case _ => Left(int)
     }
 
@@ -118,7 +120,7 @@ object MinusOne
 
     override def unary_-() = One
 
-    override def ^(that: Integer) = if (that.isEven) One else this
+    override def ^(that: Integer): Integer = if (that.isEmpty) Zero else if (that.isEven) One else this
 
     override def equals(re: Real) = (this eq re) || super.equals(re)
 
@@ -146,6 +148,8 @@ class Factorial(val n: Natural)
     private lazy val evaluated = n.evaluate * (n.decr !).evaluate
 
     def evaluate = evaluated
+
+    override def isEven = n > 1
 
     override def toString = n.toString + "!"
 

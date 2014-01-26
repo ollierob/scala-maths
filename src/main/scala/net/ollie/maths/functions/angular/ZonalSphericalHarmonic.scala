@@ -1,6 +1,6 @@
 package net.ollie.maths.functions.angular
 
-import net.ollie.maths.{Expression, Variable}
+import net.ollie.maths.Expression
 import net.ollie.maths.functions.Represented
 import net.ollie.maths.functions.numeric.PositiveSquareRoot
 import net.ollie.maths.functions.polynomial.LegendrePolynomial
@@ -16,6 +16,12 @@ trait ZonalSphericalHarmonic
 
     override final def m = Zero
 
+    final def phi = Zero
+
+    final def minusM: ZonalSphericalHarmonic = this
+
+    override final def conjugate: ZonalSphericalHarmonic = this
+
     override def toString = "Z(" + l + ")"
 
 }
@@ -23,6 +29,8 @@ trait ZonalSphericalHarmonic
 object ZeroZeroHarmonic
         extends ZonalSphericalHarmonic
         with Represented {
+
+    def theta = Zero
 
     def l = Zero
 
@@ -32,7 +40,7 @@ object ZeroZeroHarmonic
 
 }
 
-class LZeroHarmonic(val l: Natural, val theta: Variable)
+class LZeroHarmonic(val l: Natural, val theta: Expression)
         extends AnyRef
         with ZonalSphericalHarmonic
         with Represented {

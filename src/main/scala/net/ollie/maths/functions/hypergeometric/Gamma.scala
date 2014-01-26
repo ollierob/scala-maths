@@ -21,12 +21,12 @@ object Gamma
         case _ => ???
     }
 
-    def apply(re: Real) = re match {
-        case n: Natural => apply(n)
+    def apply(re: Real): Real = re match {
+        case n: Integer if n.isStrictlyPositive => apply(n.abs)
         case _ => new RealGamma(re)
     }
 
-    def apply(n: Natural) = (n.decr) !
+    def apply(n: Natural): Natural = (n.decr) !
 
     protected[this] def create(expr: Expression) = new Gamma(expr)
 

@@ -10,9 +10,13 @@ object Zero
         extends Natural
         with EmptyNumber {
 
-    private lazy val evaluated: BigInt = 0
+    private final val i = BigInt(0)
 
-    def evaluate = evaluated
+    def evaluate = i
+
+    private final val d = BigDecimal("0")
+
+    def evaluate(precision: Precision) = d to precision
 
     override def isEmpty = super[EmptyNumber].isEmpty
 
@@ -21,6 +25,8 @@ object Zero
     override def inverse = UnsignedInfinity
 
     override def unary_-() = this
+
+    override def abs = this
 
     override def succ = One
 
@@ -35,6 +41,8 @@ object Zero
     override def ?*(that: Real) = Some(this)
 
     override def *(that: Natural) = this
+
+    override def eval(precision: Precision) = super[EmptyNumber].eval(precision)
 
     override def toString = super[EmptyNumber].toString
 

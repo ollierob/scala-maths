@@ -1,7 +1,7 @@
 package net.ollie.maths.functions.polynomial
 
 import net.ollie.maths._
-import net.ollie.maths.functions.{Represented, Modal}
+import net.ollie.maths.functions.{Modal, Represented}
 import net.ollie.maths.numbers.{Integer, Natural, Zero}
 
 /**
@@ -11,11 +11,18 @@ trait AssociatedLegendrePolynomial
         extends Modal
         with Represented {
 
-    override def toString = "P(" + l + "," + m + ")"
+    override def toString = s"P($l, $m)"
 
 }
 
 object AssociatedLegendrePolynomial {
+
+    def apply(l: Int, m: Int, x: Expression): AssociatedLegendrePolynomial = apply(Integer(l), Integer(m), x)
+
+    def apply(l: Integer, m: Integer, x: Expression): AssociatedLegendrePolynomial = l match {
+        case _ if l >= 0 => apply(l.abs, m, x)
+        case _ => apply(l.abs - 1, m, x)
+    }
 
     def apply(l: Natural, m: Integer, x: Expression): AssociatedLegendrePolynomial = m match {
         case Zero => LegendrePolynomial(l, x)
@@ -49,6 +56,8 @@ class RegularAssociatedLegendrePolynomial(val l: Natural, val m: Integer, val x:
 
     require(l <= m.abs)
 
-    protected[this] def f = (((2 * l - 1) * Plm(l - 1, m, x)) - ((l + m) * Plm(l - 2, m, x))) / (l - m + 1)
+    protected[this] def f = {
+        ((((2 * l) - 1) * Plm(l - 1, m, x)) - ((l + m) * Plm(l - 2, m, x))) / (l - m + 1)
+    }
 
 }

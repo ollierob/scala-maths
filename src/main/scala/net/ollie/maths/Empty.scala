@@ -1,13 +1,13 @@
 package net.ollie.maths
 
-import net.ollie.maths.numbers.Zero
+import net.ollie.maths.numbers.{Precision, Zero}
 
 /**
  * An empty expression.
  *
  * For a number this means that it is known to be equal to zero at compile-time.
  * It may not be possible to know if a number is zero at compile-time;
- * the method [[net.ollie.maths.Empty.isEmpty]] should be called, rather than pattern-matching on this trait.
+ * the method isEmpty should be called, rather than pattern-matching on this trait.
  *
  * For an expression, it means that it evaluates to zero everywhere.
  *
@@ -33,7 +33,8 @@ trait Empty
 
 trait EmptyNumber
         extends Empty
-        with Number {
+        with Number
+        with Evaluable {
 
     override def unary_-() = this
 
@@ -42,6 +43,8 @@ trait EmptyNumber
     override def isEmpty = super[Empty].isEmpty
 
     override def toString = super[Empty].toString
+
+    protected[this] def eval(precision: Precision) = BigDecimal(0) to precision
 
     override def ?*(that: Expression)(leftToRight: Boolean) = super[Empty].?*(that)(leftToRight)
 }

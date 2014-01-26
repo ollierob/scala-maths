@@ -12,11 +12,13 @@ import org.scalatest.junit.JUnitRunner
 @RunWith(classOf[JUnitRunner])
 class SphericalHarmonicTest extends FlatSpec with Matchers {
 
+    val theta = new Variable("theta")
+    val phi = new Variable("phi")
+
     behavior of "Y(0,0)"
 
     {
-        val theta = new Variable("theta")
-        val phi = new Variable("phi")
+
         val ylm = SphericalHarmonic(0, 0, theta, phi)
 
         it should "have zero order and degree" in {
@@ -29,6 +31,30 @@ class SphericalHarmonicTest extends FlatSpec with Matchers {
         it should "differentiate" in {
             ylm.df(theta).isEmpty shouldBe (true)
             ylm.df(phi).isEmpty shouldBe (true)
+        }
+
+        it should "conjugate" in {
+            ylm.conjugate shouldBe ylm
+        }
+
+    }
+
+    behavior of "Y(1, 1)"
+
+    {
+
+        val ylm = SphericalHarmonic(1, 1, theta, phi)
+
+        it should "conjugate" in {
+            val c = ylm.conjugate
+            c.l shouldBe ylm.l
+            c.m shouldBe -(ylm.m)
+            c.conjugate shouldBe ylm
+        }
+
+        it should "differentiate" in {
+            val df = ylm.df(theta)
+            println(df)
         }
 
     }
