@@ -21,7 +21,13 @@ object Floor extends Round {
 
 }
 
-trait Round
+object Nearest extends Round {
+
+    def mode = RoundingMode.HALF_EVEN;
+
+}
+
+sealed trait Round
         extends UnivariateFunction[Real, Integer] {
 
     protected[this] def mode: RoundingMode
