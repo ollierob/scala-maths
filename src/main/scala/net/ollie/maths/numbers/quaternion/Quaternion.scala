@@ -92,7 +92,7 @@ object Quaternion {
 
     implicit def k(re: Real): QuaternionK = new QuaternionK(re)
 
-    def apply(re: Real, i: QuaternionI, j: QuaternionJ, k: QuaternionK): Quaternion = new FullQuaternion(re, i, j, k)
+    def apply(re: Real, i: QuaternionI, j: QuaternionJ, k: QuaternionK): Quaternion = new CartesianQuaternion(re, i, j, k)
 
     def apply(re: Int, ii: Int, jj: Int, kk: Int): Quaternion = apply(re, i(ii), j(jj), k(kk))
 
@@ -186,9 +186,6 @@ object QuaternionZero
     override def df(x: Variable) = super[Quaternion].df(x)
 
 }
-
-class FullQuaternion(val re: Real, val i: QuaternionI, val j: QuaternionJ, val k: QuaternionK)
-        extends Quaternion
 
 class QuaternionR(val re: Real)
         extends Quaternion {
