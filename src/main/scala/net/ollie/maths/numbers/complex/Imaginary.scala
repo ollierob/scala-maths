@@ -1,6 +1,6 @@
 package net.ollie.maths.numbers.complex
 
-import net.ollie.maths.Empty
+import net.ollie.maths.{EmptyNumber, Empty}
 import net.ollie.maths.functions.angular.RightAngle
 import net.ollie.maths.functions.numeric.Signum
 import net.ollie.maths.numbers.{One, Real, Zero}
@@ -62,7 +62,7 @@ object Imaginary {
 
 object ImaginaryZero
         extends Imaginary(Zero)
-        with Empty {
+        with EmptyNumber {
 
     override def arg = ???
 
@@ -70,11 +70,11 @@ object ImaginaryZero
 
     override def unary_-() = this
 
-    override def isEmpty = super[Empty].isEmpty
+    override def isEmpty = super[EmptyNumber].isEmpty
 
-    override def toString = super[Empty].toString
+    override def variables = super[EmptyNumber].variables
 
-    override def variables = super[Empty].variables
+    override def toString = super[EmptyNumber].toString
 
 }
 

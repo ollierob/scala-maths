@@ -167,7 +167,7 @@ object Quaternion {
 
 object QuaternionZero
         extends Quaternion
-        with Empty {
+        with EmptyNumber {
 
     def re = Zero
 
@@ -179,9 +179,9 @@ object QuaternionZero
 
     override def unary_-() = this
 
-    override def isEmpty = super[Empty].isEmpty
+    override def isEmpty = super[EmptyNumber].isEmpty
 
-    override def variables = super[Empty].variables
+    override def variables = super[EmptyNumber].variables
 
     override def df(x: Variable) = super[Quaternion].df(x)
 

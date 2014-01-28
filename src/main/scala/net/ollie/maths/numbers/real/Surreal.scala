@@ -1,6 +1,6 @@
 package net.ollie.maths.numbers.real
 
-import net.ollie.maths.{Empty, Variable}
+import net.ollie.maths.{EmptyNumber, Variable}
 import net.ollie.maths.numbers._
 
 /**
@@ -35,7 +35,7 @@ trait SurrealForm extends Surreal {
 
 object EmptyForm
         extends SurrealForm
-        with Empty {
+        with EmptyNumber {
 
     def left = NumberSet()
 
@@ -45,11 +45,13 @@ object EmptyForm
 
     override def unary_-() = this
 
+    override def toConstant = Some(this)
+
     override def variables = Set()
 
     override def isEmpty = true
 
-    override def df(x: Variable) = super[SurrealForm].df(x)
+    override def eval(precision: Precision) = super[EmptyNumber].eval(precision)
 
     override def toString = "{ | }"
 

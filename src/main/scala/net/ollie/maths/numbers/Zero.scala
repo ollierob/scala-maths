@@ -1,6 +1,6 @@
 package net.ollie.maths.numbers
 
-import net.ollie.maths.{EmptyNumber, Variable}
+import net.ollie.maths.{Expression, EmptyNumber, Variable}
 
 /**
  * Empty real number.
@@ -43,6 +43,8 @@ object Zero
     override def *(that: Natural) = this
 
     override def eval(precision: Precision) = super[EmptyNumber].eval(precision)
+
+    override def replace(variables: Map[Variable, Expression]) = this
 
     override def toString = super[EmptyNumber].toString
 

@@ -1,6 +1,6 @@
 package net.ollie.maths.functions.angular
 
-import net.ollie.maths.Expression
+import net.ollie.maths._
 import net.ollie.maths.functions.{Modal, Represented}
 import net.ollie.maths.functions.numeric.{Exp, PositiveSquareRoot}
 import net.ollie.maths.functions.polynomial.AssociatedLegendrePolynomial
@@ -49,18 +49,28 @@ object SphericalHarmonic {
 
     def apply(l: Natural, m: Integer, theta: Expression, phi: Expression): SphericalHarmonic = (l, m) match {
         case (_, Zero) => apply(l, theta)
+        case _ if m.abs > l => new EmptyHarmonic(l, m, theta, phi)
         case _ => new LMHarmonic(l, m, theta, phi)
     }
 
-    def apply(l: Natural, theta: Expression): ZonalSphericalHarmonic = l match {
-        case Zero => ZeroZeroHarmonic
-        case _ => new LZeroHarmonic(l, theta)
-    }
+    def apply(l: Natural, theta: Expression): ZonalSphericalHarmonic = ZonalSphericalHarmonic(l, theta)
 
     def conjugate(ylm: SphericalHarmonic): SphericalHarmonic = ylm match {
         case conjugated: ConjugatedSphericalHarmonic => conjugated.ylm
         case _ => new ConjugatedSphericalHarmonic(ylm)
     }
+
+}
+
+private class EmptyHarmonic(val l: Natural, val m: Integer, val theta: Expression, val phi: Expression)
+        extends SphericalHarmonic
+        with Empty {
+
+    def minusM = SphericalHarmonic(l, -m, theta, phi)
+
+    override def df(x: Variable) = Zero
+
+    def replace(variables: Map[Variable, Expression]) = SphericalHarmonic(l, m, theta.replace(variables), phi.replace(variables))
 
 }
 

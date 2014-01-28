@@ -90,7 +90,7 @@ object Massive {
 
 object MassiveZero
         extends Massive
-        with Empty {
+        with EmptyNumber {
 
     override def isEmpty = true
 
@@ -100,9 +100,13 @@ object MassiveZero
 
     override def ?*(that: Number)(leftToRight: Boolean) = Some(this)
 
-    override def variables = super[Empty].variables
+    override def variables = super[EmptyNumber].variables
 
     override def unary_-() = this
+
+    override def toConstant: Option[Massive] = Some(this)
+
+    override def df(x: Variable) = this
 
     def tryReduce = Some(Zero)
 

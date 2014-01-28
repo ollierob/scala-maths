@@ -129,6 +129,8 @@ object EmptyAngle
 
     override def variables = super[Empty].variables
 
+    override def toConstant = Some(this)
+
 }
 
 class Radians(val value: Real)

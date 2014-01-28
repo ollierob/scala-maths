@@ -21,11 +21,15 @@ trait Empty
 
     def variables = Set.empty
 
+    def toConstant: Option[Number] = Some(Zero)
+
     override def unary_-(): Empty = Zero
 
     override def +(that: Expression) = that
 
     override def ?*(that: Expression)(leftToRight: Boolean) = Some(this)
+
+    override def df(x: Variable): Empty
 
     override def toString = "0"
 
@@ -45,6 +49,8 @@ trait EmptyNumber
     override def toString = super[Empty].toString
 
     protected def eval(precision: Precision) = BigDecimal(0) to precision
+
+    override def toConstant: Option[System] = Some(this.narrow)
 
     override def ?*(that: Expression)(leftToRight: Boolean) = super[Empty].?*(that)(leftToRight)
 

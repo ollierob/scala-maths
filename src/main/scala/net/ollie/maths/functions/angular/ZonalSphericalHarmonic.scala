@@ -26,6 +26,15 @@ trait ZonalSphericalHarmonic
 
 }
 
+object ZonalSphericalHarmonic {
+
+    def apply(l: Natural, theta: Expression): ZonalSphericalHarmonic = l match {
+        case Zero => ZeroZeroHarmonic
+        case _ => new LZeroHarmonic(l, theta)
+    }
+
+}
+
 object ZeroZeroHarmonic
         extends ZonalSphericalHarmonic
         with Represented {

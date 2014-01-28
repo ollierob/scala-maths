@@ -16,6 +16,8 @@ object ZeroPolynomial
 
     protected[this] def f = Zero
 
+    override def toConstant = super[Empty].toConstant
+
     override def df(x: Variable) = this
 
     override def variables = super[Empty].variables

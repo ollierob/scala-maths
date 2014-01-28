@@ -47,6 +47,10 @@ class EmptyAssociatedLegendrePolynomial(val l: Natural, val m: Integer)
 
     override def variables = super[Empty].variables
 
+    override def toConstant = super[Empty].toConstant
+
+    override def df(x: Variable) = Zero
+
 }
 
 class RegularAssociatedLegendrePolynomial(val l: Natural, val m: Integer, val x: Expression)
