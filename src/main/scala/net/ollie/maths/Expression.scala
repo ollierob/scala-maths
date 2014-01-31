@@ -205,27 +205,25 @@ object Univariate {
         case _ => ???
     }
 
-    private class NonvariateWrapper(val expression: Number)
+    private class NonvariateWrapper(val n: Number)
             extends AnyRef
             with Univariate {
 
         def replace(variables: Map[Variable, Expression]) = this
 
-        def toConstant: Option[Number] = expression.toConstant
+        def toConstant: Option[Number] = n.toConstant
 
-        def isEmpty = expression.isEmpty
+        def isEmpty = n.isEmpty
 
         override def df(x: Variable) = Zero
 
         def variable = ???
 
-        override def apply[N <: Number](n: N)(implicit conversion: NumberIdentityArithmetic[N#System]): N#System = {
-            conversion.convert(expression).get
-        }
+        //override def apply(n: N):N = this.n
 
         override def dx = Zero
 
-        override def toString = expression.toString
+        override def toString = n.toString
 
     }
 
@@ -266,9 +264,9 @@ trait Univariate
 
     def variables = Set(variable)
 
-    def apply[N <: Number](n: N)(implicit conversion: NumberIdentityArithmetic[N#System]): N#System = {
-        val replaced: Option[Number] = replace(variable, n).toConstant
-        conversion.convert(replaced).get
+    def apply[R <: Number](n: Number)(implicit conversion: NumberIdentityArithmetic[R]): R = {
+        val out: Number = replace(variable, n).toConstant.get
+        conversion.convert(out).get
     }
 
     def apply(u: Univariate): Univariate = replace(variable, u)

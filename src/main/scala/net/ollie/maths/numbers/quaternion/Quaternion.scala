@@ -28,7 +28,7 @@ trait Quaternion
 
     def isEmpty = re.isEmpty && i.isEmpty && j.isEmpty && k.isEmpty
 
-    def inverse: Quaternion = conjugate / Quaternion.RealQuaternionArithmetic.convert(norm.squared)
+    def inverse: Quaternion = conjugate / Quaternion.RealQuaternionArithmetic.promote(norm.squared)
 
     def conjugate: Quaternion = Quaternion.conjugate(this)
 
@@ -92,6 +92,13 @@ object Quaternion {
 
     implicit def k(re: Real): QuaternionK = new QuaternionK(re)
 
+    def apply(n: Number): Option[Quaternion] = n match {
+        case re: Real => Some(Quaternion(re))
+        case z: Complex => Some(Quaternion(z))
+        case q: Quaternion => Some(q)
+        case _ => None
+    }
+
     def apply(re: Real, i: QuaternionI, j: QuaternionJ, k: QuaternionK): Quaternion = new CartesianQuaternion(re, i, j, k)
 
     def apply(re: Int, ii: Int, jj: Int, kk: Int): Quaternion = apply(re, i(ii), j(jj), k(kk))
@@ -124,11 +131,13 @@ object Quaternion {
 
         def multiply(left: Real, right: Quaternion) = Quaternion(left) * right
 
-        def convert(re: Real) = Quaternion(re)
+        def promote(re: Real) = Quaternion(re)
 
         def zero = Quaternion.zero
 
         def one = Quaternion.one
+
+        def convert(n: Number) = Quaternion(n)
 
     }
 
@@ -141,11 +150,13 @@ object Quaternion {
 
         def multiply(z: Complex, q: Quaternion) = Quaternion(z) * q
 
-        def convert(z: Complex) = z
+        def promote(z: Complex) = z
 
         def zero = Quaternion.zero
 
         def one = Quaternion.one
+
+        def convert(n: Number) = Quaternion(n)
 
     }
 
@@ -176,6 +187,8 @@ object QuaternionZero
     def j = Zero
 
     def k = Zero
+
+    override def abs = Zero
 
     override def unary_-() = this
 

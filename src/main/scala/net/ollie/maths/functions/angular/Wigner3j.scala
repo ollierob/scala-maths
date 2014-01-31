@@ -81,6 +81,8 @@ private class ZeroWigner3J(val lAndM: CyclicTuple3[ModalPair, ModalPair, ModalPa
 
     override def isEmpty = true
 
+    override def abs = Zero
+
     override def toString = super[EmptyNumber].toString
 
 }

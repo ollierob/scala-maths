@@ -75,6 +75,12 @@ trait Complex
 
 object Complex {
 
+    def apply(n: Number): Option[Complex] = n match {
+        case re: Real => Some(Complex(re))
+        case z: Complex => Some(z)
+        case _ => None
+    }
+
     def apply(re: Real, im: Real): Complex = apply(re, i(im))
 
     def apply(re: Real, im: Imaginary): Complex = if (re.isEmpty && im.isEmpty) ComplexZero else new CartesianComplex(re, im)
@@ -104,7 +110,7 @@ object Complex {
             with AdditionArithmetic[Real, Complex, Complex]
             with MultiplicationArithmetic[Real, Complex, Complex] {
 
-        def convert(re: Real) = re
+        def promote(re: Real) = re
 
         def add(left: Real, right: Complex) = Complex(left) + right
 
@@ -113,6 +119,8 @@ object Complex {
         def zero = ComplexZero
 
         def one = One
+
+        override def convert(n: Number) = Complex(n)
 
     }
 

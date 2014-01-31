@@ -1,6 +1,6 @@
 package net.ollie.maths
 
-import net.ollie.maths.numbers.PositiveReal
+import net.ollie.maths.numbers.{Zero, PositiveReal}
 
 /**
  * Created by Ollie on 02/01/14.
@@ -10,7 +10,7 @@ trait Number
         with Invertible
         with Differentiable {
 
-    type System >: this.type <: Number with Expression
+    type System >: this.type <: Number
 
     final def narrow: System = this
 
@@ -25,6 +25,11 @@ trait Number
     def +[R <: Number, Combined <: Number](that: R)
                                           (implicit addition: AdditionArithmetic[System, R#System, Combined]): Combined = {
         addition.add(this, that.narrow)
+    }
+
+    def -[R <: Number, Combined <: Number](that: R)
+                                          (implicit addition: AdditionArithmetic[System, R#System, Combined]): Combined = {
+        addition.add(this, -that)
     }
 
     override def ?*(that: Expression)(leftToRight: Boolean) = that match {
@@ -76,7 +81,7 @@ trait Number
         tetration.tetrate(this, tower.narrow)
     }
 
-    override def df(x: Variable): System with Empty
+    override def df(x: Variable): EmptyNumber = Zero
 
     def toConstant: Option[System] = Some(narrow)
 

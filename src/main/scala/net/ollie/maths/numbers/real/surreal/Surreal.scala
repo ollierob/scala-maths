@@ -87,6 +87,8 @@ object EmptyForm
 
     def nearest = Zero
 
+    override def abs = Zero
+
     override def +(that: Surreal) = that
 
     override def unary_-() = this

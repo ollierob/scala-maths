@@ -46,6 +46,12 @@ trait Massive
 
 object Massive {
 
+    def apply(n: Number): Option[Massive] = n match {
+        case re: Real => Some(Massive(re))
+        case m: Massive => Some(m)
+        case _ => None
+    }
+
     implicit def apply(re: Real): Massive = if (re.isEmpty) MassiveZero else new SomeMassive(re)
 
     def series(left: Massive, right: Massive): Massive = (left, right) match {
@@ -64,11 +70,13 @@ object Massive {
 
         def one = One
 
-        def convert(from: Real) = from
+        def promote(from: Real) = from
 
         def add(left: Real, right: Massive) = Massive(left) + right
 
         def multiply(left: Real, right: Massive): Massive = Massive(left) * right
+
+        def convert(n: Number) = Massive(n)
 
     }
 
@@ -93,6 +101,8 @@ object MassiveZero
         with EmptyNumber {
 
     override def isEmpty = true
+
+    override def abs = Zero
 
     override def inverse = Zero.inverse
 

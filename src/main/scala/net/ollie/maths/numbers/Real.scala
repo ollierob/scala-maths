@@ -21,7 +21,7 @@ trait Real
 
     override def unary_-(): Real = Real.negate(this)
 
-    override def df(x: Variable): Real with Empty = Zero
+    override def df(x: Variable): Real with EmptyNumber = Zero
 
     def inverse: Real = Real.inverse(this)
 
@@ -172,6 +172,7 @@ object Real {
             extends AdditionArithmetic[Real, Real, Real]
             with MultiplicationArithmetic[Real, Real, Real]
             with TetrationArithmetic[Real, Real, Massive]
+            with IdentityArithmetic[Real, Real]
             with scala.math.Numeric[Real] {
 
         def add(x: Real, y: Real) = plus(x, y)
@@ -199,6 +200,13 @@ object Real {
         def multiply(left: Real, right: Real) = left * right
 
         def tetrate(base: Real, tower: Real) = PowerTower(base, tower)
+
+        override def promote(from: Real) = from
+
+        override def convert(from: Number) = from match {
+            case re: Real => Some(re)
+            case _ => None
+        }
 
     }
 

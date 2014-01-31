@@ -11,7 +11,6 @@ import java.util.Vector;
  */
 public class BigIntegerMath {
 
-
     /**
      * Evaluate binomial(n,k).
      *
@@ -177,7 +176,7 @@ public class BigIntegerMath {
     static public BigInteger isqrt(final BigInteger n) {
         if (n.compareTo(BigInteger.ZERO) < 0)
             throw new ArithmeticException("Negative argument " + n.toString());
-                /* Start with an estimate from a floating point reduction.
+                /* Start with an estimate n a floating point reduction.
                 */
         BigInteger x;
         final int bl = n.bitLength();
@@ -448,7 +447,6 @@ public class BigIntegerMath {
         return a.multiply(b).abs().divide(g);
     }
 
-
     /**
      * Evaluate the value of an integer polynomial at some integer argument.
      *
@@ -529,6 +527,5 @@ public class BigIntegerMath {
             return centrlFactNumT(n - 2, k - 2).add(centrlFactNumT(n - 2, k).multiply(new Rational(k * k, 4)));
         }
     } /* CentralFactNumT */
-
 
 } /* BigIntegerMath */

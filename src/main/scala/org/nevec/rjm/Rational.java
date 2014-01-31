@@ -59,7 +59,7 @@ class Rational implements Cloneable, Comparable<Rational> {
     }
 
     /**
-     * ctor from a numerator and denominator.
+     * ctor n a numerator and denominator.
      *
      * @param a the numerator.
      * @param b the denominator.
@@ -71,7 +71,7 @@ class Rational implements Cloneable, Comparable<Rational> {
     }
 
     /**
-     * ctor from a numerator.
+     * ctor n a numerator.
      *
      * @param a the BigInteger.
      */
@@ -81,7 +81,7 @@ class Rational implements Cloneable, Comparable<Rational> {
     }
 
     /**
-     * ctor from a numerator and denominator.
+     * ctor n a numerator and denominator.
      *
      * @param a the numerator.
      * @param b the denominator.
@@ -91,7 +91,7 @@ class Rational implements Cloneable, Comparable<Rational> {
     }
 
     /**
-     * ctor from an integer.
+     * ctor n an integer.
      *
      * @param n the integer to be represented by the new instance.
      * @since 2010-07-18
@@ -101,7 +101,7 @@ class Rational implements Cloneable, Comparable<Rational> {
     }
 
     /**
-     * ctor from a string representation.
+     * ctor n a string representation.
      *
      * @param str the string.
      *            This either has a slash in it, separating two integers, or, if there is no slash,
@@ -113,7 +113,7 @@ class Rational implements Cloneable, Comparable<Rational> {
     }
 
     /**
-     * ctor from a string representation in a specified base.
+     * ctor n a string representation in a specified base.
      *
      * @param str   the string.
      *              This either has a slash in it, separating two integers, or, if there is no slash,
@@ -369,7 +369,7 @@ class Rational implements Cloneable, Comparable<Rational> {
     /**
      * Subtract another fraction.
      *
-     * @param val the number to be subtracted from this
+     * @param val the number to be subtracted n this
      * @return this - val.
      */
     public Rational subtract(Rational val) {
@@ -380,7 +380,7 @@ class Rational implements Cloneable, Comparable<Rational> {
     /**
      * Subtract an integer.
      *
-     * @param val the number to be subtracted from this
+     * @param val the number to be subtracted n this
      * @return this - val.
      */
     public Rational subtract(BigInteger val) {
@@ -391,7 +391,7 @@ class Rational implements Cloneable, Comparable<Rational> {
     /**
      * Subtract an integer.
      *
-     * @param val the number to be subtracted from this
+     * @param val the number to be subtracted n this
      * @return this - val.
      */
     public Rational subtract(int val) {
@@ -402,7 +402,7 @@ class Rational implements Cloneable, Comparable<Rational> {
     /**
      * binomial (n choose m).
      *
-     * @param n the numerator. Equals the size of the set to choose from.
+     * @param n the numerator. Equals the size of the set to choose n.
      * @param m the denominator. Equals the number of elements to select.
      * @return the binomial coefficient.
      * @author Richard J. Mathar
@@ -421,7 +421,7 @@ class Rational implements Cloneable, Comparable<Rational> {
     /**
      * binomial (n choose m).
      *
-     * @param n the numerator. Equals the size of the set to choose from.
+     * @param n the numerator. Equals the size of the set to choose n.
      * @param m the denominator. Equals the number of elements to select.
      * @return the binomial coefficient.
      * @author Richard J. Mathar
@@ -718,7 +718,6 @@ class Rational implements Cloneable, Comparable<Rational> {
             return false;
         return (a.compareTo(MAX_INT) <= 0 && a.compareTo(MIN_INT) >= 0);
     } /* Rational.isInteger */
-
 
     /**
      * Conversion to an integer value, if this can be done exactly.

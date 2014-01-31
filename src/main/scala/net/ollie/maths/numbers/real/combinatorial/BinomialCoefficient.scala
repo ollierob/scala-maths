@@ -65,6 +65,8 @@ class BinomialZero(val n: Natural, val k: Natural)
 
     def evaluate = 0
 
+    override def abs = Zero
+
     override def unary_-() = this
 
     override def isEmpty = true

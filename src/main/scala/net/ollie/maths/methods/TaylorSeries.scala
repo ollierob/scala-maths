@@ -15,7 +15,7 @@ import net.ollie.maths.numbers.{Natural, Precision, Real, Zero}
 object TaylorSeries {
 
     def apply(expression: Univariate, at: Real, around: Real): Real = {
-        new TaylorSeries(expression, at, around)
+        new TaylorSeries(expression, at, around)(Real.RealArithmetic)
     }
 
     def apply(builder: ExpressionBuilder, at: Real, around: Real): Real = {

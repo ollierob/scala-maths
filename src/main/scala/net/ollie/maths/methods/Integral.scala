@@ -64,7 +64,7 @@ trait NumericalIntegrationMethod {
 
     def finite(of: Univariate, from: Real, to: Real): DefiniteIntegral
 
-    def toInfinity(of: Univariate, from: Real): DefiniteIntegral = ??? //new InfiniteIntegral(of, from)(this)
+    def toInfinity(of: Univariate, from: Real): DefiniteIntegral = ??? //new InfiniteIntegral(of, n)(this)
 
     def betweenInfinities(of: Univariate): DefiniteIntegral = ???
 
@@ -90,7 +90,7 @@ object TrapezoidalIntegrationMethod
                 val terms = split(h)
                 var totalArea: Real = Zero
                 for (i <- 1 to N) {
-                    val t = of(terms(i - 1)) + of(terms(i))
+                    val t: Real = of(terms(i - 1))(Real.RealArithmetic) + of(terms(i))(Real.RealArithmetic)
                     totalArea += t
                 }
                 totalArea *= delta / (2 * N)
@@ -133,9 +133,9 @@ object SimpsonsIntegrationMethod
             def next(nth: Natural, precision: Precision) = {
                 val h = interval / n
                 val terms = split(h)
-                var totalArea: Real = of(terms(0)) + of(terms.last)
+                var totalArea: Real = of(terms(0))(Real.RealArithmetic) + of(terms.last)(Real.RealArithmetic)
                 for (i <- 1 to n - 1) {
-                    totalArea += of(terms(i)) * (if (i % 2 == 0) 2 else 4)
+                    totalArea += of(terms(i))(Real.RealArithmetic) * (if (i % 2 == 0) 2 else 4)
                 }
                 totalArea *= h / 3
                 n += 2

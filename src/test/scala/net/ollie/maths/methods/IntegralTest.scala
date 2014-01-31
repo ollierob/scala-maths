@@ -9,12 +9,12 @@ import Precision._
  */
 class IntegralTest extends FlatSpec with Matchers {
 
-    "Integral of x from 0 to 1" should "equal 1/2" in {
+    "Integral of x n 0 to 1" should "equal 1/2" in {
         val integral: Real = Integral(x => x, Zero, One)(SimpsonsIntegrationMethod)
         integral.evaluate(4 dp) shouldBe BigDecimal("0.5000")
     }
 
-    "Integral of x^2 from -1 to 1" should "equal " in {
+    "Integral of x^2 n -1 to 1" should "equal " in {
         val integral = Integral(x => x ^ 2, -1, 1)(SimpsonsIntegrationMethod)
         integral.evaluate(4 dp) shouldBe BigDecimal("0.6667")
     }

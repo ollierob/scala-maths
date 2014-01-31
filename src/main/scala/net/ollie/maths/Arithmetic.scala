@@ -34,23 +34,24 @@ trait TetrationArithmetic[-Left, -Right, +Combined] {
 
 }
 
-trait IdentityArithmetic[-From, +To] {
+trait NumberIdentityArithmetic[+To] {
 
-    def convert(from: From): To
+    def convert(n: Number): Option[To]
 
-    def convert(from: Option[From]): Option[To] = from match {
-        case Some(f) => Some(convert(f))
+    def convert(n: Option[Number]): Option[To] = n match {
+        case Some(f) => convert(f)
         case _ => None
     }
 
 }
 
-trait NumberIdentityArithmetic[To] {
+trait IdentityArithmetic[-From, +To]
+        extends NumberIdentityArithmetic[To] {
 
-    def convert(from: Number): Option[To]
+    def promote(from: From): To
 
-    def convert(from: Option[Number]): Option[To] = from match {
-        case Some(f) => convert(f)
+    def promote(from: Option[From]): Option[To] = from match {
+        case Some(f) => Some(promote(f))
         case _ => None
     }
 

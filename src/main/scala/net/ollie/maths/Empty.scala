@@ -1,6 +1,6 @@
 package net.ollie.maths
 
-import net.ollie.maths.numbers.{Precision, Zero}
+import net.ollie.maths.numbers.{PositiveReal, Precision, Zero}
 
 /**
  * An empty expression.
@@ -39,6 +39,8 @@ trait EmptyNumber
         extends Empty
         with Number
         with Evaluable {
+
+    def abs: PositiveReal with EmptyNumber = Zero
 
     override def unary_-() = this
 

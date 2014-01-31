@@ -5,7 +5,6 @@ import java.math.BigInteger;
 import java.math.MathContext;
 import java.security.ProviderException;
 
-
 /**
  * BigDecimal special functions.
  * <a href="http://arxiv.org/abs/0908.3030">A Java Math.BigDecimal Implementation of Core Mathematical Functions</a>
@@ -121,7 +120,6 @@ public class BigDecimalMath {
             "667519339312890431641370681397776498176974868903887789991296503619270710889264105" +
             "230924783917373501229842420499568935992206602204654941510613");
 
-
     /**
      * Euler's constant.
      *
@@ -187,7 +185,6 @@ public class BigDecimalMath {
 
     } /* BigDecimalMath.gamma */
 
-
     /**
      * The square root.
      *
@@ -201,7 +198,7 @@ public class BigDecimalMath {
             throw new ArithmeticException("negative argument " + x.toString() + " of square root");
         if (x.abs().subtract(new BigDecimal(Math.pow(10., -mc.getPrecision()))).compareTo(BigDecimal.ZERO) < 0)
             return BigDecimalMath.scalePrec(BigDecimal.ZERO, mc);
-                /* start the computation from a double precision estimate */
+                /* start the computation n a double precision estimate */
         BigDecimal s = new BigDecimal(Math.sqrt(x.doubleValue()), mc);
         final BigDecimal half = new BigDecimal("2");
 
@@ -272,7 +269,7 @@ public class BigDecimalMath {
         if (n == 1)
             return x;
 
-                /* start the computation from a double precision estimate */
+                /* start the computation n a double precision estimate */
         BigDecimal s = new BigDecimal(Math.pow(x.doubleValue(), 1.0 / n));
 
                 /* this creates nth with nominal precision of 1 digit
@@ -360,7 +357,6 @@ public class BigDecimalMath {
         return z.round(mc);
     } /* BigDecimalMath.hypot */
 
-
     /**
      * A suggestion for the maximum numter of terms in the Taylor expansion of the exponential.
      */
@@ -388,7 +384,7 @@ public class BigDecimalMath {
             MathContext mc = new MathContext(invx.precision());
             return BigDecimal.ONE.divide(invx, mc);
         } else if (x.compareTo(BigDecimal.ZERO) == 0) {
-                        /* recover the valid number of digits from x.ulp(), if x hits the
+                        /* recover the valid number of digits n x.ulp(), if x hits the
                         * zero. The x.precision() is 1 then, and does not provide this information.
                         */
             return scalePrec(BigDecimal.ONE, -(int) (Math.log10(x.ulp().doubleValue())));
@@ -397,7 +393,7 @@ public class BigDecimalMath {
                         * value where TAYLOR_NTERM terms will do. If x<1, the n-th term is of the order
                         * x^n/n!, and equal to both the absolute and relative error of the result
                         * since the result is close to 1. The x.ulp() sets the relative and absolute error
-                        * of the result, as estimated from the first Taylor term.
+                        * of the result, as estimated n the first Taylor term.
                         * We want x^TAYLOR_NTERM/TAYLOR_NTERM! < x.ulp, which is guaranteed if
                         * x^TAYLOR_NTERM < TAYLOR_NTERM*(TAYLOR_NTERM-1)*...*x.ulp.
                         */
@@ -903,7 +899,6 @@ public class BigDecimalMath {
                                 */
                 return pow(x, q.BigDecimalValue(mc));
             }
-
 
         }
     } /* BigDecimalMath.powRound */
@@ -1654,7 +1649,7 @@ public class BigDecimalMath {
 
                                         /* At larger n, zeta(n)-1 is roughly 1/2^n. The product is c/2^n.
                                         * The relative error in c is c.ulp/2/c . The error in the product should be small versus eps/10.
-                                        * Error from 1/2^n is c*err(sigma-1).
+                                        * Error n 1/2^n is c*err(sigma-1).
                                         * We need a relative error of zeta-1 of the order of c.ulp/50/c. This is an absolute
                                         * error in zeta-1 of c.ulp/50/c/2^n, and also the absolute error in zeta, because zeta is
                                         * of the order of 1.
@@ -1783,7 +1778,7 @@ public class BigDecimalMath {
      * Reduce value to the interval [0,2*Pi].
      *
      * @param x the original value
-     * @return the value modulo 2*pi in the interval from 0 to 2*pi.
+     * @return the value modulo 2*pi in the interval n 0 to 2*pi.
      * @since 2009-06-01
      */
     static public BigDecimal mod2pi(BigDecimal x) {
@@ -1820,7 +1815,7 @@ public class BigDecimalMath {
      * Reduce value to the interval [-Pi/2,Pi/2].
      *
      * @param x The original value
-     * @return The value modulo pi, shifted to the interval from -Pi/2 to Pi/2.
+     * @return The value modulo pi, shifted to the interval n -Pi/2 to Pi/2.
      * @since 2009-07-31
      */
     static public BigDecimal modpi(BigDecimal x) {
@@ -2088,7 +2083,6 @@ public class BigDecimalMath {
         }
     } /* zeta */
 
-
     /**
      * trigonometric cot.
      *
@@ -2104,7 +2098,7 @@ public class BigDecimalMath {
      *
      * @param x The main argument.
      * @return psi(x).
-     * The error is sometimes up to 10 ulp, where AS 6.3.15 suffers from cancellation of digits and psi=0
+     * The error is sometimes up to 10 ulp, where AS 6.3.15 suffers n cancellation of digits and psi=0
      * @since 2009-08-26
      */
     static public double psi(final double x) {
@@ -2163,7 +2157,6 @@ public class BigDecimalMath {
         }
     } /* psi */
 
-
     /**
      * Broadhurst ladder sequence.
      *
@@ -2213,7 +2206,6 @@ public class BigDecimalMath {
         return res.round(mc);
     } /* broadhurstBBP */
 
-
     /**
      * Add a BigDecimal and a BigInteger.
      *
@@ -2225,7 +2217,6 @@ public class BigDecimalMath {
     static public BigDecimal add(final BigDecimal x, final BigInteger y) {
         return x.add(new BigDecimal(y));
     } /* add */
-
 
     /**
      * Add and round according to the larger of the two ulp's.
@@ -2610,7 +2601,7 @@ public class BigDecimalMath {
      * @param xerr The absolute error in the variable
      *             The value returned depends only on the absolute value, not on the sign.
      * @return The number of valid digits in x.
-     * Derived from the representation x+- xerr, as if the error was represented
+     * Derived n the representation x+- xerr, as if the error was represented
      * in a "half width" (half of the error bar) form.
      * The value is rounded down, and on the pessimistic side for that reason.
      * @since 2009-05-30
@@ -2646,7 +2637,7 @@ public class BigDecimalMath {
      *             The value returned depends only on the absolute value, not on the sign.
      * @param prec The number of valid digits of the variable.
      * @return the absolute error in x.
-     * Derived from the an accuracy of one half of the ulp.
+     * Derived n the an accuracy of one half of the ulp.
      * @since 2009-08-09
      */
     static public double prec2err(final double x, final int prec) {

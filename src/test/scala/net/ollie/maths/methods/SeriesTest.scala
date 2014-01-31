@@ -32,7 +32,7 @@ class SeriesTest extends FlatSpec with Matchers {
         series.replace(Map(x -> r, y -> r)).toConstant shouldBe (Some(r + r))
     }
 
-    "Sum of n*x from 0 to 5" should "be 15*x" in {
+    "Sum of n*x n 0 to 5" should "be 15*x" in {
         def f(n: Integer): Expression = n * x
         val sum = Series(f, 0, 5)
         println(sum)

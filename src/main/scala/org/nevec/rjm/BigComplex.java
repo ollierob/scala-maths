@@ -3,7 +3,6 @@ package org.nevec.rjm;
 import java.math.BigDecimal;
 import java.math.MathContext;
 
-
 /**
  * Complex numbers with BigDecimal real and imaginary components
  *
@@ -98,7 +97,7 @@ class BigComplex {
     /**
      * Subtract another BigComplex
      *
-     * @param oth the value to be subtracted from this.
+     * @param oth the value to be subtracted n this.
      * @return this minus oth
      */
     BigComplex subtract(final BigComplex oth) {
@@ -201,6 +200,5 @@ class BigComplex {
     public String toString(MathContext mc) {
         return "(" + re.round(mc).toString() + "," + im.round(mc).toString() + ")";
     }
-
 
 } /* BigComplex */
