@@ -2,10 +2,13 @@ package net.ollie.maths.numbers.complex
 
 import org.scalatest.{Matchers, FlatSpec}
 import net.ollie.maths.numbers.{Real, Zero}
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
 /**
  * Created by Ollie on 31/01/14.
  */
+@RunWith(classOf[JUnitRunner])
 class DualTest extends FlatSpec with Matchers {
 
     behavior of "2 + 3d"
