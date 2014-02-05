@@ -1,6 +1,5 @@
 package net.ollie.maths.functions
 
-
 /**
  * Created by Ollie on 05/01/14.
  */

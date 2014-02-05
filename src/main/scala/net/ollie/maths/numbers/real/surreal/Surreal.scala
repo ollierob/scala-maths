@@ -54,6 +54,11 @@ object Surreal {
 
     def apply(): Surreal = EmptyForm
 
+    implicit def apply(re: Real): Surreal = re match {
+        case s: Surreal => s
+        case _ => new WrapperForm(re)
+    }
+
     def apply(left: SurrealSet, right: SurrealSet): Surreal = {
         if (left.isEmpty && right.isEmpty) Surreal()
         else new RegularForm(left, right)

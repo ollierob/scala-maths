@@ -266,7 +266,7 @@ trait Univariate
 
     def apply[R <: Number](n: Number)(implicit conversion: NumberIdentityArithmetic[R]): R = {
         val out: Number = replace(variable, n).toConstant.get
-        conversion.convert(out).get
+        conversion(out).get
     }
 
     def apply(u: Univariate): Univariate = replace(variable, u)

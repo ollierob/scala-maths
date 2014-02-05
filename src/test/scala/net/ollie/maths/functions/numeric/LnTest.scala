@@ -1,6 +1,6 @@
 package net.ollie.maths.functions.numeric
 
-import net.ollie.maths.Variable
+import net.ollie.maths.{Number, Variable}
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.real.EulersNumber
 import org.junit.runner.RunWith
@@ -47,8 +47,8 @@ class LnTest extends FlatSpec with Matchers {
     }
 
     "Ln(Ln(4))" should "evaluate" in {
-        val r = Ln(Ln(4))
-        val re: Real = Real.NumberToReal.convert(r).get
+        val r: Number = Ln(Ln(4))
+        val re: Real = Real(r).get
         re.evaluate(4 dp) shouldBe BigDecimal("0.3266")
     }
 

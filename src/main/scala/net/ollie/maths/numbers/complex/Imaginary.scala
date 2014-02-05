@@ -1,6 +1,6 @@
 package net.ollie.maths.numbers.complex
 
-import net.ollie.maths.{EmptyNumber, Empty}
+import net.ollie.maths.{Empty, EmptyNumber}
 import net.ollie.maths.functions.angular.RightAngle
 import net.ollie.maths.functions.numeric.Signum
 import net.ollie.maths.numbers.{One, Real, Zero}
@@ -11,37 +11,27 @@ import net.ollie.maths.numbers.{One, Real, Zero}
 class Imaginary(val coefficient: Real)
         extends Complex {
 
-    /**
-     * This is not the coefficient!
-     * @return
-     */
     def re: Real with Empty = Zero
 
-    def im = this
+    def im = coefficient
 
     override def isEmpty = coefficient.isEmpty
 
     override def unary_-(): Imaginary = -coefficient
 
+    override def conjugate: Imaginary = -this
+
     override def abs = coefficient.abs
 
     override def arg = RightAngle * Signum(coefficient)
 
-    def +(that: Imaginary): Imaginary = coefficient + that.coefficient
-
-    def -(that: Imaginary): Imaginary = coefficient - that.coefficient
-
     def *(that: Imaginary): Real = -(coefficient * that.coefficient)
-
-    def /(that: Imaginary): Real = coefficient / that.coefficient
-
-    def *(that: Real): Imaginary = coefficient * that
 
     override def /(that: Real): Imaginary = coefficient / that
 
     override def equals(that: Complex): Boolean = that match {
         case i: Imaginary => this.coefficient == i.coefficient
-        case _ => that.re == Zero && coefficient == that.im.coefficient
+        case _ => that.re == Zero && coefficient == that.im
     }
 
     override def hashCode = -coefficient.hashCode

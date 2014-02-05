@@ -1,50 +1,31 @@
 package net.ollie.maths.numbers.complex
 
-import scala.Some
-
 import net.ollie.maths._
 import net.ollie.maths.Operation.indeterminate
 import net.ollie.maths.functions.angular.{Angle, ArcTan}
 import net.ollie.maths.functions.numeric.PositiveSquareRoot
-import net.ollie.maths.numbers.{One, PositiveReal, Real, Zero}
+import net.ollie.maths.numbers._
+import scala.Some
 
 /**
  * Created by Ollie on 04/01/14.
  */
 trait Complex
-        extends Number {
+        extends ComplexLike {
 
     final type System = Complex
 
-    def re: Real
+    override implicit val builder = Complex
 
-    def im: Imaginary
+    def im: Real
 
-    override def unary_-(): Complex = Complex.negate(this)
-
-    def inverse: Complex = Complex.inverse(this)
-
-    def conjugate: Complex = Complex.conjugate(this)
+    def unre = im
 
     override def df(x: Variable) = ComplexZero
 
-    def abs: PositiveReal = PositiveSquareRoot(re.squared + im.coefficient.squared)
+    def abs: PositiveReal = PositiveSquareRoot(re.squared + im.squared)
 
-    def arg: Angle = ArcTan(im.re / re)
-
-    def isEmpty: Boolean = re.isEmpty && im.isEmpty
-
-    def toReal: Option[Real] = if (im.isEmpty) Some(re) else None
-
-    def +(that: Complex): Complex = Complex(this.re + that.re, this.im + that.im)
-
-    def -(that: Complex): Complex = Complex(this.re - that.re, this.im - that.im)
-
-    def *(that: Complex): Complex = Complex((this.re * that.re) + (this.im * that.im), (this.im * that.re) + (that.im * this.re))
-
-    def /(that: Complex): Complex = this * that.inverse
-
-    def /(that: Real): Complex = Complex(this.re / that, this.im / that)
+    def arg: Angle = ArcTan(im / re)
 
     def ?+(that: Number) = that match {
         case re: Real => Some(this + Complex(re))
@@ -69,41 +50,32 @@ trait Complex
 
     override def hashCode = re.hashCode * im.hashCode
 
-    override def toString = re.toString + " + " + im.toString
-
 }
 
-object Complex {
+object Complex
+        extends ComplexBuilder[Complex] {
+
+    override def unitSquared = MinusOne
 
     def apply(n: Number): Option[Complex] = n match {
         case re: Real => Some(Complex(re))
         case z: Complex => Some(z)
+        case x: ComplexLike => x.toReal match {
+            case Some(re) => Some(re)
+            case _ => None
+        }
         case _ => None
     }
 
-    def apply(re: Real, im: Real): Complex = apply(re, i(im))
-
-    def apply(re: Real, im: Imaginary): Complex = if (re.isEmpty && im.isEmpty) ComplexZero else new CartesianComplex(re, im)
-
-    implicit def apply(re: Real): Complex = apply(re, Zero)
-
-    def negate(z: Complex): Complex = Complex(-z.re, -z.im)
-
-    def inverse(z: Complex): Complex = z.conjugate / z.abs.squared
-
-    def conjugate(z: Complex): Complex = if (z.isEmpty) ComplexZero else new ComplexConjugate(z)
-
-    def i(re: Real): Imaginary = Imaginary(re)
-
-    implicit object NumberToComplex
-            extends NumberIdentityArithmetic[Complex] {
-
-        def convert(from: Number) = from match {
-            case re: Real => Some(re)
-            case z: Complex => Some(z)
-            case _ => None
-        }
+    implicit def apply(pair: (Real, Real)): Complex = pair match {
+        case (Zero, Zero) => ComplexZero
+        case (Zero, _) => Imaginary(pair._2)
+        case _ => new CartesianComplex(pair._1, pair._2)
     }
+
+    def apply(re: Real, im: Real): Complex = Complex((re, im))
+
+    implicit def apply(re: Real): Complex = Complex(re, Zero)
 
     implicit object RealComplexArithmetic
             extends IdentityArithmetic[Real, Complex]
@@ -119,8 +91,6 @@ object Complex {
         def zero = ComplexZero
 
         def one = One
-
-        override def convert(n: Number) = Complex(n)
 
     }
 

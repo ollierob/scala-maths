@@ -3,7 +3,7 @@ package net.ollie.maths.numbers.complex
 import org.junit.runner.RunWith
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.junit.JUnitRunner
-import net.ollie.maths.numbers.Integer
+import net.ollie.maths.numbers.{Zero, One, Integer}
 import net.ollie.maths.functions.numeric.PositiveSquareRoot
 
 /**
@@ -11,6 +11,11 @@ import net.ollie.maths.functions.numeric.PositiveSquareRoot
  */
 @RunWith(classOf[JUnitRunner])
 class ComplexTest extends FlatSpec with Matchers {
+
+    "1" should "widen" in {
+        val z: Complex = One
+        z shouldBe Complex(One, Zero)
+    }
 
     behavior of "2 + 3i"
 
@@ -22,8 +27,9 @@ class ComplexTest extends FlatSpec with Matchers {
             z.re shouldBe Integer(2)
         }
 
-        it should "have im().re() = 3" in {
-            z.im.coefficient shouldBe Integer(3)
+        it should "have im() = 3" in {
+            z.im shouldBe Integer(3)
+            z.unre shouldBe Integer(3)
         }
 
         it should "not be empty" in {
@@ -36,6 +42,24 @@ class ComplexTest extends FlatSpec with Matchers {
 
         it should "invert" in {
             z.inverse shouldBe (Complex(Integer(2) / Integer(13), Integer(-3) / Integer(13)))
+        }
+
+        it should "multiply by 5" in {
+            z * 5 shouldBe Complex(10, 15)
+            z * Complex(5, 0) shouldBe Complex(10, 15)
+            Complex(5, 0) * z shouldBe Complex(10, 15)
+            5 * z shouldBe Complex(10, 15)
+        }
+
+        it should "divide by 5" in {
+            z / Integer(5) shouldBe Complex(Integer(2) / Integer(5), Integer(3) / Integer(5))
+            z / Complex(5, 0) shouldBe Complex(Integer(2) / Integer(5), Integer(3) / Integer(5))
+        }
+
+        it should "multiply by 5+7i" in {
+            val z2 = Complex(5, 7)
+            z * z2 shouldBe Complex(-11, 29)
+            z2 * z shouldBe Complex(-11, 29)
         }
 
         it should "divide by 5 + 7i" in {

@@ -37,7 +37,7 @@ object ComplexSignum
         extends UnivariateFunction[Complex, Integer] {
 
     def apply(z: Complex): Integer = Signum(z.re) match {
-        case Zero => Signum(z.im.coefficient)
+        case Zero => Signum(z.im)
         case otherwise => otherwise
     }
 

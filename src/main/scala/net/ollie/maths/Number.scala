@@ -10,7 +10,9 @@ trait Number
         with Invertible
         with Differentiable {
 
-    type System >: this.type <: Number
+    self =>
+
+    type System >: this.type <: Number {type System = self.System}
 
     final def narrow: System = this
 
@@ -18,7 +20,7 @@ trait Number
 
     def abs: PositiveReal
 
-    def inverse: Number
+    def inverse: System
 
     def ?+(that: Number): Option[Number]
 

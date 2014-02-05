@@ -17,6 +17,8 @@ trait Real
 
     final type System = Real
 
+    type Subsystem >: this.type <: System
+
     override def replace(variables: Map[Variable, Expression]) = this
 
     override def unary_-(): Real = Real.negate(this)
@@ -138,7 +140,13 @@ trait Real
 
 }
 
-object Real {
+object Real
+        extends NumberIdentityArithmetic[Real] {
+
+    def apply(from: Number): Option[Real] = from match {
+        case re: Real => Some(re)
+        case _ => None
+    }
 
     implicit def apply(int: Int): Real = Integer(int)
 
@@ -155,18 +163,6 @@ object Real {
     }
 
     def pow(base: Real, power: Integer): Real = RealPower(base, power)
-
-    implicit object NumberToReal
-            extends NumberIdentityArithmetic[Real] {
-
-        def convert(from: Number): Option[Real] = from match {
-            case re: Real => Some(re)
-            case _ => None
-        }
-
-        override def toString = "Number -> Real"
-
-    }
 
     implicit object RealArithmetic
             extends AdditionArithmetic[Real, Real, Real]
@@ -202,11 +198,6 @@ object Real {
         def tetrate(base: Real, tower: Real) = PowerTower(base, tower)
 
         override def promote(from: Real) = from
-
-        override def convert(from: Number) = from match {
-            case re: Real => Some(re)
-            case _ => None
-        }
 
     }
 

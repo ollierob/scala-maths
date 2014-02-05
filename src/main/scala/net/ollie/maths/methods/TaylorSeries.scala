@@ -15,7 +15,7 @@ import net.ollie.maths.numbers.{Natural, Precision, Real, Zero}
 object TaylorSeries {
 
     def apply(expression: Univariate, at: Real, around: Real): Real = {
-        new TaylorSeries(expression, at, around)(Real.RealArithmetic)
+        new TaylorSeries(expression, at, around)(Real)
     }
 
     def apply(builder: ExpressionBuilder, at: Real, around: Real): Real = {
@@ -39,15 +39,13 @@ private class TaylorSeries(val f: Univariate, val x: Real, val a: Real)(implicit
 
         def next(n: Natural, precision: Precision): BigDecimal = {
             terms += nthTerm(n)
-            println(s"$fNDash at $a => " + fNDash(a))
             fNDash = fNDash.dx
-            println(s"Nth $n => $terms => " + terms.map(_.approximatelyEvaluate(precision)).sum)
             terms.map(_.approximatelyEvaluate(precision)).sum
         }
 
         def nthTerm(n: Natural): Real = fNDash(a) * (xMinusA ^ n) / (n !)
 
-        implicit def convert(n: Number): Real = conversion.convert(n).get
+        implicit def convert(n: Number): Real = conversion(n).get
 
     }
 

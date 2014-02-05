@@ -90,7 +90,7 @@ object TrapezoidalIntegrationMethod
                 val terms = split(h)
                 var totalArea: Real = Zero
                 for (i <- 1 to N) {
-                    val t: Real = of(terms(i - 1))(Real.RealArithmetic) + of(terms(i))(Real.RealArithmetic)
+                    val t: Real = of(terms(i - 1))(Real) + of(terms(i))(Real)
                     totalArea += t
                 }
                 totalArea *= delta / (2 * N)
@@ -133,9 +133,9 @@ object SimpsonsIntegrationMethod
             def next(nth: Natural, precision: Precision) = {
                 val h = interval / n
                 val terms = split(h)
-                var totalArea: Real = of(terms(0))(Real.RealArithmetic) + of(terms.last)(Real.RealArithmetic)
+                var totalArea: Real = of(terms(0))(Real) + of(terms.last)(Real)
                 for (i <- 1 to n - 1) {
-                    totalArea += of(terms(i))(Real.RealArithmetic) * (if (i % 2 == 0) 2 else 4)
+                    totalArea += of(terms(i))(Real) * (if (i % 2 == 0) 2 else 4)
                 }
                 totalArea *= h / 3
                 n += 2

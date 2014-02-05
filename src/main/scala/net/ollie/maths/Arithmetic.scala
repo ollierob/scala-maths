@@ -14,8 +14,6 @@ trait AdditionArithmetic[-Left, -Right, +Combined] {
 
 trait MultiplicationArithmetic[-Left, -Right, +Combined] {
 
-    def zero: Combined
-
     def one: Combined
 
     def multiply(left: Left, right: Right): Combined
@@ -36,17 +34,16 @@ trait TetrationArithmetic[-Left, -Right, +Combined] {
 
 trait NumberIdentityArithmetic[+To] {
 
-    def convert(n: Number): Option[To]
+    def apply(n: Number): Option[To]
 
-    def convert(n: Option[Number]): Option[To] = n match {
-        case Some(f) => convert(f)
+    def apply(n: Option[Number]): Option[To] = n match {
+        case Some(f) => apply(f)
         case _ => None
     }
 
 }
 
-trait IdentityArithmetic[-From, +To]
-        extends NumberIdentityArithmetic[To] {
+trait IdentityArithmetic[-From, +To] {
 
     def promote(from: From): To
 

@@ -88,7 +88,9 @@ class Product[+T <: Expression](val terms: Seq[T])
         simplified.toSeq
     }
 
-    protected[this] def apply(expressions: Seq[Expression]) = Product(simplify(expressions))
+    protected[this] def apply(expressions: Seq[Expression]) = {
+        Product(simplify(expressions))
+    }
 
     def isEmpty = terms.exists(_.isEmpty)
 

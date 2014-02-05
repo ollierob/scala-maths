@@ -9,17 +9,15 @@ import scala.Some
  * @see http://mathworld.wolfram.com/DualNumber.html
  */
 trait Dual
-        extends Number {
+        extends ComplexLike {
 
     type System = Dual
 
-    def re: Real
+    override implicit protected[this] val builder = Dual
 
-    def d: Dualistic
+    def d: Real
 
-    override def isEmpty = re.isEmpty && d.isEmpty
-
-    def inverse: Dual = Dual(re.inverse, (-d.coefficient) / (re.squared))
+    def unre = d
 
     override def unary_-(): Dual = Dual(-re, -d)
 
@@ -35,28 +33,6 @@ trait Dual
 
     def ?^(that: Number) = None
 
-    def +(that: Real): Dual = this + Dual(that)
-
-    def +(that: Dual): Dual = Dual(this.re + that.re, this.d + that.d)
-
-    def -(that: Dual): Dual = this + (-that)
-
-    def *(that: Real): Dual = this * Dual(that)
-
-    def *(that: Dual): Dual = {
-        val re: Real = (this.re * that.re) + (this.d * that.d)
-        val d: Dualistic = (this.d * that.re) + (that.d * this.re)
-        Dual(re, d)
-    }
-
-    def /(that: Dual): Dual = {
-        val re: Real = this.re / that.re
-        val d: Dualistic = ((this.d.coefficient * that.re) - (this.re * that.d.coefficient)) / (that.re.squared)
-        Dual(re, d)
-    }
-
-    def /(that: Real): Dual = Dual(this.re / that, this.d / that)
-
     override def equals(that: Number) = that match {
         case re: Real => this.d.isEmpty && this.re == re
         case d: Dual => this.equals(d)
@@ -65,11 +41,14 @@ trait Dual
 
     def equals(that: Dual): Boolean = (this.re == that.re && this.d == that.d) || super.equals(that)
 
-    override def toString: String = s"$re + $d"
+    override def toString = re.toString + " + " + d.toString + "d"
 
 }
 
-object Dual {
+object Dual
+        extends ComplexBuilder[Dual] {
+
+    def unitSquared = Zero
 
     def apply(n: Number): Option[Dual] = n match {
         case re: Real => Some(Dual(re))
@@ -79,9 +58,9 @@ object Dual {
 
     implicit def apply(re: Real): Dual = Dual(re, Zero)
 
-    def apply(re: Int, d: Int): Dual = apply(re, Dualistic(d))
+    def apply(re: Real, d: Real): Dual = if (re.isEmpty && d.isEmpty) DualZero else new RegularDual(re, d)
 
-    def apply(re: Real, d: Dualistic): Dual = if (re.isEmpty) d else new RegularDual(re, d)
+    implicit def apply(pair: (Real, Real)): Dual = Dual(pair._1, pair._2)
 
     implicit object RealDualArithmetic
             extends AdditionArithmetic[Real, Dual, Dual]
@@ -98,17 +77,15 @@ object Dual {
 
         override def multiply(left: Real, right: Dual) = promote(left) * right
 
-        override def convert(n: Number) = Dual(n)
-
     }
 
     def at(function: Univariate, d: Dual): Number = {
-        function(d.re) + (d.d.coefficient * function.dx(d.d.coefficient))
+        function(d.re)(Real) + (d.d * function.dx(d.d)(Real))
     }
 
 }
 
-class RegularDual(val re: Real, val d: Dualistic)
+class RegularDual(val re: Real, val d: Real)
         extends Dual {
 
     override def abs: PositiveReal = ???
@@ -122,61 +99,5 @@ object DualZero
     override def re = Zero
 
     override def d = Zero
-
-}
-
-object Dualistic {
-
-    implicit def apply(re: Real): Dualistic = new Dualistic(re)
-
-    implicit object Multiplication
-            extends MultiplicationArithmetic[Dualistic, Dualistic, Real] {
-
-        override def one = 1
-
-        override def zero = Zero
-
-        override def multiply(left: Dualistic, right: Dualistic) = left * right
-
-    }
-
-}
-
-class Dualistic(val coefficient: Real)
-        extends Dual {
-
-    override type System = Dual
-
-    override final def re = Zero
-
-    override final def d = this
-
-    override def isEmpty = coefficient.isEmpty
-
-    override def unary_-(): Dualistic = Dualistic(-coefficient)
-
-    def +(that: Dualistic): Dualistic = Dualistic(this.coefficient + that.coefficient)
-
-    def *(that: Dualistic): Real = Zero
-
-    override def *(re: Real): Dualistic = Dualistic(this.coefficient * re)
-
-    override def /(re: Real): Dualistic = Dualistic(this.coefficient / re)
-
-    override def abs = re.abs
-
-    override def equals(that: Dual) = that match {
-        case d: Dualistic => (this.coefficient == d.coefficient) || super.equals(d)
-        case _ => super.equals(that)
-    }
-
-    override def toString = coefficient.toString + "d"
-
-}
-
-object DualUnit
-        extends Dualistic(One) {
-
-    override def toString = "d"
 
 }

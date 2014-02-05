@@ -84,7 +84,7 @@ object Quaternion {
 
     implicit def apply(re: Real): Quaternion = if (re.isEmpty) QuaternionZero else new QuaternionR(re)
 
-    implicit def apply(z: Complex): Quaternion = Quaternion(z.re, z.im.coefficient, Zero, Zero)
+    implicit def apply(z: Complex): Quaternion = Quaternion(z.re, z.im, Zero, Zero)
 
     implicit def i(re: Real): QuaternionI = new QuaternionI(re)
 
@@ -111,17 +111,6 @@ object Quaternion {
 
     def one: Quaternion = Quaternion(One)
 
-    implicit object NumberToQuaternion
-            extends NumberIdentityArithmetic[Quaternion] {
-
-        def convert(from: Number) = from match {
-            case re: Real => Some(Quaternion(re))
-            case z: Complex => Some(z)
-            case q: Quaternion => Some(q)
-            case _ => None
-        }
-    }
-
     implicit object RealQuaternionArithmetic
             extends AdditionArithmetic[Real, Quaternion, Quaternion]
             with MultiplicationArithmetic[Real, Quaternion, Quaternion]
@@ -136,8 +125,6 @@ object Quaternion {
         def zero = Quaternion.zero
 
         def one = Quaternion.one
-
-        def convert(n: Number) = Quaternion(n)
 
     }
 
@@ -155,8 +142,6 @@ object Quaternion {
         def zero = Quaternion.zero
 
         def one = Quaternion.one
-
-        def convert(n: Number) = Quaternion(n)
 
     }
 

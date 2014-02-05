@@ -3,7 +3,7 @@ package net.ollie.maths.numbers.complex
 import org.junit.runner.RunWith
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.junit.JUnitRunner
-import net.ollie.maths.numbers.Zero
+import net.ollie.maths.numbers.{One, Zero}
 
 /**
  * Created by Ollie on 12/01/14.
@@ -29,9 +29,15 @@ class ImaginaryTest extends FlatSpec with Matchers {
             j == i shouldBe (false)
         }
 
-        it should "have re() = 1" in {
+        it should "have re() = 0" in {
             i.re shouldBe Zero
         }
+
+        it should "have im() = 1" in {
+            i.im shouldBe One
+        }
+
+        it
 
     }
 
