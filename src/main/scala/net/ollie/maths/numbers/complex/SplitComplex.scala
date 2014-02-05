@@ -17,9 +17,18 @@ trait SplitComplex
 
     def unre = s
 
-    override def abs: PositiveReal = ???
+    override def abs: PositiveReal = ??? //TODO
 
     def modulus: Real = re.squared - s.squared
+
+    override def equals(z: ComplexLike) = z match {
+        case s: SplitComplex => this.equals(s)
+        case _ => super.equals(z)
+    }
+
+    def equals(s: SplitComplex) = this.re == s.re && this.s == s.s
+
+    override def toString = re.toString + " + " + s.toString + "j"
 
 }
 
@@ -45,7 +54,7 @@ class CartesianSplitComplex(val re: Real, val s: Real)
 
     override def ?^(that: Number): Option[Number] = ???
 
-    override protected def ?*(that: Number)(leftToRight: Boolean): Option[Number] = ???
+    override def ?*(that: Number)(leftToRight: Boolean): Option[Number] = ???
 
     override def ?+(that: Number): Option[Number] = ???
 

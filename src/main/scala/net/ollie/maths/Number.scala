@@ -47,7 +47,7 @@ trait Number
         }
     }
 
-    protected def ?*(that: Number)(leftToRight: Boolean): Option[Number]
+    def ?*(that: Number)(leftToRight: Boolean): Option[Number]
 
     def *[R <: Number, Combined <: Number](that: R)
                                           (implicit multiplication: MultiplicationArithmetic[System, R#System, Combined]): Combined = {

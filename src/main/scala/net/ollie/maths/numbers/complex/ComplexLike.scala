@@ -61,6 +61,14 @@ trait ComplexLike
 
     def /(that: System): System = this * that.inverse
 
+    override def equals(n: Number) = n match {
+        case re: Real => unre.isEmpty && this.re == re
+        case z: ComplexLike => this.equals(z)
+        case _ => super.equals(n)
+    }
+
+    def equals(z: ComplexLike): Boolean = super.equals(z)
+
 }
 
 trait ComplexBuilder[System]

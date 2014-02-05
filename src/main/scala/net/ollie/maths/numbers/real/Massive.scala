@@ -33,7 +33,7 @@ trait Massive
         case _ => None
     }
 
-    protected def ?*(that: Number)(leftToRight: Boolean) = that match {
+    def ?*(that: Number)(leftToRight: Boolean) = that match {
         case m: Massive => Some(m)
         case _ => None
     }

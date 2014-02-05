@@ -1,7 +1,7 @@
 package net.ollie.maths.numbers.complex
 
 import net.ollie.maths._
-import net.ollie.maths.numbers.{PositiveReal, One, Real, Zero}
+import net.ollie.maths.numbers.{One, Real, Zero}
 import scala.Some
 
 /**
@@ -17,9 +17,11 @@ trait Dual
 
     def d: Real
 
-    def unre = d
+    final def unre = d
 
     override def unary_-(): Dual = Dual(-re, -d)
+
+    def abs = re.abs
 
     def ?+(that: Number) = that match {
         case d: Dual => Some(this + d)
@@ -33,10 +35,9 @@ trait Dual
 
     def ?^(that: Number) = None
 
-    override def equals(that: Number) = that match {
-        case re: Real => this.d.isEmpty && this.re == re
-        case d: Dual => this.equals(d)
-        case _ => super.equals(that)
+    override def equals(z: ComplexLike) = z match {
+        case d: Dual => this equals d
+        case _ => super.equals(z)
     }
 
     def equals(that: Dual): Boolean = (this.re == that.re && this.d == that.d) || super.equals(that)
@@ -86,11 +87,7 @@ object Dual
 }
 
 class RegularDual(val re: Real, val d: Real)
-        extends Dual {
-
-    override def abs: PositiveReal = ???
-
-}
+        extends Dual
 
 object DualZero
         extends Dual
@@ -99,5 +96,11 @@ object DualZero
     override def re = Zero
 
     override def d = Zero
+
+    override def abs = super[EmptyNumber].abs
+
+    override def unary_-() = this
+
+    override def conjugate = this
 
 }

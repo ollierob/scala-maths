@@ -41,9 +41,9 @@ trait Complex
 
     def ?^(that: Number) = ???
 
-    override def equals(n: Number): Boolean = n match {
+    override def equals(z: ComplexLike): Boolean = z match {
         case z: Complex => this equals z
-        case _ => super.equals(n)
+        case _ => super.equals(z)
     }
 
     def equals(that: Complex) = this.re == that.re && this.im == that.im
