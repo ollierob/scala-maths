@@ -1,14 +1,16 @@
 package net.ollie.maths.numbers.quaternion
 
 import net.ollie.maths._
-import net.ollie.maths.numbers.{One, PositiveReal, Real, Zero}
+import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.complex.Complex
+import scala.Some
 
 /**
  * Created by Ollie on 11/01/14.
  */
 trait Quaternion
-        extends Number {
+        extends Number
+        with MaybeReal {
 
     type System = Quaternion
 
@@ -32,7 +34,7 @@ trait Quaternion
 
     def conjugate: Quaternion = Quaternion.conjugate(this)
 
-    def isReal: Option[Real] = if (i.isEmpty && j.isEmpty && k.isEmpty) Some(re) else None
+    def toReal: Option[Real] = if (i.isEmpty && j.isEmpty && k.isEmpty) Some(re) else None
 
     def isComplex: Option[Complex] = if (j.isEmpty && k.isEmpty) Some(Complex(re, i.re)) else None
 

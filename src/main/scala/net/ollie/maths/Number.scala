@@ -1,6 +1,7 @@
 package net.ollie.maths
 
 import net.ollie.maths.numbers.{Zero, PositiveReal}
+import scala.collection.mutable
 
 /**
  * Created by Ollie on 02/01/14.
@@ -98,5 +99,36 @@ trait Number
     }
 
     def equals(n: Number) = super.equals(n)
+
+}
+
+abstract class NumberSeries[N <: Number](val terms: Seq[N])
+        extends Number {
+
+    protected[this] def simplify(left: Seq[N], right: Seq[N]): Seq[N] = {
+        left.foldLeft(right)((seq, next) => simplify(next, seq))
+    }
+
+    //TODO should use foldright because the term is being added to the right
+    protected[this] def simplify(term: N, terms: Seq[N]): Seq[N] = {
+        var simplified = false
+        var current = term
+        val series = terms.foldLeft(new mutable.ListBuffer[N]())((seq, next) => tryAdd(next, current) match {
+            case Some(m) => {
+                simplified = true
+                current = m
+                seq += current
+            }
+            case _ => seq :+ next
+        })
+        if (!simplified) series += current;
+        series.toSeq
+    }
+
+    protected[this] def tryAdd(left: N, right: N): Option[N]
+
+    def isEmpty = terms.forall(_.isEmpty)
+
+    override def toString = terms.mkString("(", " + ", ")")
 
 }

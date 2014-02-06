@@ -4,7 +4,7 @@ import scala.Some
 import scala.collection.mutable
 
 import net.ollie.maths._
-import net.ollie.maths.methods.{ApproximatelyEvaluated, Product, Series}
+import net.ollie.maths.methods.{ApproximatelyEvaluated, Product}
 import net.ollie.maths.numbers.real.{Massive, PowerTower, RealPower}
 
 /**
@@ -13,7 +13,8 @@ import net.ollie.maths.numbers.real.{Massive, PowerTower, RealPower}
 trait Real
         extends Number
         with Evaluable
-        with Ordered[Real] {
+        with Ordered[Real]
+        with MaybeReal {
 
     final type System = Real
 
@@ -121,6 +122,8 @@ trait Real
 
     def isStrictlyPositive: Boolean = Zero < this
 
+    def toReal = Some(this)
+
     protected def tryCompareTo(that: Real): Option[Int] = None
 
     override def equals(number: Number) = number match {
@@ -143,8 +146,11 @@ trait Real
 object Real
         extends NumberIdentityArithmetic[Real] {
 
+    def apply(): Real = Zero
+
     def apply(from: Number): Option[Real] = from match {
         case re: Real => Some(re)
+        case m: MaybeReal => m.toReal
         case _ => None
     }
 
@@ -200,6 +206,12 @@ object Real
         override def promote(from: Real) = from
 
     }
+
+}
+
+trait MaybeReal {
+
+    def toReal: Option[Real]
 
 }
 
@@ -293,11 +305,10 @@ object RealSeries {
 
 }
 
-class RealSeries private(val terms: Seq[Real])
-        extends Real
+class RealSeries private(override val terms: Seq[Real])
+        extends NumberSeries(terms)
+        with Real
         with ApproximatelyEvaluated {
-
-    private final def series = Series(terms)
 
     override def toConstant = super[Real].toConstant
 
@@ -311,28 +322,7 @@ class RealSeries private(val terms: Seq[Real])
         }))
     }
 
-    private def simplify(left: Seq[Real], right: Seq[Real]): Seq[Real] = {
-        left.foldLeft(right)((seq, next) => simplify(next, seq))
-    }
-
-    private def simplify(term: Real, terms: Seq[Real]): Seq[Real] = {
-        var simplified = false
-        var current = term
-        val series = terms.foldLeft(new mutable.ListBuffer[Real]())((seq, next) => next ?+? current match {
-            case Some(m) => {
-                simplified = true
-                current = m
-                seq += current
-            }
-            case _ => seq :+ next
-        })
-        if (!simplified) series += current;
-        series.toSeq
-    }
-
-    def isEmpty = series.isEmpty //TODO not necessarily true!
-
-    override def toString = series.toString
+    override def tryAdd(left: Real, right: Real) = left ?+? right
 
     override def equals(that: Real) = that match {
         case series: RealSeries => this.terms == series.terms || super.equals(series)

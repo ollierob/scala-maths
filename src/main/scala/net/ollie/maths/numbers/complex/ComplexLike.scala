@@ -1,13 +1,14 @@
 package net.ollie.maths.numbers.complex
 
-import net.ollie.maths.numbers.Real
+import net.ollie.maths.numbers.{MaybeReal, Real}
 import net.ollie.maths.{NumberIdentityArithmetic, Number}
 
 /**
  * Created by Ollie on 01/02/14.
  */
 trait ComplexLike
-        extends Number {
+        extends Number
+        with MaybeReal {
 
     self =>
 
