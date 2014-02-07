@@ -69,4 +69,9 @@ class IntegerFractionTest extends FlatSpec with Matchers {
         IntegerFraction(3, 5).evaluate(4 dp) shouldBe BigDecimal("0.6000")
     }
 
+    "2/3 + 5/7" should "equal 29/21" in {
+        val r: Rational = IntegerFraction(2, 3) + IntegerFraction(5, 7)
+        r shouldBe IntegerFraction(29, 21)
+    }
+
 }

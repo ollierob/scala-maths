@@ -50,7 +50,7 @@ trait Integer
         }
     }
 
-    def /(that: Integer): Real = Integer.divide(this, that)
+    def /(that: Integer): Rational = Integer.divide(this, that)
 
     def isEven: Boolean = this.evaluate % 2 == 0
 

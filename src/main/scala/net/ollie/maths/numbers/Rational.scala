@@ -20,16 +20,21 @@ trait Rational
 
     override def inverse = IntegerFraction(denominator, numerator)
 
+    override def unary_-(): Rational = -numerator / -denominator
+
     def isEmpty: Boolean = numerator.isEmpty
 
     override def approximatelyEvaluate(precision: Precision): BigDecimal = numerator.evaluate(precision) / denominator.evaluate(precision)
 
-    override def ?*(that: Real) = {
-        that match {
-            case r: Rational => Some(IntegerFraction(r.numerator * numerator, r.denominator * denominator))
-            case _ if that == denominator => Some(numerator)
-            case _ => super.?*(that)
-        }
+    override def ?+(that: Real) = that match {
+        case r: Rational => Some(this + r)
+        case _ => super.?+(that)
+    }
+
+    override def ?*(that: Real) = that match {
+        case r: Rational => Some(IntegerFraction(r.numerator * numerator, r.denominator * denominator))
+        case _ if that == denominator => Some(numerator)
+        case _ => super.?*(that)
     }
 
     override def ?==(that: Real) = that match {
@@ -37,7 +42,46 @@ trait Rational
         case _ => super.?==(that)
     }
 
+    def +(that: Rational): Rational = {
+        val n: Integer = (this.numerator * that.denominator) + (that.numerator * this.denominator)
+        val d: Integer = this.denominator * that.denominator
+        n / d
+    }
+
+    def -(that: Rational): Rational = this + (-that)
+
+    def *(that: Rational): Rational = (this.numerator * that.numerator) / (this.denominator * that.denominator)
+
     override def toString: String = numerator.toString + "/" + denominator.toString
+
+}
+
+object Rational {
+
+    implicit object Numeric
+            extends scala.Numeric[Rational] {
+
+        def compare(x: Rational, y: Rational) = x.compareTo(y)
+
+        def toDouble(x: Rational) = x.evaluate(DoublePrecision).toDouble
+
+        def toFloat(x: Rational) = x.evaluate(SinglePrecision).toFloat
+
+        def toLong(x: Rational) = x.evaluate(IntegerPrecision).toLong
+
+        def toInt(x: Rational) = x.evaluate(IntegerPrecision).toInt
+
+        def fromInt(x: Int) = Integer(x)
+
+        def negate(x: Rational) = -x
+
+        def times(x: Rational, y: Rational) = x * y
+
+        def minus(x: Rational, y: Rational) = x - y
+
+        def plus(x: Rational, y: Rational) = x + y
+
+    }
 
 }
 
@@ -82,11 +126,6 @@ class IntegerFraction private[numbers](override val numerator: Integer, override
     override def unary_-() = IntegerFraction(-numerator, denominator)
 
     override def squared = Natural.divide(numerator.squared, denominator.squared)
-
-    override def ?+(that: Real) = that match {
-        case r: Rational => Some(((this.numerator * r.denominator) + (r.numerator * this.denominator)) / (this.denominator * r.denominator))
-        case _ => None
-    }
 
     override def ?*(that: Real) = numerator ?* that match {
         case Some(m: Integer) => Some(IntegerFraction(m, denominator))
