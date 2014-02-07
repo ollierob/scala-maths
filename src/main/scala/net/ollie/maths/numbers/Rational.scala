@@ -43,7 +43,7 @@ trait Rational
 
 object IntegerFraction {
 
-    def apply(numerator: Integer, denominator: Integer): Real = common(numerator, denominator) match {
+    def apply(numerator: Integer, denominator: Integer): Rational = common(numerator, denominator) match {
         case Some(m) => m
         case _ => (numerator, denominator) match {
             case (n1: Natural, n2: Natural) => Natural.divide(n1, n2)

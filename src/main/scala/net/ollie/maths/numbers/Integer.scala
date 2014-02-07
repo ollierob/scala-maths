@@ -21,7 +21,7 @@ trait Integer
 
     override def unary_-(): Integer = Integer.negate(this)
 
-    override def inverse: Real = Integer.divide(One, this)
+    override def inverse: Rational = Integer.divide(One, this)
 
     override def abs: Natural = Integer.abs(this)
 
@@ -83,7 +83,7 @@ object Integer {
 
     def negate(i: Integer): Integer = new NegatedInteger(i)
 
-    def divide(numerator: Integer, denominator: Integer): Real = IntegerFraction(numerator, denominator)
+    def divide(numerator: Integer, denominator: Integer): Rational = IntegerFraction(numerator, denominator)
 
     def abs(i: Integer): Natural = Natural(i.evaluate.abs)
 
