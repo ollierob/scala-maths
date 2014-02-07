@@ -37,6 +37,8 @@ trait Angle
 
     override def *(that: Real): Angle = builder.create(this.toRadians * that)
 
+    override def /(that: Real): Angle = builder.create(this.toRadians / that)
+
     override def ?+(that: Real) = that match {
         case angle: Angle => Some(Radians(this.toRadians + angle.toRadians))
         case _ => super.?+(that)
@@ -96,6 +98,9 @@ object Classification extends Enumeration {
 
 }
 
+/**
+ * 2 pi radians, or 360 degrees.
+ */
 object FullAngle
         extends Radians(2 * Pi) {
 
@@ -103,6 +108,9 @@ object FullAngle
 
 }
 
+/**
+ * pi radians, or 180 degrees.
+ */
 object HalfAngle
         extends Radians(Pi) {
 
@@ -110,6 +118,9 @@ object HalfAngle
 
 }
 
+/**
+ * pi/2 radians, or 90 degrees.
+ */
 object RightAngle
         extends Radians(Pi / 2) {
 

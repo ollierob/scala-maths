@@ -115,7 +115,7 @@ class RealArcCos(override val of: Real)
         extends ArcCos(of)
         with Real {
 
-    protected[this] def eval(precision: Precision) = BigDecimalMath.acos(of.approximatelyEvaluate(precision).underlying())
+    protected[this] def eval(precision: Precision) = BigDecimalMath.acos(of.evaluate(precision).underlying())
 
     override def isEmpty = of == One
 

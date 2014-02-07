@@ -65,4 +65,8 @@ class IntegerFractionTest extends FlatSpec with Matchers {
         IntegerFraction(ONE, THREE) + IntegerFraction(ONE, FIVE) shouldBe (IntegerFraction(8, 15))
     }
 
+    "3/5" should "evaluate" in {
+        IntegerFraction(3, 5).evaluate(4 dp) shouldBe BigDecimal("0.6000")
+    }
+
 }

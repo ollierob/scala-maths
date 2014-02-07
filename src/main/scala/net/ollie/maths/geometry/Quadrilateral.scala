@@ -9,6 +9,8 @@ import net.ollie.maths.numbers.PositiveReal
 trait Quadrilateral
         extends Polygon {
 
+    final def sides = 4
+
 }
 
 object Quadrilateral {
