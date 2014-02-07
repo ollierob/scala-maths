@@ -10,6 +10,36 @@ trait HomogeneousTuple[T]
 
     def iterator: Iterator[T]
 
+    def size: Int
+
+}
+
+object Homogeneous1Tuple {
+
+    implicit def apply[T](tuple: (T, )) = new Homogeneous1Tuple(tuple._1)
+
+}
+
+class Homogeneous1Tuple[T](a: T)
+        extends Tuple1(a)
+        with HomogeneousTuple[T] {
+
+    def size = 1
+
+    def iterator = new Iterator[T] {
+
+        var n = false
+
+        def hasNext = !n
+
+        def next(): T = {
+            if (n) throw new NoSuchElementException
+            n = true
+            a
+        }
+
+    }
+
 }
 
 object Homogeneous3Tuple {
@@ -39,5 +69,7 @@ class Homogeneous3Tuple[T](a: T, b: T, c: T)
         }
 
     }
+
+    def size = 3
 
 }
