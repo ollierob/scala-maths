@@ -16,6 +16,8 @@ trait Rational
 
     def denominator: Integer
 
+    override def abs: PositiveReal with Rational = numerator.abs / denominator.abs
+
     override def inverse = IntegerFraction(denominator, numerator)
 
     def isEmpty: Boolean = numerator.isEmpty
@@ -52,8 +54,8 @@ object IntegerFraction {
         }
     }
 
-    def common(numerator: Integer, denominator: Integer): Option[Real] = (numerator, denominator) match {
-        case (_, Zero) => Some(numerator * denominator.inverse)
+    def common(numerator: Integer, denominator: Integer): Option[Rational] = (numerator, denominator) match {
+        case (_, Zero) => ??? //Some(numerator * denominator.inverse)
         case (Zero, _) => Some(Zero)
         case (_, One) => Some(numerator)
         case (_, MinusOne) => Some(-numerator)

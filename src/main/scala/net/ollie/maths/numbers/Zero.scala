@@ -1,6 +1,6 @@
 package net.ollie.maths.numbers
 
-import net.ollie.maths.{Expression, EmptyNumber, Variable}
+import net.ollie.maths.{Operation, Expression, EmptyNumber, Variable}
 
 /**
  * Empty real number.
@@ -22,7 +22,7 @@ object Zero
 
     override def isEven = true
 
-    override def inverse = UnsignedInfinity
+    override def inverse: PositiveReal with Rational = Operation.undefined //UnsignedInfinity //TODO
 
     override def unary_-() = this
 

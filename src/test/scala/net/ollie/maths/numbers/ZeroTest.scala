@@ -16,11 +16,11 @@ class ZeroTest extends FlatSpec with Matchers {
         Zero.isEmpty shouldBe true
     }
 
-    it should "invert" in {
-        val i = Zero.inverse
-        i.abs shouldBe Infinity
-        i + 1 shouldBe i
-    }
+    //    it should "invert" in {
+    //        val i = Zero.inverse
+    //        i.abs shouldBe Infinity
+    //        i + 1 shouldBe i
+    //    }
 
     "N(0)" should "equal 0" in {
         val i: Int = 0

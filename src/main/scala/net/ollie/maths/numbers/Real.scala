@@ -28,7 +28,7 @@ trait Real
 
     def inverse: Real = Real.inverse(this)
 
-    def abs = Real.abs(this)
+    def abs: PositiveReal = Real.abs(this)
 
     def +(that: Real): Real = this ?+ that match {
         case Some(n) => n

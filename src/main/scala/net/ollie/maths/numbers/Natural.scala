@@ -39,7 +39,7 @@ trait Natural
 
     def *(i: Int): Integer = this * Integer(i) //Helps resolve ambiguous reference errors
 
-    def /(that: Natural): PositiveReal = Natural.divide(this, that)
+    def /(that: Natural): PositiveReal with Rational = Natural.divide(this, that)
 
     def ^(that: Natural): Natural = Natural.power(this, that)
 
@@ -69,7 +69,7 @@ object Natural {
         case _ => Left(int)
     }
 
-    def divide(numerator: Natural, denominator: Natural): PositiveReal = IntegerFraction.common(numerator, denominator) match {
+    def divide(numerator: Natural, denominator: Natural): PositiveReal with Rational = IntegerFraction.common(numerator, denominator) match {
         case Some(m) => m.abs
         case _ => IntegerFraction.reduce(numerator, denominator) match {
             case Some((i1, i2)) => divide(i1.abs, i2.abs)
@@ -77,7 +77,7 @@ object Natural {
         }
     }
 
-    def inverse(n: Natural): PositiveReal = divide(One, n)
+    def inverse(n: Natural): PositiveReal with Rational = divide(One, n)
 
     def power(base: Natural, power: Natural): Natural = new NaturalPower(base, power)
 
