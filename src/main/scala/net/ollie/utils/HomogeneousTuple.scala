@@ -3,8 +3,8 @@ package net.ollie.utils
 /**
  * Created by Ollie on 06/02/14.
  */
-trait HomogeneousTuple[T]
-        extends Product {
+trait HomogeneousTuple[+T]
+extends Product {
 
     override def productIterator: Iterator[T] = iterator
 
@@ -16,7 +16,7 @@ trait HomogeneousTuple[T]
 
 object Homogeneous1Tuple {
 
-    implicit def apply[T](tuple: (T, )) = new Homogeneous1Tuple(tuple._1)
+    implicit def apply[T](tuple: Tuple1[T]) = new Homogeneous1Tuple(tuple._1)
 
 }
 
