@@ -18,8 +18,6 @@ trait Real
 
     final type System = Real
 
-    type Subsystem >: this.type <: System
-
     override def replace(variables: Map[Variable, Expression]) = this
 
     override def unary_-(): Real = Real.negate(this)
