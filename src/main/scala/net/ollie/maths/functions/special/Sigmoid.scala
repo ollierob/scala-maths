@@ -4,7 +4,7 @@ import net.ollie.maths.{Expression, Number}
 import net.ollie.maths.functions.{ExpressionBuilder, UnivariateFunction}
 import net.ollie.maths.functions.numeric.Exp
 import net.ollie.maths.numbers.Real
-import net.ollie.maths.numbers.constants.One
+import net.ollie.maths.numbers.constants.Half
 
 /**
  * Created by Ollie on 22/01/14.
@@ -23,6 +23,6 @@ object Sigmoid
 
     protected[this] def create(expr: Expression) = 1 / (1 + Exp(-expr))
 
-    protected[this] def empty = One / 2
+    protected[this] def empty = Half
 
 }

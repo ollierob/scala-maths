@@ -3,7 +3,7 @@ package net.ollie.maths.functions.numeric
 import net.ollie.maths._
 import net.ollie.maths.functions.{ExpressionBuilder, UnivariateFunction}
 import net.ollie.maths.numbers.Real
-import net.ollie.maths.numbers.constants.{Zero, One}
+import net.ollie.maths.numbers.constants.{Half, Zero, One}
 
 /**
  * Created by Ollie on 10/01/14.
@@ -27,9 +27,7 @@ object Heaviside
 
     override def toString = "Heaviside(?)"
 
-    private final val HALF = One / 2
-
-    protected[this] def empty = HALF
+    protected[this] def empty = Half
 
 }
 
