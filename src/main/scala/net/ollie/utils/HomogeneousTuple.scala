@@ -58,7 +58,7 @@ class Homogeneous2Tuple[+T](a: T, b: T)
 
         var index = 0;
 
-        override def hasNext: Boolean = index < 3
+        override def hasNext: Boolean = index < size
 
         override def next(): T = {
             index += 1
@@ -89,7 +89,7 @@ class Homogeneous3Tuple[T](a: T, b: T, c: T)
 
         var index = 0;
 
-        override def hasNext: Boolean = index < 3
+        override def hasNext: Boolean = index < size
 
         override def next(): T = {
             index += 1
@@ -97,6 +97,39 @@ class Homogeneous3Tuple[T](a: T, b: T, c: T)
                 case 1 => a
                 case 2 => b
                 case 3 => c
+                case _ => throw new NoSuchElementException
+            }
+        }
+
+    }
+
+}
+
+object Homogeneous4Tuple {
+
+    implicit def apply[T](tuple: (T, T, T, T)) = new Homogeneous4Tuple(tuple._1, tuple._2, tuple._3, tuple._4)
+
+}
+
+class Homogeneous4Tuple[T](a: T, b: T, c: T, d: T)
+        extends Tuple4(a, b, c, d)
+        with HomogeneousTuple[T] {
+
+    final def size = 4
+
+    def iterator = new Iterator[T] {
+
+        var index = 0;
+
+        override def hasNext: Boolean = index < size
+
+        override def next(): T = {
+            index += 1
+            index match {
+                case 1 => a
+                case 2 => b
+                case 3 => c
+                case 4 => d
                 case _ => throw new NoSuchElementException
             }
         }
