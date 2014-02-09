@@ -1,10 +1,10 @@
 package net.ollie.maths.numbers
 
 import scala.Some
-import scala.collection.mutable
 
 import net.ollie.maths._
-import net.ollie.maths.methods.{ApproximatelyEvaluated, Product}
+import net.ollie.maths.methods.ApproximatelyEvaluated
+import net.ollie.maths.numbers.massive.{PowerTower, Massive}
 
 /**
  * Created by Ollie on 01/01/14.
@@ -314,8 +314,8 @@ class RealSeries private(override val terms: Seq[Real])
     override def ?+(that: Real) = {
         if (that.isEmpty) this
         Some(RealSeries(that match {
-            case series: RealSeries => simplify(this.terms, series.terms)
-            case _ => simplify(that, terms)
+            case series: RealSeries => simplify(this.terms ++ series.terms)
+            case _ => simplify(terms :+ that)
         }))
     }
 
@@ -341,46 +341,18 @@ object RealProduct {
 
 }
 
-class RealProduct private(val terms: Seq[Real])
-        extends Real
+class RealProduct(override val terms: Seq[Real])
+        extends NumberProduct(terms)
+        with Real
         with ApproximatelyEvaluated {
 
-    require(!terms.isEmpty)
+    override def ?*(that: Real) = Some(RealProduct(simplify(terms :+ that)))
 
-    private final def product = Product(terms)
+    protected[this] def tryMultiply(left: Real, right: Real) = left ?*? right
 
-    override protected[this] def approx(precision: Precision) = terms.map(_.approximatelyEvaluate(precision)).product
-
-    override def ?*(that: Real) = {
-        if (that.isEmpty) Some(Zero)
-        else Some(RealProduct(that match {
-            case product: RealProduct => simplify(product.terms, this.terms)
-            case _ => simplify(that, this.terms)
-        }))
+    protected[this] def approx(precision: Precision) = {
+        terms.map(_.approximatelyEvaluate(precision)).product
     }
-
-    private def simplify(left: Seq[Real], right: Seq[Real]): Seq[Real] = {
-        left.foldLeft(right)((seq, next) => simplify(next, seq))
-    }
-
-    private def simplify(term: Real, terms: Seq[Real]): Seq[Real] = {
-        var simplified = false
-        var current = term
-        val product = terms.foldLeft(new mutable.ListBuffer[Real]())((seq, next) => next ?*? current match {
-            case Some(m) => {
-                simplified = true
-                current = m
-                seq += current
-            }
-            case _ => seq :+ next
-        })
-        if (!simplified) current +=: product
-        product.toSeq
-    }
-
-    def isEmpty = product.isEmpty
-
-    override def toString = product.toString
 
     override def equals(that: Real) = that match {
         case product: RealProduct => this.terms == product.terms || super.equals(product)

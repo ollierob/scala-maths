@@ -21,7 +21,7 @@ trait Number
 
     def abs: PositiveReal
 
-    def inverse: System
+    def inverse: Number
 
     def ?+(that: Number): Option[Number]
 
@@ -105,15 +105,12 @@ trait Number
 abstract class NumberSeries[N <: Number](val terms: Seq[N])
         extends Number {
 
-    protected[this] def simplify(left: Seq[N], right: Seq[N]): Seq[N] = {
-        left.foldLeft(right)((seq, next) => simplify(next, seq))
-    }
+    require(!terms.isEmpty)
 
-    //TODO should use foldright because the term is being added to the right
-    protected[this] def simplify(term: N, terms: Seq[N]): Seq[N] = {
+    protected[this] def simplify(terms: Seq[N]): Seq[N] = {
         var simplified = false
-        var current = term
-        val series = terms.foldLeft(new mutable.ListBuffer[N]())((seq, next) => tryAdd(next, current) match {
+        var current = terms.head
+        val series = terms.tail.foldLeft(new mutable.ListBuffer[N]())((seq, next) => tryAdd(next, current) match {
             case Some(m) => {
                 simplified = true
                 current = m
@@ -130,5 +127,33 @@ abstract class NumberSeries[N <: Number](val terms: Seq[N])
     def isEmpty = terms.forall(_.isEmpty)
 
     override def toString = terms.mkString("(", " + ", ")")
+
+}
+
+abstract class NumberProduct[N <: Number](val terms: Seq[N])
+        extends Number {
+
+    require(!terms.isEmpty)
+
+    protected[this] def simplify(terms: Seq[N]): Seq[N] = {
+        var simplified = false
+        var current = terms.head
+        val series = terms.tail.foldLeft(new mutable.ListBuffer[N]())((seq, next) => tryMultiply(next, current) match {
+            case Some(m) => {
+                simplified = true
+                current = m
+                seq += current
+            }
+            case _ => seq :+ next
+        })
+        if (!simplified) series += current;
+        series.toSeq
+    }
+
+    protected[this] def tryMultiply(left: N, right: N): Option[N]
+
+    def isEmpty = terms.find(_.isEmpty).isDefined
+
+    override def toString = terms.mkString("(", " * ", ")")
 
 }
