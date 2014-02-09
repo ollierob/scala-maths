@@ -8,8 +8,7 @@ import scala.collection.mutable
  */
 trait Number
         extends Nonvariate
-        with Invertible
-        with Differentiable {
+        with Invertible {
 
     self =>
 
@@ -26,12 +25,12 @@ trait Number
     def ?+(that: Number): Option[Number]
 
     def +[R <: Number, Combined <: Number](that: R)
-                                          (implicit addition: AdditionArithmetic[System, R#System, Combined]): Combined = {
+            (implicit addition: AdditionArithmetic[System, R#System, Combined]): Combined = {
         addition.add(this, that.narrow)
     }
 
     def -[R <: Number, Combined <: Number](that: R)
-                                          (implicit addition: AdditionArithmetic[System, R#System, Combined]): Combined = {
+            (implicit addition: AdditionArithmetic[System, R#System, Combined]): Combined = {
         addition.add(this, -that)
     }
 
@@ -51,7 +50,7 @@ trait Number
     def ?*(that: Number)(leftToRight: Boolean): Option[Number]
 
     def *[R <: Number, Combined <: Number](that: R)
-                                          (implicit multiplication: MultiplicationArithmetic[System, R#System, Combined]): Combined = {
+            (implicit multiplication: MultiplicationArithmetic[System, R#System, Combined]): Combined = {
         multiplication.multiply(this, that.narrow)
     }
 
@@ -64,7 +63,7 @@ trait Number
      * @return a number
      */
     def ^[R <: Number, Combined <: Number](power: R)
-                                          (implicit exponentiation: ExponentiationArithmetic[System, R#System, Combined]): Combined = {
+            (implicit exponentiation: ExponentiationArithmetic[System, R#System, Combined]): Combined = {
         exponentiation.exponent(this, power.narrow)
     }
 
@@ -80,7 +79,7 @@ trait Number
      * @see http://mathworld.wolfram.com/PowerTower.html
      */
     def ^^[R <: Number, Combined <: Number](tower: R)
-                                           (implicit tetration: TetrationArithmetic[System, R#System, Combined]): Combined = {
+            (implicit tetration: TetrationArithmetic[System, R#System, Combined]): Combined = {
         tetration.tetrate(this, tower.narrow)
     }
 

@@ -197,8 +197,6 @@ trait Nonvariate
 
     def variables = Set()
 
-    //def /(that: Univariate): Univariate = ???
-
 }
 
 object Univariate {

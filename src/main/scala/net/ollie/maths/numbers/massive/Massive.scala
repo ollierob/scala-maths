@@ -6,6 +6,10 @@ import scala.Some
 
 /**
  * Real finite numbers that (probably) cannot be expressed in decimal form because they are so large.
+ *
+ * These are handled in their own number system, because most functions will need to evaluate them
+ * to be able to evaluate themselves.
+ *
  * Created by Ollie on 12/01/14.
  * @see [[Infinitesimal]]
  * @see [[PowerTower]]
@@ -17,10 +21,10 @@ trait Massive
 
     def inverse: Real = this.tryReduce match {
         case Some(re) => re.inverse
-        case _ => Massive.invert(this)
+        case _ => new InvertedMassive(this)
     }
 
-    def unary_-(): Massive = Massive.negate(this)
+    def unary_-(): Massive = new NegatedMassive(this)
 
     def tryReduce: Option[Real]
 
@@ -65,10 +69,6 @@ object Massive {
     }
 
     implicit def apply(re: Real): Massive = if (re.isEmpty) Massive() else new PromotedMassive(re)
-
-    def negate(m: Massive): Massive = new NegatedMassive(m)
-
-    def invert(m: Massive): Infinitesimal = new InvertedMassive(m)
 
     def series(terms: Seq[Massive]): Massive = terms.filterNot(_.isEmpty) match {
         case Nil => Massive()
@@ -185,6 +185,7 @@ class InvertedMassive(val of: Massive)
         extends Infinitesimal {
 
     //TODO inverse should return massive
+    //TODO inverse shouldn't assume positive
 
 }
 
