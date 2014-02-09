@@ -11,7 +11,7 @@ trait Infinite {
 
     def isEmpty = false
 
-    protected[this] def eval(precision: Precision): BigDecimal = ???
+    protected[this] def doEvaluate(precision: Precision): BigDecimal = ??? //TODO tie to Evaluable
 
     def abs: PositiveReal with Infinite = Infinity
 
