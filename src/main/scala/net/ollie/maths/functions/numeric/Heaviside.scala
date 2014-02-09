@@ -32,20 +32,14 @@ object Heaviside
 
 }
 
-class Heaviside(val expr: Expression)
+class Heaviside(val of: Expression)
         extends AnyRef
-        with Composite {
+        with FunctionBuilder {
 
-    def of = expr
+    protected[this] def builder = Heaviside
+
+    protected[this] def derivative(x: Expression) = DiracDelta(x)
 
     def isEmpty = false
-
-    protected[this] def at(n: Number) = Heaviside(n)
-
-    protected[this] def apply(expr: Expression) = Heaviside(expr)
-
-    override def toString = s"Heaviside($of)"
-
-    protected[this] def derivative(at: Expression) = DiracDelta(at)
 
 }

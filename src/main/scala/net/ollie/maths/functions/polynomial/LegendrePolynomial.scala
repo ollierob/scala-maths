@@ -36,18 +36,15 @@ object LegendrePolynomial {
 }
 
 object ZeroLegendrePolynomial
-        extends LegendrePolynomial
-        with Natural {
+        extends LegendrePolynomial {
+
+    //could mixin Natural, but this makes negation ugly.
 
     def l = Zero
 
-    protected[this] def f = One
+    def f = One
 
     def evaluate = f.evaluate
-
-    override def toConstant = super[Natural].toConstant
-
-    override def variables = super[Natural].variables
 
     override def toString = "LegendreP(0)()"
 
@@ -58,7 +55,7 @@ class OneLegendrePolynomial(val of: Expression)
 
     def l = One
 
-    protected[this] def f = of
+    def f = of
 
     override def toString = s"LegendreP(1)($of)"
 
@@ -69,7 +66,7 @@ class SomeLegendrePolynomial(val l: Natural)(val x: Expression)
 
     require(l > One)
 
-    protected[this] def f = ((((2 * l) - 1) * x * LegendrePolynomial(l - 1, x)) - ((l - 1) * LegendrePolynomial(l - 2, x))) / l
+    def f = ((((2 * l) - 1) * x * LegendrePolynomial(l - 1, x)) - ((l - 1) * LegendrePolynomial(l - 2, x))) / l
 
     override def df(x: Variable) = l * (x * LegendrePolynomial(l, x) - LegendrePolynomial(l - 1, x)) / ((x ^ 2) + 1)
 

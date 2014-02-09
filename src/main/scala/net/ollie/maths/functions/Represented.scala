@@ -9,7 +9,7 @@ import net.ollie.maths.{Expression, Variable}
 trait Represented
         extends Expression {
 
-    protected[this] def f: Expression
+    def f: Expression
 
     def variables = f.variables
 
@@ -20,5 +20,7 @@ trait Represented
     def isEmpty = f.isEmpty
 
     def df(x: Variable): Expression = f.df(x)
+
+    def unary_-(): Expression = Expression.negate(this)
 
 }

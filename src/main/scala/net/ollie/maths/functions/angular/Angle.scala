@@ -8,6 +8,8 @@ import net.ollie.maths.numbers.real.Pi
 trait Angle
         extends Real {
 
+    type Type >: this.type <: Angle
+
     def toRadians: Real
 
     def isEmpty = toRadians.isEmpty
@@ -27,17 +29,17 @@ trait Angle
 
     protected[this] def eval(precision: Precision) = toRadians.evaluate(precision)
 
-    override def unary_-(): Angle = ???
+    implicit def builder: AngleBuilder[Type]
 
-    implicit def builder: AngleBuilder
+    override def unary_-(): Type = builder.create(-this.toRadians)
 
-    def +(that: Angle): Angle = builder.create(this.toRadians + that.toRadians)
+    def +(that: Angle): Type = builder.create(this.toRadians + that.toRadians)
 
-    def -(that: Angle): Angle = builder.create(this.toRadians - that.toRadians)
+    def -(that: Angle): Type = builder.create(this.toRadians - that.toRadians)
 
-    override def *(that: Real): Angle = builder.create(this.toRadians * that)
+    override def *(that: Real): Type = builder.create(this.toRadians * that)
 
-    override def /(that: Real): Angle = builder.create(this.toRadians / that)
+    override def /(that: Real): Type = builder.create(this.toRadians / that)
 
     override def ?+(that: Real) = that match {
         case angle: Angle => Some(Radians(this.toRadians + angle.toRadians))
@@ -53,9 +55,9 @@ trait Angle
 
 object Angle extends Enumeration {
 
-    trait AngleBuilder {
+    trait AngleBuilder[T] {
 
-        def create(radians: Real): Angle
+        def create(radians: Real): T
 
     }
 
@@ -148,6 +150,8 @@ class Radians(val value: Real)
         extends AnyRef
         with Angle {
 
+    type Type = Radians
+
     def toRadians = value
 
     def +(that: Radians): Radians = Radians(this.value + that.value)
@@ -170,7 +174,7 @@ object Radians {
         case _ => new Radians(re)
     }
 
-    implicit object Builder extends AngleBuilder {
+    implicit object Builder extends AngleBuilder[Radians] {
 
         def create(radians: Real) = Radians(radians)
 
@@ -181,6 +185,8 @@ object Radians {
 class Degrees(val value: Real)
         extends AnyRef
         with Angle {
+
+    type Type = Degrees
 
     def toRadians = value * Pi / 180
 
@@ -204,7 +210,7 @@ object Degrees {
     }
 
     implicit object Builder
-            extends AngleBuilder {
+            extends AngleBuilder[Degrees] {
 
         def create(radians: Real) = apply(radians)
 
@@ -212,7 +218,11 @@ object Degrees {
 
 }
 
-class Grads(val value: Real) extends AnyRef with Angle {
+class Grads(val value: Real)
+        extends AnyRef
+        with Angle {
+
+    type Type = Grads
 
     def toRadians = value * Pi / 200
 
@@ -220,11 +230,15 @@ class Grads(val value: Real) extends AnyRef with Angle {
 
     override def toString = value.toString + " grad"
 
-    implicit def builder = ???
+    implicit def builder = ??? //TODO
 
 }
 
-class Turns(val value: Real) extends AnyRef with Angle {
+class Turns(val value: Real)
+        extends AnyRef
+        with Angle {
+
+    type Type = Turns
 
     def toRadians = value * 2 * Pi
 

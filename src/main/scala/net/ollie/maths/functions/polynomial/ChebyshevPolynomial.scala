@@ -37,7 +37,7 @@ private object TZero
 
     def n = Zero
 
-    override protected[this] def f = One
+    def f = One
 
     override def df(x: Variable) = One.df(x)
 
@@ -50,7 +50,7 @@ private class TOne(val of: Expression)
 
     def n = One
 
-    protected[this] def f = of
+    def f = of
 
     override def toString = s"Chebyshev1(1)($of)"
 
@@ -59,7 +59,7 @@ private class TOne(val of: Expression)
 private class TAny(val n: Natural, val of: Expression)
         extends ChebyshevFirstKind {
 
-    protected[this] def f = (2 * of * ChebyshevFirstKind(n - 1)(of)) - ChebyshevFirstKind(n - 2)(of)
+    def f = (2 * of * ChebyshevFirstKind(n - 1)(of)) - ChebyshevFirstKind(n - 2)(of)
 
     override def df(x: Variable) = n * ChebyshevSecondKind(n - 1)(x)
 
@@ -88,7 +88,7 @@ private object UZero
 
     def n = Zero
 
-    protected[this] def f = One
+    def f = One
 
     override def toString = "Chebyshev2(0)()"
 
@@ -99,7 +99,7 @@ private class UOne(val of: Expression)
 
     def n = One
 
-    protected[this] def f = 2 * of
+    def f = 2 * of
 
     override def toString = s"Chebyshev2(1)($of)"
 
@@ -108,7 +108,7 @@ private class UOne(val of: Expression)
 private class UAny(override val n: Natural, val of: Expression)
         extends ChebyshevSecondKind {
 
-    protected[this] def f = Series(nth, Zero, Floor(n / 2))
+    def f = Series(nth, Zero, Floor(n / 2))
 
     private val nth = new ((Integer) => Expression) {
 
@@ -123,7 +123,7 @@ private class UAny(override val n: Natural, val of: Expression)
 private class RecursiveUAny(override val n: Natural, val of: Expression)
         extends ChebyshevSecondKind {
 
-    protected[this] def f = (2 * of * ChebyshevSecondKind(n - 1)(of)) - ChebyshevSecondKind(n - 2)(of)
+    def f = (2 * of * ChebyshevSecondKind(n - 1)(of)) - ChebyshevSecondKind(n - 2)(of)
 
     override def df(x: Variable) = ((n.succ) * ChebyshevFirstKind(n.succ)(of) - (of * this)) / (of ^ 2 - 1)
 

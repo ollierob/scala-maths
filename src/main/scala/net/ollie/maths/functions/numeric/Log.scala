@@ -70,7 +70,7 @@ object Ln
 
 class Ln(val of: Expression)
         extends Log
-        with Composite {
+        with Function {
 
     def base = EulersNumber
 

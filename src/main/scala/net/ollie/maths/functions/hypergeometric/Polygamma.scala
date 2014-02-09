@@ -21,7 +21,7 @@ object Polygamma {
 }
 
 class Polygamma(val order: Natural, val of: Expression)
-        extends Composite {
+        extends Function {
 
     protected[this] def at(n: Number) = Polygamma(order, n)
 

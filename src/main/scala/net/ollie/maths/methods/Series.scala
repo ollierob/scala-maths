@@ -38,7 +38,7 @@ object Series {
 }
 
 class Series[+T <: Expression] protected(val terms: Seq[T])
-extends Aggregate {
+        extends Aggregate {
 
     protected[this] def apply(expressions: Seq[Expression]) = Series(expressions)
 
@@ -85,6 +85,8 @@ private class FiniteIncrementalSum(f: (Integer) => Expression, start: Integer, e
         for (i <- 0 to size) terms += f(start + i)
         Series(terms)
     }
+
+    def unary_-() = Expression.negate(this)
 
     def df(x: Variable) = series.df(x)
 

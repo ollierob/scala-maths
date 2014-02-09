@@ -41,7 +41,7 @@ class EmptyAssociatedLegendrePolynomial(val l: Natural, val m: Integer)
 
     require(m.abs > l)
 
-    protected[this] def f = Zero
+    def f = Zero
 
     override def isEmpty = super[Empty].isEmpty
 
@@ -60,7 +60,7 @@ class RegularAssociatedLegendrePolynomial(val l: Natural, val m: Integer, val x:
 
     require(l <= m.abs)
 
-    protected[this] def f = {
+    def f = {
         ((((2 * l) - 1) * Plm(l - 1, m, x)) - ((l + m) * Plm(l - 2, m, x))) / (l - m + 1)
     }
 

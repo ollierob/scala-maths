@@ -42,7 +42,7 @@ trait EmptyNumber
 
     def abs: PositiveReal with EmptyNumber = Zero
 
-    override def unary_-() = this
+    override def unary_-(): EmptyNumber with System = this
 
     override def variables = super[Number].variables
 

@@ -38,7 +38,7 @@ object Sin
 }
 
 private class Sin(val of: Expression)
-        extends CompositeBuilder
+        extends OddFunctionBuilder
         with Invertible {
 
     protected[this] def builder = Sin
@@ -111,7 +111,7 @@ object ArcSin
 }
 
 class ArcSin(val of: Expression)
-        extends CompositeBuilder {
+        extends OddFunctionBuilder {
 
     def isEmpty = of.isEmpty
 

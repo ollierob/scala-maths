@@ -1,6 +1,6 @@
 package net.ollie.maths.functions.angular
 
-import net.ollie.maths.{CompositeBuilder, Expression, Number}
+import net.ollie.maths.{OddFunctionBuilder, Expression, Number}
 import net.ollie.maths.functions.{ExpressionBuilder, UnivariateFunction}
 import net.ollie.maths.methods.ApproximatelyEvaluated
 import net.ollie.maths.numbers.{Precision, Real, Zero}
@@ -27,7 +27,7 @@ object Tan
 }
 
 class Tan(val of: Expression)
-        extends CompositeBuilder {
+        extends OddFunctionBuilder {
 
     protected[this] def builder = Tan
 
@@ -66,6 +66,8 @@ object Cotan
 
 object ArcTan
         extends ExpressionBuilder {
+
+    //TODO
 
     def apply(n: Number): Number = ???
 

@@ -23,7 +23,7 @@ object TriangleCoefficient
 private class TriangleCoefficient(val a: Expression, val b: Expression, val c: Expression)
         extends Represented {
 
-    protected[this] def f: Expression = Gamma(a + b - c + 1) * Gamma(a - b + c + 1) * Gamma(b + c - a + 1) / Gamma(a + b + c + 2)
+    def f: Expression = Gamma(a + b - c + 1) * Gamma(a - b + c + 1) * Gamma(b + c - a + 1) / Gamma(a + b + c + 2)
 
     override def toString = s"Triangle($a, $b, $c)"
 

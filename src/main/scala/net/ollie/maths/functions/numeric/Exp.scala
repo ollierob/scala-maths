@@ -37,7 +37,7 @@ object Exp
 }
 
 class Exp(val of: Expression)
-        extends Composite
+        extends Function
         with Invertible {
 
     def isEmpty = false

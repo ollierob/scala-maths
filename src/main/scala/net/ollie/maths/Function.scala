@@ -3,13 +3,13 @@ package net.ollie.maths
 import net.ollie.maths.functions.ExpressionBuilder
 
 /**
- * This expression is composed with another expression. (Most are!)
+ * This expression is a function of another expression. (Most are!)
  *
  * Created by Ollie on 05/01/14.
  *
  * @see http://mathworld.wolfram.com/Composition.html
  */
-trait Composite
+trait Function
         extends Expression {
 
     protected[this] def of: Expression
@@ -27,14 +27,16 @@ trait Composite
 
     def df(x: Variable) = of.df(x) * derivative(of)
 
+    def unary_-() = Expression.negate(this)
+
     protected[this] def derivative(x: Expression): Expression
 
     protected[this] def apply(x: Expression): Expression
 
 }
 
-trait CompositeBuilder
-        extends Composite {
+trait FunctionBuilder
+        extends Function {
 
     protected[this] def builder: ExpressionBuilder
 
@@ -44,3 +46,13 @@ trait CompositeBuilder
 
 }
 
+/**
+ * Builds an odd expression.
+ * @see http://mathworld.wolfram.com/OddFunction.html
+ */
+trait OddFunctionBuilder
+        extends FunctionBuilder {
+
+    override def unary_-() = apply(-of)
+
+}

@@ -30,7 +30,7 @@ object Beta
 class Beta(val x: Expression, val y: Expression)
         extends Represented {
 
-    protected[this] def f = Gamma(x) * Gamma(y) / Gamma(x + y)
+    def f = Gamma(x) * Gamma(y) / Gamma(x + y)
 
     override def hashCode = 17 * x.hashCode + 33 * y.hashCode
 

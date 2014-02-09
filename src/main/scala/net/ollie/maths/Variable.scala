@@ -21,6 +21,8 @@ class Variable(val name: String)
 
     def toConstant = None
 
+    def unary_-() = Expression.negate(this)
+
     def replace(variables: Map[Variable, Expression]) = variables.get(this) match {
         case Some(expr) => expr
         case _ => this

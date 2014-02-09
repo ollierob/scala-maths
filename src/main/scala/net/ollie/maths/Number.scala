@@ -17,7 +17,7 @@ trait Number
 
     final def narrow: System = this
 
-    override def unary_-(): System = ??? //FIXME override Differentiable.unary_-()
+    def unary_-(): System
 
     def abs: PositiveReal
 

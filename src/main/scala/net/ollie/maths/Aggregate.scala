@@ -8,6 +8,8 @@ trait Aggregate
 
     protected def terms: Seq[Expression]
 
+    def unary_-() = Expression.negate(this)
+
     def variables = terms.map(_.variables).flatten.toSet
 
     def replace(variables: Map[Variable, Expression]) = apply(terms.map(_.replace(variables)))

@@ -10,7 +10,7 @@ import net.ollie.maths.numbers.{Integer, Zero}
 trait Expression
         extends Differentiable {
 
-    def unary_-(): Expression = Expression.negate(this)
+    def unary_-(): Expression
 
     def replace(variable: Variable, expression: Option[Expression]): Expression = expression match {
         case Some(expr) => replace(variable, expr)
@@ -80,23 +80,23 @@ trait Expression
 
 object Expression {
 
-    def negate(expr: Expression) = new NegatedExpression(expr)
+    def negate(expr: Expression): Expression = if (expr.isEmpty) expr else new NegatedExpression(expr)
 
     def divide(numerator: Expression, denominator: Expression): Expression = (numerator, denominator) match {
         case _ if numerator.isEmpty => Zero
         case _ => new ExpressionFraction(numerator, denominator)
     }
 
-    def power(base: Expression, power: Expression) = (base, power) match {
+    def power(base: Expression, power: Expression): Expression = (base, power) match {
         case (Zero, _) => Zero
         case _ => new ExpressionPower(base, power)
     }
 
-    def series(e1: Expression, e2: Expression) = Series(e1, e2)
+    def series(e1: Expression, e2: Expression): Expression = Series(e1, e2)
 
-    def product(e1: Expression, e2: Expression) = Product(e1, e2)
+    def product(e1: Expression, e2: Expression): Expression = Product(e1, e2)
 
-    implicit def convert(int: Int): Integer = Integer(int)
+    implicit def apply(int: Int): Integer = Integer(int)
 
 }
 
@@ -107,6 +107,8 @@ class NegatedExpression(val of: Expression)
 
     def isEmpty = of.isEmpty
 
+    def unary_-() = of
+
     override def toConstant: Option[Number] = of.toConstant match {
         case Some(n) => Some(-n)
         case _ => None
@@ -114,9 +116,10 @@ class NegatedExpression(val of: Expression)
 
     def variables = of.variables
 
+    def df(x: Variable) = -(of.df(x))
+
     override def toString = "-(" + of + ")"
 
-    def df(x: Variable) = -(of.df(x))
 }
 
 class ExpressionFraction(val numerator: Expression, val denominator: Expression)
@@ -162,6 +165,8 @@ class ExpressionFraction(val numerator: Expression, val denominator: Expression)
 
 class ExpressionPower(val base: Expression, val power: Expression)
         extends Expression {
+
+    def unary_-() = Expression.negate(this)
 
     def replace(variables: Map[Variable, Expression]) = base.replace(variables) ^ power.replace(variables)
 
@@ -209,6 +214,8 @@ object Univariate {
             extends AnyRef
             with Univariate {
 
+        def unary_-(): Univariate = -n
+
         def replace(variables: Map[Variable, Expression]) = this
 
         def toConstant: Option[Number] = n.toConstant
@@ -218,8 +225,6 @@ object Univariate {
         override def df(x: Variable) = Zero
 
         def variable = ???
-
-        //override def apply(n: N):N = this.n
 
         override def dx = Zero
 
@@ -232,6 +237,8 @@ object Univariate {
             with Univariate {
 
         require(expression.variables.size == 1, "Require 1 variable but " + expression + " had " + expression.variables)
+
+        def unary_-(): Univariate = -expression
 
         def replace(variables: Map[Variable, Expression]) = expression.replace(variables)
 
@@ -259,6 +266,8 @@ object Univariate {
 
 trait Univariate
         extends Expression {
+
+    def unary_-(): Univariate
 
     def variable: Variable
 

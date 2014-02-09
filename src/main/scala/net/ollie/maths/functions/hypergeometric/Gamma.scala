@@ -35,7 +35,7 @@ object Gamma
 }
 
 class Gamma(val of: Expression)
-        extends Composite {
+        extends Function {
 
     protected[this] def at(n: Number) = Gamma(n)
 

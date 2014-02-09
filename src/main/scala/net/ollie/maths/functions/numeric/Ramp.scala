@@ -32,7 +32,7 @@ object Ramp
 class Ramp(val expression: Expression)
         extends Represented {
 
-    protected[this] def f = expression * Heaviside(expression)
+    def f = expression * Heaviside(expression)
 
     override def toString = s"Ramp($expression)"
 

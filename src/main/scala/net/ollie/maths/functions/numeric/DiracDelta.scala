@@ -22,7 +22,7 @@ object DiracDelta
 }
 
 class DiracDelta(val expression: Expression)
-        extends Composite {
+        extends Function {
 
     protected[this] def of = expression
 

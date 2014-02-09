@@ -8,13 +8,37 @@ import net.ollie.maths.numbers.Zero
  * Created by Ollie on 08/01/14.
  */
 trait Polynomial
-        extends Represented
+        extends Represented {
+
+    override def unary_-(): Polynomial = new NegatedPolynomial(this)
+
+}
+
+class NegatedPolynomial(override val of: Polynomial)
+        extends NegatedExpression(of)
+        with Polynomial {
+
+    def f = -(of.f)
+
+    override def variables = super[Polynomial].variables
+
+    override def replace(variables: Map[Variable, Expression]) = super[NegatedExpression].replace(variables)
+
+    override def toConstant = super[NegatedExpression].toConstant
+
+    override def isEmpty = super[Polynomial].isEmpty
+
+    override def df(x: Variable) = super[NegatedExpression].df(x)
+
+}
 
 object ZeroPolynomial
         extends Polynomial
         with Empty {
 
-    protected[this] def f = Zero
+    def f = Zero
+
+    override def unary_-(): Polynomial with Empty = this
 
     override def toConstant = super[Empty].toConstant
 

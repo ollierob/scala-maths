@@ -15,7 +15,7 @@ class ComplexConjugate(val of: Complex)
 
     def im = -(of.im)
 
-    override def toString = "(" + of + ")*"
+    override def toString = s"($of)*"
 
     override def abs = of.abs
 
