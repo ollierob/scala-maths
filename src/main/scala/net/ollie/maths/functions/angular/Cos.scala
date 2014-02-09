@@ -32,7 +32,7 @@ object Cos
 }
 
 class Cos(val of: Expression)
-        extends FunctionBuilder
+        extends BuiltFunction
         with Invertible {
 
     protected[this] def builder = Cos
@@ -100,7 +100,7 @@ object ArcCos
 }
 
 class ArcCos(val of: Expression)
-        extends FunctionBuilder
+        extends BuiltFunction
         with Invertible {
 
     protected[this] def builder = ArcCos

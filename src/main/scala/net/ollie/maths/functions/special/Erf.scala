@@ -1,6 +1,6 @@
 package net.ollie.maths.functions.special
 
-import net.ollie.maths.{OddFunctionBuilder, Expression, Number}
+import net.ollie.maths.{OddBuiltFunction, Expression, Number}
 import net.ollie.maths.functions.{ExpressionBuilder, Represented, UnivariateFunction}
 import net.ollie.maths.functions.numeric.{Exp, PositiveSquareRoot}
 import net.ollie.maths.methods.{Integral, SimpsonsIntegrationMethod}
@@ -35,7 +35,7 @@ object Erf
 
 class Erf(val of: Expression)
         extends AnyRef
-        with OddFunctionBuilder {
+        with OddBuiltFunction {
 
     protected[this] def builder = Erf
 

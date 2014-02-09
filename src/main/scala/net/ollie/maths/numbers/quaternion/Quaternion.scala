@@ -2,7 +2,7 @@ package net.ollie.maths.numbers.quaternion
 
 import net.ollie.maths._
 import net.ollie.maths.numbers._
-import net.ollie.maths.numbers.complex.Complex
+import net.ollie.maths.numbers.complex.{MaybeComplex, Complex}
 import scala.Some
 import net.ollie.maths.numbers.constants.{Zero, One}
 
@@ -11,7 +11,7 @@ import net.ollie.maths.numbers.constants.{Zero, One}
  */
 trait Quaternion
         extends Number
-        with MaybeReal {
+        with MaybeComplex {
 
     type System = Quaternion
 
@@ -37,7 +37,7 @@ trait Quaternion
 
     def toReal: Option[Real] = if (i.isEmpty && j.isEmpty && k.isEmpty) Some(re) else None
 
-    def isComplex: Option[Complex] = if (j.isEmpty && k.isEmpty) Some(Complex(re, i.re)) else None
+    def toComplex: Option[Complex] = if (j.isEmpty && k.isEmpty) Some(Complex(re, i.coefficient)) else None
 
     override def df(x: Variable) = QuaternionZero
 

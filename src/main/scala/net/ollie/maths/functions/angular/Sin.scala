@@ -33,7 +33,7 @@ object Sin
 }
 
 private class Sin(val of: Expression)
-        extends OddFunctionBuilder
+        extends OddBuiltFunction
         with Invertible {
 
     protected[this] def builder = Sin
@@ -106,7 +106,7 @@ object ArcSin
 }
 
 class ArcSin(val of: Expression)
-        extends OddFunctionBuilder {
+        extends OddBuiltFunction {
 
     def isEmpty = of.isEmpty
 

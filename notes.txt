@@ -1,0 +1,30 @@
+Quick notes:
+
+* "Biro" classes
+
+    Sub-types that are easily lost.
+    OO languages typically lead to loss of type information ("widening" towards Object).
+
+    For example, surreals are an extension of the reals with commutative addition. Strongly typed:
+
+        surreal + surreal = surreal
+        surreal + real = surreal
+        real + surreal = real
+
+    The third type should be surreal; we need an ugly "subtyping" of the reals, or knowledge of all subtypes.
+    Also a real function applied to a surreal should (statically) return a surreal.
+
+
+* Object-inheritance is upside-down
+
+    In mathematics, we would say that "complex extends real".
+    They add functionality to the reals, which are a subset.
+
+    In OO, we would say that "real extends complex".
+    They specialize complex behavior (there is no imaginary part).
+    They can be widened and passed around as complex numbers.
+    We cannot also say that "real extends split-complex".
+
+    We introduce traits that are inherited in a similar fashion to the mathematical form
+    ("real-like", "complex-like extends real-like", etc.)
+    which allow conversion, but do not provide any other behavior.

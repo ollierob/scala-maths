@@ -1,6 +1,6 @@
 package net.ollie.maths.functions.angular
 
-import net.ollie.maths.{OddFunctionBuilder, Expression, Number}
+import net.ollie.maths.{OddBuiltFunction, Expression, Number}
 import net.ollie.maths.functions.{RealExpressionBuilder, ExpressionBuilder, UnivariateFunction}
 import net.ollie.maths.methods.ApproximatelyEvaluated
 import net.ollie.maths.numbers.{Precision, Real}
@@ -29,7 +29,7 @@ object Tan
 }
 
 class Tan(val of: Expression)
-        extends OddFunctionBuilder {
+        extends OddBuiltFunction {
 
     protected[this] def builder = Tan
 

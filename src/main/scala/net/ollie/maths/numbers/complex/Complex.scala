@@ -12,7 +12,8 @@ import net.ollie.maths.numbers.constants.{MinusOne, Zero, One}
  * Created by Ollie on 04/01/14.
  */
 trait Complex
-        extends ComplexLike {
+        extends ComplexLike
+        with MaybeComplex {
 
     final type System = Complex
 
@@ -27,6 +28,8 @@ trait Complex
     def abs: PositiveReal = PositiveSquareRoot(re.squared + im.squared)
 
     def arg: Angle = ArcTan(im / re)
+
+    def toComplex = Some(this)
 
     def ?+(that: Number) = that match {
         case re: Real => Some(this + Complex(re))
@@ -58,9 +61,12 @@ object Complex
 
     override def unitSquared = MinusOne
 
+    def apply(): Complex with Empty = ComplexZero
+
     def apply(n: Number): Option[Complex] = n match {
         case re: Real => Some(Complex(re))
         case z: Complex => Some(z)
+        case m: MaybeComplex => m.toComplex
         case x: ComplexLike => x.toReal match {
             case Some(re) => Some(re)
             case _ => None
@@ -69,7 +75,7 @@ object Complex
     }
 
     implicit def apply(pair: (Real, Real)): Complex = pair match {
-        case (Zero, Zero) => ComplexZero
+        case (Zero, Zero) => Complex()
         case (Zero, _) => Imaginary(pair._2)
         case _ => new CartesianComplex(pair._1, pair._2)
     }
@@ -108,6 +114,13 @@ object Complex
         def one = One
 
     }
+
+}
+
+trait MaybeComplex
+        extends MaybeReal {
+
+    def toComplex: Option[Complex]
 
 }
 

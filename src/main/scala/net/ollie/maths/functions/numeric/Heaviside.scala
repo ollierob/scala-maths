@@ -33,7 +33,7 @@ object Heaviside
 
 class Heaviside(val of: Expression)
         extends AnyRef
-        with FunctionBuilder {
+        with BuiltFunction {
 
     protected[this] def builder = Heaviside
 

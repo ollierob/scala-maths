@@ -1,7 +1,7 @@
 package net.ollie.maths.functions.angular
 
-import net.ollie.maths.functions.RealExpressionBuilder
-import net.ollie.maths.{FunctionBuilder, Expression}
+import net.ollie.maths.functions.{UnivariateFunction, RealExpressionBuilder}
+import net.ollie.maths.{BuiltFunction, Expression}
 import net.ollie.maths.numbers.{Natural, Real}
 import net.ollie.maths.methods.Series
 import net.ollie.maths.numbers.constants.{MinusOne, Zero}
@@ -12,7 +12,8 @@ import net.ollie.maths.numbers.constants.{MinusOne, Zero}
  * @see http://mathworld.wolfram.com/InverseTangent.html
  */
 object ArcTan
-        extends RealExpressionBuilder {
+        extends RealExpressionBuilder
+        with UnivariateFunction[Real, Angle] {
 
     def apply(re: Real): Angle with ArcTan = new RealArcTan(re)
 
@@ -32,7 +33,7 @@ trait ArcTan
 }
 
 class ExpressionArcTan(val of: Expression)
-        extends FunctionBuilder
+        extends BuiltFunction
         with ArcTan {
 
     protected[this] def builder = ArcTan

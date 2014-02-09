@@ -3,7 +3,7 @@ package net.ollie.maths
 import net.ollie.maths.functions.ExpressionBuilder
 
 /**
- * This expression is a function of another expression. (Most are!)
+ * Some function of an expression.
  *
  * Created by Ollie on 05/01/14.
  *
@@ -35,7 +35,7 @@ trait Function
 
 }
 
-trait FunctionBuilder
+trait BuiltFunction
         extends Function {
 
     protected[this] def builder: ExpressionBuilder
@@ -50,8 +50,8 @@ trait FunctionBuilder
  * Builds an odd expression.
  * @see http://mathworld.wolfram.com/OddFunction.html
  */
-trait OddFunctionBuilder
-        extends FunctionBuilder {
+trait OddBuiltFunction
+        extends BuiltFunction {
 
     override def unary_-() = apply(-of)
 
