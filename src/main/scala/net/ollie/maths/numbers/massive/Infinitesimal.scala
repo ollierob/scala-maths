@@ -1,10 +1,16 @@
-package net.ollie.maths.numbers
+package net.ollie.maths.numbers.massive
+
+import net.ollie.maths.numbers.{Precision, Zero, Real, PositiveReal}
 
 /**
+ * Real finite numbers that (probably) cannot be expressed in decimal form because they are so small.
  * Created by Ollie on 09/02/14.
+ * @see [[Massive]]
  */
 trait Infinitesimal
         extends PositiveReal {
+
+    def isEmpty = false
 
     override protected def tryCompareTo(that: Real): Option[Int] = that match {
         case Zero => Some(1) //Greater than zero
