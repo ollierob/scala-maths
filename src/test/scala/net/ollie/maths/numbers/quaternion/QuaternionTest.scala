@@ -1,10 +1,10 @@
 package net.ollie.maths.numbers.quaternion
 
-import net.ollie.maths.numbers.One
 import net.ollie.maths.numbers.complex.Complex
 import org.junit.runner.RunWith
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.junit.JUnitRunner
+import net.ollie.maths.numbers.constants.One
 
 /**
  * Created by Ollie on 11/01/14.

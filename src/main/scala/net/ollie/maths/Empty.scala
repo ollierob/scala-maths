@@ -1,6 +1,7 @@
 package net.ollie.maths
 
-import net.ollie.maths.numbers.{PositiveReal, Precision, Zero}
+import net.ollie.maths.numbers.{PositiveReal, Precision}
+import net.ollie.maths.numbers.constants.Zero
 
 /**
  * An empty expression.

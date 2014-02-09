@@ -1,8 +1,9 @@
-package net.ollie.maths.numbers
+package net.ollie.maths.numbers.constants
 
 import org.scalatest.{Matchers, FlatSpec}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
+import net.ollie.maths.numbers.Natural
 
 /**
  * Created by Ollie on 12/01/14.

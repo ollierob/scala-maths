@@ -1,7 +1,8 @@
 package net.ollie.maths.functions.numeric
 
 import net.ollie.maths.functions.BivariateFunction
-import net.ollie.maths.numbers.{One, Integer, Natural, Zero}
+import net.ollie.maths.numbers.{Integer, Natural}
+import net.ollie.maths.numbers.constants.{Zero, One}
 
 /**
  * Created by Ollie on 04/01/14.

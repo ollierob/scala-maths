@@ -4,9 +4,10 @@ import org.scalatest.{FlatSpec, Matchers}
 import net.ollie.maths.Variable
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import net.ollie.maths.numbers.{Zero, Precision}
+import net.ollie.maths.numbers.Precision
 import Precision._
 import Angle._
+import net.ollie.maths.numbers.constants.Zero
 
 /**
  * Created by Ollie on 03/01/14.

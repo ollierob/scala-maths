@@ -2,9 +2,9 @@ package net.ollie.maths.functions.hypergeometric
 
 import org.scalatest.{Matchers, FlatSpec}
 import net.ollie.maths.Variable
-import net.ollie.maths.numbers.One
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
+import net.ollie.maths.numbers.constants.One
 
 /**
  * Created by Ollie on 22/01/14.

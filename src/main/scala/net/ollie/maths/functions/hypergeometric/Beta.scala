@@ -5,6 +5,7 @@ import net.ollie.maths.functions.{Represented, SymmetricBivariateFunction}
 import net.ollie.maths.methods.Product
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.complex.{ComplexInfinity, Complex}
+import net.ollie.maths.numbers.constants.{Zero, One}
 
 /**
  * Created by Ollie on 22/01/14.

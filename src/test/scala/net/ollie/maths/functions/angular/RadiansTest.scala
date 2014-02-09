@@ -1,17 +1,16 @@
 package net.ollie.maths.functions.angular
 
 import org.scalatest.{FlatSpec, Matchers}
-import net.ollie.maths.numbers.Zero
 import Angle._
 import org.scalatest.junit.JUnitRunner
 import org.junit.runner.RunWith
+import net.ollie.maths.numbers.constants.Zero
 
 /**
  * Created by Ollie on 12/01/14.
  */
 @RunWith(classOf[JUnitRunner])
 class RadiansTest extends FlatSpec with Matchers {
-
 
     behavior of "0 radians"
 

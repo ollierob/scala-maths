@@ -3,6 +3,7 @@ package net.ollie.maths.numbers
 import net.ollie.maths.ExpressionFraction
 import net.ollie.maths.functions.numeric.GreatestCommonDivisor
 import net.ollie.maths.methods.ApproximatelyEvaluated
+import net.ollie.maths.numbers.constants.{MinusOne, Zero, One}
 
 /**
  * A number that can be expressed as an integer divided by another integer.

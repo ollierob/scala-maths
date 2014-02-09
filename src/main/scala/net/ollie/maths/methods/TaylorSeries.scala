@@ -5,7 +5,8 @@ import scala.collection.mutable.ListBuffer
 
 import net.ollie.maths._
 import net.ollie.maths.functions.ExpressionBuilder
-import net.ollie.maths.numbers.{Natural, Precision, Real, Zero}
+import net.ollie.maths.numbers.{Natural, Precision, Real}
+import net.ollie.maths.numbers.constants.Zero
 
 /**
  * Evaluates a univariate expression at a value, using the derivatives at another value (whose value is, ideally, already explicitly known).

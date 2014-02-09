@@ -4,7 +4,7 @@ import net.ollie.maths._
 import net.ollie.maths.functions.ExpressionBuilder
 import net.ollie.maths.numbers._
 import org.nevec.rjm.BigDecimalMath
-import net.ollie.maths.numbers.constants.EulersNumber
+import net.ollie.maths.numbers.constants.{Zero, EulersNumber}
 
 /**
  * Created by Ollie on 16/01/14.

@@ -2,9 +2,9 @@ package net.ollie.maths.functions.angular
 
 import org.scalatest.{Matchers, FlatSpec}
 import net.ollie.maths.Variable
-import net.ollie.maths.numbers.{Zero, One}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
+import net.ollie.maths.numbers.constants.{Zero, One}
 
 /**
  * Created by Ollie on 12/01/14.

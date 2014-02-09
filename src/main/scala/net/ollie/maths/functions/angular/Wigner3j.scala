@@ -6,6 +6,7 @@ import net.ollie.maths.functions.numeric.{Floor, Min, PositiveSquareRoot, Triang
 import net.ollie.maths.methods.Series
 import net.ollie.maths.numbers._
 import net.ollie.utils.CyclicTuple3
+import net.ollie.maths.numbers.constants.{MinusOne, Zero, One}
 
 /**
  * Created by Ollie on 26/01/14.

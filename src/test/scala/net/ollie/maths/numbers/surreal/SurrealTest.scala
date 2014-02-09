@@ -1,8 +1,9 @@
 package net.ollie.maths.numbers.surreal
 
-import net.ollie.maths.numbers.{Integer, Zero}
+import net.ollie.maths.numbers.Integer
 import org.scalatest.{FlatSpec, Matchers}
 import Surreal._
+import net.ollie.maths.numbers.constants.Zero
 
 /**
  * Created by Ollie on 28/01/14.

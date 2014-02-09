@@ -4,6 +4,7 @@ import net.ollie.maths.Number
 import net.ollie.maths.functions.UnivariateFunction
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.complex.Complex
+import net.ollie.maths.numbers.constants.{MinusOne, Zero, One}
 
 /**
  * Created by Ollie on 05/01/14.

@@ -6,6 +6,7 @@ import net.ollie.maths.Expression
 import net.ollie.maths.functions.UnivariateFunction
 import net.ollie.maths.methods.ApproximatelyEvaluated
 import net.ollie.maths.numbers._
+import net.ollie.maths.numbers.constants.{Zero, One}
 
 /**
  * Created by Ollie on 08/01/14.

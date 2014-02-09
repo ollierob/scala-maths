@@ -1,6 +1,7 @@
 package net.ollie.maths.numbers
 
 import scala.Some
+import net.ollie.maths.numbers.constants.{MinusOne, One}
 
 /**
  * Integer classes.
@@ -135,6 +136,8 @@ class ExactInteger(val int: Int)
     }
 
     override def unary_-(): Integer = Integer(-int)
+
+    override def toString = int.toString
 
 }
 

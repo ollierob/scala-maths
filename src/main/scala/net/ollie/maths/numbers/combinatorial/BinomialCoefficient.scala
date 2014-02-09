@@ -4,6 +4,7 @@ import net.ollie.maths.{EmptyNumber, Variable}
 import net.ollie.maths.functions.numeric.{Floor, GreatestCommonDivisor}
 import net.ollie.maths.numbers._
 import net.ollie.maths.methods.Product
+import net.ollie.maths.numbers.constants.{MinusOne, Zero, One}
 
 /**
  * Created by Ollie on 11/01/14.

@@ -2,7 +2,7 @@ package net.ollie.maths
 
 import org.scalatest.{Matchers, FlatSpec}
 import net.ollie.maths.functions.numeric.SquareRoot
-import net.ollie.maths.numbers.One
+import net.ollie.maths.numbers.constants.One
 
 /**
  * Created by Ollie on 24/01/14.

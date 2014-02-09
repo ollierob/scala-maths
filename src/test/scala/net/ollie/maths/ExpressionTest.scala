@@ -1,9 +1,10 @@
 package net.ollie.maths
 
-import net.ollie.maths.numbers.{Integer, Natural, One, Zero}
+import net.ollie.maths.numbers.{Integer, Natural}
 import org.scalatest.{FlatSpec, Matchers}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
+import net.ollie.maths.numbers.constants.{Zero, One}
 
 /**
  * Created by Ollie on 19/01/14.

@@ -3,7 +3,8 @@ package net.ollie.maths.numbers.complex
 import net.ollie.maths.{Empty, EmptyNumber}
 import net.ollie.maths.functions.angular.RightAngle
 import net.ollie.maths.functions.numeric.Signum
-import net.ollie.maths.numbers.{One, Real, Zero}
+import net.ollie.maths.numbers.Real
+import net.ollie.maths.numbers.constants.{Zero, One}
 
 /**
  * Created by Ollie on 12/01/14.

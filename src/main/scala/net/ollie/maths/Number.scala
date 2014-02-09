@@ -1,7 +1,8 @@
 package net.ollie.maths
 
-import net.ollie.maths.numbers.{Zero, PositiveReal}
+import net.ollie.maths.numbers.PositiveReal
 import scala.collection.mutable
+import net.ollie.maths.numbers.constants.Zero
 
 /**
  * Created by Ollie on 02/01/14.

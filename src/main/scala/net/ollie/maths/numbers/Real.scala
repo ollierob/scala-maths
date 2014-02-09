@@ -5,6 +5,7 @@ import scala.Some
 import net.ollie.maths._
 import net.ollie.maths.methods.ApproximatelyEvaluated
 import net.ollie.maths.numbers.massive.{PowerTower, Massive}
+import net.ollie.maths.numbers.constants.{Zero, One}
 
 /**
  * Created by Ollie on 01/01/14.

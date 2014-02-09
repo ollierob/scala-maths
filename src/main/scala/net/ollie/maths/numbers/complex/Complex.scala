@@ -6,6 +6,7 @@ import net.ollie.maths.functions.angular.{Angle, ArcTan}
 import net.ollie.maths.functions.numeric.PositiveSquareRoot
 import net.ollie.maths.numbers._
 import scala.Some
+import net.ollie.maths.numbers.constants.{MinusOne, Zero, One}
 
 /**
  * Created by Ollie on 04/01/14.

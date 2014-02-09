@@ -3,7 +3,7 @@ package net.ollie.maths.numbers.complex
 import org.junit.runner.RunWith
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.junit.JUnitRunner
-import net.ollie.maths.numbers.{One, Zero}
+import net.ollie.maths.numbers.constants.{Zero, One}
 
 /**
  * Created by Ollie on 12/01/14.

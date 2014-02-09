@@ -1,11 +1,12 @@
 package net.ollie.maths
 
 import net.ollie.maths.methods.Product
-import net.ollie.maths.numbers.{Integer, Natural, One, Real}
+import net.ollie.maths.numbers.{Integer, Natural, Real}
 import org.junit.runner.RunWith
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.junit.JUnitRunner
 import net.ollie.maths.numbers.complex.Complex
+import net.ollie.maths.numbers.constants.One
 
 /**
  * Created by Ollie on 11/01/14.

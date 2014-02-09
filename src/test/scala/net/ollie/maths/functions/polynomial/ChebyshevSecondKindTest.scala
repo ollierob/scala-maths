@@ -1,10 +1,11 @@
 package net.ollie.maths.functions.polynomial
 
 import net.ollie.maths.Variable
-import net.ollie.maths.numbers.{One, Zero, Natural}
+import net.ollie.maths.numbers.Natural
 import org.scalatest.{FlatSpec, Matchers}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
+import net.ollie.maths.numbers.constants.{Zero, One}
 
 /**
  * Created by Ollie on 19/01/14.

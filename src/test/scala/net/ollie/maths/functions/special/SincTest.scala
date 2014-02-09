@@ -1,10 +1,10 @@
 package net.ollie.maths.functions.special
 
 import org.scalatest.{Matchers, FlatSpec}
-import net.ollie.maths.numbers.{One, Zero}
 import net.ollie.maths.Variable
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
+import net.ollie.maths.numbers.constants.{Zero, One}
 
 /**
  * Created by Ollie on 23/01/14.

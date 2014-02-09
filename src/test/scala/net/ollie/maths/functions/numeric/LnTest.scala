@@ -5,7 +5,7 @@ import net.ollie.maths.numbers._
 import org.junit.runner.RunWith
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.junit.JUnitRunner
-import net.ollie.maths.numbers.constants.EulersNumber
+import net.ollie.maths.numbers.constants.{Zero, One, EulersNumber}
 
 /**
  * Created by Ollie on 16/01/14.

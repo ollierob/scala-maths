@@ -3,8 +3,9 @@ package net.ollie.maths.functions.polynomial
 import net.ollie.maths.{Expression, Variable}
 import net.ollie.maths.functions.numeric.Floor
 import net.ollie.maths.methods.Series
-import net.ollie.maths.numbers.{Integer, Natural, One, Zero}
+import net.ollie.maths.numbers.{Integer, Natural}
 import net.ollie.maths.numbers.combinatorial.BinomialCoefficient
+import net.ollie.maths.numbers.constants.{Zero, One}
 
 /**
  * Created by Ollie on 18/01/14.

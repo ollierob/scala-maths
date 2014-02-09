@@ -5,6 +5,7 @@ import scala.collection.mutable.{ArrayBuffer, ListBuffer}
 
 import net.ollie.maths._
 import net.ollie.maths.numbers._
+import net.ollie.maths.numbers.constants.{Zero, One}
 
 /**
  * Created by Ollie on 19/01/14.

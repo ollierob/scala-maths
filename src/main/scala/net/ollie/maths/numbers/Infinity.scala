@@ -1,6 +1,7 @@
 package net.ollie.maths.numbers
 
 import net.ollie.maths.{Number, Empty}
+import net.ollie.maths.numbers.constants.Zero
 
 /**
  * Basic implementations of infinity.

@@ -1,6 +1,8 @@
-package net.ollie.maths.numbers
+package net.ollie.maths.numbers.constants
 
 import net.ollie.maths.{Operation, Expression, EmptyNumber, Variable}
+import net.ollie.maths.numbers._
+import scala.Some
 
 /**
  * Empty real number.

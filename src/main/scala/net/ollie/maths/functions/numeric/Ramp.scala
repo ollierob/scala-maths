@@ -2,7 +2,8 @@ package net.ollie.maths.functions.numeric
 
 import net.ollie.maths.{Expression, Number}
 import net.ollie.maths.functions.{ExpressionBuilder, Represented, UnivariateFunction}
-import net.ollie.maths.numbers.{Real, Zero}
+import net.ollie.maths.numbers.Real
+import net.ollie.maths.numbers.constants.Zero
 
 /**
  * Created by Ollie on 11/01/14.

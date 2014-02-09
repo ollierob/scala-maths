@@ -1,8 +1,9 @@
 package net.ollie.maths.numbers.complex
 
 import net.ollie.maths._
-import net.ollie.maths.numbers.{One, Real, Zero}
+import net.ollie.maths.numbers.Real
 import scala.Some
+import net.ollie.maths.numbers.constants.{Zero, One}
 
 /**
  * Created by Ollie on 28/01/14.

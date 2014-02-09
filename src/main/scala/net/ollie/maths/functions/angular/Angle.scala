@@ -2,8 +2,8 @@ package net.ollie.maths.functions.angular
 
 import net.ollie.maths.Empty
 import net.ollie.maths.functions.angular.Angle.AngleBuilder
-import net.ollie.maths.numbers.{Precision, Real, Zero}
-import net.ollie.maths.numbers.constants.Pi
+import net.ollie.maths.numbers.{Precision, Real}
+import net.ollie.maths.numbers.constants.{Zero, Pi}
 
 trait Angle
         extends Real {

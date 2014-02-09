@@ -1,9 +1,9 @@
 package net.ollie.maths.methods
 
 import net.ollie.maths.Variable
-import net.ollie.maths.numbers.{One, Zero}
 import org.scalatest.{FlatSpec, Matchers}
 import net.ollie.maths.functions.angular.Sin
+import net.ollie.maths.numbers.constants.{Zero, One}
 
 /**
  * Created by Ollie on 12/01/14.

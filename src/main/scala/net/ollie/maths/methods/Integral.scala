@@ -2,6 +2,7 @@ package net.ollie.maths.methods
 
 import net.ollie.maths.{Expression, Univariate, Variable}
 import net.ollie.maths.numbers._
+import net.ollie.maths.numbers.constants.Zero
 
 /**
  * Real integrals.

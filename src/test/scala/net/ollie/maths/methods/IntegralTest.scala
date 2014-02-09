@@ -1,8 +1,9 @@
 package net.ollie.maths.methods
 
 import org.scalatest.{Matchers, FlatSpec}
-import net.ollie.maths.numbers.{Precision, Real, One, Zero}
+import net.ollie.maths.numbers.{Precision, Real}
 import Precision._
+import net.ollie.maths.numbers.constants.{Zero, One}
 
 /**
  * Created by Ollie on 19/01/14.

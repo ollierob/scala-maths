@@ -4,8 +4,8 @@ import net.ollie.maths.{Expression, Number, Variable}
 import net.ollie.maths.functions.{ExpressionBuilder, Represented, UnivariateFunction}
 import net.ollie.maths.functions.angular.Sin
 import net.ollie.maths.methods.ApproximatelyEvaluated
-import net.ollie.maths.numbers.{One, Precision, Real, Zero}
-import net.ollie.maths.numbers.constants.Pi
+import net.ollie.maths.numbers.{Precision, Real}
+import net.ollie.maths.numbers.constants.{Zero, One, Pi}
 
 /**
  * Created by Ollie on 23/01/14.

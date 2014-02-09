@@ -10,6 +10,7 @@ import net.ollie.maths.functions.special.Sinc
 import net.ollie.maths.methods.MaclaurinSeries
 import net.ollie.maths.numbers._
 import org.nevec.rjm.BigDecimalMath
+import net.ollie.maths.numbers.constants.{Zero, One}
 
 /**
  * Created by Ollie on 02/01/14.

@@ -1,6 +1,7 @@
 package net.ollie.maths
 
-import net.ollie.maths.numbers.{One, Real, Zero}
+import net.ollie.maths.numbers.Real
+import net.ollie.maths.numbers.constants.{Zero, One}
 
 /**
  * Created by Ollie on 02/01/14.

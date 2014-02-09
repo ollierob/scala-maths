@@ -6,6 +6,7 @@ import net.ollie.maths.functions.numeric.Exp
 import net.ollie.maths.methods.{Integral, SimpsonsIntegrationMethod}
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.complex.{ComplexInfinity, Complex}
+import net.ollie.maths.numbers.constants.Zero
 
 /**
  * Created by Ollie on 18/01/14.

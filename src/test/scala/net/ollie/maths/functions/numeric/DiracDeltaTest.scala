@@ -1,9 +1,9 @@
 package net.ollie.maths.functions.numeric
 
 import net.ollie.maths.Variable
-import net.ollie.maths.numbers.{Infinite, Zero}
+import net.ollie.maths.numbers.Infinite
 import org.scalatest.{FlatSpec, Matchers}
-import net.ollie.maths.numbers.constants.Pi
+import net.ollie.maths.numbers.constants.{Zero, Pi}
 
 /**
  * Created by Ollie on 10/01/14.

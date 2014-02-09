@@ -3,7 +3,7 @@ package net.ollie.maths.numbers
 import org.scalatest.{Matchers, FlatSpec}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import net.ollie.maths.numbers.constants.Pi
+import net.ollie.maths.numbers.constants.{Zero, One, Pi}
 
 /**
  * Created by Ollie on 15/01/14.

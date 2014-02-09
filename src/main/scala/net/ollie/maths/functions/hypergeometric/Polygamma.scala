@@ -2,8 +2,9 @@ package net.ollie.maths.functions.hypergeometric
 
 import net.ollie.maths._
 import net.ollie.maths.functions.ExpressionBuilder
-import net.ollie.maths.numbers.{Natural, Zero}
+import net.ollie.maths.numbers.Natural
 import net.ollie.maths.numbers.complex.ComplexInfinity
+import net.ollie.maths.numbers.constants.Zero
 
 /**
  * Created by Ollie on 18/01/14.

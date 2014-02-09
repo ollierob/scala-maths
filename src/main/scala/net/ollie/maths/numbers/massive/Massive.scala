@@ -3,6 +3,7 @@ package net.ollie.maths.numbers.massive
 import net.ollie.maths._
 import net.ollie.maths.numbers._
 import scala.Some
+import net.ollie.maths.numbers.constants.{Zero, One}
 
 /**
  * Real finite numbers that (probably) cannot be expressed in decimal form because they are so large.

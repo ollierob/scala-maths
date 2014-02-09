@@ -2,7 +2,7 @@ package net.ollie.maths.methods
 
 import net.ollie.maths.{Aggregate, Expression, Variable}
 import net.ollie.maths.functions.numeric.Ln
-import net.ollie.maths.numbers.Zero
+import net.ollie.maths.numbers.constants.Zero
 
 /**
  * Created by Ollie on 27/01/14.

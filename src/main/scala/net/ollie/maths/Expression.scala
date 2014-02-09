@@ -2,7 +2,8 @@ package net.ollie.maths
 
 import net.ollie.maths.functions.numeric.Ln
 import net.ollie.maths.methods.{Product, Series}
-import net.ollie.maths.numbers.{Integer, Zero}
+import net.ollie.maths.numbers.Integer
+import net.ollie.maths.numbers.constants.Zero
 
 /**
  * Created by Ollie on 01/01/14.

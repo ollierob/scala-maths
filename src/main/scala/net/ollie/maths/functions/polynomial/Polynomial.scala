@@ -2,7 +2,7 @@ package net.ollie.maths.functions.polynomial
 
 import net.ollie.maths._
 import net.ollie.maths.functions.Represented
-import net.ollie.maths.numbers.Zero
+import net.ollie.maths.numbers.constants.Zero
 
 /**
  * Created by Ollie on 08/01/14.

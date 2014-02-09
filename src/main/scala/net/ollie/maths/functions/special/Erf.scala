@@ -4,9 +4,9 @@ import net.ollie.maths.{OddFunctionBuilder, Expression, Number}
 import net.ollie.maths.functions.{ExpressionBuilder, Represented, UnivariateFunction}
 import net.ollie.maths.functions.numeric.{Exp, PositiveSquareRoot}
 import net.ollie.maths.methods.{Integral, SimpsonsIntegrationMethod}
-import net.ollie.maths.numbers.{Precision, Real, Zero}
+import net.ollie.maths.numbers.{Precision, Real}
 import net.ollie.maths.numbers.complex.{Complex, ImaginaryUnit => i}
-import net.ollie.maths.numbers.constants.Pi
+import net.ollie.maths.numbers.constants.{Zero, Pi}
 
 /**
  * Created by Ollie on 22/01/14.

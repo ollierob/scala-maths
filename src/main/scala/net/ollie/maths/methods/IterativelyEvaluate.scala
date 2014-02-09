@@ -1,7 +1,8 @@
 package net.ollie.maths.methods
 
 import net.ollie.maths.Evaluable
-import net.ollie.maths.numbers.{Natural, Precision, Zero}
+import net.ollie.maths.numbers.{Natural, Precision}
+import net.ollie.maths.numbers.constants.Zero
 
 /**
  * Created by Ollie on 12/01/14.

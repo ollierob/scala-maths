@@ -2,10 +2,9 @@ package net.ollie.maths.functions.polynomial
 
 import org.scalatest.{Matchers, FlatSpec}
 import net.ollie.maths.Variable
-import net.ollie.maths.numbers.{Zero, One}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import net.ollie.maths.numbers.constants.Pi
+import net.ollie.maths.numbers.constants.{Zero, One, Pi}
 
 /**
  * Created by Ollie on 09/01/14.

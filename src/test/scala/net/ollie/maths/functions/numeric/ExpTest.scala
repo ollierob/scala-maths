@@ -1,10 +1,11 @@
 package net.ollie.maths.functions.numeric
 
 import net.ollie.maths.Variable
-import net.ollie.maths.numbers.{Infinity, Integer, One, Zero}
+import net.ollie.maths.numbers.{Infinity, Integer}
 import org.scalatest.{FlatSpec, Matchers}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
+import net.ollie.maths.numbers.constants.{Zero, One}
 
 /**
  * Created by Ollie on 18/01/14.

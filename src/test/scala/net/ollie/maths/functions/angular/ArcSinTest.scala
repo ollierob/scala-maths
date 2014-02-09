@@ -1,10 +1,10 @@
 package net.ollie.maths.functions.angular
 
-import net.ollie.maths.numbers.{One, Zero}
 import net.ollie.maths.numbers.Precision._
 import org.junit.runner.RunWith
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.junit.JUnitRunner
+import net.ollie.maths.numbers.constants.{Zero, One}
 
 /**
  * Created by Ollie on 22/01/14.

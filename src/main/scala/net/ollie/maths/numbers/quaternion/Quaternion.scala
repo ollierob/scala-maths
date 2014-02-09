@@ -4,6 +4,7 @@ import net.ollie.maths._
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.complex.Complex
 import scala.Some
+import net.ollie.maths.numbers.constants.{Zero, One}
 
 /**
  * Created by Ollie on 11/01/14.

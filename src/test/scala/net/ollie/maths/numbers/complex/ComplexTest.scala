@@ -3,8 +3,9 @@ package net.ollie.maths.numbers.complex
 import org.junit.runner.RunWith
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.junit.JUnitRunner
-import net.ollie.maths.numbers.{Zero, One, Integer}
+import net.ollie.maths.numbers.Integer
 import net.ollie.maths.functions.numeric.PositiveSquareRoot
+import net.ollie.maths.numbers.constants.{Zero, One}
 
 /**
  * Created by Ollie on 14/01/14.

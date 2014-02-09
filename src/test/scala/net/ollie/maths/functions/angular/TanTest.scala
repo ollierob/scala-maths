@@ -1,7 +1,7 @@
 package net.ollie.maths.functions.angular
 
 import org.scalatest.{Matchers, FlatSpec}
-import net.ollie.maths.numbers.Zero
+import net.ollie.maths.numbers.constants.Zero
 
 /**
  * Created by Ollie on 18/01/14.

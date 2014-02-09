@@ -1,7 +1,7 @@
 package net.ollie.maths.numbers
 
 import net.ollie.maths.methods.ApproximatelyEvaluated
-import net.ollie.maths.numbers._
+import net.ollie.maths.numbers.constants.{Zero, One}
 
 /**
  * Created by Ollie on 12/01/14.

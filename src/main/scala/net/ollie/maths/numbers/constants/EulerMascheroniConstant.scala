@@ -2,7 +2,7 @@ package net.ollie.maths.numbers.constants
 
 import net.ollie.maths.functions.numeric.Ln
 import net.ollie.maths.methods.{SimpsonsIntegrationMethod, Integral}
-import net.ollie.maths.numbers.{Infinity, PositiveReal, Precision, Zero}
+import net.ollie.maths.numbers.{Infinity, PositiveReal, Precision}
 
 /**
  * Created by Ollie on 04/01/14.

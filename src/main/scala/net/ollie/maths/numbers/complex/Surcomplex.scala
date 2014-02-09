@@ -2,7 +2,8 @@ package net.ollie.maths.numbers.complex
 
 import net.ollie.maths.numbers.surreal.{EmptyForm, Surreal}
 import net.ollie.maths.Empty
-import net.ollie.maths.numbers.{Zero, Real}
+import net.ollie.maths.numbers.Real
+import net.ollie.maths.numbers.constants.Zero
 
 /**
  * Created by Ollie on 06/01/14.
