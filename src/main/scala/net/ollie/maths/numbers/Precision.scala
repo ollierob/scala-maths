@@ -9,7 +9,7 @@ import scala.math.BigDecimal.RoundingMode.RoundingMode
  * Precision object that allows specification to a number of significant figures, decimal places, or bytes.
  * Created by Ollie on 23/12/13.
  */
-trait Precision {
+sealed trait Precision {
 
     def apply(bd: BigDecimal)(implicit mode: RoundingMode = Precision.DEFAULT_ROUNDING): BigDecimal
 

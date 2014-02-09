@@ -3,7 +3,7 @@ package net.ollie.maths.functions.angular
 import scala.Some
 
 import net.ollie.maths._
-import net.ollie.maths.functions.{ExpressionBuilder, UnivariateFunction}
+import net.ollie.maths.functions.{RealExpressionBuilder, ExpressionBuilder, UnivariateFunction}
 import net.ollie.maths.functions.numeric.SquareRoot
 import net.ollie.maths.methods.MaclaurinSeries
 import net.ollie.maths.numbers.{Precision, Real}
@@ -14,14 +14,16 @@ import net.ollie.maths.numbers.constants.{One, Pi}
  * Created by Ollie on 03/01/14.
  */
 object Cos
-        extends ExpressionBuilder {
+        extends RealExpressionBuilder {
 
-    def apply(n: Number): Number = n match {
-        case re: Real => apply(Radians(re))
-        case _ => ???
+    import Angle._
+
+    def apply(re: Real): Real = re match {
+        case a: Angle => apply(a)
+        case _ => apply(re radians)
     }
 
-    def apply(angle: Angle) = if (angle.isEmpty) empty else new RealCos(angle)
+    def apply(angle: Angle): Real = if (angle.isEmpty) empty else new RealCos(angle)
 
     protected[this] def create(expr: Expression): Cos = new Cos(expr)
 

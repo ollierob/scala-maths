@@ -4,7 +4,7 @@ import scala.Some
 
 import Angle._
 import net.ollie.maths._
-import net.ollie.maths.functions.{ExpressionBuilder, UnivariateFunction}
+import net.ollie.maths.functions.{RealExpressionBuilder, ExpressionBuilder, UnivariateFunction}
 import net.ollie.maths.functions.numeric.{Signum, SquareRoot}
 import net.ollie.maths.functions.special.Sinc
 import net.ollie.maths.methods.MaclaurinSeries
@@ -16,14 +16,8 @@ import net.ollie.maths.numbers.constants.{Zero, One}
  * Created by Ollie on 02/01/14.
  */
 object Sin
-        extends UnivariateFunction[Angle, Real]
-        with ExpressionBuilder {
-
-    def apply(n: Number): Number = n match {
-        case Zero => empty
-        case re: Real => Sin(Radians(re))
-        case _ => ???
-    }
+        extends RealExpressionBuilder
+        with UnivariateFunction[Angle, Real] {
 
     def apply(re: Real): Real = re match {
         case angle: Angle => apply(angle)

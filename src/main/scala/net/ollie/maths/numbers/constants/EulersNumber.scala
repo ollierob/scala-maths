@@ -10,13 +10,14 @@ import net.ollie.maths.numbers._
 object EulersNumber
         extends PositiveReal {
 
-    private final val E50 = BigDecimal("2.71828182845904523536028747135266249775724709369995")
+    private val E50 = BigDecimal("2.71828182845904523536028747135266249775724709369995")
+    private val SERIES = Series(nth _, Zero)
 
     def isEmpty = false
 
     protected[this] def doEvaluate(precision: Precision) = {
         if (precision.value < 50) precision(E50)
-        else Series(nth _, Zero).evaluate(precision)
+        else SERIES.evaluate(precision)
     }
 
     private def nth(n: Natural): Real = 1 / (n !)

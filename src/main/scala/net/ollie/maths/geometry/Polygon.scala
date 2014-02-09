@@ -1,7 +1,7 @@
 package net.ollie.maths.geometry
 
 import net.ollie.maths.numbers.{Natural, PositiveReal}
-import net.ollie.maths.functions.angular.{Sec, Angle, Cotan}
+import net.ollie.maths.functions.angular.{Sec, Angle, CoTan}
 import net.ollie.maths.numbers.constants.Pi
 import Angle._
 
@@ -26,7 +26,7 @@ trait RegularPolygon
 
     def inCircle: Circle = Circle.withRadius(inRadius)
 
-    def inRadius: PositiveReal = sideLength * Cotan(Pi / sides radians).abs / 2
+    def inRadius: PositiveReal = sideLength * CoTan(Pi / sides radians).abs / 2
 
     def circumCircle = Circle.withRadius(circumRadius)
 

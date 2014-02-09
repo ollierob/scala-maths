@@ -1,6 +1,7 @@
 package net.ollie.maths.functions
 
 import net.ollie.maths._
+import net.ollie.maths.numbers.Real
 
 /**
  * Created by Ollie on 11/01/14.
@@ -18,5 +19,17 @@ trait ExpressionBuilder {
     protected[this] def create(expr: Expression): Expression
 
     protected[this] def empty: Expression
+
+}
+
+trait RealExpressionBuilder
+        extends ExpressionBuilder {
+
+    def apply(n: Number): Number = Real(n) match {
+        case Some(re) => apply(re)
+        case _ => ???
+    }
+
+    def apply(re: Real): Number
 
 }

@@ -104,7 +104,7 @@ object Classification extends Enumeration {
  * 2 pi radians, or 360 degrees.
  */
 object FullAngle
-        extends Radians(2 * Pi) {
+        extends KnownRadians(2 * Pi) {
 
     override def classify = Classification.Full
 
@@ -114,7 +114,7 @@ object FullAngle
  * pi radians, or 180 degrees.
  */
 object HalfAngle
-        extends Radians(Pi) {
+        extends KnownRadians(Pi) {
 
     override def classify = Classification.Straight
 
@@ -124,14 +124,14 @@ object HalfAngle
  * pi/2 radians, or 90 degrees.
  */
 object RightAngle
-        extends Radians(Pi / 2) {
+        extends KnownRadians(Pi / 2) {
 
     override def classify = Classification.Right
 
 }
 
 object EmptyAngle
-        extends Radians(0)
+        extends KnownRadians(0)
         with Empty {
 
     override def unary_-() = this
@@ -146,11 +146,13 @@ object EmptyAngle
 
 }
 
-class Radians(val value: Real)
+trait Radians
         extends AnyRef
         with Angle {
 
     type Type = Radians
+
+    def value: Real
 
     def toRadians = value
 
@@ -163,15 +165,19 @@ class Radians(val value: Real)
     override def toString = value.toString
 
     implicit def builder = Radians.Builder
+
 }
+
+class KnownRadians protected[angular](val value: Real)
+        extends Radians
 
 object Radians {
 
     implicit def apply(re: Real): Radians = re match {
         case Zero => EmptyAngle
         case rad: Radians => rad
-        case angle: Angle => new Radians(angle.toRadians)
-        case _ => new Radians(re)
+        case angle: Angle => new KnownRadians(angle.toRadians)
+        case _ => new KnownRadians(re)
     }
 
     implicit object Builder extends AngleBuilder[Radians] {
