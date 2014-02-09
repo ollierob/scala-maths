@@ -9,15 +9,10 @@ import Angle._
  * Created by Ollie on 19/01/14.
  * @see http://mathworld.wolfram.com/Polygon.html
  */
-trait Polygon {
+trait Polygon
+        extends Shape {
 
     def sides: Natural
-
-    def area: PositiveReal
-
-    def perimeter: PositiveReal
-
-    def semiperimeter: PositiveReal = perimeter / 2
 
 }
 
@@ -29,11 +24,15 @@ trait RegularPolygon
 
     def sideLength: PositiveReal
 
-    def inradius: PositiveReal = sideLength * Cotan(Pi / sides radians).abs / 2
+    def inCircle: Circle = Circle.withRadius(inRadius)
 
-    def circumradius: PositiveReal = inradius * Sec(Pi / sides radians).abs
+    def inRadius: PositiveReal = sideLength * Cotan(Pi / sides radians).abs / 2
 
-    def area: PositiveReal = sides * sideLength * inradius / 2
+    def circumCircle = Circle.withRadius(circumRadius)
+
+    def circumRadius: PositiveReal = inRadius * Sec(Pi / sides radians).abs
+
+    def area: PositiveReal = sides * sideLength * inRadius / 2
 
     def perimeter: PositiveReal = sideLength * sides
 
