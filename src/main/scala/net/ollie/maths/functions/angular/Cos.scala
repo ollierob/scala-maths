@@ -3,7 +3,7 @@ package net.ollie.maths.functions.angular
 import scala.Some
 
 import net.ollie.maths._
-import net.ollie.maths.functions.{RealExpressionBuilder, ExpressionBuilder, UnivariateFunction}
+import net.ollie.maths.functions.{BuiltFunction, RealFunctionBuilder, FunctionBuilder, UnivariateFunction}
 import net.ollie.maths.functions.numeric.SquareRoot
 import net.ollie.maths.methods.MaclaurinSeries
 import net.ollie.maths.numbers.{Precision, Real}
@@ -14,7 +14,7 @@ import net.ollie.maths.numbers.constants.{One, Pi}
  * Created by Ollie on 03/01/14.
  */
 object Cos
-        extends RealExpressionBuilder {
+        extends RealFunctionBuilder {
 
     import Angle._
 
@@ -64,7 +64,7 @@ class RealCos(override val of: Angle)
 }
 
 object Sec
-        extends ExpressionBuilder {
+        extends FunctionBuilder {
 
     def apply(n: Number) = Cos(n).inverse
 
@@ -81,7 +81,7 @@ object Sec
  * @see http://mathworld.wolfram.com/InverseCosine.html
  */
 object ArcCos
-        extends ExpressionBuilder
+        extends FunctionBuilder
         with UnivariateFunction[Real, Angle] {
 
     import Angle._

@@ -4,7 +4,7 @@ import scala.Some
 
 import Angle._
 import net.ollie.maths._
-import net.ollie.maths.functions.{RealExpressionBuilder, ExpressionBuilder, UnivariateFunction}
+import net.ollie.maths.functions.{OddBuiltFunction, RealFunctionBuilder, FunctionBuilder, UnivariateFunction}
 import net.ollie.maths.functions.numeric.{Signum, SquareRoot}
 import net.ollie.maths.functions.special.Sinc
 import net.ollie.maths.methods.MaclaurinSeries
@@ -16,7 +16,7 @@ import net.ollie.maths.numbers.constants.{Zero, One}
  * Created by Ollie on 02/01/14.
  */
 object Sin
-        extends RealExpressionBuilder
+        extends RealFunctionBuilder
         with UnivariateFunction[Angle, Real] {
 
     def apply(re: Real): Real = re match {
@@ -72,7 +72,7 @@ private class RealSin(val of: Angle)
 }
 
 object Cosec
-        extends ExpressionBuilder {
+        extends FunctionBuilder {
 
     def apply(n: Number) = Sin(n).inverse
 
@@ -83,7 +83,7 @@ object Cosec
 }
 
 object ArcSin
-        extends ExpressionBuilder
+        extends FunctionBuilder
         with UnivariateFunction[Real, Angle] {
 
     def apply(n: Number) = n match {

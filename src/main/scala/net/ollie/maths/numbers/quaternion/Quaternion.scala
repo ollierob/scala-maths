@@ -35,7 +35,7 @@ trait Quaternion
 
     def conjugate: Quaternion = Quaternion.conjugate(this)
 
-    def toReal: Option[Real] = if (i.isEmpty && j.isEmpty && k.isEmpty) Some(re) else None
+    override def toReal: Option[Real] = if (i.isEmpty && j.isEmpty && k.isEmpty) Some(re) else None
 
     def toComplex: Option[Complex] = if (j.isEmpty && k.isEmpty) Some(Complex(re, i.coefficient)) else None
 

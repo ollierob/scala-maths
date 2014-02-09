@@ -1,8 +1,8 @@
 package net.ollie.maths.functions.angular
 
-import net.ollie.maths.functions.{UnivariateFunction, ComplexExpressionBuilder}
+import net.ollie.maths.functions.{BuiltFunction, UnivariateFunction, ComplexFunctionBuilder}
 import net.ollie.maths.numbers.complex.Complex
-import net.ollie.maths.{BuiltFunction, Expression}
+import net.ollie.maths.Expression
 import net.ollie.maths.numbers.{Precision, Real}
 import net.ollie.maths.functions.numeric.Exp
 import net.ollie.maths.numbers.constants.One
@@ -11,10 +11,10 @@ import net.ollie.maths.numbers.constants.One
  * Created by Ollie on 09/02/14.
  */
 object HyperbolicCos
-        extends ComplexExpressionBuilder
+        extends ComplexFunctionBuilder
         with UnivariateFunction[Complex, Complex] {
 
-    def apply(re: Real): Real with HyperbolicCos = new RealHyperbolicCos(re)
+    override def apply(re: Real): Real with HyperbolicCos = new RealHyperbolicCos(re)
 
     def apply(z: Complex): Complex with HyperbolicCos = ???
 

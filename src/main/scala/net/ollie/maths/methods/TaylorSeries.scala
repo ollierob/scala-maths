@@ -4,7 +4,7 @@ import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 import net.ollie.maths._
-import net.ollie.maths.functions.ExpressionBuilder
+import net.ollie.maths.functions.FunctionBuilder
 import net.ollie.maths.numbers.{Natural, Precision, Real}
 import net.ollie.maths.numbers.constants.Zero
 
@@ -19,7 +19,7 @@ object TaylorSeries {
         new TaylorSeries(expression, at, around)(Real)
     }
 
-    def apply(builder: ExpressionBuilder, at: Real, around: Real): Real = {
+    def apply(builder: FunctionBuilder, at: Real, around: Real): Real = {
         val x = Variable("$x")
         TaylorSeries(builder(x), at, around)
     }
@@ -59,7 +59,7 @@ private class TaylorSeries(val f: Univariate, val x: Real, val a: Real)(implicit
  */
 object MaclaurinSeries {
 
-    def apply(builder: ExpressionBuilder, at: Real): Real = {
+    def apply(builder: FunctionBuilder, at: Real): Real = {
         val x = Variable("$x")
         MaclaurinSeries(builder(x), at)
     }

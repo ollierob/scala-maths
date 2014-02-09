@@ -1,7 +1,7 @@
 package net.ollie.maths.functions.angular
 
-import net.ollie.maths.{OddBuiltFunction, Expression, Number}
-import net.ollie.maths.functions.{RealExpressionBuilder, ExpressionBuilder, UnivariateFunction}
+import net.ollie.maths.{Expression, Number}
+import net.ollie.maths.functions.{OddBuiltFunction, RealFunctionBuilder, FunctionBuilder, UnivariateFunction}
 import net.ollie.maths.methods.ApproximatelyEvaluated
 import net.ollie.maths.numbers.{Precision, Real}
 import net.ollie.maths.numbers.constants.Zero
@@ -10,7 +10,7 @@ import net.ollie.maths.numbers.constants.Zero
  * Created by Ollie on 18/01/14.
  */
 object Tan
-        extends RealExpressionBuilder
+        extends RealFunctionBuilder
         with UnivariateFunction[Angle, Real] {
 
     import Angle._
@@ -60,7 +60,7 @@ class RealTan(override val of: Angle)
  * 1/Tan
  */
 object CoTan
-        extends ExpressionBuilder {
+        extends FunctionBuilder {
 
     def apply(n: Number): Number = Tan(n).inverse
 

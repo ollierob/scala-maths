@@ -1,7 +1,7 @@
 package net.ollie.maths.functions.numeric
 
 import net.ollie.maths._
-import net.ollie.maths.functions.{ExpressionBuilder, UnivariateFunction}
+import net.ollie.maths.functions.{FunctionBuilder, UnivariateFunction}
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.constants.Zero
 
@@ -10,7 +10,7 @@ import net.ollie.maths.numbers.constants.Zero
  */
 object DiracDelta
         extends UnivariateFunction[Number, PositiveReal]
-        with ExpressionBuilder {
+        with FunctionBuilder {
 
     def apply(n: Number): PositiveReal = if (n.isEmpty) Infinity else Zero
 

@@ -1,7 +1,7 @@
 package net.ollie.maths.numbers
 
 import org.nevec.rjm.BigDecimalMath
-import net.ollie.maths.Operation
+import net.ollie.maths.{Number, Operation}
 
 /**
  * Numbers known to be equal to or greater than zero at compile time.
@@ -22,11 +22,24 @@ trait PositiveReal
 
     def ^(that: Real): PositiveReal = PositiveReal.pow(this, that)
 
+    override def ^(that: Integer): PositiveReal = PositiveReal.pow(this, that)
+
     override def isStrictlyPositive = !this.isEmpty
 
 }
 
 object PositiveReal {
+
+    def apply(n: Number): Option[PositiveReal] = Real(n) match {
+        case Some(re) => apply(re)
+        case _ => None
+    }
+
+    def apply(re: Real): Option[PositiveReal] = re match {
+        case p: PositiveReal => Some(p)
+        case _ if re.isEmpty || re.isStrictlyPositive => Some(re.abs)
+        case _ => None
+    }
 
     implicit def apply(int: Int): Natural = Natural(int)
 

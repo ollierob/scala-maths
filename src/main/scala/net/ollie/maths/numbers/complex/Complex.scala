@@ -31,6 +31,8 @@ trait Complex
 
     def toComplex = Some(this)
 
+    override def toReal = super[MaybeComplex].toReal
+
     def ?+(that: Number) = that match {
         case re: Real => Some(this + Complex(re))
         case z: Complex => Some(this + z)
@@ -119,6 +121,11 @@ object Complex
 
 trait MaybeComplex
         extends MaybeReal {
+
+    def toReal = this toComplex match {
+        case Some(z) => if (z.im.isEmpty) Some(z.re) else None
+        case _ => None
+    }
 
     def toComplex: Option[Complex]
 

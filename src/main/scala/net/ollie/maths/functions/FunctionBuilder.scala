@@ -10,7 +10,7 @@ import net.ollie.maths.numbers.complex.Complex
  * Created by Ollie on 11/01/14.
  * @see [[BuiltFunction]]
  */
-trait ExpressionBuilder {
+trait FunctionBuilder {
 
     def apply(n: Number): Number
 
@@ -26,8 +26,33 @@ trait ExpressionBuilder {
 
 }
 
-trait RealExpressionBuilder
-        extends ExpressionBuilder {
+/**
+ *
+ */
+trait BuiltFunction
+        extends Function {
+
+    protected[this] def builder: FunctionBuilder
+
+    protected[this] def at(n: Number) = builder(n)
+
+    protected[this] def apply(x: Expression) = builder(x)
+
+}
+
+/**
+ * Builds an odd expression.
+ * @see http://mathworld.wolfram.com/OddFunction.html
+ */
+trait OddBuiltFunction
+        extends BuiltFunction {
+
+    override def unary_-() = apply(-of)
+
+}
+
+trait RealFunctionBuilder
+        extends FunctionBuilder {
 
     def apply(n: Number): Number = Real(n) match {
         case Some(re) => apply(re)
@@ -40,13 +65,15 @@ trait RealExpressionBuilder
 
 }
 
-trait ComplexExpressionBuilder
-        extends RealExpressionBuilder {
+trait ComplexFunctionBuilder
+        extends RealFunctionBuilder {
 
     protected override def otherwise(n: Number): Number = Complex(n) match {
         case Some(z) => apply(z)
         case _ => super.apply(n)
     }
+
+    def apply(re: Real): Number = apply(Complex(re))
 
     def apply(z: Complex): Number
 

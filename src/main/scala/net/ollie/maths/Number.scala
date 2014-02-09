@@ -1,6 +1,5 @@
 package net.ollie.maths
 
-import net.ollie.maths.numbers.PositiveReal
 import scala.collection.mutable
 import net.ollie.maths.numbers.constants.Zero
 
@@ -18,8 +17,6 @@ trait Number
     final def narrow: System = this
 
     def unary_-(): System
-
-    def abs: PositiveReal
 
     def inverse: Number
 

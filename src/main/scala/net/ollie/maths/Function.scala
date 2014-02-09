@@ -1,7 +1,5 @@
 package net.ollie.maths
 
-import net.ollie.maths.functions.ExpressionBuilder
-
 /**
  * Some function of an expression.
  *
@@ -32,27 +30,5 @@ trait Function
     protected[this] def derivative(x: Expression): Expression
 
     protected[this] def apply(x: Expression): Expression
-
-}
-
-trait BuiltFunction
-        extends Function {
-
-    protected[this] def builder: ExpressionBuilder
-
-    protected[this] def at(n: Number) = builder(n)
-
-    protected[this] def apply(x: Expression) = builder(x)
-
-}
-
-/**
- * Builds an odd expression.
- * @see http://mathworld.wolfram.com/OddFunction.html
- */
-trait OddBuiltFunction
-        extends BuiltFunction {
-
-    override def unary_-() = apply(-of)
 
 }

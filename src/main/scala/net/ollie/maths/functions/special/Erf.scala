@@ -1,7 +1,7 @@
 package net.ollie.maths.functions.special
 
-import net.ollie.maths.{OddBuiltFunction, Expression, Number}
-import net.ollie.maths.functions.{ExpressionBuilder, Represented, UnivariateFunction}
+import net.ollie.maths.{Expression, Number}
+import net.ollie.maths.functions.{OddBuiltFunction, FunctionBuilder, Represented, UnivariateFunction}
 import net.ollie.maths.functions.numeric.{Exp, PositiveSquareRoot}
 import net.ollie.maths.methods.{Integral, SimpsonsIntegrationMethod}
 import net.ollie.maths.numbers.{Precision, Real}
@@ -13,7 +13,7 @@ import net.ollie.maths.numbers.constants.{Zero, Pi}
  * @see http://mathworld.wolfram.com/Erf.html
  */
 object Erf
-        extends ExpressionBuilder
+        extends FunctionBuilder
         with UnivariateFunction[Real, Real] {
 
     def apply(n: Number): Number = n match {
@@ -65,7 +65,7 @@ class RealErf(val x: Real)
  * @see http://mathworld.wolfram.com/Erfi.html
  */
 object Erfi
-        extends ExpressionBuilder
+        extends FunctionBuilder
         with UnivariateFunction[Complex, Complex] {
 
     def apply(n: Number) = n match {

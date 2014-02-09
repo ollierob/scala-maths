@@ -18,7 +18,7 @@ trait SplitComplex
 
     def unre = s
 
-    override def abs: PositiveReal = ??? //TODO
+    def abs: PositiveReal = ??? //TODO
 
     def modulus: Real = re.squared - s.squared
 
