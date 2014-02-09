@@ -16,6 +16,7 @@ object Series {
         case _ if left.isEmpty => right
         case _ if right.isEmpty => left
         case (_, s: Series[_]) => s :+ left
+        case (s: Series[_], _) => s + right
         case _ => new Series(Seq(left, right))
     }
 
@@ -36,8 +37,8 @@ object Series {
 
 }
 
-class Series[+T <: Expression](val terms: Seq[T])
-        extends Aggregate {
+class Series[+T <: Expression] protected(val terms: Seq[T])
+extends Aggregate {
 
     protected[this] def apply(expressions: Seq[Expression]) = Series(expressions)
 
