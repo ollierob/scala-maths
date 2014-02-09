@@ -32,7 +32,7 @@ object Triangle {
 
     val SIXTY_DEGREES = 60 degrees
 
-    def apply(a: PositiveReal, b: PositiveReal, c: PositiveReal): Scalene = {
+    def apply(a: PositiveReal, b: PositiveReal, c: PositiveReal): Triangle = {
         classify(a, b, c) match {
             case Classification.EQUILATERAL => Triangle(a)
             case _ => new ScaleneSides(a, b, c)
@@ -66,12 +66,21 @@ object Triangle {
 
 }
 
+/**
+ * A triangle with no equal angles.
+ */
 trait Scalene
         extends Triangle
 
+/**
+ * A triangle with two or three equal sides (i.e. subclassed by [[Equilateral]]).
+ */
 trait Isosceles
-        extends Scalene
+        extends Triangle
 
+/**
+ * A triangle with three equal sides. Note this is a special case of [[Isosceles]].
+ */
 trait Equilateral
         extends Isosceles {
 
