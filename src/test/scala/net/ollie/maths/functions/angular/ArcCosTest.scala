@@ -4,8 +4,8 @@ import net.ollie.maths.numbers.{IntegerFraction, Real}
 import org.junit.runner.RunWith
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.junit.JUnitRunner
-import net.ollie.maths.numbers.real.Pi
 import net.ollie.maths.numbers.Precision._
+import net.ollie.maths.numbers.constants.Pi
 
 /**
  * Created by Ollie on 24/01/14.

@@ -1,4 +1,4 @@
-package net.ollie.maths.numbers.real
+package net.ollie.maths.numbers.constants
 
 import net.ollie.maths.functions.numeric.Ln
 import net.ollie.maths.methods.{SimpsonsIntegrationMethod, Integral}

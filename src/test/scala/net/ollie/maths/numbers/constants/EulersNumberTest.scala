@@ -1,4 +1,4 @@
-package net.ollie.maths.numbers.real
+package net.ollie.maths.numbers.constants
 
 import net.ollie.maths.numbers.Precision._
 import org.junit.runner.RunWith

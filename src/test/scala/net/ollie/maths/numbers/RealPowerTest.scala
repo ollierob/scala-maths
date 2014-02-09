@@ -1,7 +1,6 @@
-package net.ollie.maths.numbers.real
+package net.ollie.maths.numbers
 
 import org.scalatest.{Matchers, FlatSpec}
-import net.ollie.maths.numbers.One
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 

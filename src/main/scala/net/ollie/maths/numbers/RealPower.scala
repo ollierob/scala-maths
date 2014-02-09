@@ -1,4 +1,4 @@
-package net.ollie.maths.numbers.real
+package net.ollie.maths.numbers
 
 import net.ollie.maths.methods.ApproximatelyEvaluated
 import net.ollie.maths.numbers._

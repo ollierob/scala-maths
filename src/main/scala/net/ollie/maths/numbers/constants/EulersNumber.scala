@@ -1,4 +1,4 @@
-package net.ollie.maths.numbers.real
+package net.ollie.maths.numbers.constants
 
 import net.ollie.maths.methods.Series
 import net.ollie.maths.numbers._

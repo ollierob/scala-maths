@@ -1,4 +1,4 @@
-package net.ollie.maths.numbers.real.surreal
+package net.ollie.maths.numbers.surreal
 
 import net.ollie.maths.Operation
 import net.ollie.maths.numbers.Real
@@ -14,9 +14,19 @@ trait SurrealSet {
 
     def +(that: Real): SurrealSet
 
+    /**
+     * Construct a surreal number from both sets.
+     * @param that
+     * @return
+     */
     def |(that: SurrealSet): Surreal = Surreal(this, that)
 
-    def ::(that: SurrealSet): SurrealSet = SurrealSet.composite(this, that)
+    /**
+     * Intersect both sets.
+     * @param that
+     * @return
+     */
+    def ::(that: SurrealSet): SurrealSet = SurrealSet.compose(this, that)
 
     def contains(s: Real): Boolean
 
@@ -36,7 +46,7 @@ object SurrealSet {
 
     def apply(set: Set[Real]): SurrealSet = if (set.isEmpty) EmptySurrealSet else new RegularSurrealSet(set)
 
-    protected[surreal] def composite(a: SurrealSet, b: SurrealSet): SurrealSet = new CompositeSurrealSet(Set(a, b))
+    protected[surreal] def compose(a: SurrealSet, b: SurrealSet): SurrealSet = new CompositeSurrealSet(Set(a, b))
 
 }
 
@@ -58,11 +68,11 @@ object EmptySurrealSet
 
     def contains(s: Real) = false
 
-    override def toString = "-"
-
     def min = Operation.undefined
 
     def max = Operation.undefined
+
+    override def toString = "-"
 
 }
 
@@ -102,11 +112,11 @@ class RegularSurrealSet(val set: Set[Real])
 
     def intersects(that: SurrealSet) = set.find(that.contains(_) == true).isDefined
 
-    override def toString = set.mkString("[", ",", "]")
-
     def min = set.min
 
     def max = set.max
+
+    override def toString = set.mkString("[", ",", "]")
 
 }
 
@@ -117,7 +127,7 @@ class CompositeSurrealSet(val sets: Set[SurrealSet])
 
     def isEmpty = sets.forall(_.isEmpty)
 
-    def unary_-(): SurrealSet = ???
+    def unary_-(): SurrealSet = new CompositeSurrealSet(sets.map(-_))
 
     def +(that: Real): SurrealSet = ???
 
@@ -125,8 +135,8 @@ class CompositeSurrealSet(val sets: Set[SurrealSet])
 
     def intersects(that: SurrealSet) = sets.find(_.intersects(that)).isDefined
 
-    def min = ???
+    def min = sets.map(_.min).min
 
-    def max = ???
+    def max = sets.map(_.max).max
 
 }

@@ -6,7 +6,7 @@ import net.ollie.maths.functions.numeric.{Exp, PositiveSquareRoot}
 import net.ollie.maths.functions.polynomial.AssociatedLegendrePolynomial
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.complex.{ImaginaryUnit => i}
-import net.ollie.maths.numbers.real.Pi
+import net.ollie.maths.numbers.constants.Pi
 
 /**
  * Created by Ollie on 08/01/14.

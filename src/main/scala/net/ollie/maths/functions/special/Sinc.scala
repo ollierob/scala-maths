@@ -5,7 +5,7 @@ import net.ollie.maths.functions.{ExpressionBuilder, Represented, UnivariateFunc
 import net.ollie.maths.functions.angular.Sin
 import net.ollie.maths.methods.ApproximatelyEvaluated
 import net.ollie.maths.numbers.{One, Precision, Real, Zero}
-import net.ollie.maths.numbers.real.Pi
+import net.ollie.maths.numbers.constants.Pi
 
 /**
  * Created by Ollie on 23/01/14.

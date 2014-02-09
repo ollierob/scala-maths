@@ -1,4 +1,4 @@
-package net.ollie.maths.numbers.real
+package net.ollie.maths.numbers.constants
 
 import org.scalatest.{Matchers, FlatSpec}
 import org.junit.runner.RunWith

@@ -1,9 +1,9 @@
 package net.ollie.maths
 
-import net.ollie.maths.numbers.real.Pi
 import org.junit.runner.RunWith
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.junit.JUnitRunner
+import net.ollie.maths.numbers.constants.Pi
 
 /**
  * Created by Ollie on 11/01/14.

@@ -5,6 +5,7 @@ import net.ollie.maths.functions.ExpressionBuilder
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.real.EulersNumber
 import org.nevec.rjm.BigDecimalMath
+import net.ollie.maths.numbers.constants.EulersNumber
 
 /**
  * Created by Ollie on 18/01/14.

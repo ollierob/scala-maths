@@ -169,6 +169,8 @@ class NaturalPower(override val base: Natural, override val power: Natural)
         extends RealToIntegerPower(base, power)
         with Natural {
 
+    override def isEven = base.isEven || power.isEven
+
     def evaluate = power.toInt match {
         case Some(i: Int) => base.evaluate.pow(i)
         case _ => ??? //TODO

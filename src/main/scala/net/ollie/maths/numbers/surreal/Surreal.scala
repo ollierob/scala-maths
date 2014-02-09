@@ -1,7 +1,8 @@
-package net.ollie.maths.numbers.real.surreal
+package net.ollie.maths.numbers.surreal
 
 import net.ollie.maths.{EmptyNumber, Variable}
 import net.ollie.maths.numbers._
+import net.ollie.maths.numbers.real.Infinitesimal
 
 /**
  * Created by Ollie on 06/01/14.
@@ -16,13 +17,13 @@ trait Surreal
 
     protected[this] def doEvaluate(precision: Precision) = nearest.evaluate(precision)
 
-    def isEmpty = left.isEmpty && right.isEmpty
-
     def left: SurrealSet
 
     def right: SurrealSet
 
-    def isNumeric = !left.intersects(right) && ???
+    def isEmpty = left.isEmpty && right.isEmpty
+
+    def isNumeric = !left.intersects(right) && ??? //TODO
 
     override def ?+(that: Real) = that match {
         case s: Surreal => Some(this + s)
@@ -35,7 +36,7 @@ trait Surreal
 
     def -(that: Surreal): Surreal = this + (-that)
 
-    override def tryCompareTo(that: Real) = that match {
+    override protected def tryCompareTo(that: Real) = that match {
         case s: Surreal => this.tryCompareTo(s)
         case _ => super.tryCompareTo(that)
     }
@@ -44,7 +45,7 @@ trait Surreal
 
     override def unary_-(): Surreal = Surreal(-right, -left)
 
-    override def df(x: Variable) = EmptyForm
+    override def df(x: Variable) = Surreal()
 
     override def toString = s"{$left | $right}"
 
@@ -52,7 +53,7 @@ trait Surreal
 
 object Surreal {
 
-    def apply(): Surreal = EmptyForm
+    def apply(): Surreal with EmptyNumber = EmptyForm
 
     implicit def apply(re: Real): Surreal = re match {
         case s: Surreal => s
@@ -128,20 +129,23 @@ object InfiniteForm
 
     override def +(that: Surreal) = this
 
-    override def toString = "ω"
+    override def toString = "surreal(ω)"
 
 }
 
 object InfinitesimalForm
-        extends Surreal {
+        extends Surreal
+        with Infinitesimal {
 
     def nearest = Zero
 
     def left = Zero
 
-    def right = ???
+    def right = ??? //TODO
 
-    override def toString = "ε"
+    override def doEvaluate(precision: Precision) = super[Surreal].doEvaluate(precision)
+
+    override def toString = "surreal(ε)"
 
 }
 

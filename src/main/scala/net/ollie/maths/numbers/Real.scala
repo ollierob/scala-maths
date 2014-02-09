@@ -270,9 +270,9 @@ class InverseReal(val of: Real)
         case _ => super.?*(that)
     }
 
-    override def toString = s"1/$of"
-
     override def approx(precision: Precision) = 1 / of.evaluate(precision)
+
+    override def toString = s"1/$of"
 
 }
 

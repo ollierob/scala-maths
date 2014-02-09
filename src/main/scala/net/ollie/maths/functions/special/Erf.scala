@@ -6,7 +6,7 @@ import net.ollie.maths.functions.numeric.{Exp, PositiveSquareRoot}
 import net.ollie.maths.methods.{Integral, SimpsonsIntegrationMethod}
 import net.ollie.maths.numbers.{Precision, Real, Zero}
 import net.ollie.maths.numbers.complex.{Complex, ImaginaryUnit => i}
-import net.ollie.maths.numbers.real.Pi
+import net.ollie.maths.numbers.constants.Pi
 
 /**
  * Created by Ollie on 22/01/14.

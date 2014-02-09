@@ -5,7 +5,7 @@ import net.ollie.maths.functions.Represented
 import net.ollie.maths.functions.numeric.PositiveSquareRoot
 import net.ollie.maths.functions.polynomial.LegendrePolynomial
 import net.ollie.maths.numbers._
-import net.ollie.maths.numbers.real.Pi
+import net.ollie.maths.numbers.constants.Pi
 
 /**
  * Order-less spherical harmonics.

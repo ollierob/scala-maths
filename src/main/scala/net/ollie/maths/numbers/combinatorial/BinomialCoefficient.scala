@@ -1,4 +1,4 @@
-package net.ollie.maths.numbers.real.combinatorial
+package net.ollie.maths.numbers.combinatorial
 
 import net.ollie.maths.{EmptyNumber, Variable}
 import net.ollie.maths.functions.numeric.{Floor, GreatestCommonDivisor}

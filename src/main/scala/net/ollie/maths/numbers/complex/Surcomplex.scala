@@ -1,6 +1,6 @@
 package net.ollie.maths.numbers.complex
 
-import net.ollie.maths.numbers.real.surreal.{EmptyForm, Surreal}
+import net.ollie.maths.numbers.surreal.{EmptyForm, Surreal}
 import net.ollie.maths.Empty
 import net.ollie.maths.numbers.{Zero, Real}
 

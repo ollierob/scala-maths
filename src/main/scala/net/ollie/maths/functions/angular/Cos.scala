@@ -7,8 +7,8 @@ import net.ollie.maths.functions.{ExpressionBuilder, UnivariateFunction}
 import net.ollie.maths.functions.numeric.SquareRoot
 import net.ollie.maths.methods.MaclaurinSeries
 import net.ollie.maths.numbers.{One, Precision, Real}
-import net.ollie.maths.numbers.real.Pi
 import org.nevec.rjm.BigDecimalMath
+import net.ollie.maths.numbers.constants.Pi
 
 /**
  * Created by Ollie on 03/01/14.

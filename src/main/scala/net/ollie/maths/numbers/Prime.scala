@@ -1,11 +1,12 @@
-package net.ollie.maths.numbers.real
+package net.ollie.maths.numbers
 
 import net.ollie.maths.numbers.Natural
 
 /**
  * Created by Ollie on 18/01/14.
  */
-trait Prime extends Natural
+trait Prime
+        extends Natural
 
 object Prime {
 
@@ -24,7 +25,9 @@ object Prime {
         case _ => new NextPrime(if (n.isEven) n.succ else n)
     }
 
-    def pi(n: Natural)(implicit calculator: PrimeCalculator = DEFAULT_CALCULATOR): Natural = Natural(calculator.pi(n.evaluate))
+    def pi(n: Natural)(implicit calculator: PrimeCalculator = DEFAULT_CALCULATOR): Natural = {
+        Natural(calculator.pi(n.evaluate))
+    }
 
 }
 
@@ -35,6 +38,8 @@ private class NextPrime(val n: Natural)(implicit calculator: PrimeCalculator)
     private lazy val evaluated = calculator.next(n.evaluate)
 
     def evaluate = evaluated
+
+    override def toString = s"NextPrime($n)"
 
 }
 
