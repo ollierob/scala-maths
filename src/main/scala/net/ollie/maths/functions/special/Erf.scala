@@ -52,7 +52,7 @@ class RealErf(val x: Real)
 
     private lazy val integral = 2 * Integral(t => Exp(-(t ^ 2)), 0, x)(SimpsonsIntegrationMethod) / PositiveSquareRoot(Pi)
 
-    protected[this] def eval(precision: Precision) = integral.evaluate(precision)
+    protected[this] def doEvaluate(precision: Precision) = integral.evaluate(precision)
 
     def isEmpty = x.isEmpty
 

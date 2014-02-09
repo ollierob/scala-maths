@@ -42,7 +42,7 @@ object Zero
 
     override def *(that: Natural) = this
 
-    override def eval(precision: Precision) = super[EmptyNumber].eval(precision)
+    override def doEvaluate(precision: Precision) = super[EmptyNumber].doEvaluate(precision)
 
     override def replace(variables: Map[Variable, Expression]) = this
 

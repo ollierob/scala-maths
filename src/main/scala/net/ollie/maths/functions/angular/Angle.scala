@@ -27,7 +27,7 @@ trait Angle
         }
     }
 
-    protected[this] def eval(precision: Precision) = toRadians.evaluate(precision)
+    protected[this] def doEvaluate(precision: Precision) = toRadians.evaluate(precision)
 
     implicit def builder: AngleBuilder[Type]
 

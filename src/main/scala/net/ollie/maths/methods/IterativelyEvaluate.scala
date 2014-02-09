@@ -43,7 +43,7 @@ object IterativelyEvaluate {
 trait IterativelyEvaluated
         extends Evaluable {
 
-    protected[this] def eval(precision: Precision) = IterativelyEvaluate(precision, this)
+    protected[this] def doEvaluate(precision: Precision) = IterativelyEvaluate(precision, this)
 
     def evaluationIterator(startPrecision: Precision): EvaluationIterator
 

@@ -50,7 +50,7 @@ class PositiveRealPower(val base: PositiveReal, val power: Real)
         extends PositiveReal
         with RealPower {
 
-    protected[this] def eval(precision: Precision) = {
+    protected[this] def doEvaluate(precision: Precision) = {
         BigDecimalMath.pow(base.evaluate(precision).underlying(), power.evaluate(precision).underlying())
     }
 

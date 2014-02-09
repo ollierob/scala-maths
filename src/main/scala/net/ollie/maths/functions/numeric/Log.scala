@@ -90,7 +90,7 @@ class RealLn(override val of: PositiveReal)
 
     override def inverse = super[Real].inverse
 
-    protected[this] def eval(precision: Precision) = BigDecimalMath.log(of.evaluate(precision).underlying())
+    protected[this] def doEvaluate(precision: Precision) = BigDecimalMath.log(of.evaluate(precision).underlying())
 
     override def toConstant = super[Real].toConstant
 

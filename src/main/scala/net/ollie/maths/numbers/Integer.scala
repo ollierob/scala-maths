@@ -13,7 +13,7 @@ trait Integer
 
     final def denominator = One
 
-    protected override def eval(precision: Precision): BigDecimal = precision(BigDecimal(evaluate))
+    protected override def doEvaluate(precision: Precision): BigDecimal = precision(BigDecimal(evaluate))
 
     override def approximatelyEvaluate(precision: Precision) = BigDecimal(evaluate)
 

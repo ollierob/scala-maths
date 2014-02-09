@@ -51,7 +51,7 @@ class RealCos(override val of: Angle)
 
     private lazy val series = MaclaurinSeries(Cos, of.toRadians)
 
-    protected[this] def eval(precision: Precision) = series.evaluate(precision)
+    protected[this] def doEvaluate(precision: Precision) = series.evaluate(precision)
 
     override def inverse = super[Real].inverse
 
@@ -115,7 +115,7 @@ class RealArcCos(override val of: Real)
         extends ArcCos(of)
         with Real {
 
-    protected[this] def eval(precision: Precision) = BigDecimalMath.acos(of.evaluate(precision).underlying())
+    protected[this] def doEvaluate(precision: Precision) = BigDecimalMath.acos(of.evaluate(precision).underlying())
 
     override def isEmpty = of == One
 

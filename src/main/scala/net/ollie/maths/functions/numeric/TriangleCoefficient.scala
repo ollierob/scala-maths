@@ -38,7 +38,7 @@ private class TriangleCoefficientOf(val a: Natural, val b: Natural, val c: Natur
 
     private lazy val f = ((a + b - c).abs.!) * ((a - b + c).abs.!) * ((b + c - a).abs.!) / ((a + b + c + 1).abs.!)
 
-    protected[this] def eval(precision: Precision) = f.evaluate(precision)
+    protected[this] def doEvaluate(precision: Precision) = f.evaluate(precision)
 
     private lazy val empty = a.isEmpty && b.isEmpty && c.isEmpty
 

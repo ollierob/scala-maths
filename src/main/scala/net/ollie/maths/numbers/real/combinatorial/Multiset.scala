@@ -16,7 +16,7 @@ class Multiset(val n: Natural, k: Natural)
 
     private val binomial = BinomialCoefficient(n + k - 1, k)
 
-    protected[this] def eval(precision: Precision) = binomial.evaluate(precision)
+    protected[this] def doEvaluate(precision: Precision) = binomial.evaluate(precision)
 
     def isEmpty = binomial.isEmpty
 

@@ -55,7 +55,7 @@ class RealGamma(val z: Complex)
 
     private lazy val integral = Integral(t => (t ^ (z - 1)) * Exp(-t), Zero, Infinity)(SimpsonsIntegrationMethod)
 
-    protected[this] def eval(precision: Precision) = integral.evaluate(precision)
+    protected[this] def doEvaluate(precision: Precision) = integral.evaluate(precision)
 
     override def isEmpty = false //Gamma is not zero anywhere.
 

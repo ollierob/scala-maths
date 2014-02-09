@@ -60,6 +60,6 @@ class ExpOf(re: Real)
 
     override def isEmpty = MinusInfinity == re
 
-    protected[this] override def eval(precision: Precision) = BigDecimalMath.exp(re.evaluate(precision).underlying())
+    protected[this] override def doEvaluate(precision: Precision) = BigDecimalMath.exp(re.evaluate(precision).underlying())
 
 }

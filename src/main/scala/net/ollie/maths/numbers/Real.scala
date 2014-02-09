@@ -239,7 +239,7 @@ class ExactReal(val of: BigDecimal)
 class NegatedReal(val of: Real)
         extends Real {
 
-    protected[this] def eval(precision: Precision) = -(of.evaluate(precision))
+    protected[this] def doEvaluate(precision: Precision) = -(of.evaluate(precision))
 
     override def variables = super[Real].variables
 
@@ -279,7 +279,7 @@ class InverseReal(val of: Real)
 class AbsReal(val of: Real)
         extends PositiveReal {
 
-    protected[this] def eval(precision: Precision) = of.evaluate(precision).abs
+    protected[this] def doEvaluate(precision: Precision) = of.evaluate(precision).abs
 
     def isEmpty = of.isEmpty
 

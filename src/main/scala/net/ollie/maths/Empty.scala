@@ -50,7 +50,7 @@ trait EmptyNumber
 
     override def toString = super[Empty].toString
 
-    protected def eval(precision: Precision) = BigDecimal(0) to precision
+    protected def doEvaluate(precision: Precision) = BigDecimal(0) to precision
 
     override def toConstant: Option[System] = Some(this.narrow)
 

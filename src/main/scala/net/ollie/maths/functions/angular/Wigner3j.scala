@@ -109,7 +109,7 @@ private class EvenWigner3J(val l: CyclicTuple3[Natural, Natural, Natural])
 
     private def gml(l: Natural) = (g - l).abs.!
 
-    protected[this] def eval(precision: Precision) = f.evaluate(precision)
+    protected[this] def doEvaluate(precision: Precision) = f.evaluate(precision)
 
 }
 
@@ -164,6 +164,6 @@ private class FullWigner3j(val lAndM: CyclicTuple3[ModalPair, ModalPair, ModalPa
 
     }.toSeq
 
-    protected[this] def eval(precision: Precision) = f.evaluate(precision)
+    protected[this] def doEvaluate(precision: Precision) = f.evaluate(precision)
 
 }

@@ -131,7 +131,7 @@ private class SumOver[N <: Integer](f: N => Real, over: Seq[N])
         terms
     }
 
-    protected[this] def eval(precision: Precision) = series.sum.evaluate(precision)
+    protected[this] def doEvaluate(precision: Precision) = series.sum.evaluate(precision)
 
     def isEmpty = over.isEmpty || series.forall(_.isEmpty)
 

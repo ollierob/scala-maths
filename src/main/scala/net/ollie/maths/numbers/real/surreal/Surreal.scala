@@ -14,7 +14,7 @@ trait Surreal
 
     override def abs = nearest.abs
 
-    protected[this] def eval(precision: Precision) = nearest.evaluate(precision)
+    protected[this] def doEvaluate(precision: Precision) = nearest.evaluate(precision)
 
     def isEmpty = left.isEmpty && right.isEmpty
 
@@ -104,7 +104,7 @@ object EmptyForm
 
     override def isEmpty = true
 
-    override def eval(precision: Precision) = super[EmptyNumber].eval(precision)
+    override def doEvaluate(precision: Precision) = super[EmptyNumber].doEvaluate(precision)
 
     override def toString = super[EmptyNumber].toString
 
@@ -120,7 +120,7 @@ object InfiniteForm
 
     def nearest = Infinity
 
-    protected[this] override def eval(precision: Precision) = Infinity.evaluate(precision)
+    protected[this] override def doEvaluate(precision: Precision) = Infinity.evaluate(precision)
 
     def left = ???
 

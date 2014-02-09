@@ -64,7 +64,7 @@ private class RealSin(val of: Angle)
 
     private lazy val series = MaclaurinSeries(Sin, of.toRadians)
 
-    protected[this] def eval(precision: Precision) = series.evaluate(precision)
+    protected[this] def doEvaluate(precision: Precision) = series.evaluate(precision)
 
     override def variables = super[Real].variables
 
@@ -130,7 +130,7 @@ class RealArcSin(val x: Real)
 
     //private def nth(n: NaturalNumber): RealNumber = BinomialCoefficient(2 * n, n) * (x ^ (2 * n + 1)) / ((4 ^ n) * (2 * n + 1))
 
-    protected[this] def eval(precision: Precision) = BigDecimalMath.asin(x.approximatelyEvaluate(precision).underlying())
+    protected[this] def doEvaluate(precision: Precision) = BigDecimalMath.asin(x.approximatelyEvaluate(precision).underlying())
 
     def isEmpty = x.isEmpty
 

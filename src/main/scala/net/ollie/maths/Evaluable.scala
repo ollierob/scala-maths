@@ -25,7 +25,7 @@ trait Evaluable {
             case _ =>
         }
 
-        val evaluated = this.eval(precision)
+        val evaluated = this.doEvaluate(precision)
 
         if (max.isDefined) {
             precision > max.get._1 match {
@@ -40,7 +40,7 @@ trait Evaluable {
 
     }
 
-    protected[this] def eval(precision: Precision): BigDecimal
+    protected[this] def doEvaluate(precision: Precision): BigDecimal
 
     def approximatelyEvaluate(precision: Precision): BigDecimal = evaluate(precision)
 

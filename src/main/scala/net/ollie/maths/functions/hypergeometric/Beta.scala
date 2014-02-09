@@ -52,7 +52,7 @@ class RealBeta(override val x: Real, override val y: Real)
 
     private def nth(n: Natural): Real = (1 + ((x * y) / (n * (x + y + n)))).inverse
 
-    protected[this] def eval(precision: Precision) = series.evaluate(precision)
+    protected[this] def doEvaluate(precision: Precision) = series.evaluate(precision)
 
     override def toConstant = super[Real].toConstant
 
