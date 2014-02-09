@@ -3,7 +3,6 @@ package net.ollie.maths.numbers
 import scala.collection.mutable
 
 import net.ollie.maths.{Number, Operation}
-import net.ollie.maths.numbers.real.RealToIntegerPower
 
 /**
  * Positive integer classes.

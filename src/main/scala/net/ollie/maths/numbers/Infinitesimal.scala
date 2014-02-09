@@ -1,7 +1,5 @@
 package net.ollie.maths.numbers
 
-import net.ollie.maths.numbers.Precision
-
 /**
  * Created by Ollie on 09/02/14.
  */

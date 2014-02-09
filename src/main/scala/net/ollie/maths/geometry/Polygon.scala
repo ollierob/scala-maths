@@ -6,8 +6,7 @@ import net.ollie.maths.numbers.{Natural, PositiveReal}
  * Created by Ollie on 19/01/14.
  * @see http://mathworld.wolfram.com/Polygon.html
  */
-trait Polygon
-        extends Shape {
+trait Polygon {
 
     def sides: Natural
 

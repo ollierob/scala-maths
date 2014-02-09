@@ -1,7 +1,5 @@
 package net.ollie.maths.numbers
 
-import net.ollie.maths.numbers.Real
-
 /**
  * Created by Ollie on 12/01/14.
  */

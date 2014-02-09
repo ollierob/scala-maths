@@ -2,6 +2,7 @@ package net.ollie.maths.geometry
 
 import net.ollie.maths.functions.numeric.PositiveSquareRoot
 import net.ollie.maths.numbers.PositiveReal
+import net.ollie.utils.Homogeneous4Tuple
 
 /**
  * Created by Ollie on 19/01/14.
@@ -11,9 +12,9 @@ trait Quadrilateral
 
     final def sides = 4
 
-}
+    def perimeter = describeSides.iterator.sum
 
-object Quadrilateral {
+    def describeSides: Homogeneous4Tuple[PositiveReal]
 
 }
 
@@ -28,13 +29,30 @@ object Trapezoid {
 
 }
 
-class Trapezoid(a: PositiveReal, b: PositiveReal, h: PositiveReal)
+/**
+ * Not enough information to fully describe.
+ * @param a
+ * @param b
+ * @param h
+ */
+abstract class Trapezoid(val a: PositiveReal, val b: PositiveReal, val h: PositiveReal)
         extends Quadrilateral {
 
-    lazy val g: PositiveReal = PositiveSquareRoot((a - b).squared + h.squared)
+    private lazy val g: PositiveReal = PositiveSquareRoot((a - b).squared + h.squared)
+
+    override def perimeter = a + b + h + g
 
     def area = Trapezoid.area(a, b, h)
 
-    def perimeter = a + b + h + g
+}
+
+class Square(val side: PositiveReal)
+        extends Quadrilateral {
+
+    def area = side.squared
+
+    def describeSides = (side, side, side, side)
+
+    override def toString = s"Square($side)"
 
 }

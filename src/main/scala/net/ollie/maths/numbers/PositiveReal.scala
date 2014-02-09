@@ -1,7 +1,7 @@
 package net.ollie.maths.numbers
 
-import net.ollie.maths.numbers.real.RealPower
 import org.nevec.rjm.BigDecimalMath
+import net.ollie.maths.Operation
 
 /**
  * Numbers known to be equal to or greater than zero at compile time.
@@ -33,6 +33,35 @@ object PositiveReal {
     def inverse(re: PositiveReal): PositiveReal = new PositiveRealInverse(re)
 
     def pow(base: PositiveReal, power: Real): PositiveReal = new PositiveRealPower(base, power)
+
+    implicit object Numeric
+            extends scala.Numeric[PositiveReal] {
+
+        def compare(x: PositiveReal, y: PositiveReal) = x compare y
+
+        def toDouble(x: PositiveReal) = x.evaluate(DoublePrecision).toDouble
+
+        def toFloat(x: PositiveReal) = x.evaluate(SinglePrecision).toFloat
+
+        def toLong(x: PositiveReal) = x.evaluate(IntegerPrecision).toLong
+
+        def toInt(x: PositiveReal) = x.evaluate(IntegerPrecision).toInt
+
+        def fromInt(x: Int) = Natural(x)
+
+        def negate(x: PositiveReal) = Operation.illegal(s"Cannot negate $x to a positive!")
+
+        def times(x: PositiveReal, y: PositiveReal) = x * y
+
+        def minus(x: PositiveReal, y: PositiveReal) = {
+            val z: Real = x - y
+            if (z.isStrictlyPositive) z.abs
+            else Operation.illegal(s"$x -$y is not positive!")
+        }
+
+        def plus(x: PositiveReal, y: PositiveReal) = x + y
+
+    }
 
 }
 

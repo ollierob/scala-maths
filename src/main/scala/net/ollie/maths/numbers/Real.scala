@@ -5,7 +5,6 @@ import scala.collection.mutable
 
 import net.ollie.maths._
 import net.ollie.maths.methods.{ApproximatelyEvaluated, Product}
-import net.ollie.maths.numbers.real.{Massive, PowerTower, RealPower}
 
 /**
  * Created by Ollie on 01/01/14.

@@ -3,7 +3,6 @@ package net.ollie.maths.functions.numeric
 import net.ollie.maths._
 import net.ollie.maths.functions.ExpressionBuilder
 import net.ollie.maths.numbers._
-import net.ollie.maths.numbers.real.EulersNumber
 import org.nevec.rjm.BigDecimalMath
 import net.ollie.maths.numbers.constants.EulersNumber
 

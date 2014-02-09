@@ -4,7 +4,6 @@ import scala.Some
 
 import net.ollie.maths._
 import net.ollie.maths.methods.Series
-import net.ollie.maths.numbers.{One, PositiveReal, Real, Zero}
 
 /**
  * Real finite numbers that are unlikely to be expressible in decimal form.

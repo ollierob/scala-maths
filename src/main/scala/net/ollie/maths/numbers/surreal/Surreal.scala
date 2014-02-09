@@ -2,7 +2,6 @@ package net.ollie.maths.numbers.surreal
 
 import net.ollie.maths.{EmptyNumber, Variable}
 import net.ollie.maths.numbers._
-import net.ollie.maths.numbers.real.Infinitesimal
 
 /**
  * Created by Ollie on 06/01/14.
