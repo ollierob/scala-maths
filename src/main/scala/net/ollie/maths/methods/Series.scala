@@ -12,7 +12,12 @@ import net.ollie.maths.numbers._
  */
 object Series {
 
-    def apply(left: Expression, right: Expression): Expression = if (left.isEmpty) right else if (right.isEmpty) left else new Series(Seq(left, right))
+    def apply(left: Expression, right: Expression): Expression = (left, right) match {
+        case _ if left.isEmpty => right
+        case _ if right.isEmpty => left
+        case (_, s: Series[_]) => s :+ left
+        case _ => new Series(Seq(left, right))
+    }
 
     def apply(terms: Iterable[Expression]): Expression = terms.filterNot(_.isEmpty) match {
         case Nil => Zero
@@ -52,6 +57,11 @@ class Series[+T <: Expression](val terms: Seq[T])
     override def +(that: Expression) = that match {
         case s: Series[_] => Series(terms ++: s.terms)
         case _ => Series(terms :+ that)
+    }
+
+    def :+(that: Expression) = that match {
+        case s: Series[_] => Series(s.terms ++: terms)
+        case _ => Series(that +: terms)
     }
 
     override def df(x: Variable) = Series(terms.map(_.df(x)))
