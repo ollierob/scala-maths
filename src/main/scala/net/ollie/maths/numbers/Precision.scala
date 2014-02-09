@@ -81,9 +81,19 @@ class DecimalPlaces(val value: Int)
 
 }
 
-object IntegerPrecision extends DecimalPlaces(0)
+/**
+ * Accurate to zero decimal places.
+ */
+object IntegerPrecision
+        extends DecimalPlaces(0)
 
-class SignificantFigures(val value: Int) extends AnyRef with Precision {
+/**
+ * Accurate to N significant figures.
+ * @param value
+ */
+class SignificantFigures(val value: Int)
+        extends AnyRef
+        with Precision {
 
     import Precision._
 

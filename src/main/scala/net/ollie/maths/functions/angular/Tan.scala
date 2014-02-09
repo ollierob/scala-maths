@@ -18,7 +18,7 @@ object Tan
         case _ => ???
     }
 
-    def apply(angle: Angle) = new RealTan(angle)
+    def apply(angle: Angle): Real = new RealTan(angle)
 
     protected[this] def create(expr: Expression) = new Tan(expr)
 
@@ -57,7 +57,9 @@ class RealTan(override val of: Angle)
 object Cotan
         extends ExpressionBuilder {
 
-    def apply(n: Number) = Tan(n).inverse
+    def apply(n: Number): Number = Tan(n).inverse
+
+    def apply(re: Angle): Real = Tan(re).inverse
 
     protected[this] def create(expr: Expression) = 1 / Tan(expr)
 

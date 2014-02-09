@@ -1,6 +1,7 @@
 package net.ollie.maths.numbers.constants
 
-import net.ollie.maths.numbers.{PositiveReal, Precision}
+import net.ollie.maths.numbers._
+import net.ollie.maths.methods.ApproximatelyEvaluated
 
 /**
  * Created by Ollie on 05/01/14.
@@ -17,6 +18,23 @@ object Pi
 
     def isEmpty = false
 
+    def /(that: Natural): PiOrLess = new PiOver(that)
+
     override def toString = "π"
+
+}
+
+trait PiOrLess
+        extends PositiveReal
+
+private class PiOver(val d: Natural)
+        extends PiOrLess
+        with ApproximatelyEvaluated {
+
+    def isEmpty = !Infinite.is(d)
+
+    protected[this] def approx(precision: Precision) = Pi.approximatelyEvaluate(precision) / d.approximatelyEvaluate(precision)
+
+    override def toString = s"$Pi/$d"
 
 }

@@ -46,13 +46,16 @@ abstract class Trapezoid(val a: PositiveReal, val b: PositiveReal, val h: Positi
 
 }
 
-class Square(val side: PositiveReal)
-        extends Quadrilateral {
+class Square(val sideLength: PositiveReal)
+        extends Quadrilateral
+        with RegularPolygon {
 
-    def area = side.squared
+    override def area = sideLength.squared
 
-    def describeSides = (side, side, side, side)
+    def describeSides = (sideLength, sideLength, sideLength, sideLength)
 
-    override def toString = s"Square($side)"
+    override def perimeter = super[RegularPolygon].perimeter
+
+    override def toString = s"Square($sideLength)"
 
 }

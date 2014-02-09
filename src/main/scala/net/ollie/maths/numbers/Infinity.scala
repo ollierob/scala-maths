@@ -1,6 +1,6 @@
 package net.ollie.maths.numbers
 
-import net.ollie.maths.Empty
+import net.ollie.maths.{Number, Empty}
 
 /**
  * Basic implementations of infinity.
@@ -14,6 +14,15 @@ trait Infinite {
     protected[this] def doEvaluate(precision: Precision): BigDecimal = ??? //TODO tie to Evaluable
 
     def abs: PositiveReal with Infinite = Infinity
+
+}
+
+object Infinite {
+
+    def is(n: Number): Boolean = n match {
+        case i: Infinite => true
+        case _ => false
+    }
 
 }
 

@@ -2,7 +2,6 @@ package net.ollie.maths.functions.numeric
 
 import net.ollie.maths.{Number, Variable}
 import net.ollie.maths.numbers._
-import net.ollie.maths.numbers.real.EulersNumber
 import org.junit.runner.RunWith
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.junit.JUnitRunner

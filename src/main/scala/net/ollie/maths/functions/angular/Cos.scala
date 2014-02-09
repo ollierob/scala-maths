@@ -66,6 +66,8 @@ object Sec
 
     def apply(n: Number) = Cos(n).inverse
 
+    def apply(re: Angle): Real = Cos(re).inverse
+
     protected[this] def create(expr: Expression) = 1 / Cos(expr)
 
     protected[this] def empty = Cos.empty.inverse
@@ -87,7 +89,7 @@ object ArcCos
         case _ => ???
     }
 
-    def apply(f: Real): Angle = new RealArcCos(f) radians
+    def apply(re: Real): Angle = new RealArcCos(re) radians
 
     protected[this] def create(x: Expression) = new ArcCos(x)
 

@@ -1,6 +1,6 @@
 package net.ollie.maths.functions.angular
 
-import net.ollie.maths.numbers.{IntegerFraction, Real}
+import net.ollie.maths.numbers.{SinglePrecision, IntegerFraction, Real}
 import org.junit.runner.RunWith
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.junit.JUnitRunner
@@ -26,7 +26,7 @@ class ArcCosTest extends FlatSpec with Matchers {
 
     "ArcCos(3/5) + ArcCos(4/5)" should "equal Pi/2" in {
         val r = ArcCos(IntegerFraction(3, 5)) + ArcCos(IntegerFraction(4, 5))
-        r.evaluate(4 dp) shouldBe BigDecimal("1.5708")
+        r.evaluate(SinglePrecision) shouldBe BigDecimal("1.570796")
         r shouldBe Pi / 2
     }
 
