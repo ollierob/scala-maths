@@ -38,6 +38,8 @@ class Homogeneous1Tuple[T](a: T)
             a
         }
 
+        override def size = Homogeneous1Tuple.this.size
+
     }
 
 }
@@ -68,6 +70,8 @@ class Homogeneous2Tuple[+T](a: T, b: T)
                 case _ => throw new NoSuchElementException
             }
         }
+
+        override def size = Homogeneous2Tuple.this.size
 
     }
 
@@ -101,6 +105,8 @@ class Homogeneous3Tuple[T](a: T, b: T, c: T)
             }
         }
 
+        override def size = Homogeneous3Tuple.this.size
+
     }
 
 }
@@ -133,6 +139,8 @@ class Homogeneous4Tuple[T](a: T, b: T, c: T, d: T)
                 case _ => throw new NoSuchElementException
             }
         }
+
+        override def size = Homogeneous4Tuple.this.size
 
     }
 
