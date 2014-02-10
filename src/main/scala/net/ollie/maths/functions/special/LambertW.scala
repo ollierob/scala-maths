@@ -21,8 +21,8 @@ object LambertW
 
     override def apply(re: Real): Number = ???
 
-    def apply(z: Complex): Multivalued[Complex] = {
-        Multivalued(Set[Complex](new LambertWZeroComplexBranch(z), new LambertWMinusOneBranch(z)))
+    def apply(z: Complex): LambertWBranches = {
+        new LambertWBranches(new LambertWZeroComplexBranch(z), new LambertWMinusOneBranch(z))
     }
 
     def apply(p: PositiveReal): LambertWZeroBranch with PositiveReal = new LambertWZeroPositiveBranch(p)
@@ -94,3 +94,6 @@ class LambertWMinusOneBranch(val of: Complex)
     override def toString = s"LambertW-1($of)"
 
 }
+
+class LambertWBranches(val w0: LambertWZeroComplexBranch, val w1: LambertWMinusOneBranch)
+        extends MultivaluedSet(Set[Complex](w0, w1))

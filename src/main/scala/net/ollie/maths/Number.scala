@@ -12,7 +12,7 @@ trait Number
 
     self =>
 
-    type System >: this.type <: Number {type System = self.System}
+    type System >: this.type <: Number //{type System <: self.System}
 
     final def narrow: System = this
 

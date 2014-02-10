@@ -5,18 +5,18 @@ import net.ollie.maths.Number
 /**
  * Created by Ollie on 09/02/14.
  */
-trait Multivalued[N <: Number]
+trait Multivalued
         extends Number {
 
-    type System = Multivalued[_]
+    type System = Multivalued
 
-    def values: Set[N]
+    type Contents <: Number
+
+    def values: Set[Contents]
 
     def isEmpty = values.forall(_.isEmpty)
 
-    def inverse: Multivalued[_]
-
-    def unary_-(): Multivalued[_]
+    def unary_-(): Multivalued
 
     def ?^(that: Number): Option[Number] = ???
 
@@ -28,28 +28,38 @@ trait Multivalued[N <: Number]
 
 object Multivalued {
 
-    def apply[N <: Number](n: N): Multivalued[N] = n match {
-        case m: Multivalued[N] => m
+    def apply[N <: Number](n: N): Multivalued = n match {
+        case m: Multivalued => m
         case _ => new MultivaluedSingleton(n)
     }
 
-    def apply[N <: Number](values: Set[N]): Multivalued[N] = new MultivaluedSet(values)
+    def apply[N <: Number](values: Set[N]): Multivalued = new MultivaluedSet(values)
+
+    trait Builder[N] {
+
+        def apply(set: Set[N]): N with Multivalued
+
+    }
 
 }
 
 class MultivaluedSingleton[N <: Number](val value: N)
-        extends Multivalued[N] {
+        extends Multivalued {
+
+    type Contents = N
 
     def values = Set(value)
 
-    def inverse = Multivalued(value.inverse)
+    def unary_-(): Multivalued = Multivalued(-value)
 
-    def unary_-() = Multivalued(-value)
+    def inverse = Multivalued(value.inverse)
 
 }
 
 class MultivaluedSet[N <: Number](val values: Set[N])
-        extends Multivalued[N] {
+        extends Multivalued {
+
+    type Contents = N
 
     def unary_-() = Multivalued(values.map(-_))
 
