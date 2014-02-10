@@ -3,12 +3,10 @@ package net.ollie.maths.functions.angular
 import scala.Some
 
 import net.ollie.maths._
-import net.ollie.maths.functions.{BuiltFunction, RealFunctionBuilder, FunctionBuilder, UnivariateFunction}
-import net.ollie.maths.functions.numeric.SquareRoot
+import net.ollie.maths.functions.{BuiltFunction, RealFunctionBuilder, FunctionBuilder}
 import net.ollie.maths.methods.MaclaurinSeries
 import net.ollie.maths.numbers.{Precision, Real}
-import org.nevec.rjm.BigDecimalMath
-import net.ollie.maths.numbers.constants.{One, Pi}
+import net.ollie.maths.numbers.constants.One
 
 /**
  * Created by Ollie on 03/01/14.
@@ -18,22 +16,33 @@ object Cos
 
     import Angle._
 
-    def apply(re: Real): Real = re match {
+    def apply(re: Real): Real with Cos = re match {
         case a: Angle => apply(a)
         case _ => apply(re radians)
     }
 
-    def apply(angle: Angle): Real = if (angle.isEmpty) empty else new RealCos(angle)
+    def apply(angle: Angle): Real with Cos = new RealCos(angle)
 
-    protected[this] def create(expr: Expression): Cos = new Cos(expr)
+    protected[this] def create(expr: Expression): Cos = new CosOf(expr)
 
     protected[angular] def empty = One
 
 }
 
-class Cos(val of: Expression)
+trait Cos extends Expression {
+
+    val of: Expression
+
+    override def toString = s"Cos($of)"
+
+}
+
+class CosOf(val of: Expression)
         extends BuiltFunction
+        with Cos
         with Invertible {
+
+    type Inverse = Expression //TODO
 
     protected[this] def builder = Cos
 
@@ -48,12 +57,14 @@ class Cos(val of: Expression)
 }
 
 class RealCos(override val of: Angle)
-        extends Cos(of)
-        with Real {
+        extends Real
+        with Cos {
 
     private lazy val series = MaclaurinSeries(Cos, of.toRadians)
 
     protected[this] def doEvaluate(precision: Precision) = series.evaluate(precision)
+
+    def isEmpty = ??? //TODO mod
 
     override def inverse = super[Real].inverse
 
@@ -73,60 +84,5 @@ object Sec
     protected[this] def create(expr: Expression) = 1 / Cos(expr)
 
     protected[this] def empty = Cos.empty.inverse
-
-}
-
-/**
- *
- * @see http://mathworld.wolfram.com/InverseCosine.html
- */
-object ArcCos
-        extends FunctionBuilder
-        with UnivariateFunction[Real, Angle] {
-
-    import Angle._
-
-    def apply(n: Number) = n match {
-        case re: Real => apply(re)
-        case _ => ???
-    }
-
-    def apply(re: Real): Angle = new RealArcCos(re) radians
-
-    protected[this] def create(x: Expression) = new ArcCos(x)
-
-    protected[this] def empty = Pi / 2
-
-}
-
-class ArcCos(val of: Expression)
-        extends BuiltFunction
-        with Invertible {
-
-    protected[this] def builder = ArcCos
-
-    protected[this] def derivative(x: Expression) = -1 / SquareRoot(1 - (x ^ 2))
-
-    def inverse = Cos(of)
-
-    def isEmpty = false
-
-    override def toString = s"ArcCos($of)"
-
-}
-
-class RealArcCos(override val of: Real)
-        extends ArcCos(of)
-        with Real {
-
-    protected[this] def doEvaluate(precision: Precision) = BigDecimalMath.acos(of.evaluate(precision).underlying())
-
-    override def isEmpty = of == One
-
-    override def variables = super[Real].variables
-
-    override def toConstant = super[Real].toConstant
-
-    override def inverse = super[Real].inverse
 
 }

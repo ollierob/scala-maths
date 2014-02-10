@@ -16,7 +16,9 @@ trait Real
         with Ordered[Real]
         with MaybeReal {
 
-    final type System = Real
+    type System = Real
+
+    type Inverse = Real
 
     override def replace(variables: Map[Variable, Expression]) = this
 

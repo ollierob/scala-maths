@@ -3,14 +3,16 @@ package net.ollie.maths.functions.numeric
 import net.ollie.maths._
 import net.ollie.maths.functions.FunctionBuilder
 import net.ollie.maths.numbers._
+import net.ollie.maths.numbers.constants.{One, Zero, EulersNumber}
 import org.nevec.rjm.BigDecimalMath
-import net.ollie.maths.numbers.constants.{Zero, EulersNumber}
 
 /**
  * Created by Ollie on 16/01/14.
  */
 trait Log
         extends Invertible {
+
+    type Inverse = Expression //TODO
 
     def base: Real
 
@@ -59,7 +61,7 @@ object Ln
 
     protected[this] def create(expr: Expression) = expr match {
         case Exp(of) => of
-        case _ => new Ln(expr)
+        case _ => new LnOf(expr)
     }
 
     protected[this] def empty: Real = -Infinity
@@ -68,9 +70,18 @@ object Ln
 
 }
 
-class Ln(val of: Expression)
+trait Ln {
+
+    def of: Expression
+
+    override def toString = s"Ln($of)"
+
+}
+
+class LnOf(val of: Expression)
         extends Log
-        with Function {
+        with Function
+        with Ln {
 
     def base = EulersNumber
 
@@ -78,17 +89,17 @@ class Ln(val of: Expression)
 
     protected[this] def apply(expr: Expression) = Ln(expr)
 
-    override def toString = s"Ln($of)"
-
     protected[this] def derivative(at: Expression) = 1 / at
 
 }
 
 class RealLn(override val of: PositiveReal)
-        extends Ln(of)
-        with Real {
+        extends Real
+        with Ln {
 
     override def inverse = super[Real].inverse
+
+    def isEmpty = of == One
 
     protected[this] def doEvaluate(precision: Precision) = BigDecimalMath.log(of.evaluate(precision).underlying())
 

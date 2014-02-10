@@ -12,6 +12,8 @@ trait Multivalued
 
     type Contents <: Number
 
+    type Inverse = Multivalued //{type Inverse = Contents#Inverse}
+
     def values: Set[Contents]
 
     def isEmpty = values.forall(_.isEmpty)

@@ -5,7 +5,7 @@ import scala.Some
 import Angle._
 import net.ollie.maths._
 import net.ollie.maths.functions.{OddBuiltFunction, RealFunctionBuilder, FunctionBuilder, UnivariateFunction}
-import net.ollie.maths.functions.numeric.{Signum, SquareRoot}
+import net.ollie.maths.functions.numeric.SquareRoot
 import net.ollie.maths.functions.special.Sinc
 import net.ollie.maths.methods.MaclaurinSeries
 import net.ollie.maths.numbers._
@@ -35,6 +35,8 @@ object Sin
 private class Sin(val of: Expression)
         extends OddBuiltFunction
         with Invertible {
+
+    type Inverse = Expression //TODO
 
     protected[this] def builder = Sin
 
@@ -79,54 +81,5 @@ object Cosec
     protected[this] def create(expr: Expression) = 1 / Sin(expr)
 
     protected[this] def empty = Sin.empty.inverse
-
-}
-
-object ArcSin
-        extends FunctionBuilder
-        with UnivariateFunction[Real, Angle] {
-
-    def apply(n: Number) = n match {
-        case re: Real => apply(re)
-        case _ => ???
-    }
-
-    def apply(d: BigDecimal): Angle = apply(Real(d))
-
-    def apply(re: Real): Angle = re match {
-        case _ if re.abs < One => new RealArcSin(re) radians
-        case _ if re.abs == One => Signum(re) * One radians
-        case _ => Operation.undefined
-    }
-
-    protected[this] def empty = Zero
-
-    protected[this] def create(expr: Expression) = new ArcSin(expr)
-
-}
-
-class ArcSin(val of: Expression)
-        extends OddBuiltFunction {
-
-    def isEmpty = of.isEmpty
-
-    protected[this] def builder = ArcSin
-
-    protected[this] def derivative(x: Expression) = 1 / SquareRoot(1 - (x ^ 2))
-
-    override def toString = s"ArcSin($of)"
-
-}
-
-class RealArcSin(val x: Real)
-        extends Real {
-
-    //private lazy val series = Series(nth _, Zero)
-
-    //private def nth(n: NaturalNumber): RealNumber = BinomialCoefficient(2 * n, n) * (x ^ (2 * n + 1)) / ((4 ^ n) * (2 * n + 1))
-
-    protected[this] def doEvaluate(precision: Precision) = BigDecimalMath.asin(x.approximatelyEvaluate(precision).underlying())
-
-    def isEmpty = x.isEmpty
 
 }

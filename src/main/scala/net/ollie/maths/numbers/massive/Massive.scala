@@ -20,6 +20,8 @@ trait Massive
 
     type System = Massive
 
+    type Inverse = Real //TODO
+
     def inverse: Real = this.tryReduce match {
         case Some(re) => re.inverse
         case _ => new InvertedMassive(this)
