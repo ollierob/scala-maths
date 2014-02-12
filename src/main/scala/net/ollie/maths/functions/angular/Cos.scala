@@ -5,8 +5,8 @@ import scala.Some
 import net.ollie.maths._
 import net.ollie.maths.functions.{BuiltFunction, RealFunctionBuilder, FunctionBuilder}
 import net.ollie.maths.methods.MaclaurinSeries
-import net.ollie.maths.numbers.{Precision, Real}
-import net.ollie.maths.numbers.constants.One
+import net.ollie.maths.numbers.{Integer, Precision, Real}
+import net.ollie.maths.numbers.constants.{Pi, One}
 
 /**
  * Created by Ollie on 03/01/14.
@@ -23,7 +23,7 @@ object Cos
 
     def apply(angle: Angle): Real with Cos = new RealCos(angle)
 
-    protected[this] def create(expr: Expression): Cos = new CosOf(expr)
+    protected[this] def create(expr: Expression) = new CosOf(expr)
 
     protected[angular] def empty = One
 
@@ -64,7 +64,15 @@ class RealCos(override val of: Angle)
 
     protected[this] def doEvaluate(precision: Precision) = series.evaluate(precision)
 
-    def isEmpty = ??? //TODO mod
+    private lazy val empty: Boolean = {
+        val mod = 2 * of / Pi
+        mod match {
+            case i: Integer => !i.isEven
+            case _ => false
+        }
+    }
+
+    def isEmpty = empty
 
     override def inverse = super[Real].inverse
 

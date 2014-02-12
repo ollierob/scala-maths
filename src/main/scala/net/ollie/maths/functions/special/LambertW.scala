@@ -1,6 +1,6 @@
 package net.ollie.maths.functions.special
 
-import net.ollie.maths.functions.{ComplexFunctionBuilder, BuiltFunction}
+import net.ollie.maths.functions.{UnivariateFunction, ComplexFunctionBuilder, BuiltFunction}
 import net.ollie.maths.{Number, Expression}
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.constants.{Zero, One}
@@ -13,19 +13,20 @@ import net.ollie.maths.numbers.complex.Complex
  * @see http://mathworld.wolfram.com/LambertW-Function.html
  */
 object LambertW
-        extends ComplexFunctionBuilder {
+        extends ComplexFunctionBuilder
+        with UnivariateFunction[Complex, LambertWBranches] {
 
-    protected[this] def empty = Zero
-
-    protected[this] def create(expr: Expression) = new LambertWFunction(expr)
-
-    override def apply(re: Real): Number = ???
+    type Z = LambertWBranches
 
     def apply(z: Complex): LambertWBranches = {
         new LambertWBranches(new LambertWZeroComplexBranch(z), new LambertWMinusOneBranch(z))
     }
 
     def apply(p: PositiveReal): LambertWZeroBranch with PositiveReal = new LambertWZeroPositiveBranch(p)
+
+    protected[this] def create(expr: Expression) = new LambertWFunction(expr)
+
+    protected[this] def empty = Zero
 
 }
 

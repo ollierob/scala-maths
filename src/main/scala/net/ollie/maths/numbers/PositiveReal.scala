@@ -20,7 +20,10 @@ trait PositiveReal
 
     def /(that: PositiveReal): PositiveReal = this * that.inverse
 
-    def ^(that: Real): PositiveReal = PositiveReal.pow(this, that)
+    def ^(that: Real): PositiveReal = that match {
+        case i: Integer => this.^(that)
+        case _ => PositiveReal.pow(this, that)
+    }
 
     override def ^(that: Integer): PositiveReal = PositiveReal.pow(this, that)
 
@@ -93,6 +96,7 @@ class PositiveRealPower(val base: PositiveReal, val power: Real)
         with RealPower {
 
     protected[this] def doEvaluate(precision: Precision) = {
+        println(s"EVALUATING $this AT $precision")
         BigDecimalMath.pow(base.evaluate(precision).underlying(), power.evaluate(precision).underlying())
     }
 

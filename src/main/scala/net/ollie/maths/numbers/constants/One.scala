@@ -1,7 +1,7 @@
 package net.ollie.maths.numbers.constants
 
 import net.ollie.maths.numbers._
-import net.ollie.maths.Number
+import net.ollie.maths.{Expression, Number}
 import scala.Some
 
 /**
@@ -16,11 +16,31 @@ object One
 
     override def decr = Zero
 
-    override def ?*(that: Number)(leftToRight: Boolean): Option[Number] = Some(that)
+    override def *(that: Real) = that
+
+    override def *(that: PositiveReal) = that
+
+    override def *(that: Integer) = that
 
     override def *(that: Natural) = that
 
+    override def ?*(that: Expression)(leftToRight: Boolean) = Some(that)
+
+    override def ?*(that: Number)(leftToRight: Boolean): Option[Number] = Some(that)
+
     override def ?*(that: Real) = Some(that)
+
+    override def ?*?(that: Real) = Some(that)
+
+    override def ^(that: Expression) = this
+
+    override def ^(that: Real) = this
+
+    override def ^(that: Integer) = this
+
+    override def ^(that: Natural) = this
+
+    override def ?^(that: Number) = Some(this)
 
 }
 

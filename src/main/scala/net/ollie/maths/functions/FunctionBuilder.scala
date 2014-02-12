@@ -56,10 +56,8 @@ trait RealFunctionBuilder
 
     def apply(n: Number): Number = Real(n) match {
         case Some(re) => apply(re)
-        case _ => otherwise(n)
+        case _ => ???
     }
-
-    protected def otherwise(n: Number): Number = ???
 
     def apply(re: Real): Number
 
@@ -68,13 +66,18 @@ trait RealFunctionBuilder
 trait ComplexFunctionBuilder
         extends RealFunctionBuilder {
 
-    protected override def otherwise(n: Number): Number = Complex(n) match {
-        case Some(z) => apply(z)
-        case _ => super.apply(n)
+    type Z <: Number
+
+    override def apply(n: Number): Z = Complex(n) match {
+        case Some(z) => z.toReal match {
+            case Some(re) => apply(re)
+            case _ => apply(z)
+        }
+        case _ => ???
     }
 
-    def apply(re: Real): Number = apply(Complex(re))
+    def apply(re: Real): Z = apply(Complex(re))
 
-    def apply(z: Complex): Number
+    def apply(z: Complex): Z
 
 }

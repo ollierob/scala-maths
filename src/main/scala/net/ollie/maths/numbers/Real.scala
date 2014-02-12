@@ -92,7 +92,7 @@ trait Real
      * @param that
      * @return
      */
-    override def ?*(that: Number)(leftToRight: Boolean) = that match {
+    def ?*(that: Number)(leftToRight: Boolean) = that match {
         case re: Real => Some(this * re)
         case _ => None
     }

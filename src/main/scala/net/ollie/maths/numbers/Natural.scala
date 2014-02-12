@@ -37,9 +37,14 @@ trait Natural
 
     def *(that: Natural): Natural = Natural(this.evaluate * that.evaluate)
 
-    def *(i: Int): Integer = this * Integer(i) //Helps resolve ambiguous reference errors
+    final def *(i: Int): Integer = this * Integer(i) //Helps resolve ambiguous reference errors
 
     def /(that: Natural): PositiveReal with Rational = Natural.divide(this, that)
+
+    override def ^(that: Integer) = that match {
+        case n: Natural => this.^(n)
+        case _ => super.^(that)
+    }
 
     def ^(that: Natural): Natural = Natural.power(this, that)
 

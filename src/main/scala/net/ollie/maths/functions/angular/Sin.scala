@@ -5,12 +5,10 @@ import scala.Some
 import Angle._
 import net.ollie.maths._
 import net.ollie.maths.functions.{OddBuiltFunction, RealFunctionBuilder, FunctionBuilder, UnivariateFunction}
-import net.ollie.maths.functions.numeric.SquareRoot
 import net.ollie.maths.functions.special.Sinc
 import net.ollie.maths.methods.MaclaurinSeries
 import net.ollie.maths.numbers._
-import org.nevec.rjm.BigDecimalMath
-import net.ollie.maths.numbers.constants.{Zero, One}
+import net.ollie.maths.numbers.constants.Zero
 
 /**
  * Created by Ollie on 02/01/14.
@@ -19,21 +17,31 @@ object Sin
         extends RealFunctionBuilder
         with UnivariateFunction[Angle, Real] {
 
-    def apply(re: Real): Real = re match {
+    def apply(re: Real): Real with Sin = re match {
         case angle: Angle => apply(angle)
         case _ => apply(re radians)
     }
 
-    def apply(angle: Angle) = if (angle.isEmpty) empty else new RealSin(angle)
+    def apply(angle: Angle): Real with Sin = if (angle.isEmpty) empty else new RealSin(angle)
 
-    protected[this] def create(expr: Expression): Expression = new Sin(expr)
+    protected[this] def create(expr: Expression): Sin = new SinOf(expr)
 
-    protected[angular] def empty = Zero
+    protected[angular] def empty = SinZero
 
 }
 
-private class Sin(val of: Expression)
+trait Sin
+        extends Expression {
+
+    val of: Expression
+
+    override def toString = s"Sin($of)"
+
+}
+
+private class SinOf(val of: Expression)
         extends OddBuiltFunction
+        with Sin
         with Invertible {
 
     type Inverse = Expression //TODO
@@ -56,8 +64,9 @@ private class Sin(val of: Expression)
  * TODO periodicity
  * @param of
  */
-private class RealSin(val of: Angle)
-        extends Real {
+class RealSin(val of: Angle)
+        extends Real
+        with Sin {
 
     private lazy val series = MaclaurinSeries(Sin, of.toRadians)
 
@@ -70,6 +79,17 @@ private class RealSin(val of: Angle)
     def isEmpty = of.isEmpty
 
     override def toString = s"Sin($of)"
+
+}
+
+private object SinZero
+        extends Real
+        with Sin
+        with EmptyNumber {
+
+    val of = Zero
+
+    override def abs = super[EmptyNumber].abs
 
 }
 

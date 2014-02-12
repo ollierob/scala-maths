@@ -11,6 +11,8 @@ import scala.math.BigDecimal.RoundingMode.RoundingMode
  */
 sealed trait Precision {
 
+    require(value >= 0)
+
     def apply(bd: BigDecimal)(implicit mode: RoundingMode = Precision.DEFAULT_ROUNDING): BigDecimal
 
     def increase: Precision
