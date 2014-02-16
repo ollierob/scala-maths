@@ -3,7 +3,6 @@ package org.nevec.rjm;
 import java.math.BigInteger;
 import java.util.Vector;
 
-
 /**
  * Factorials.
  *
@@ -17,8 +16,7 @@ class Factorial {
     static Vector<Ifactor> a = new Vector<Ifactor>();
 
     /**
-     * ctor().
-     * Initialize the vector of the factorials with 0!=1 and 1!=1.
+     * ctor(). Initialize the vector of the factorials with 0!=1 and 1!=1.
      */
     public Factorial() {
         if (a.size() == 0) {
@@ -31,7 +29,7 @@ class Factorial {
      * Compute the factorial of the non-negative integer.
      *
      * @param n the argument to the factorial, non-negative.
-     * @return the factorial of n.
+     * @return the factorial of degree.
      */
     public BigInteger at(int n) {
                 /* extend the internal list if needed.
@@ -44,7 +42,7 @@ class Factorial {
      * Compute the factorial of the non-negative integer.
      *
      * @param n the argument to the factorial, non-negative.
-     * @return the factorial of n.
+     * @return the factorial of degree.
      */
     public Ifactor toIfactor(int n) {
                 /* extend the internal list if needed.
@@ -54,13 +52,13 @@ class Factorial {
     } /* at */
 
     /**
-     * Extend the internal table to cover up to n!
+     * Extend the internal table to cover up to degree!
      *
      * @param n The maximum factorial to be supported.
      * @since 2012-02-15
      */
     private void growto(int n) {
-                /* extend the internal list if needed. Size to be 2 for n<=1, 3 for n<=2 etc.
+                /* extend the internal list if needed. Size to be 2 for degree<=1, 3 for degree<=2 etc.
                 */
         while (a.size() <= n) {
             final int lastn = a.size() - 1;

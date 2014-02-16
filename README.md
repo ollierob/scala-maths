@@ -21,5 +21,5 @@ Build up expressions in a human-readable manner:
     val ex = (2 * Ln(x)) + x
     val df = ex.df(x)
     val sin = Sin(df)
-    val n = sin.replace(x, Pi).toConstant.get
-    n.evaluate(4 decimalPlaces) shouldBe BigDecimal("0.9978")
+    val degree = sin.replace(x, Pi).toConstant.get
+    degree.evaluate(4 decimalPlaces) shouldBe BigDecimal("0.9978")

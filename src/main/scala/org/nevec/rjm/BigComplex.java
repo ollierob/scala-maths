@@ -47,8 +47,7 @@ class BigComplex {
     /**
      * ctor with real part.
      *
-     * @param x real part.
-     *          The imaginary part is set to zero.
+     * @param x real part. The imaginary part is set to zero.
      */
     public BigComplex(BigDecimal x) {
         re = x;
@@ -70,7 +69,7 @@ class BigComplex {
      * Multiply with another BigComplex
      *
      * @param oth The BigComplex which is a factor in the product
-     * @param mc  Defining precision and rounding mode
+     * @param mc Defining precision and rounding mode
      * @return This multiplied by oth
      * @since 2010-07-19 implemented with 3 multiplications and 5 additions/subtractions
      */
@@ -97,7 +96,7 @@ class BigComplex {
     /**
      * Subtract another BigComplex
      *
-     * @param oth the value to be subtracted n this.
+     * @param oth the value to be subtracted degree this.
      * @return this minus oth
      */
     BigComplex subtract(final BigComplex oth) {
@@ -118,8 +117,7 @@ class BigComplex {
     /**
      * The absolute value squared.
      *
-     * @return The sum of the squares of real and imaginary parts.
-     * This is the square of BigComplex.abs() .
+     * @return The sum of the squares of real and imaginary parts. This is the square of BigComplex.abs() .
      */
     BigDecimal norm() {
         return re.multiply(re).add(im.multiply(im));
@@ -138,11 +136,10 @@ class BigComplex {
     /**
      * The square root.
      *
-     * @return the square root of the this.
-     * The branch is chosen such that the imaginary part of the result has the
-     * same sign as the imaginary part of this.
-     * @see Tim Ahrendt, <a href="http://dx.doi.org/10.1145/236869.236924">Fast High-precision computation of complex square roots</a>,
-     * ISSAC 1996 p142-149.
+     * @return the square root of the this. The branch is chosen such that the imaginary part of the result has the same
+     * sign as the imaginary part of this.
+     * @see Tim Ahrendt, <a href="http://dx.doi.org/10.1145/236869.236924">Fast High-precision computation of complex
+     * square roots</a>, ISSAC 1996 p142-149.
      * @since 2008-10-27
      */
     BigComplex sqrt(MathContext mc) {

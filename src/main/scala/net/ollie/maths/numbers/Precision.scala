@@ -15,7 +15,9 @@ sealed trait Precision {
 
     def apply(bd: BigDecimal)(implicit mode: RoundingMode = Precision.DEFAULT_ROUNDING): BigDecimal
 
-    def increase: Precision
+    def increase: Precision = increaseBy(1)
+
+    def increaseBy(value: Int): Precision
 
     def value: Int
 
@@ -70,7 +72,7 @@ class DecimalPlaces(val value: Int)
 
     def apply(bd: BigDecimal)(implicit mode: RoundingMode = Precision.DEFAULT_ROUNDING) = bd.setScale(value, mode)
 
-    def increase = new DecimalPlaces(value + 1)
+    def increaseBy(value: Int) = new DecimalPlaces(this.value + value)
 
     override def >(that: Precision) = that match {
         case d: DecimalPlaces => Some(this.value > d.value)
@@ -105,7 +107,7 @@ class SignificantFigures(val value: Int)
         bd.setScale(value, mode).round(new MathContext(value, mode))
     }
 
-    def increase = new SignificantFigures(value + 1)
+    def increaseBy(value: Int) = new SignificantFigures(this.value + value)
 
     override def >(that: Precision) = that match {
         case s: SignificantFigures => Some(this.value > s.value)

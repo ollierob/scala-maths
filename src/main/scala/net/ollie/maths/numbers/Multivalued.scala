@@ -3,6 +3,7 @@ package net.ollie.maths.numbers
 import net.ollie.maths.Number
 
 /**
+ * TODO should have a  (Very difficult!)
  * Created by Ollie on 09/02/14.
  */
 trait Multivalued
@@ -10,61 +11,83 @@ trait Multivalued
 
     type System = Multivalued
 
+    type Inverse = Multivalued
+
     type Contents <: Number
 
-    type Inverse = Multivalued //{type Inverse = Contents#Inverse}
+    def principal: Contents
 
     def values: Set[Contents]
 
     def isEmpty = values.forall(_.isEmpty)
 
-    def unary_-(): Multivalued
+    def unary_-(): Multivalued = Multivalued.negate(this)
 
-    def ?^(that: Number): Option[Number] = ???
+    def ?^(that: Number) = None
 
-    def ?*(that: Number)(leftToRight: Boolean): Option[Number] = ???
+    def ?*(that: Number)(leftToRight: Boolean) = None
 
-    def ?+(that: Number): Option[Number] = ???
+    def ?+(that: Number) = None
+
+    override def toString = s"$values"
 
 }
 
 object Multivalued {
 
-    def apply[N <: Number](n: N): Multivalued = n match {
+    def apply(n: Number): Multivalued = n match {
         case m: Multivalued => m
         case _ => new MultivaluedSingleton(n)
     }
 
-    def apply[N <: Number](values: Set[N]): Multivalued = new MultivaluedSet(values)
+    def apply[N <: Number](principal: N, values: Set[N]): Multivalued = {
+        new MultivaluedSet(principal, values)
+    }
 
-    trait Builder[N] {
-
-        def apply(set: Set[N]): N with Multivalued
-
+    def negate[M <: Multivalued](m: M): Multivalued = {
+        new NegatedMultivalued(m)
     }
 
 }
 
-class MultivaluedSingleton[N <: Number](val value: N)
+class MultivaluedSingleton[N <: Number](val principal: N)
         extends Multivalued {
 
     type Contents = N
 
-    def values = Set(value)
+    def values = Set(principal)
 
-    def unary_-(): Multivalued = Multivalued(-value)
-
-    def inverse = Multivalued(value.inverse)
+    def inverse = Multivalued(principal.inverse)
 
 }
 
-class MultivaluedSet[N <: Number](val values: Set[N])
+class MultivaluedSet[N <: Number](val principal: N, val values: Set[N])
         extends Multivalued {
 
     type Contents = N
 
-    def unary_-() = Multivalued(values.map(-_))
+    require(values.contains(principal))
 
-    def inverse = Multivalued(values.map(_.inverse))
+    def inverse = {
+        val p: N = principal
+        Multivalued(p.inverse, values.map(_.inverse))
+    }
+
+}
+
+class NegatedMultivalued[M <: Multivalued](val of: M)
+        extends Multivalued {
+
+    type Contents = M#Contents#System
+
+    def inverse = (-of).inverse
+
+    override def unary_-() = ??? //of
+
+    def principal = -(of.principal)
+
+    def values = of.values.map(-_)
+
+    override def toString = s"-$of"
 
 }

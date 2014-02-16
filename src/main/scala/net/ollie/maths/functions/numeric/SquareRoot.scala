@@ -7,6 +7,7 @@ import net.ollie.maths.functions.UnivariateFunction
 import net.ollie.maths.methods.ApproximatelyEvaluated
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.constants.{Half, Zero}
+import org.nevec.rjm.BigDecimalMath
 
 /**
  * Created by Ollie on 08/01/14.
@@ -14,6 +15,25 @@ import net.ollie.maths.numbers.constants.{Half, Zero}
 object SquareRoot {
 
     def apply(x: Expression): Expression = x ^ Half
+
+    def apply(re: PositiveReal) = new RealSquareRoots(re)
+
+}
+
+class RealSquareRoots(val of: PositiveReal)
+        extends Roots[PositiveReal, Real] {
+
+    final def degree = 2
+
+    def inverse = Roots(of.inverse, degree)
+
+    private lazy val root: PositiveReal = PositiveSquareRoot(of)
+
+    def principal = root
+
+    def values = Set[Real](root, -root)
+
+    override def toString = s"±SquareRoot($of)"
 
 }
 
@@ -26,7 +46,10 @@ object PositiveSquareRoot
         case _ => None
     }
 
-    def apply(f: PositiveReal): PositiveReal = if (f.isEmpty) Zero else new PositiveSquareRoot(f)
+    def apply(f: PositiveReal): PositiveReal = {
+        if (f.isEmpty) Zero
+        else new PositiveSquareRoot(f)
+    }
 
     def unapply(root: PositiveSquareRoot): Option[PositiveReal] = Some(root.of)
 
@@ -39,7 +62,7 @@ class PositiveSquareRoot(val of: PositiveReal)
 
     override def approx(precision: Precision) = {
         if (precision.value < 16) Math.sqrt(of.approximatelyEvaluate(precision).toDouble)
-        else ???
+        else BigDecimalMath.sqrt(of.approximatelyEvaluate(precision).underlying())
     }
 
     def isEmpty = of.isEmpty
@@ -54,3 +77,4 @@ class PositiveSquareRoot(val of: PositiveReal)
     override def toString = s"+√($of)"
 
 }
+

@@ -22,7 +22,7 @@ object LambertW
         new LambertWBranches(new LambertWZeroComplexBranch(z), new LambertWMinusOneBranch(z))
     }
 
-    def apply(p: PositiveReal): LambertWZeroBranch with PositiveReal = new LambertWZeroPositiveBranch(p)
+    def apply(p: PositiveReal) = new LambertWZeroPositiveBranch(p)
 
     protected[this] def create(expr: Expression) = new LambertWFunction(expr)
 
@@ -97,4 +97,4 @@ class LambertWMinusOneBranch(val of: Complex)
 }
 
 class LambertWBranches(val w0: LambertWZeroComplexBranch, val w1: LambertWMinusOneBranch)
-        extends MultivaluedSet(Set[Complex](w0, w1))
+        extends MultivaluedSet(w0, Set[Complex](w0, w1))

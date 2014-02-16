@@ -3,7 +3,7 @@ package net.ollie.maths.numbers
 import org.scalatest.{Matchers, FlatSpec}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import net.ollie.maths.numbers.constants.{Zero, One, Pi}
+import Precision._
 
 /**
  * Created by Ollie on 15/01/14.
@@ -11,30 +11,12 @@ import net.ollie.maths.numbers.constants.{Zero, One, Pi}
 @RunWith(classOf[JUnitRunner])
 class RealProductTest extends FlatSpec with Matchers {
 
-    behavior of "2 * Pi"
-
-    {
-
-        val product = RealProduct(2, Pi)
-
-        it should "multiply by zero" in {
-            product * Zero shouldBe (Zero)
-            Zero * product shouldBe (Zero)
-        }
-
-        it should "multiply by 1" in {
-            product * One shouldBe (product)
-        }
-
-        it should "multiply by 2" in {
-            product * 2 shouldBe (RealProduct(4, Pi))
-            2 * product shouldBe (RealProduct(4, Pi))
-        }
-
-        it should "multiply by itself" in {
-            product * product shouldBe (RealProduct(Seq(4, Pi, Pi)))
-        }
-
+    "small * large" should "evaluate" in {
+        val large: Real = Real(999961)
+        val small: Real = 1 / Real(999983)
+        val product = new RealProduct(Seq(small, large))
+        product.evaluate(4 dp) shouldBe BigDecimal("1.0000")
+        product.evaluate(5 dp) shouldBe BigDecimal("0.99998")
     }
 
 }

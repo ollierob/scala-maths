@@ -119,7 +119,7 @@ class NegatedExpression(val of: Expression)
 
     def df(x: Variable) = -(of.df(x))
 
-    override def toString = "-(" + of + ")"
+    override def toString = s"-($of)"
 
 }
 

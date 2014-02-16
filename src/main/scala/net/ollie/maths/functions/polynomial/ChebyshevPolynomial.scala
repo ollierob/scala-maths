@@ -115,7 +115,7 @@ private class UAny(override val n: Natural, val of: Expression)
 
         def apply(r: Integer): Expression = ((-One) ^ r) * BinomialCoefficient(n - r, r) * ((2 * of) ^ (n - (2 * r)))
 
-        override def toString = s"(-1)^r (n-r choose r) (2x)^(n-2r)"
+        override def toString = s"(-1)^r (degree-r choose r) (2x)^(degree-2r)"
 
     }
 

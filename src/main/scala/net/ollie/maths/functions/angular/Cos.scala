@@ -4,9 +4,9 @@ import scala.Some
 
 import net.ollie.maths._
 import net.ollie.maths.functions.{BuiltFunction, RealFunctionBuilder, FunctionBuilder}
-import net.ollie.maths.methods.MaclaurinSeries
 import net.ollie.maths.numbers.{Integer, Precision, Real}
 import net.ollie.maths.numbers.constants.{Pi, One}
+import org.nevec.rjm.BigDecimalMath
 
 /**
  * Created by Ollie on 03/01/14.
@@ -23,13 +23,16 @@ object Cos
 
     def apply(angle: Angle): Real with Cos = new RealCos(angle)
 
+    def unapply(cos: Cos): Option[Expression] = Some(cos.of)
+
     protected[this] def create(expr: Expression) = new CosOf(expr)
 
     protected[angular] def empty = One
 
 }
 
-trait Cos extends Expression {
+trait Cos
+        extends Expression {
 
     val of: Expression
 
@@ -52,6 +55,11 @@ class CosOf(val of: Expression)
 
     def isEmpty = false
 
+    override def equals(that: Expression) = that match {
+        case Cos(y) => of == y || super.equals(that)
+        case _ => super.equals(that)
+    }
+
     override def toString = s"Cos($of)"
 
 }
@@ -60,13 +68,17 @@ class RealCos(override val of: Angle)
         extends Real
         with Cos {
 
-    private lazy val series = MaclaurinSeries(Cos, of.toRadians)
+    private lazy val reduced = of.reduce
 
-    protected[this] def doEvaluate(precision: Precision) = series.evaluate(precision)
+    //private lazy val series = MaclaurinSeries(Cos, of.toRadians)
+
+    protected[this] def doEvaluate(precision: Precision) = {
+        //series.evaluate(precision)
+        precision(BigDecimalMath.cos(of.evaluate(precision).underlying()))
+    }
 
     private lazy val empty: Boolean = {
-        val mod = 2 * of / Pi
-        mod match {
+        (2 * of / Pi) match {
             case i: Integer => !i.isEven
             case _ => false
         }
@@ -86,6 +98,8 @@ object Sec
         extends FunctionBuilder {
 
     def apply(n: Number) = Cos(n).inverse
+
+    def apply(re: Real): Real = Cos(re).inverse
 
     def apply(re: Angle): Real = Cos(re).inverse
 

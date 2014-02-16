@@ -1,6 +1,5 @@
 package net.ollie.maths.functions.numeric
 
-import net.ollie.maths.Number
 import net.ollie.maths.functions.UnivariateFunction
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.complex.Complex
@@ -12,13 +11,6 @@ import net.ollie.maths.numbers.constants.{MinusOne, Zero, One}
 object Signum
         extends UnivariateFunction[Real, Integer] {
 
-    def apply(n: Number): Integer = n match {
-        case Zero => Zero
-        case re: Real => apply(re)
-        case z: Complex => apply(z)
-        case _ => ???
-    }
-
     def apply(re: Real): Integer = re match {
         case Zero => Zero
         case _ if re.isStrictlyPositive => One
@@ -27,7 +19,7 @@ object Signum
 
     def apply(z: Complex): Integer = ComplexSignum(z)
 
-    override def toString = "sgn(?)"
+    override def toString = "Signum(?)"
 
 }
 
@@ -42,6 +34,6 @@ object ComplexSignum
         case otherwise => otherwise
     }
 
-    override def toString = "csgn(?)"
+    override def toString = "ComplexSignum(?)"
 
 }

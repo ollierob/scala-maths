@@ -39,7 +39,7 @@ object BinomialCoefficient {
     def central(n: Integer): Real = apply(n, Floor(n / 2))
 
     /**
-     * Coefficient is good if LeastPrimeFactor(n choose k) > k
+     * Coefficient is good if LeastPrimeFactor(degree choose k) > k
      * @see http://mathworld.wolfram.com/GoodBinomialCoefficient.html
      **/
     def isGood(c: BinomialCoefficient): Boolean = c.k >= 2 && GreatestCommonDivisor(c, c.k !) == One

@@ -1,8 +1,5 @@
 package net.ollie.maths.methods
 
-import scala.collection.mutable
-import scala.collection.mutable.ListBuffer
-
 import net.ollie.maths._
 import net.ollie.maths.functions.FunctionBuilder
 import net.ollie.maths.numbers.{Natural, Precision, Real}
@@ -35,13 +32,14 @@ private class TaylorSeries(val f: Univariate, val x: Real, val a: Real)(implicit
     def evaluationIterator(startPrecision: Precision) = new EvaluationIterator {
 
         val xMinusA = x - a
-        val terms: mutable.Buffer[Real] = new ListBuffer[Real]()
+        var series: Real = Zero
         var fNDash: Univariate = f
 
         def next(n: Natural, precision: Precision): BigDecimal = {
-            terms += nthTerm(n)
+            series += nthTerm(n)
+            //println(fNDash + " => " + series)
             fNDash = fNDash.dx
-            terms.map(_.approximatelyEvaluate(precision)).sum
+            series.evaluate(precision)
         }
 
         def nthTerm(n: Natural): Real = fNDash(a) * (xMinusA ^ n) / (n !)

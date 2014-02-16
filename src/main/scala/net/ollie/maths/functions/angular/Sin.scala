@@ -6,9 +6,9 @@ import Angle._
 import net.ollie.maths._
 import net.ollie.maths.functions.{OddBuiltFunction, RealFunctionBuilder, FunctionBuilder, UnivariateFunction}
 import net.ollie.maths.functions.special.Sinc
-import net.ollie.maths.methods.MaclaurinSeries
 import net.ollie.maths.numbers._
-import net.ollie.maths.numbers.constants.Zero
+import net.ollie.maths.numbers.constants.{Pi, Zero}
+import org.nevec.rjm.BigDecimalMath
 
 /**
  * Created by Ollie on 02/01/14.
@@ -22,7 +22,12 @@ object Sin
         case _ => apply(re radians)
     }
 
-    def apply(angle: Angle): Real with Sin = if (angle.isEmpty) empty else new RealSin(angle)
+    def apply(angle: Angle): Real with Sin = {
+        if (angle.isEmpty) empty
+        else new RealSin(angle)
+    }
+
+    def unapply(sin: Sin): Option[Expression] = Some(sin.of)
 
     protected[this] def create(expr: Expression): Sin = new SinOf(expr)
 
@@ -54,7 +59,10 @@ private class SinOf(val of: Expression)
 
     def inverse = ArcSin(of)
 
-    override def /(that: Expression) = if (that equals of) Sinc(of) else super./(that)
+    override def /(that: Expression) = {
+        if (of equals that) Sinc(of)
+        else super./(that)
+    }
 
     override def toString = s"Sin($of)"
 
@@ -68,15 +76,24 @@ class RealSin(val of: Angle)
         extends Real
         with Sin {
 
-    private lazy val series = MaclaurinSeries(Sin, of.toRadians)
+    private lazy val reduced: Angle = of.reduce
 
-    protected[this] def doEvaluate(precision: Precision) = series.evaluate(precision)
+    protected[this] def doEvaluate(precision: Precision) = {
+        BigDecimalMath.sin(reduced.evaluate(precision).underlying())
+    }
 
     override def variables = super[Real].variables
 
     override def toConstant = Some(this)
 
-    def isEmpty = of.isEmpty
+    private lazy val empty: Boolean = {
+        (reduced / Pi).toRadians.value match {
+            case i: Integer => true
+            case _ => false
+        }
+    }
+
+    def isEmpty = empty
 
     override def toString = s"Sin($of)"
 

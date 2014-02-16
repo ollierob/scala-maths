@@ -5,12 +5,11 @@ import java.util.Collections;
 import java.util.Vector;
 
 /**
- * Factored integers.
- * This class contains a non-negative integer with the prime factor decomposition attached.
+ * Factored integers. This class contains a non-negative integer with the prime factor decomposition attached.
  *
  * @author Richard J. Mathar
- * @since 2012-02-14 The internal representation contains the bases, and becomes sparser if few
- * prime factors are present.
+ * @since 2012-02-14 The internal representation contains the bases, and becomes sparser if few prime factors are
+ * present.
  */
 class Ifactor implements Cloneable, Comparable<Ifactor> {
     /**
@@ -20,7 +19,7 @@ class Ifactor implements Cloneable, Comparable<Ifactor> {
 
     /*
     * The bases and powers of the prime factorization.
-    * representation n = primeexp[0]^primeexp[1]*primeexp[2]^primeexp[3]*...
+    * representation degree = primeexp[0]^primeexp[1]*primeexp[2]^primeexp[3]*...
     * The value 0 is represented by an empty vector, the value 1 by a vector of length 1
     * with a single power of 0.
     */
@@ -31,8 +30,7 @@ class Ifactor implements Cloneable, Comparable<Ifactor> {
     final public static Ifactor ZERO = new Ifactor(0);
 
     /**
-     * Constructor given an integer.
-     * constructor with an ordinary integer
+     * Constructor given an integer. constructor with an ordinary integer
      *
      * @param number the standard representation of the integer
      */
@@ -68,8 +66,7 @@ class Ifactor implements Cloneable, Comparable<Ifactor> {
     } /* Ifactor */
 
     /**
-     * Constructor given a BigInteger .
-     * Constructor with an ordinary integer, calling a prime factor decomposition.
+     * Constructor given a BigInteger . Constructor with an ordinary integer, calling a prime factor decomposition.
      *
      * @param number the BigInteger representation of the integer
      */
@@ -105,9 +102,9 @@ class Ifactor implements Cloneable, Comparable<Ifactor> {
     /**
      * Constructor given a list of exponents of the prime factor decomposition.
      *
-     * @param pows the vector with the sorted list of exponents.
-     *             pows[0] is the exponent of 2, pows[1] the exponent of 3, pows[2] the exponent of 5 etc.
-     *             Note that this list does not include the primes, but assumes a continuous prime-smooth basis.
+     * @param pows the vector with the sorted list of exponents. pows[0] is the exponent of 2, pows[1] the exponent of
+     * 3, pows[2] the exponent of 5 etc. Note that this list does not include the primes, but assumes a continuous
+     * prime-smooth basis.
      */
     public Ifactor(Vector<Integer> pows) {
         primeexp = new Vector<Integer>(2 * pows.size());
@@ -150,9 +147,8 @@ class Ifactor implements Cloneable, Comparable<Ifactor> {
     } /* Ifactor.clone */
 
     /**
-     * Comparison of two numbers.
-     * The value of this method is in allowing the Vector<>.contains() calls that use the value,
-     * not the reference for comparison.
+     * Comparison of two numbers. The value of this method is in allowing the Vector<>.contains() calls that use the
+     * value, not the reference for comparison.
      *
      * @param oth the number to compare this with.
      * @return true if both are the same numbers, false otherwise.
@@ -196,7 +192,7 @@ class Ifactor implements Cloneable, Comparable<Ifactor> {
                 * the powers of the components and calling the constructor with the
                 * list of exponents. This here is the simplest implementation, but slow because
                 * it calls another prime factorization of the product:
-                * return( new Ifactor(n.multiply(oth.n))) ;
+                * return( new Ifactor(degree.multiply(oth.degree))) ;
                 */
         return multGcdLcm(oth, 0);
     }
@@ -205,8 +201,7 @@ class Ifactor implements Cloneable, Comparable<Ifactor> {
      * Lowest common multiple of this with oth.
      *
      * @param oth the second parameter of lcm(this,oth)
-     * @return the lowest common multiple of both numbers. Returns zero
-     * if any of both arguments is zero.
+     * @return the lowest common multiple of both numbers. Returns zero if any of both arguments is zero.
      */
     public Ifactor lcm(final Ifactor oth) {
         return multGcdLcm(oth, 2);
@@ -216,8 +211,7 @@ class Ifactor implements Cloneable, Comparable<Ifactor> {
      * Greatest common divisor of this and oth.
      *
      * @param oth the second parameter of gcd(this,oth)
-     * @return the lowest common multiple of both numbers. Returns zero
-     * if any of both arguments is zero.
+     * @return the lowest common multiple of both numbers. Returns zero if any of both arguments is zero.
      */
     public Ifactor gcd(final Ifactor oth) {
         return multGcdLcm(oth, 1);
@@ -226,7 +220,7 @@ class Ifactor implements Cloneable, Comparable<Ifactor> {
     /**
      * Multiply with another positive integer.
      *
-     * @param oth  the second factor.
+     * @param oth the second factor.
      * @param type 0 to multiply, 1 for gcd, 2 for lcm
      * @return the product, gcd or lcm of both numbers.
      */
@@ -372,7 +366,7 @@ class Ifactor implements Cloneable, Comparable<Ifactor> {
      * Exponentiation with a positive integer.
      *
      * @param exponent the non-negative exponent
-     * @return n^exponent. If exponent=0, the result is 1.
+     * @return degree^exponent. If exponent=0, the result is 1.
      */
     public Ifactor pow(final int exponent) throws ArithmeticException {
                 /* three simple cases first
@@ -401,9 +395,8 @@ class Ifactor implements Cloneable, Comparable<Ifactor> {
      * Pulling the r-th root.
      *
      * @param r the positive or negative (nonzero) root.
-     * @return n^(1/r).
-     * The return value falls into the Ifactor class if r is positive, but if r is negative
-     * a Rational type is needed.
+     * @return degree^(1/r). The return value falls into the Ifactor class if r is positive, but if r is negative a
+     * Rational type is needed.
      * @since 2009-05-18
      */
     public Rational root(final int r) throws ArithmeticException {
@@ -430,7 +423,6 @@ class Ifactor implements Cloneable, Comparable<Ifactor> {
             return new Rational(pows);
         }
     } /* Ifactor.root */
-
 
     /**
      * The set of positive divisors.
@@ -478,7 +470,7 @@ class Ifactor implements Cloneable, Comparable<Ifactor> {
     /**
      * Sum of the divisors of the number.
      *
-     * @return the sum of all divisors of the number, 1+....+n.
+     * @return the sum of all divisors of the number, 1+....+degree.
      */
     public Ifactor sigma() {
         return sigma(1);
@@ -487,7 +479,7 @@ class Ifactor implements Cloneable, Comparable<Ifactor> {
     /**
      * Sum of the k-th powers of divisors of the number.
      *
-     * @return the sum of all divisors of the number, 1^k+....+n^k.
+     * @return the sum of all divisors of the number, 1^k+....+degree^k.
      */
     public Ifactor sigma(int k) {
                 /* the question is whether keeping a factorization  is worth the effort
@@ -522,22 +514,21 @@ class Ifactor implements Cloneable, Comparable<Ifactor> {
     } /* Ifactor.sigma */
 
     /**
-     * Divide through the highest possible power of the highest prime.
-     * If the current number is the prime factor product p1^e1 * p2*e2* p3^e3*...*py^ey * pz^ez,
-     * the value returned has the final factor pz^ez eliminated, which gives
+     * Divide through the highest possible power of the highest prime. If the current number is the prime factor product
+     * p1^e1 * p2*e2* p3^e3*...*py^ey * pz^ez, the value returned has the final factor pz^ez eliminated, which gives
      * p1^e1 * p2*e2* p3^e3*...*py^ey.
      *
-     * @return the new integer obtained by removing the highest prime power.
-     * If this here represents 0 or 1, it is returned without change.
+     * @return the new integer obtained by removing the highest prime power. If this here represents 0 or 1, it is
+     * returned without change.
      * @since 2006-08-20
      */
     public Ifactor dropPrime() {
-                /* the cases n==1 or n ==0
+                /* the cases degree==1 or degree ==0
                 */
         if (n.compareTo(BigInteger.ONE) <= 0)
             return this;
 
-                /* The cases n>1
+                /* The cases degree>1
                 * Start empty. Copy all but the last factor over to the result
                 * the vector with the new prime factor powers, which contain the
                 * old prime factor powers up to but not including the last one.
@@ -607,9 +598,8 @@ class Ifactor implements Cloneable, Comparable<Ifactor> {
     } /* Ifactor.core */
 
     /**
-     * The Moebius function.
-     * 1 if n=1, else, if k is the number of distinct prime factors, return (-1)^k,
-     * else, if k has repeated prime factors, return 0.
+     * The Moebius function. 1 if degree=1, else, if k is the number of distinct prime factors, return (-1)^k, else, if
+     * k has repeated prime factors, return 0.
      *
      * @return the moebius function.
      */
@@ -696,7 +686,7 @@ class Ifactor implements Cloneable, Comparable<Ifactor> {
     /**
      * Convert to printable format
      *
-     * @return a string of the form n:prime^pow*prime^pow*prime^pow...
+     * @return a string of the form degree:prime^pow*prime^pow*prime^pow...
      */
     public String toString() {
         String resul = new String(n.toString() + ":");
@@ -718,9 +708,8 @@ class Ifactor implements Cloneable, Comparable<Ifactor> {
     } /* Ifactor.toString */
 
     /**
-     * Test program.
-     * It takes a single argument n and prints the integer factorizaton.<br>
-     * java -cp . org.nevec.rjm.Ifactor n<br>
+     * Test program. It takes a single argument degree and prints the integer factorizaton.<br> java -cp .
+     * org.nevec.rjm.Ifactor degree<br>
      */
     public static void main(String[] args) throws Exception {
         BigInteger n = new BigInteger(args[0]);

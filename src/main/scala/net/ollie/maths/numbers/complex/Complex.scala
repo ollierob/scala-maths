@@ -15,7 +15,7 @@ trait Complex
         extends ComplexLike
         with MaybeComplex {
 
-    final type System = Complex
+    type System = Complex
 
     override implicit val builder = Complex
 
@@ -85,6 +85,8 @@ object Complex
     def apply(re: Real, im: Real): Complex = Complex((re, im))
 
     implicit def apply(re: Real): Complex = Complex(re, Zero)
+
+    def polar(r: Real, theta: Angle): PolarComplex = PolarComplex(r, theta)
 
     implicit object RealComplexArithmetic
             extends IdentityArithmetic[Real, Complex]

@@ -49,7 +49,7 @@ class SeriesTest extends FlatSpec with Matchers {
 
     }
 
-    "Sum of n*x n 0 to 5" should "be 15*x" in {
+    "Sum of degree*x degree 0 to 5" should "be 15*x" in {
         def f(n: Integer): Expression = n * x
         val sum = Series(f, 0, 5)
         println(sum)

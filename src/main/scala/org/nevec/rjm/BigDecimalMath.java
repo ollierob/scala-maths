@@ -6,8 +6,8 @@ import java.math.MathContext;
 import java.security.ProviderException;
 
 /**
- * BigDecimal special functions.
- * <a href="http://arxiv.org/abs/0908.3030">A Java Math.BigDecimal Implementation of Core Mathematical Functions</a>
+ * BigDecimal special functions. <a href="http://arxiv.org/abs/0908.3030">A Java Math.BigDecimal Implementation of Core
+ * Mathematical Functions</a>
  *
  * @author Richard J. Mathar
  * @see <a href="http://apfloat.org/">apfloat</a>
@@ -18,10 +18,8 @@ import java.security.ProviderException;
 public class BigDecimalMath {
 
     /**
-     * The base of the natural logarithm in a predefined accuracy.
-     * http://www.cs.arizona.edu/icon/oddsends/e.htm
-     * The precision of the predefined constant is one less than
-     * the string's length, taking into account the decimal dot.
+     * The base of the natural logarithm in a predefined accuracy. http://www.cs.arizona.edu/icon/oddsends/e.htm The
+     * precision of the predefined constant is one less than the string's length, taking into account the decimal dot.
      * static int E_PRECISION = E.length()-1 ;
      */
     static BigDecimal E = new BigDecimal("2.71828182845904523536028747135266249775724709369995957496696762772407663035354" +
@@ -44,8 +42,7 @@ public class BigDecimalMath {
             "549227850925778256209262264832627793338656648162772516401910590049164499828931");
 
     /**
-     * Euler's constant Pi.
-     * http://www.cs.arizona.edu/icon/oddsends/pi.htm
+     * Euler's constant Pi. http://www.cs.arizona.edu/icon/oddsends/pi.htm
      */
     static BigDecimal PI = new BigDecimal("3.14159265358979323846264338327950288419716939937510582097494459230781640628620" +
             "899862803482534211706798214808651328230664709384460955058223172535940812848111" +
@@ -70,8 +67,7 @@ public class BigDecimalMath {
             "654252786255181841757467289097777279380008164706001614524919217321721477235014");
 
     /**
-     * Euler-Mascheroni constant lower-case gamma.
-     * http://www.worldwideschool.org/library/books/sci/math/MiscellaneousMathematicalConstants/chap35.html
+     * Euler-Mascheroni constant lower-case gamma. http://www.worldwideschool.org/library/books/sci/math/MiscellaneousMathematicalConstants/chap35.html
      */
     static BigDecimal GAMMA = new BigDecimal("0.577215664901532860606512090082402431" +
             "0421593359399235988057672348848677267776646709369470632917467495146314472498070" +
@@ -95,8 +91,7 @@ public class BigDecimalMath {
             "49885007864151716151945");
 
     /**
-     * Natural logarithm of 2.
-     * http://www.worldwideschool.org/library/books/sci/math/MiscellaneousMathematicalConstants/chap58.html
+     * Natural logarithm of 2. http://www.worldwideschool.org/library/books/sci/math/MiscellaneousMathematicalConstants/chap58.html
      */
     static BigDecimal LOG2 = new BigDecimal("0.693147180559945309417232121458176568075" +
             "50013436025525412068000949339362196969471560586332699641868754200148102057068573" +
@@ -170,7 +165,7 @@ public class BigDecimalMath {
             mcloc = new MathContext(1 + err2prec(1.2, eps / kmax));
             for (int n = 1; ; n++) {
                                 /* zeta is close to 1. Division of zeta-1 through
-                                * 4^n*(2n+1) means divion through roughly 2^(2n+1)
+                                * 4^degree*(2n+1) means divion through roughly 2^(2n+1)
                                 */
                 BigDecimal c = zeta(2 * n + 1, mcloc).subtract(BigDecimal.ONE);
                 BigInteger fourn = new BigInteger("" + (2 * n + 1));
@@ -188,7 +183,7 @@ public class BigDecimalMath {
     /**
      * The square root.
      *
-     * @param x  the non-negative argument.
+     * @param x the non-negative argument.
      * @param mc
      * @return the square root of the BigDecimal.
      * @since 2008-10-27
@@ -198,7 +193,7 @@ public class BigDecimalMath {
             throw new ArithmeticException("negative argument " + x.toString() + " of square root");
         if (x.abs().subtract(new BigDecimal(Math.pow(10., -mc.getPrecision()))).compareTo(BigDecimal.ZERO) < 0)
             return BigDecimalMath.scalePrec(BigDecimal.ZERO, mc);
-                /* start the computation n a double precision estimate */
+                /* start the computation degree a double precision estimate */
         BigDecimal s = new BigDecimal(Math.sqrt(x.doubleValue()), mc);
         final BigDecimal half = new BigDecimal("2");
 
@@ -241,8 +236,8 @@ public class BigDecimalMath {
      * The cube root.
      *
      * @param x The argument.
-     * @return The cubic root of the BigDecimal rounded to the precision implied by x.
-     * The sign of the result is the sign of the argument.
+     * @return The cubic root of the BigDecimal rounded to the precision implied by x. The sign of the result is the
+     * sign of the argument.
      * @since 2009-08-16
      */
     static public BigDecimal cbrt(final BigDecimal x) {
@@ -257,7 +252,7 @@ public class BigDecimalMath {
      *
      * @param n the positive argument.
      * @param x the non-negative argument.
-     * @return The n-th root of the BigDecimal rounded to the precision implied by x, x^(1/n).
+     * @return The degree-th root of the BigDecimal rounded to the precision implied by x, x^(1/degree).
      * @since 2009-07-30
      */
     static public BigDecimal root(final int n, final BigDecimal x) {
@@ -269,7 +264,7 @@ public class BigDecimalMath {
         if (n == 1)
             return x;
 
-                /* start the computation n a double precision estimate */
+                /* start the computation degree a double precision estimate */
         BigDecimal s = new BigDecimal(Math.pow(x.doubleValue(), 1.0 / n));
 
                 /* this creates nth with nominal precision of 1 digit
@@ -286,8 +281,8 @@ public class BigDecimalMath {
                 */
         final double eps = x.ulp().doubleValue() / (2 * n * x.doubleValue());
         for (; ; ) {
-                        /* s = s -(s/n-x/n/s^(n-1)) = s-(s-x/s^(n-1))/n; test correction s/n-x/s for being
-                        * smaller than the precision requested. The relative correction is (1-x/s^n)/n,
+                        /* s = s -(s/degree-x/degree/s^(degree-1)) = s-(s-x/s^(degree-1))/degree; test correction s/degree-x/s for being
+                        * smaller than the precision requested. The relative correction is (1-x/s^degree)/degree,
                         */
             BigDecimal c = xhighpr.divide(s.pow(n - 1), mc);
             c = s.subtract(c);
@@ -333,11 +328,11 @@ public class BigDecimalMath {
      *
      * @param n the first argument.
      * @param x the second argument.
-     * @return the square root of the sum of the squares of the two arguments, sqrt(n^2+x^2).
+     * @return the square root of the sum of the squares of the two arguments, sqrt(degree^2+x^2).
      * @since 2009-08-05
      */
     static public BigDecimal hypot(final int n, final BigDecimal x) {
-                /* compute n^2+x^2 in infinite precision
+                /* compute degree^2+x^2 in infinite precision
                 */
         BigDecimal z = (new BigDecimal(n)).pow(2).add(x.pow(2));
 
@@ -366,10 +361,9 @@ public class BigDecimalMath {
      * The exponential function.
      *
      * @param x the argument.
-     * @return exp(x).
-     * The precision of the result is implicitly defined by the precision in the argument.
-     * In particular this means that "Invalid Operation" errors are thrown if catastrophic
-     * cancellation of digits causes the result to have no valid digits left.
+     * @return exp(x). The precision of the result is implicitly defined by the precision in the argument. In particular
+     * this means that "Invalid Operation" errors are thrown if catastrophic cancellation of digits causes the result to
+     * have no valid digits left.
      * @author Richard J. Mathar
      * @since 2009-05-29
      */
@@ -384,16 +378,16 @@ public class BigDecimalMath {
             MathContext mc = new MathContext(invx.precision());
             return BigDecimal.ONE.divide(invx, mc);
         } else if (x.compareTo(BigDecimal.ZERO) == 0) {
-                        /* recover the valid number of digits n x.ulp(), if x hits the
+                        /* recover the valid number of digits degree x.ulp(), if x hits the
                         * zero. The x.precision() is 1 then, and does not provide this information.
                         */
             return scalePrec(BigDecimal.ONE, -(int) (Math.log10(x.ulp().doubleValue())));
         } else {
                         /* Push the number in the Taylor expansion down to a small
-                        * value where TAYLOR_NTERM terms will do. If x<1, the n-th term is of the order
-                        * x^n/n!, and equal to both the absolute and relative error of the result
+                        * value where TAYLOR_NTERM terms will do. If x<1, the degree-th term is of the order
+                        * x^degree/degree!, and equal to both the absolute and relative error of the result
                         * since the result is close to 1. The x.ulp() sets the relative and absolute error
-                        * of the result, as estimated n the first Taylor term.
+                        * of the result, as estimated degree the first Taylor term.
                         * We want x^TAYLOR_NTERM/TAYLOR_NTERM! < x.ulp, which is guaranteed if
                         * x^TAYLOR_NTERM < TAYLOR_NTERM*(TAYLOR_NTERM-1)*...*x.ulp.
                         */
@@ -483,8 +477,7 @@ public class BigDecimalMath {
      * The natural logarithm.
      *
      * @param x the argument.
-     * @return ln(x).
-     * The precision of the result is implicitly defined by the precision in the argument.
+     * @return ln(x). The precision of the result is implicitly defined by the precision in the argument.
      * @author Richard J. Mathar
      * @since 2009-05-29
      */
@@ -547,9 +540,9 @@ public class BigDecimalMath {
     /**
      * The natural logarithm.
      *
-     * @param n  The main argument, a strictly positive integer.
+     * @param n The main argument, a strictly positive integer.
      * @param mc The requirements on the precision.
-     * @return ln(n).
+     * @return ln(degree).
      * @author Richard J. Mathar
      * @since 2009-08-08
      */
@@ -669,19 +662,19 @@ public class BigDecimalMath {
 
         } else {
                         /* At this point one could either forward to the log(BigDecimal) signature (implemented)
-                        * or decompose n into Ifactors and use an implemenation of all the prime bases.
+                        * or decompose degree into Ifactors and use an implemenation of all the prime bases.
                         * Estimate of the result; convert the mc argument to an  absolute error eps
-                        * log(n+errn) = log(n)+errn/n = log(n)+eps
+                        * log(degree+errn) = log(degree)+errn/degree = log(degree)+eps
                         */
             double res = Math.log((double) n);
             double eps = prec2err(res, mc.getPrecision());
-                        /* errn = eps*n, convert absolute error in result to requirement on absolute error in input
+                        /* errn = eps*degree, convert absolute error in result to requirement on absolute error in input
                         */
             eps *= n;
-                        /* Convert this absolute requirement of error in n to a relative error in n
+                        /* Convert this absolute requirement of error in degree to a relative error in degree
                         */
             final MathContext mcloc = new MathContext(1 + err2prec((double) n, eps));
-                        /* Padd n with a number of zeros to trigger the required accuracy in
+                        /* Padd degree with a number of zeros to trigger the required accuracy in
                         * the standard signature method
                         */
             BigDecimal nb = scalePrec(new BigDecimal(n), mcloc);
@@ -692,7 +685,7 @@ public class BigDecimalMath {
     /**
      * The natural logarithm.
      *
-     * @param r  The main argument, a strictly positive value.
+     * @param r The main argument, a strictly positive value.
      * @param mc The requirements on the precision.
      * @return ln(r).
      * @author Richard J. Mathar
@@ -728,8 +721,7 @@ public class BigDecimalMath {
      *
      * @param x Base of the power.
      * @param y Exponent of the power.
-     * @return x^y.
-     * The estimation of the relative error in the result is |log(x)*err(y)|+|y*err(x)/x|
+     * @return x^y. The estimation of the relative error in the result is |log(x)*err(y)|+|y*err(x)/x|
      * @since 2009-06-01
      */
     static public BigDecimal pow(final BigDecimal x, final BigDecimal y) {
@@ -758,8 +750,8 @@ public class BigDecimalMath {
      *
      * @param x The base.
      * @param n The exponent.
-     * @return x^n.
-     * @since 2010-05-26 handle also n<0 cases.
+     * @return x^degree.
+     * @since 2010-05-26 handle also degree<0 cases.
      */
     static public BigDecimal powRound(final BigDecimal x, final int n) {
         /** Special cases: x^1=x and x^0 = 1
@@ -769,9 +761,9 @@ public class BigDecimalMath {
         else if (n == 0)
             return BigDecimal.ONE;
         else {
-                        /* The relative error in the result is n times the relative error in the input.
+                        /* The relative error in the result is degree times the relative error in the input.
                         * The estimation is slightly optimistic due to the integer rounding of the logarithm.
-                        * Since the standard BigDecimal.pow can only handle positive n, we split the algorithm.
+                        * Since the standard BigDecimal.pow can only handle positive degree, we split the algorithm.
                         */
             MathContext mc = new MathContext(x.precision() - (int) Math.log10((double) (Math.abs(n))));
             if (n > 0)
@@ -785,13 +777,12 @@ public class BigDecimalMath {
      * Raise to an integer power and round.
      *
      * @param x The base.
-     * @param n The exponent.
-     *          The current implementation allows n only in the interval of the standard int values.
-     * @return x^n.
+     * @param n The exponent. The current implementation allows degree only in the interval of the standard int values.
+     * @return x^degree.
      * @since 2010-05-26
      */
     static public BigDecimal powRound(final BigDecimal x, final BigInteger n) {
-        /** For now, the implementation forwards to the cases where n
+        /** For now, the implementation forwards to the cases where degree
          * is in the range of the standard integers. This might, however, be
          * implemented to decompose larger powers into cascaded calls to smaller ones.
          */
@@ -804,9 +795,8 @@ public class BigDecimalMath {
     /**
      * Raise to a fractional power and round.
      *
-     * @param x The base.
-     *          Generally enforced to be positive, with the exception of integer exponents where
-     *          the sign is carried over according to the parity of the exponent.
+     * @param x The base. Generally enforced to be positive, with the exception of integer exponents where the sign is
+     * carried over according to the parity of the exponent.
      * @param q The exponent.
      * @return x^q.
      * @since 2010-05-26
@@ -1612,7 +1602,7 @@ public class BigDecimalMath {
         if (x.compareTo(BigDecimal.ZERO) < 0)
             return divideRound(Gamma(x.add(BigDecimal.ONE)), x);
         else if (x.doubleValue() > 1.5) {
-                        /* Gamma(x) = Gamma(xmin+n) = Gamma(xmin)*Pochhammer(xmin,n).
+                        /* Gamma(x) = Gamma(xmin+degree) = Gamma(xmin)*Pochhammer(xmin,degree).
                         */
             int n = (int) (x.doubleValue() - 0.5);
             BigDecimal xmin1 = x.subtract(new BigDecimal(n));
@@ -1638,27 +1628,27 @@ public class BigDecimalMath {
                 BigDecimal gammCompl = BigDecimal.ONE.subtract(gamma(mcloc));
                 resul = resul.add(multiplyRound(z, gammCompl));
                 for (int n = 2; ; n++) {
-                                        /* multiplying z^n/n by zeta(n-1) means that the two relative errors add.
-                                        * so the requirement in the relative error of zeta(n)-1 is that this is somewhat
-                                        * smaller than the relative error in z^n/n (the absolute error of thelatter  is the
+                                        /* multiplying z^degree/degree by zeta(degree-1) means that the two relative errors add.
+                                        * so the requirement in the relative error of zeta(degree)-1 is that this is somewhat
+                                        * smaller than the relative error in z^degree/degree (the absolute error of thelatter  is the
                                         * absolute error in z) 
                                         */
                     BigDecimal c = divideRound(z.pow(n, mcloc), n);
                     MathContext m = new MathContext(err2prec(n * z.ulp().doubleValue() / 2. / z.doubleValue()));
                     c = c.round(m);
 
-                                        /* At larger n, zeta(n)-1 is roughly 1/2^n. The product is c/2^n.
+                                        /* At larger degree, zeta(degree)-1 is roughly 1/2^degree. The product is c/2^degree.
                                         * The relative error in c is c.ulp/2/c . The error in the product should be small versus eps/10.
-                                        * Error n 1/2^n is c*err(sigma-1).
+                                        * Error degree 1/2^degree is c*err(sigma-1).
                                         * We need a relative error of zeta-1 of the order of c.ulp/50/c. This is an absolute
-                                        * error in zeta-1 of c.ulp/50/c/2^n, and also the absolute error in zeta, because zeta is
+                                        * error in zeta-1 of c.ulp/50/c/2^degree, and also the absolute error in zeta, because zeta is
                                         * of the order of 1.
                                         */
                     if (eps / 100. / c.doubleValue() < 0.01)
                         m = new MathContext(err2prec(eps / 100. / c.doubleValue()));
                     else
                         m = new MathContext(2);
-                                        /* zeta(n) -1 */
+                                        /* zeta(degree) -1 */
                     BigDecimal zetm1 = zeta(n, m).subtract(BigDecimal.ONE);
                     c = multiplyRound(c, zetm1);
 
@@ -1687,7 +1677,7 @@ public class BigDecimalMath {
     /**
      * The Gamma function.
      *
-     * @param q  The argument.
+     * @param q The argument.
      * @param mc The required accuracy in the result.
      * @return Gamma(x).
      * @since 2010-05-26
@@ -1697,7 +1687,7 @@ public class BigDecimalMath {
             if (q.compareTo(Rational.ZERO) <= 0)
                 throw new ArithmeticException("Gamma at " + q.toString());
             else {
-                                /* Gamma(n) = (n-1)! */
+                                /* Gamma(degree) = (degree-1)! */
                 Factorial f = new Factorial();
                 BigInteger g = f.at(q.trunc().intValue() - 1);
                 return scalePrec(new BigDecimal(g), mc);
@@ -1743,7 +1733,7 @@ public class BigDecimalMath {
      *
      * @param x The main argument.
      * @param n The non-negative index.
-     * @return (x)_n = x(x+1)(x+2)*...*(x+n-1).
+     * @return (x)_n = x(x+1)(x+2)*...*(x+degree-1).
      * @since 2009-08-19
      */
     static public BigDecimal pochhammer(final BigDecimal x, final int n) {
@@ -1778,7 +1768,7 @@ public class BigDecimalMath {
      * Reduce value to the interval [0,2*Pi].
      *
      * @param x the original value
-     * @return the value modulo 2*pi in the interval n 0 to 2*pi.
+     * @return the value modulo 2*pi in the interval degree 0 to 2*pi.
      * @since 2009-06-01
      */
     static public BigDecimal mod2pi(BigDecimal x) {
@@ -1815,7 +1805,7 @@ public class BigDecimalMath {
      * Reduce value to the interval [-Pi/2,Pi/2].
      *
      * @param x The original value
-     * @return The value modulo pi, shifted to the interval n -Pi/2 to Pi/2.
+     * @return The value modulo pi, shifted to the interval degree -Pi/2 to Pi/2.
      * @since 2009-07-31
      */
     static public BigDecimal modpi(BigDecimal x) {
@@ -1854,9 +1844,9 @@ public class BigDecimalMath {
     /**
      * Riemann zeta function.
      *
-     * @param n  The positive integer argument.
+     * @param n The positive integer argument.
      * @param mc Specification of the accuracy of the result.
-     * @return zeta(n).
+     * @return zeta(degree).
      * @since 2009-08-05
      */
     static public BigDecimal zeta(final int n, final MathContext mc) {
@@ -1866,15 +1856,15 @@ public class BigDecimalMath {
             throw new ArithmeticException("Pole at zeta(1) ");
 
         if (n % 2 == 0) {
-                        /* Even indices. Abramowitz-Stegun 23.2.16. Start with 2^(n-1)*B(n)/n!
+                        /* Even indices. Abramowitz-Stegun 23.2.16. Start with 2^(degree-1)*B(degree)/degree!
                         */
             Rational b = (new Bernoulli()).at(n).abs();
             b = b.divide((new Factorial()).at(n));
             b = b.multiply(BigInteger.ONE.shiftLeft(n - 1));
 
-                        /* to be multiplied by pi^n. Absolute error in the result of pi^n is n times
-                        * error in pi times pi^(n-1). Relative error is n*error(pi)/pi, requested by mc.
-                        * Need one more digit in pi if n=10, two digits if n=100 etc, and add one extra digit.
+                        /* to be multiplied by pi^degree. Absolute error in the result of pi^degree is degree times
+                        * error in pi times pi^(degree-1). Relative error is degree*error(pi)/pi, requested by mc.
+                        * Need one more digit in pi if degree=10, two digits if degree=100 etc, and add one extra digit.
                         */
             MathContext mcpi = new MathContext(mc.getPrecision() + (int) (Math.log10(10.0 * n)));
             final BigDecimal piton = pi(mcpi).pow(n, mc);
@@ -1922,7 +1912,7 @@ public class BigDecimalMath {
                     betsum = betsum.subtract(b);
             }
             betsum = betsum.divide(n - 1);
-                        /* The first term, including the facor (2pi)^n, is essentially most
+                        /* The first term, including the facor (2pi)^degree, is essentially most
                         * of the result, near one. The second term below is roughly in the range 0.003 to 0.009.
                         * So the precision here is matching the precisionn requested by mc, and the precision
                         * requested for 2*pi is in absolute terms adjusted.
@@ -1938,7 +1928,7 @@ public class BigDecimalMath {
             double eps = Math.pow(10., -mc.getPrecision());
 
             if (n % 4 == 3) {
-                                /* since the argument n is at least 7 here, the drop
+                                /* since the argument degree is at least 7 here, the drop
                                 * of the terms is at rather constant pace at least 10^-3, for example
                                 * 0.0018, 0.2e-7, 0.29e-11, 0.74e-15 etc for npr=1,2,3.... We want 2 times these terms
                                 * fall below eps/10.
@@ -1964,7 +1954,7 @@ public class BigDecimalMath {
                     exps = exps.add(c);
                 }
             } else {
-                                /* since the argument n is at least 9 here, the drop
+                                /* since the argument degree is at least 9 here, the drop
                                 * of the terms is at rather constant pace at least 10^-3, for example
                                 * 0.0096, 0.5e-7, 0.3e-11, 0.6e-15 etc. We want these terms
                                 * fall below eps/10.
@@ -2007,7 +1997,7 @@ public class BigDecimalMath {
      * Riemann zeta function.
      *
      * @param n The positive integer argument.
-     * @return zeta(n)-1.
+     * @return zeta(degree)-1.
      * @since 2009-08-20
      */
     static public double zeta1(final int n) {
@@ -2074,7 +2064,7 @@ public class BigDecimalMath {
                         /* look it up if available */
             return zmin1[n];
         else {
-                        /* Result is roughly 2^(-n), desired accuracy 18 digits. If zeta(n) is computed, the equivalent accuracy
+                        /* Result is roughly 2^(-degree), desired accuracy 18 digits. If zeta(degree) is computed, the equivalent accuracy
                         * in relative units is higher, because zeta is around 1.
                         */
             double eps = 1.e-18 * Math.pow(2., (double) (-n));
@@ -2097,8 +2087,8 @@ public class BigDecimalMath {
      * Digamma function.
      *
      * @param x The main argument.
-     * @return psi(x).
-     * The error is sometimes up to 10 ulp, where AS 6.3.15 suffers n cancellation of digits and psi=0
+     * @return psi(x). The error is sometimes up to 10 ulp, where AS 6.3.15 suffers degree cancellation of digits and
+     * psi=0
      * @since 2009-08-26
      */
     static public double psi(final double x) {
@@ -2160,9 +2150,9 @@ public class BigDecimalMath {
     /**
      * Broadhurst ladder sequence.
      *
-     * @param a  The vector of 8 integer arguments
+     * @param a The vector of 8 integer arguments
      * @param mc Specification of the accuracy of the result
-     * @return S_(n, p)(a)
+     * @return S_(degree, p)(a)
      * @see <a href="http://arxiv.org/abs/math/9803067">arXiv:math/9803067</a>
      * @since 2009-08-09
      */
@@ -2366,12 +2356,12 @@ public class BigDecimalMath {
      *
      * @param x The left factor.
      * @param n The right factor.
-     * @return The product x*n.
+     * @return The product x*degree.
      * @since 2009-07-30
      */
     static public BigDecimal multiplyRound(final BigDecimal x, final int n) {
         BigDecimal resul = x.multiply(new BigDecimal(n));
-                /* The estimation of the absolute error in the result is |n*err(x)|
+                /* The estimation of the absolute error in the result is |degree*err(x)|
                 */
         MathContext mc = new MathContext(n != 0 ? x.precision() : 0);
         return resul.round(mc);
@@ -2382,12 +2372,12 @@ public class BigDecimalMath {
      *
      * @param x The left factor.
      * @param n The right factor.
-     * @return the product x*n
+     * @return the product x*degree
      * @since 2009-07-30
      */
     static public BigDecimal multiplyRound(final BigDecimal x, final BigInteger n) {
         BigDecimal resul = x.multiply(new BigDecimal(n));
-                /* The estimation of the absolute error in the result is |n*err(x)|
+                /* The estimation of the absolute error in the result is |degree*err(x)|
                 */
         MathContext mc = new MathContext(n.compareTo(BigInteger.ZERO) != 0 ? x.precision() : 0);
         return resul.round(mc);
@@ -2461,7 +2451,7 @@ public class BigDecimalMath {
      *
      * @param x The numerator
      * @param n The denominator
-     * @return the divided x/n
+     * @return the divided x/degree
      * @since 2009-07-30
      */
     static public BigDecimal divideRound(final BigDecimal x, final int n) {
@@ -2476,7 +2466,7 @@ public class BigDecimalMath {
      *
      * @param x The numerator
      * @param n The denominator
-     * @return the divided x/n
+     * @return the divided x/degree
      * @since 2009-07-30
      */
     static public BigDecimal divideRound(final BigDecimal x, final BigInteger n) {
@@ -2491,7 +2481,7 @@ public class BigDecimalMath {
      *
      * @param n The numerator
      * @param x The denominator
-     * @return the divided n/x
+     * @return the divided degree/x
      * @since 2009-08-05
      */
     static public BigDecimal divideRound(final BigInteger n, final BigDecimal x) {
@@ -2506,7 +2496,7 @@ public class BigDecimalMath {
      *
      * @param n The numerator
      * @param x The denominator
-     * @return the divided n/x
+     * @return the divided degree/x
      * @since 2012-03-01
      */
     static public BigComplex divideRound(final BigInteger n, final BigComplex x) {
@@ -2518,7 +2508,7 @@ public class BigDecimalMath {
             return new BigComplex(BigDecimal.ZERO, divideRound(n, x.im).negate());
 
         BigComplex z = invertRound(x);
-                /* n/(x+iy) = nx/(x^2+y^2) -nyi/(x^2+y^2)       
+                /* degree/(x+iy) = nx/(x^2+y^2) -nyi/(x^2+y^2)
                 */
         BigDecimal repart = multiplyRound(z.re, n);
         BigDecimal impart = multiplyRound(z.im, n);
@@ -2530,7 +2520,7 @@ public class BigDecimalMath {
      *
      * @param n The numerator.
      * @param x The denominator.
-     * @return the divided n/x.
+     * @return the divided degree/x.
      * @since 2009-08-05
      */
     static public BigDecimal divideRound(final int n, final BigDecimal x) {
@@ -2541,8 +2531,7 @@ public class BigDecimalMath {
     }
 
     /**
-     * Append decimal zeros to the value. This returns a value which appears to have
-     * a higher precision than the input.
+     * Append decimal zeros to the value. This returns a value which appears to have a higher precision than the input.
      *
      * @param x The input value
      * @param d The (positive) value of zeros to be added as least significant digits.
@@ -2553,8 +2542,7 @@ public class BigDecimalMath {
     }
 
     /**
-     * Append decimal zeros to the value. This returns a value which appears to have
-     * a higher precision than the input.
+     * Append decimal zeros to the value. This returns a value which appears to have a higher precision than the input.
      *
      * @param x The input value
      * @param d The (positive) value of zeros to be added as least significant digits.
@@ -2565,10 +2553,10 @@ public class BigDecimalMath {
     }
 
     /**
-     * Boost the precision by appending decimal zeros to the value. This returns a value which appears to have
-     * a higher precision than the input.
+     * Boost the precision by appending decimal zeros to the value. This returns a value which appears to have a higher
+     * precision than the input.
      *
-     * @param x  The input value
+     * @param x The input value
      * @param mc The requirement on the minimum precision on return.
      * @return The same value as the input but with increased (pseudo) precision.
      */
@@ -2583,10 +2571,9 @@ public class BigDecimalMath {
     /**
      * Convert an absolute error to a precision.
      *
-     * @param x    The value of the variable
+     * @param x The value of the variable
      * @param xerr The absolute error in the variable
-     * @return The number of valid digits in x.
-     * The value is rounded down, and on the pessimistic side for that reason.
+     * @return The number of valid digits in x. The value is rounded down, and on the pessimistic side for that reason.
      * @since 2009-06-25
      */
     static public int err2prec(BigDecimal x, BigDecimal xerr) {
@@ -2596,14 +2583,12 @@ public class BigDecimalMath {
     /**
      * Convert an absolute error to a precision.
      *
-     * @param x    The value of the variable
-     *             The value returned depends only on the absolute value, not on the sign.
-     * @param xerr The absolute error in the variable
-     *             The value returned depends only on the absolute value, not on the sign.
-     * @return The number of valid digits in x.
-     * Derived n the representation x+- xerr, as if the error was represented
-     * in a "half width" (half of the error bar) form.
-     * The value is rounded down, and on the pessimistic side for that reason.
+     * @param x The value of the variable The value returned depends only on the absolute value, not on the sign.
+     * @param xerr The absolute error in the variable The value returned depends only on the absolute value, not on the
+     * sign.
+     * @return The number of valid digits in x. Derived degree the representation x+- xerr, as if the error was
+     * represented in a "half width" (half of the error bar) form. The value is rounded down, and on the pessimistic
+     * side for that reason.
      * @since 2009-05-30
      */
     static public int err2prec(double x, double xerr) {
@@ -2616,10 +2601,9 @@ public class BigDecimalMath {
     /**
      * Convert a relative error to a precision.
      *
-     * @param xerr The relative error in the variable.
-     *             The value returned depends only on the absolute value, not on the sign.
-     * @return The number of valid digits in x.
-     * The value is rounded down, and on the pessimistic side for that reason.
+     * @param xerr The relative error in the variable. The value returned depends only on the absolute value, not on the
+     * sign.
+     * @return The number of valid digits in x. The value is rounded down, and on the pessimistic side for that reason.
      * @since 2009-08-05
      */
     static public int err2prec(double xerr) {
@@ -2630,14 +2614,11 @@ public class BigDecimalMath {
     }
 
     /**
-     * Convert a precision (relative error) to an absolute error.
-     * The is the inverse functionality of err2prec().
+     * Convert a precision (relative error) to an absolute error. The is the inverse functionality of err2prec().
      *
-     * @param x    The value of the variable
-     *             The value returned depends only on the absolute value, not on the sign.
+     * @param x The value of the variable The value returned depends only on the absolute value, not on the sign.
      * @param prec The number of valid digits of the variable.
-     * @return the absolute error in x.
-     * Derived n the an accuracy of one half of the ulp.
+     * @return the absolute error in x. Derived degree the an accuracy of one half of the ulp.
      * @since 2009-08-09
      */
     static public double prec2err(final double x, final int prec) {

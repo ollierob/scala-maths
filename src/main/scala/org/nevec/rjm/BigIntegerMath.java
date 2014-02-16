@@ -12,7 +12,7 @@ import java.util.Vector;
 public class BigIntegerMath {
 
     /**
-     * Evaluate binomial(n,k).
+     * Evaluate binomial(degree,k).
      *
      * @param n The upper index
      * @param k The lower index
@@ -31,7 +31,7 @@ public class BigIntegerMath {
     } /* binomial */
 
     /**
-     * Evaluate binomial(n,k).
+     * Evaluate binomial(degree,k).
      *
      * @param n The upper index
      * @param k The lower index
@@ -39,14 +39,14 @@ public class BigIntegerMath {
      * @since 2008-10-15
      */
     static public BigInteger binomial(final BigInteger n, final BigInteger k) {
-                /* binomial(n,0) =1 
+                /* binomial(degree,0) =1
                 */
         if (k.compareTo(BigInteger.ZERO) == 0)
             return (BigInteger.ONE);
 
         BigInteger bin = new BigInteger("" + n);
 
-                /* the following version first calculates n(n-1)(n-2)..(n-k+1)
+                /* the following version first calculates degree(degree-1)(degree-2)..(degree-k+1)
                 * in the first loop, and divides this product through k(k-1)(k-2)....2
                 * in the second loop. This is rather slow and replaced by a faster version
                 * below
@@ -59,16 +59,16 @@ public class BigIntegerMath {
                 *       bin = bin.divide(i) ;
                 */
 
-                /* calculate n then n(n-1)/2 then n(n-1)(n-2)(2*3) etc up to n(n-1)..(n-k+1)/(2*3*..k)
+                /* calculate degree then degree(degree-1)/2 then degree(degree-1)(degree-2)(2*3) etc up to degree(degree-1)..(degree-k+1)/(2*3*..k)
                 * This is roughly the best way to keep the individual intermediate products small
-                * and in the integer domain. First replace C(n,k) by C(n,n-k) if n-k<k.
+                * and in the integer domain. First replace C(degree,k) by C(degree,degree-k) if degree-k<k.
                 */
         BigInteger truek = new BigInteger(k.toString());
         if (n.subtract(k).compareTo(k) < 0)
             truek = n.subtract(k);
 
-                /* Calculate C(num,truek) where num=n and truek is the smaller of n-k and k.
-                * Have already initialized bin=n=C(n,1) above. Start definining the factorial
+                /* Calculate C(num,truek) where num=degree and truek is the smaller of degree-k and k.
+                * Have already initialized bin=degree=C(degree,1) above. Start definining the factorial
                 * in the denominator, named fden
                 */
         BigInteger i = new BigInteger("2");
@@ -76,10 +76,10 @@ public class BigIntegerMath {
                 /* a for-loop   (i=2;i<= truek;i++)
                 */
         for (; i.compareTo(truek) <= 0; i = i.add(BigInteger.ONE)) {
-                        /* num = n-i+1 after this operation
+                        /* num = degree-i+1 after this operation
                         */
             num = num.subtract(BigInteger.ONE);
-                        /* multiply by (n-i+1)/i
+                        /* multiply by (degree-i+1)/i
                         */
             bin = (bin.multiply(num)).divide(i);
         }
@@ -87,7 +87,7 @@ public class BigIntegerMath {
     } /* binomial */
 
     /**
-     * Evaluate sigma_k(n).
+     * Evaluate sigma_k(degree).
      *
      * @param n the main argument which defines the divisors
      * @param k the lower index, which defines the power
@@ -98,7 +98,7 @@ public class BigIntegerMath {
     } /* sigmak */
 
     /**
-     * Evaluate sigma(n).
+     * Evaluate sigma(degree).
      *
      * @param n the argument for which divisors will be searched.
      * @return the sigma function. Sum of the positive divisors of the argument.
@@ -122,7 +122,7 @@ public class BigIntegerMath {
     }
 
     /**
-     * Evaluate sigma(n).
+     * Evaluate sigma(degree).
      *
      * @param n the argument for which divisors will be searched.
      * @return the sigma function. Sum of the divisors of the argument.
@@ -134,7 +134,7 @@ public class BigIntegerMath {
     }
 
     /**
-     * Evaluate floor(sqrt(n)).
+     * Evaluate floor(sqrt(degree)).
      *
      * @param n The non-negative argument.
      * @return The integer square root. The square root rounded down.
@@ -149,10 +149,9 @@ public class BigIntegerMath {
     }
 
     /**
-     * Evaluate floor(sqrt(n)).
+     * Evaluate floor(sqrt(degree)).
      *
-     * @param n The non-negative argument.
-     *          Arguments less than zero throw an ArithmeticException.
+     * @param n The non-negative argument. Arguments less than zero throw an ArithmeticException.
      * @return The integer square root, the square root rounded down.
      * @author Richard J. Mathar
      * @since 2010-08-27
@@ -165,10 +164,9 @@ public class BigIntegerMath {
     }
 
     /**
-     * Evaluate floor(sqrt(n)).
+     * Evaluate floor(sqrt(degree)).
      *
-     * @param n The non-negative argument.
-     *          Arguments less than zero throw an ArithmeticException.
+     * @param n The non-negative argument. Arguments less than zero throw an ArithmeticException.
      * @return The integer square root, the square root rounded down.
      * @author Richard J. Mathar
      * @since 2011-02-12
@@ -176,7 +174,7 @@ public class BigIntegerMath {
     static public BigInteger isqrt(final BigInteger n) {
         if (n.compareTo(BigInteger.ZERO) < 0)
             throw new ArithmeticException("Negative argument " + n.toString());
-                /* Start with an estimate n a floating point reduction.
+                /* Start with an estimate degree a floating point reduction.
                 */
         BigInteger x;
         final int bl = n.bitLength();
@@ -189,7 +187,7 @@ public class BigIntegerMath {
 
         final BigInteger two = new BigInteger("2");
         while (true) {
-                        /* check whether the result is accurate, x^2 =n
+                        /* check whether the result is accurate, x^2 =degree
                         */
             BigInteger x2 = x.pow(2);
             BigInteger xplus2 = x.add(BigInteger.ONE).pow(2);
@@ -201,7 +199,7 @@ public class BigIntegerMath {
                         /* Newton algorithm. This correction is on the
                         * low side caused by the integer divisions. So the value required
                         * may end up by one unit too large by the bare algorithm, and this
-                        * is caught above by comparing x^2, (x+-1)^2 with n.
+                        * is caught above by comparing x^2, (x+-1)^2 with degree.
                         */
             xplus2 = x2.subtract(n).divide(x).divide(two);
             x = x.subtract(xplus2);
@@ -209,11 +207,10 @@ public class BigIntegerMath {
     }
 
     /**
-     * Evaluate core(n).
-     * Returns the smallest positive integer m such that n/m is a perfect square.
+     * Evaluate core(degree). Returns the smallest positive integer m such that degree/m is a perfect square.
      *
      * @param n The non-negative argument.
-     * @return The square-free part of n.
+     * @return The square-free part of degree.
      * @author Richard J. Mathar
      * @since 2011-02-12
      */
@@ -228,10 +225,10 @@ public class BigIntegerMath {
      * Minor of an integer matrix.
      *
      * @param A The matrix.
-     * @param r The row index of the row to be removed (0-based).
-     *          An exception is thrown if this is outside the range 0 to the upper row index of A.
-     * @param c The column index of the column to be removed (0-based).
-     *          An exception is thrown if this is outside the range 0 to the upper column index of A.
+     * @param r The row index of the row to be removed (0-based). An exception is thrown if this is outside the range 0
+     * to the upper row index of A.
+     * @param c The column index of the column to be removed (0-based). An exception is thrown if this is outside the
+     * range 0 to the upper column index of A.
      * @return The depleted matrix. This is not a deep copy but contains references to the original.
      * @author Richard J. Mathar
      * @since 2010-08-27
@@ -271,9 +268,8 @@ public class BigIntegerMath {
      *
      * @param A The matrix.
      * @param c The column index of the column to be substituted (0-based).
-     * @param v The column vector to be inserted.
-     *          With the current implementation, it must be at least as long as the row count, and
-     *          its elements that exceed that count are ignored.
+     * @param v The column vector to be inserted. With the current implementation, it must be at least as long as the
+     * row count, and its elements that exceed that count are ignored.
      * @return The modified matrix. This is not a deep copy but contains references to the original.
      * @author Richard J. Mathar
      * @since 2010-08-27
@@ -307,8 +303,7 @@ public class BigIntegerMath {
     /**
      * Determinant of an integer square matrix.
      *
-     * @param A The square matrix.
-     *          If column and row dimensions are unequal, an ArithmeticException is thrown.
+     * @param A The square matrix. If column and row dimensions are unequal, an ArithmeticException is thrown.
      * @return The determinant.
      * @author Richard J. Mathar
      * @since 2010-08-27
@@ -354,10 +349,9 @@ public class BigIntegerMath {
     /**
      * Solve a linear system of equations.
      *
-     * @param A   The square matrix.
-     *            If it is not of full rank, an ArithmeticException is thrown.
-     * @param rhs The right hand side. The length of this vector must match the matrix size;
-     *            else an ArithmeticException is thrown.
+     * @param A The square matrix. If it is not of full rank, an ArithmeticException is thrown.
+     * @param rhs The right hand side. The length of this vector must match the matrix size; else an ArithmeticException
+     * is thrown.
      * @return The vector of x in A*x=rhs.
      * @author Richard J. Mathar
      * @since 2010-08-28
@@ -466,13 +460,14 @@ public class BigIntegerMath {
     }
 
     /**
-     * The central factorial number t(n,k) number at the indices provided.
+     * The central factorial number t(degree,k) number at the indices provided.
      *
      * @param n the first parameter, non-negative.
      * @param k the second index, non-negative.
-     * @return t(n, k)
+     * @return t(degree, k)
      * @author Richard J. Mathar
-     * @see <a href="http://dx.doi.org/10.1080/01630568908816313">P. L. Butzer et al, Num. Funct. Anal. Opt. 10 (5)( 1989) 419-488</a>
+     * @see <a href="http://dx.doi.org/10.1080/01630568908816313">P. L. Butzer et al, Num. Funct. Anal. Opt. 10 (5)(
+     * 1989) 419-488</a>
      * @since 2009-08-06
      */
     static public Rational centrlFactNumt(int n, int k) {
@@ -508,13 +503,14 @@ public class BigIntegerMath {
     } /* CentralFactNumt */
 
     /**
-     * The central factorial number T(n,k) number at the indices provided.
+     * The central factorial number T(degree,k) number at the indices provided.
      *
      * @param n the first parameter, non-negative.
      * @param k the second index, non-negative.
-     * @return T(n, k)
+     * @return T(degree, k)
      * @author Richard J. Mathar
-     * @see <a href="http://dx.doi.org/10.1080/01630568908816313">P. L. Butzer et al, Num. Funct. Anal. Opt. 10 (5)( 1989) 419-488</a>
+     * @see <a href="http://dx.doi.org/10.1080/01630568908816313">P. L. Butzer et al, Num. Funct. Anal. Opt. 10 (5)(
+     * 1989) 419-488</a>
      * @since 2009-08-06
      */
     static public Rational centrlFactNumT(int n, int k) {

@@ -103,7 +103,7 @@ trait Real
 
     def ?^(that: Number): Option[Number] = that match {
         case int: Integer => Some(this ^ int)
-        case re: Real if this.isStrictlyPositive => Some(this.abs ^ re)
+        case re: Real if this.isStrictlyPositive => ??? // Some(this.abs ^ re) //TODO multivalued
         case _ => None
     }
 
@@ -312,7 +312,11 @@ class RealSeries private(override val terms: Seq[Real])
 
     override def toConstant = super[Real].toConstant
 
-    override protected[this] def approx(precision: Precision) = terms.map(_.approximatelyEvaluate(precision)).sum
+    override protected[this] def approx(precision: Precision) = {
+        //println(s":APPROX $this")
+        //println(s": => " + terms.map(_.approximatelyEvaluate(precision)) + " => " +  terms.map(_.approximatelyEvaluate(precision)).sum)
+        terms.map(_.approximatelyEvaluate(precision)).sum
+    }
 
     override def ?+(that: Real) = {
         if (that.isEmpty) this
@@ -333,7 +337,10 @@ class RealSeries private(override val terms: Seq[Real])
 
 object RealProduct {
 
-    def apply(left: Real, right: Real): Real = if (left.isEmpty || right.isEmpty) Zero else new RealProduct(Seq(left, right))
+    def apply(left: Real, right: Real): Real = {
+        if (left.isEmpty || right.isEmpty) Zero
+        else new RealProduct(Seq(left, right))
+    }
 
     def apply(terms: Seq[Real]): Real = terms match {
         case Nil => Zero
@@ -354,7 +361,24 @@ class RealProduct(override val terms: Seq[Real])
     protected[this] def tryMultiply(left: Real, right: Real) = left ?*? right
 
     protected[this] def approx(precision: Precision) = {
-        terms.map(_.approximatelyEvaluate(precision)).product
+        val evaluated = terms.map(_.approximatelyEvaluate(precision))
+        val totalPrecision = Math.max(0, evaluated.foldLeft(precision.value)((current, term) => current + intLength(term)))
+        if (totalPrecision == precision.value) evaluated.product
+        else {
+            val newPrecision = precision.increaseBy(totalPrecision)
+            terms.map(_.approximatelyEvaluate(newPrecision)).product
+        }
+    }
+
+    /**
+     * Count the number of integer digits in the given bigdecimal.
+     * @param bd
+     * @return
+     */
+    private def intLength(bd: BigDecimal): Int = {
+        val bi = bd.toBigInt
+        if (bi > BigInt(9)) 0
+        else bi.toString.length
     }
 
     override def equals(that: Real) = that match {

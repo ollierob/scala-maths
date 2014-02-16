@@ -6,7 +6,7 @@ import net.ollie.maths.numbers.Real
 /**
  * Created by Ollie on 12/01/14.
  */
-class PolarComplex(val r: Real, val theta: Angle)
+class PolarComplex protected(val r: Real, val theta: Angle)
         extends Complex {
 
     def re = r * Cos(theta)
@@ -18,5 +18,16 @@ class PolarComplex(val r: Real, val theta: Angle)
     override def arg = theta
 
     override def toString = s"$r * e^($theta i)"
+
+}
+
+object PolarComplex {
+
+    def apply(r: Real, theta: Angle): PolarComplex = new PolarComplex(r, theta)
+
+    def apply(z: Complex): PolarComplex = z match {
+        case p: PolarComplex => p
+        case _ => PolarComplex(z.abs, z.arg)
+    }
 
 }

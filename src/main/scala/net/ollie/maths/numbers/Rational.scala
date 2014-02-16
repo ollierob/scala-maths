@@ -19,13 +19,17 @@ trait Rational
 
     override def abs: PositiveReal with Rational = numerator.abs / denominator.abs
 
-    override def inverse = IntegerFraction(denominator, numerator)
+    override def inverse: Rational = denominator / numerator
 
-    override def unary_-(): Rational = -numerator / -denominator
+    override def unary_-(): Rational = (-numerator) / denominator
+
+    override def squared: Rational with PositiveReal = numerator.squared / denominator.squared
 
     def isEmpty: Boolean = numerator.isEmpty
 
-    override def approximatelyEvaluate(precision: Precision): BigDecimal = numerator.evaluate(precision) / denominator.evaluate(precision)
+    override def approximatelyEvaluate(precision: Precision): BigDecimal = {
+        precision(numerator.approximatelyEvaluate(precision) / denominator.approximatelyEvaluate(precision))
+    }
 
     override def ?+(that: Real) = that match {
         case r: Rational => Some(this + r)
@@ -52,6 +56,8 @@ trait Rational
     def -(that: Rational): Rational = this + (-that)
 
     def *(that: Rational): Rational = (this.numerator * that.numerator) / (this.denominator * that.denominator)
+
+    def /(that: Rational): Rational = (this.numerator * that.denominator) / (this.denominator * that.numerator)
 
     override def toString: String = numerator.toString + "/" + denominator.toString
 
@@ -123,10 +129,6 @@ class IntegerFraction private[numbers](override val numerator: Integer, override
         with ApproximatelyEvaluated {
 
     require(!denominator.isEmpty)
-
-    override def unary_-() = IntegerFraction(-numerator, denominator)
-
-    override def squared = Natural.divide(numerator.squared, denominator.squared)
 
     override def ?*(that: Real) = numerator ?* that match {
         case Some(m: Integer) => Some(IntegerFraction(m, denominator))

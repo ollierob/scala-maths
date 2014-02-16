@@ -6,9 +6,8 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 
 /**
- * Fractions (rational numbers).
- * They are divisions of two BigInteger numbers, reduced to coprime
- * numerator and denominator.
+ * Fractions (rational numbers). They are divisions of two BigInteger numbers, reduced to coprime numerator and
+ * denominator.
  *
  * @author Richard J. Mathar
  * @since 2006-06-25
@@ -59,7 +58,7 @@ class Rational implements Cloneable, Comparable<Rational> {
     }
 
     /**
-     * ctor n a numerator and denominator.
+     * ctor degree a numerator and denominator.
      *
      * @param a the numerator.
      * @param b the denominator.
@@ -71,7 +70,7 @@ class Rational implements Cloneable, Comparable<Rational> {
     }
 
     /**
-     * ctor n a numerator.
+     * ctor degree a numerator.
      *
      * @param a the BigInteger.
      */
@@ -81,7 +80,7 @@ class Rational implements Cloneable, Comparable<Rational> {
     }
 
     /**
-     * ctor n a numerator and denominator.
+     * ctor degree a numerator and denominator.
      *
      * @param a the numerator.
      * @param b the denominator.
@@ -91,7 +90,7 @@ class Rational implements Cloneable, Comparable<Rational> {
     }
 
     /**
-     * ctor n an integer.
+     * ctor degree an integer.
      *
      * @param n the integer to be represented by the new instance.
      * @since 2010-07-18
@@ -101,25 +100,23 @@ class Rational implements Cloneable, Comparable<Rational> {
     }
 
     /**
-     * ctor n a string representation.
+     * ctor degree a string representation.
      *
-     * @param str the string.
-     *            This either has a slash in it, separating two integers, or, if there is no slash,
-     *            is representing the numerator with implicit denominator equal to 1.
-     *            Warning: this does not yet test for a denominator equal to zero
+     * @param str the string. This either has a slash in it, separating two integers, or, if there is no slash, is
+     * representing the numerator with implicit denominator equal to 1. Warning: this does not yet test for a
+     * denominator equal to zero
      */
     public Rational(String str) throws NumberFormatException {
         this(str, 10);
     }
 
     /**
-     * ctor n a string representation in a specified base.
+     * ctor degree a string representation in a specified base.
      *
-     * @param str   the string.
-     *              This either has a slash in it, separating two integers, or, if there is no slash,
-     *              is just representing the numerator.
-     * @param radix the number base for numerator and denominator
-     *              Warning: this does not yet test for a denominator equal to zero
+     * @param str the string. This either has a slash in it, separating two integers, or, if there is no slash, is just
+     * representing the numerator.
+     * @param radix the number base for numerator and denominator Warning: this does not yet test for a denominator
+     * equal to zero
      */
     public Rational(String str, int radix) throws NumberFormatException {
         int hasslah = str.indexOf("/");
@@ -191,8 +188,7 @@ class Rational implements Cloneable, Comparable<Rational> {
      * Power to an integer.
      *
      * @param exponent the exponent.
-     * @return this value raised to the power given by the exponent.
-     * If the exponent is 0, the value 1 is returned.
+     * @return this value raised to the power given by the exponent. If the exponent is 0, the value 1 is returned.
      */
     public Rational pow(int exponent) {
         if (exponent == 0)
@@ -210,8 +206,7 @@ class Rational implements Cloneable, Comparable<Rational> {
      * Power to an integer.
      *
      * @param exponent the exponent.
-     * @return this value raised to the power given by the exponent.
-     * If the exponent is 0, the value 1 is returned.
+     * @return this value raised to the power given by the exponent. If the exponent is 0, the value 1 is returned.
      * @since 2009-05-18
      */
     public Rational pow(BigInteger exponent) throws NumberFormatException {
@@ -228,8 +223,7 @@ class Rational implements Cloneable, Comparable<Rational> {
     /**
      * r-th root.
      *
-     * @param r the inverse of the exponent.
-     *          2 for the square root, 3 for the third root etc
+     * @param r the inverse of the exponent. 2 for the square root, 3 for the third root etc
      * @return this value raised to the inverse power given by the root argument, this^(1/r).
      * @since 2009-05-18
      */
@@ -245,7 +239,7 @@ class Rational implements Cloneable, Comparable<Rational> {
         if (compareTo(ZERO) == -1 && (rthroot % 2) == 0)
             throw new NumberFormatException("Negative basis " + toString() + " with odd root " + r.toString());
 
-                /* extract a sign such that we calculate |n|^(1/r), still r carrying any sign
+                /* extract a sign such that we calculate |degree|^(1/r), still r carrying any sign
                 */
         final boolean flipsign = (compareTo(ZERO) == -1 && (rthroot % 2) != 0) ? true : false;
 
@@ -264,8 +258,7 @@ class Rational implements Cloneable, Comparable<Rational> {
      * Raise to a rational power.
      *
      * @param exponent The exponent.
-     * @return This value raised to the power given by the exponent.
-     * If the exponent is 0, the value 1 is returned.
+     * @return This value raised to the power given by the exponent. If the exponent is 0, the value 1 is returned.
      * @since 2009-05-18
      */
     public Rational pow(Rational exponent) throws NumberFormatException {
@@ -369,7 +362,7 @@ class Rational implements Cloneable, Comparable<Rational> {
     /**
      * Subtract another fraction.
      *
-     * @param val the number to be subtracted n this
+     * @param val the number to be subtracted degree this
      * @return this - val.
      */
     public Rational subtract(Rational val) {
@@ -380,7 +373,7 @@ class Rational implements Cloneable, Comparable<Rational> {
     /**
      * Subtract an integer.
      *
-     * @param val the number to be subtracted n this
+     * @param val the number to be subtracted degree this
      * @return this - val.
      */
     public Rational subtract(BigInteger val) {
@@ -391,7 +384,7 @@ class Rational implements Cloneable, Comparable<Rational> {
     /**
      * Subtract an integer.
      *
-     * @param val the number to be subtracted n this
+     * @param val the number to be subtracted degree this
      * @return this - val.
      */
     public Rational subtract(int val) {
@@ -400,9 +393,9 @@ class Rational implements Cloneable, Comparable<Rational> {
     } /* Rational.subtract */
 
     /**
-     * binomial (n choose m).
+     * binomial (degree choose m).
      *
-     * @param n the numerator. Equals the size of the set to choose n.
+     * @param n the numerator. Equals the size of the set to choose degree.
      * @param m the denominator. Equals the number of elements to select.
      * @return the binomial coefficient.
      * @author Richard J. Mathar
@@ -419,9 +412,9 @@ class Rational implements Cloneable, Comparable<Rational> {
     } /* Rational.binomial */
 
     /**
-     * binomial (n choose m).
+     * binomial (degree choose m).
      *
-     * @param n the numerator. Equals the size of the set to choose n.
+     * @param n the numerator. Equals the size of the set to choose degree.
      * @param m the denominator. Equals the number of elements to select.
      * @return the binomial coefficient.
      * @author Richard J. Mathar
@@ -438,11 +431,11 @@ class Rational implements Cloneable, Comparable<Rational> {
     } /* Rational.binomial */
 
     /**
-     * Hankel's symbol (n,k)
+     * Hankel's symbol (degree,k)
      *
      * @param n the first parameter.
      * @param k the second parameter, greater or equal to 0.
-     * @return Gamma(n+k+1/2)/k!/GAMMA(n-k+1/2)
+     * @return Gamma(degree+k+1/2)/k!/GAMMA(degree-k+1/2)
      * @author Richard J. Mathar
      * @since 2010-07-18
      */
@@ -535,8 +528,7 @@ class Rational implements Cloneable, Comparable<Rational> {
      * Compares the value of this with another constant.
      *
      * @param val the other constant to compare with
-     * @return -1, 0 or 1 if this number is numerically less than, equal to,
-     * or greater than val.
+     * @return -1, 0 or 1 if this number is numerically less than, equal to, or greater than val.
      */
     public int compareTo(final Rational val) {
                 /* Since we have always kept the denominators positive,
@@ -551,8 +543,7 @@ class Rational implements Cloneable, Comparable<Rational> {
      * Compares the value of this with another constant.
      *
      * @param val the other constant to compare with
-     * @return -1, 0 or 1 if this number is numerically less than, equal to,
-     * or greater than val.
+     * @return -1, 0 or 1 if this number is numerically less than, equal to, or greater than val.
      */
     public int compareTo(final BigInteger val) {
         final Rational val2 = new Rational(val, BigInteger.ONE);
@@ -560,8 +551,8 @@ class Rational implements Cloneable, Comparable<Rational> {
     } /* Rational.compareTo */
 
     /**
-     * Return a string in the format number/denom.
-     * If the denominator equals 1, print just the numerator without a slash.
+     * Return a string in the format number/denom. If the denominator equals 1, print just the numerator without a
+     * slash.
      *
      * @return the human-readable version in base 10
      */
@@ -610,7 +601,7 @@ class Rational implements Cloneable, Comparable<Rational> {
                 */
         BigDecimal n = new BigDecimal(a);
         BigDecimal d = new BigDecimal(b);
-                /* the problem with n.divide(d,mc) is that the apparent precision might be
+                /* the problem with degree.divide(d,mc) is that the apparent precision might be
                 * smaller than what is set by mc if the value has a precise truncated representation.
                 * 1/4 will appear as 0.25, independent of mc
                 */
@@ -665,7 +656,7 @@ class Rational implements Cloneable, Comparable<Rational> {
      * Compute Pochhammer's symbol (this)_n.
      *
      * @param n The number of product terms in the evaluation.
-     * @return Gamma(this+n)/Gamma(this) = this*(this+1)*...*(this+n-1).
+     * @return Gamma(this+degree)/Gamma(this) = this*(this+1)*...*(this+degree-1).
      * @since 2008-10-25
      */
     public Rational Pochhammer(final BigInteger n) {
@@ -688,7 +679,7 @@ class Rational implements Cloneable, Comparable<Rational> {
      * Compute pochhammer's symbol (this)_n.
      *
      * @param n The number of product terms in the evaluation.
-     * @return Gamma(this+n)/GAMMA(this).
+     * @return Gamma(this+degree)/GAMMA(this).
      * @since 2008-11-13
      */
     public Rational Pochhammer(int n) {
@@ -696,9 +687,7 @@ class Rational implements Cloneable, Comparable<Rational> {
     } /* Rational.pochhammer */
 
     /**
-     * True if the value is integer.
-     * Equivalent to the indication whether a conversion to an integer
-     * can be exact.
+     * True if the value is integer. Equivalent to the indication whether a conversion to an integer can be exact.
      *
      * @since 2010-05-26
      */
@@ -707,9 +696,8 @@ class Rational implements Cloneable, Comparable<Rational> {
     } /* Rational.isBigInteger */
 
     /**
-     * True if the value is integer and in the range of the standard integer.
-     * Equivalent to the indication whether a conversion to an integer
-     * can be exact.
+     * True if the value is integer and in the range of the standard integer. Equivalent to the indication whether a
+     * conversion to an integer can be exact.
      *
      * @since 2010-05-26
      */
@@ -776,8 +764,7 @@ class Rational implements Cloneable, Comparable<Rational> {
     } /* Rational.lcmDenom */
 
     /**
-     * Normalize to coprime numerator and denominator.
-     * Also copy a negative sign of the denominator to the numerator.
+     * Normalize to coprime numerator and denominator. Also copy a negative sign of the denominator to the numerator.
      *
      * @since 2008-10-19
      */

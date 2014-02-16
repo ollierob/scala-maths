@@ -4,6 +4,7 @@ import net.ollie.maths.Empty
 import net.ollie.maths.functions.angular.Angle.AngleBuilder
 import net.ollie.maths.numbers.{Precision, Real}
 import net.ollie.maths.numbers.constants.{Zero, Pi}
+import net.ollie.maths.functions.numeric.Modulo
 
 trait Angle
         extends Real {
@@ -32,6 +33,8 @@ trait Angle
     implicit def builder: AngleBuilder[Type]
 
     override def unary_-(): Type = builder.create(-this.toRadians)
+
+    def reduce: Type
 
     def +(that: Angle): Type = builder.create(this.toRadians + that.toRadians)
 
@@ -144,6 +147,8 @@ object EmptyAngle
 
     override def toConstant = Some(this)
 
+    override def reduce = this
+
 }
 
 trait Radians
@@ -155,6 +160,8 @@ trait Radians
     def value: Real
 
     def toRadians = value
+
+    def reduce = Radians(Modulo(value, 2 * Pi))
 
     def +(that: Radians): Radians = Radians(this.value + that.value)
 
@@ -206,6 +213,8 @@ class Degrees(val value: Real)
 
     implicit def builder = Degrees.Builder
 
+    def reduce = Degrees(Modulo(value, 360))
+
 }
 
 object Degrees {
@@ -238,6 +247,8 @@ class Grads(val value: Real)
 
     implicit def builder = ??? //TODO
 
+    def reduce = ??? //TODO
+
 }
 
 class Turns(val value: Real)
@@ -253,5 +264,7 @@ class Turns(val value: Real)
     override def toString = value.toString + " turns"
 
     implicit def builder = ???
+
+    def reduce = ??? //TODO
 
 }

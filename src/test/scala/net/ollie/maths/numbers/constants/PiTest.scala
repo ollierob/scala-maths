@@ -21,6 +21,12 @@ class PiTest extends FlatSpec with Matchers {
         Pi.evaluate(8 sf) shouldBe BigDecimal("3.1415927")
     }
 
+    behavior of "Pi * 2"
+
+    it should "evaluate" in {
+        2 * Pi evaluate (4 dp) shouldBe BigDecimal("6.2832")
+    }
+
     behavior of "Pi / 2"
 
     it should "evaluate to 8 dp" in {

@@ -30,8 +30,12 @@ class VariableTest extends FlatSpec with Matchers {
         }
 
         it should "replace" in {
-            x.replace(x, Pi) shouldBe (Pi)
+            x.replace(x, Pi) shouldBe Pi
             x.replace(Variable("y"), Pi) shouldBe (x)
+        }
+
+        it should "negate" in {
+            (-x).replace(x, Pi) shouldBe -Pi
         }
 
     }

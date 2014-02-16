@@ -1,10 +1,12 @@
 package net.ollie.maths.functions.numeric
 
 import net.ollie.maths._
-import net.ollie.maths.functions.FunctionBuilder
+import net.ollie.maths.functions.{UnivariateFunction, ComplexFunctionBuilder}
 import net.ollie.maths.numbers._
-import org.nevec.rjm.BigDecimalMath
 import net.ollie.maths.numbers.constants.{Zero, One, EulersNumber}
+import net.ollie.maths.numbers.complex.{PolarComplex, Complex}
+import net.ollie.maths.functions.angular.Angle
+import net.ollie.maths.methods.MaclaurinSeries
 
 /**
  * Created by Ollie on 18/01/14.
@@ -12,32 +14,46 @@ import net.ollie.maths.numbers.constants.{Zero, One, EulersNumber}
  * @see Ln
  */
 object Exp
-        extends FunctionBuilder {
+        extends ComplexFunctionBuilder
+        with UnivariateFunction[Complex, Complex] {
 
-    def apply(n: Number): Number = n match {
-        case re: Real => apply(re)
-        case _ => ???
-    }
+    type Z = Number
 
-    def apply(re: Real): Real = re match {
+    override def apply(re: Real): Real = re match {
         case Zero => empty
         case MinusInfinity => Zero
-        case _ => new ExpOf(re)
+        case One => EulersNumber
+        case _ => new RealExp(re)
     }
 
-    def unapply(exp: Exp): Option[Expression] = Some(exp.of)
+    def apply(z: Complex): Complex = {
+        if (z.isEmpty) empty
+        else new ComplexExp(z)
+    }
+
+    def unapply(exp: ExpOf): Option[Expression] = Some(exp.of)
 
     protected[this] def create(expr: Expression) = expr match {
         case Ln(of) => of
-        case _ => new Exp(expr)
+        case _ => new ExpOf(expr)
     }
 
     protected[this] def empty = One
 
 }
 
-class Exp(val of: Expression)
-        extends Function
+trait Exp
+        extends Expression {
+
+    def of: Expression
+
+    override def toString = s"Exp($of)"
+
+}
+
+class ExpOf(val of: Expression)
+        extends Exp
+        with Function
         with Invertible {
 
     type Inverse = Expression //TODO Ln
@@ -48,20 +64,36 @@ class Exp(val of: Expression)
 
     protected[this] def apply(at: Expression) = Exp(at)
 
-    override def toString = s"Exp($of)"
-
     def inverse = Ln(of)
 
     protected[this] def derivative(at: Expression) = Exp(at)
 
 }
 
-class ExpOf(re: Real)
-        extends PositiveRealPower(EulersNumber, re)
-        with Real {
+class RealExp(val of: Real)
+        extends PositiveRealPower(EulersNumber, of)
+        with Exp {
 
-    override def isEmpty = MinusInfinity == re
+    require(MinusInfinity != of)
 
-    protected[this] override def doEvaluate(precision: Precision) = BigDecimalMath.exp(re.evaluate(precision).underlying())
+    private lazy val series = MaclaurinSeries(Exp, of)
+
+    override protected[this] def doEvaluate(precision: Precision) = series.evaluate(precision)
+
+}
+
+class ComplexExp(val of: Complex)
+        extends Complex
+        with Exp {
+
+    import Angle._
+
+    private lazy val p = PolarComplex(Exp(of.re), of.im radians)
+
+    def re = p.re
+
+    def im = p.im
+
+    override def toString = super[Complex].toString
 
 }

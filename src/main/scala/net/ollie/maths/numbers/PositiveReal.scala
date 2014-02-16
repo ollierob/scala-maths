@@ -2,6 +2,8 @@ package net.ollie.maths.numbers
 
 import org.nevec.rjm.BigDecimalMath
 import net.ollie.maths.{Number, Operation}
+import net.ollie.maths.numbers.constants.{One, Zero}
+import net.ollie.maths.numbers.RealPower.ZeroToPowerZeroIsOne
 
 /**
  * Numbers known to be equal to or greater than zero at compile time.
@@ -19,11 +21,6 @@ trait PositiveReal
     def *(that: PositiveReal): PositiveReal = super.*(that).abs
 
     def /(that: PositiveReal): PositiveReal = this * that.inverse
-
-    def ^(that: Real): PositiveReal = that match {
-        case i: Integer => this.^(that)
-        case _ => PositiveReal.pow(this, that)
-    }
 
     override def ^(that: Integer): PositiveReal = PositiveReal.pow(this, that)
 
@@ -48,7 +45,12 @@ object PositiveReal {
 
     def inverse(re: PositiveReal): PositiveReal = new PositiveRealInverse(re)
 
-    def pow(base: PositiveReal, power: Real): PositiveReal = new PositiveRealPower(base, power)
+    def pow(base: PositiveReal, power: Real)(implicit convention: ZeroToPowerZeroConvention = ZeroToPowerZeroIsOne): PositiveReal = (base, power) match {
+        case (Zero, Zero) => convention.value.abs
+        case (_, Zero) => One
+        case (_, One) => base
+        case _ => new PositiveRealPower(base, power)
+    }
 
     implicit object Numeric
             extends scala.Numeric[PositiveReal] {
@@ -89,14 +91,12 @@ class PositiveRealInverse(val re: PositiveReal)
  *
  * @param base
  * @param power
- * @see http://arxiv.org/abs/0908.3030v2
  */
 class PositiveRealPower(val base: PositiveReal, val power: Real)
         extends PositiveReal
         with RealPower {
 
     protected[this] def doEvaluate(precision: Precision) = {
-        println(s"EVALUATING $this AT $precision")
         BigDecimalMath.pow(base.evaluate(precision).underlying(), power.evaluate(precision).underlying())
     }
 

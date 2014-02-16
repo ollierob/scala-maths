@@ -2,6 +2,7 @@ package net.ollie.maths.numbers
 
 import net.ollie.maths.methods.ApproximatelyEvaluated
 import net.ollie.maths.numbers.constants.{Zero, One}
+import org.nevec.rjm.BigDecimalMath
 
 /**
  * Created by Ollie on 12/01/14.
@@ -21,14 +22,16 @@ trait RealPower
 
 object RealPower {
 
-    def apply(base: Real, power: Integer)(implicit convention: ZeroToPowerZeroConvention = ZeroToPowerZeroIsOne): Real = (base, power) match {
-        case (Zero, Zero) => convention.value
-        case (Zero, _) if power > Zero => Zero
-        case (Zero, _) if power < Zero => Zero.inverse
-        case (One, _) => One
-        case (_, Zero) => One
-        case (_, One) => base
-        case _ => new RealToIntegerPower(base, power)
+    def apply(base: Real, power: Integer)(implicit convention: ZeroToPowerZeroConvention = ZeroToPowerZeroIsOne): Real = {
+        (base, power) match {
+            case (Zero, Zero) => convention.value
+            case (Zero, _) if power.isStrictlyPositive => Zero
+            case (Zero, _) => Zero.inverse
+            case (One, _) => One
+            case (_, Zero) => One
+            case (_, One) => base
+            case _ => new RealToIntegerPower(base, power)
+        }
     }
 
     object ZeroToPowerZeroIsUndefined
@@ -59,8 +62,7 @@ class RealToIntegerPower(val base: Real, val power: Integer)
     }
 
     override def approx(precision: Precision) = {
-        if (precision.value < 16) Math.pow(base.evaluate(precision).toDouble, power.evaluate(precision).toDouble)
-        else throw new UnsupportedOperationException(s"Precision $precision unsupported for evaluation of $this")
+        BigDecimalMath.pow(base.evaluate(precision).underlying(), power.evaluate(precision).underlying())
     }
 
     override def ?==(that: Real) = that match {

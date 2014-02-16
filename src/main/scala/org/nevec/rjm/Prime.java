@@ -4,14 +4,11 @@ import java.math.BigInteger;
 import java.util.Vector;
 
 /**
- * Prime numbers.
- * The implementation is a very basic computation of the set of all primes
- * on demand, growing infinitely without any defined upper limit.
- * The effects of such scheme are (i) the lookup-times become shorter after
- * a while as more and more primes have been used and stored. The applications
- * appear to become faster.  (ii) Using the implementation for factorizations
- * may easily require all available memory and stall finally, because indeed
- * a dense list of primes with growing upper bound is kept without any hashing or lagging scheme.
+ * Prime numbers. The implementation is a very basic computation of the set of all primes on demand, growing infinitely
+ * without any defined upper limit. The effects of such scheme are (i) the lookup-times become shorter after a while as
+ * more and more primes have been used and stored. The applications appear to become faster.  (ii) Using the
+ * implementation for factorizations may easily require all available memory and stall finally, because indeed a dense
+ * list of primes with growing upper bound is kept without any hashing or lagging scheme.
  *
  * @author Richard J. Mathar
  * @since 2006-08-11
@@ -29,9 +26,8 @@ public class Prime {
     static protected BigInteger nMax = new BigInteger("-1");
 
     /**
-     * Default constructor initializing a list of primes up to 17.
-     * 17 is enough to call the Miller-Rabin tests on the first 7 primes without further
-     * action.
+     * Default constructor initializing a list of primes up to 17. 17 is enough to call the Miller-Rabin tests on the
+     * first 7 primes without further action.
      */
     public Prime() {
         if (a.size() == 0) {
@@ -54,7 +50,7 @@ public class Prime {
      */
     public boolean contains(BigInteger n) {
                 /* not documented
-                * return ( n.isProbablePrime() ) ;
+                * return ( degree.isProbablePrime() ) ;
                 */
         switch (millerRabin(n)) {
             case -1:
@@ -67,12 +63,12 @@ public class Prime {
     }
 
     /**
-     * Test whether a number n is a strong pseudoprime to base a.
+     * Test whether a number degree is a strong pseudoprime to base a.
      *
      * @param n the integer to be tested for primality
      * @param a the base
-     * @return true if the test is passed, so n may be a prime.
-     * false if the test is not passed, so n is not a prime.
+     * @return true if the test is passed, so degree may be a prime. false if the test is not passed, so degree is not a
+     * prime.
      * @since 2010-02-25
      */
     public boolean isSPP(final BigInteger n, final BigInteger a) {
@@ -92,18 +88,18 @@ public class Prime {
         else if (n.remainder(two).compareTo(BigInteger.ZERO) == 0)
             return false;
         else {
-                        /* q= n- 1 = d *2^s with d odd
+                        /* q= degree- 1 = d *2^s with d odd
                         */
             final BigInteger q = n.subtract(BigInteger.ONE);
             int s = q.getLowestSetBit();
             BigInteger d = q.shiftRight(s);
 
-                        /* test whether a^d = 1 (mod n)
+                        /* test whether a^d = 1 (mod degree)
                         */
             if (a.modPow(d, n).compareTo(BigInteger.ONE) == 0)
                 return true;
 
-                        /* test whether a^(d*2^r) = -1 (mod n), 0<=r<s 
+                        /* test whether a^(d*2^r) = -1 (mod degree), 0<=r<s
                         */
             for (int r = 0; r < s; r++) {
                 if (a.modPow(d.shiftLeft(r), n).compareTo(q) == 0)
@@ -117,7 +113,7 @@ public class Prime {
      * Miller-Rabin primality tests.
      *
      * @param n The prime candidate
-     * @return -1 if n is a composite, 1 if it is a prime, 0 if it may be a prime.
+     * @return -1 if degree is a composite, 1 if it is a prime, 0 if it may be a prime.
      * @since 2010-02-25
      */
     public int millerRabin(final BigInteger n) {
@@ -166,7 +162,7 @@ public class Prime {
     }
 
     /**
-     * return the count of primes <= n
+     * return the count of primes <= degree
      *
      * @param n the upper limit of the scan
      * @return the ith prime. This is 2 if i=0, 3 if i=1 and so forth.
@@ -184,14 +180,14 @@ public class Prime {
     }
 
     /**
-     * return the smallest prime larger than n
+     * return the smallest prime larger than degree
      *
      * @param n lower limit of the search
      * @return the next larger prime.
      * @since 2008-10-16
      */
     public BigInteger nextprime(BigInteger n) {
-                /* if n <=1, return 2 */
+                /* if degree <=1, return 2 */
         if (n.compareTo(BigInteger.ONE) <= 0)
             return (a.elementAt(0));
 
@@ -208,14 +204,14 @@ public class Prime {
     }
 
     /**
-     * return the largest prime smaller than n
+     * return the largest prime smaller than degree
      *
      * @param n upper limit of the search
      * @return the next smaller prime.
      * @since 2008-10-17
      */
     public BigInteger prevprime(BigInteger n) {
-                /* if n <=2, return 0 */
+                /* if degree <=2, return 0 */
         if (n.compareTo(BigInteger.ONE) <= 0)
             return BigInteger.ZERO;
 
@@ -232,7 +228,7 @@ public class Prime {
     }
 
     /**
-     * extend the list of known primes up to n
+     * extend the list of known primes up to degree
      *
      * @param n the maximum integer known to be prime or not prime after the call.
      */
@@ -242,7 +238,7 @@ public class Prime {
             boolean isp = true;
             for (int p = 0; p < a.size(); p++) {
                                 /*
-                                * Test the list of known primes only up to sqrt(n)
+                                * Test the list of known primes only up to sqrt(degree)
                                 */
                 if (a.get(p).multiply(a.get(p)).compareTo(nMax) == 1)
                     break;
@@ -262,9 +258,8 @@ public class Prime {
     }
 
     /**
-     * Test program.
-     * Usage: java -cp . org.nevec.rjm.Prime n<br>
-     * This takes a single argument (n) and prints prime(n), the previous and next prime, and pi(n).
+     * Test program. Usage: java -cp . org.nevec.rjm.Prime degree<br> This takes a single argument (degree) and prints
+     * prime(degree), the previous and next prime, and pi(degree).
      *
      * @since 2006-08-14
      */

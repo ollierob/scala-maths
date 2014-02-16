@@ -7,8 +7,16 @@ import scala.Some
 /**
  * Created by Ollie on 09/02/14.
  */
+trait Unity
+        extends Integer {
+
+    override def abs = One
+
+}
+
 object One
-        extends ExactNatural(1) {
+        extends ExactNatural(1)
+        with Unity {
 
     override def ! = this
 
@@ -19,8 +27,6 @@ object One
     override def *(that: Real) = that
 
     override def *(that: PositiveReal) = that
-
-    override def *(that: Integer) = that
 
     override def *(that: Natural) = that
 
@@ -34,8 +40,6 @@ object One
 
     override def ^(that: Expression) = this
 
-    override def ^(that: Real) = this
-
     override def ^(that: Integer) = this
 
     override def ^(that: Natural) = this
@@ -45,7 +49,8 @@ object One
 }
 
 object MinusOne
-        extends ExactInteger(-1) {
+        extends ExactInteger(-1)
+        with Unity {
 
     override def unary_-() = One
 

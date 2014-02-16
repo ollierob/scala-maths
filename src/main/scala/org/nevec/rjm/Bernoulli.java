@@ -3,7 +3,6 @@ package org.nevec.rjm;
 import java.math.BigInteger;
 import java.util.Vector;
 
-
 /**
  * Bernoulli numbers.
  *
@@ -12,7 +11,7 @@ import java.util.Vector;
  */
 class Bernoulli {
     /*
-    * The list of all Bernoulli numbers as a vector, n=0,2,4,....
+    * The list of all Bernoulli numbers as a vector, degree=0,2,4,....
     */
     static Vector<Rational> a = new Vector<Rational>();
 
@@ -26,7 +25,7 @@ class Bernoulli {
     /**
      * Set a coefficient in the internal table.
      *
-     * @param n     the zero-based index of the coefficient. n=0 for the constant term.
+     * @param n the zero-based index of the coefficient. degree=0 for the constant term.
      * @param value the new value of the coefficient.
      */
     protected void set(final int n, final Rational value) {
@@ -44,7 +43,7 @@ class Bernoulli {
      * The Bernoulli number at the index provided.
      *
      * @param n the index, non-negative.
-     * @return the B_0=1 for n=0, B_1=-1/2 for n=1, B_2=1/6 for n=2 etc
+     * @return the B_0=1 for degree=0, B_1=-1/2 for degree=1, B_2=1/6 for degree=2 etc
      */
     public Rational at(int n) {
         if (n == 1)
@@ -62,8 +61,8 @@ class Bernoulli {
     }
 
     /* Generate a new B_n by a standard double sum.
-    * @param n The index of the Bernoulli number.
-    * @return The Bernoulli number at n.
+    * @param degree The index of the Bernoulli number.
+    * @return The Bernoulli number at degree.
     */
     private Rational doubleSum(int n) {
         Rational resul = Rational.ZERO;
@@ -85,6 +84,5 @@ class Bernoulli {
         }
         return resul;
     }
-
 
 } /* Bernoulli */

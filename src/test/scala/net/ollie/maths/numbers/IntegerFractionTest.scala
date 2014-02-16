@@ -46,6 +46,15 @@ class IntegerFractionTest extends FlatSpec with Matchers {
         val r: Real = FOUR / FIVE
     }
 
+    it should "negate" in {
+        val r: Rational = FOUR / FIVE
+        -r shouldBe (-FOUR) / FIVE
+    }
+
+    it should "invert" in {
+        (FOUR / FIVE).inverse shouldBe FIVE / FOUR
+    }
+
     behavior of "1/3"
 
     it should "evaluate" in {
@@ -72,6 +81,14 @@ class IntegerFractionTest extends FlatSpec with Matchers {
     "2/3 + 5/7" should "equal 29/21" in {
         val r: Rational = IntegerFraction(2, 3) + IntegerFraction(5, 7)
         r shouldBe IntegerFraction(29, 21)
+    }
+
+    "1 / 99991" should "evaluate" in {
+        val fraction = 1 / Integer(99991)
+        fraction.evaluate(4 dp) shouldBe BigDecimal("0.0000")
+        fraction.evaluate(5 dp) shouldBe BigDecimal("0.00001")
+        fraction.approximatelyEvaluate(4 dp) shouldBe BigDecimal("0.0000")
+        fraction.approximatelyEvaluate(5 dp) shouldBe BigDecimal("0.00001")
     }
 
 }

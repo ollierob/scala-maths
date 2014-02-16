@@ -62,7 +62,7 @@ class RealArcSin(val of: Real)
 
     //private lazy val series = Series(nth _, Zero)
 
-    //private def nth(n: NaturalNumber): RealNumber = BinomialCoefficient(2 * n, n) * (x ^ (2 * n + 1)) / ((4 ^ n) * (2 * n + 1))
+    //private def nth(degree: NaturalNumber): RealNumber = BinomialCoefficient(2 * degree, degree) * (x ^ (2 * degree + 1)) / ((4 ^ degree) * (2 * degree + 1))
 
     protected[this] def doEvaluate(precision: Precision) = {
         BigDecimalMath.asin(of.approximatelyEvaluate(precision).underlying())
