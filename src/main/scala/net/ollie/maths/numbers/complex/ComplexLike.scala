@@ -14,8 +14,6 @@ trait ComplexLike
 
     type System >: this.type <: ComplexLike {type System = self.System}
 
-    type Inverse = System
-
     implicit protected[this] def builder: ComplexBuilder[System]
 
     def re: Real

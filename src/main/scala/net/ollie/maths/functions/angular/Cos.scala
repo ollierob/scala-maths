@@ -45,8 +45,6 @@ class CosOf(val of: Expression)
         with Cos
         with Invertible {
 
-    type Inverse = Expression //TODO
-
     protected[this] def builder = Cos
 
     protected[this] def derivative(x: Expression) = -Sin(x)

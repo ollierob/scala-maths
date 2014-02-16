@@ -56,8 +56,6 @@ class ExpOf(val of: Expression)
         with Function
         with Invertible {
 
-    type Inverse = Expression //TODO Ln
-
     def isEmpty = false
 
     protected[this] def at(n: Number) = Exp(n)

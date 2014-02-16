@@ -6,8 +6,6 @@ package net.ollie.maths
 trait Invertible
         extends Expression {
 
-    type Inverse <: Expression
-
-    def inverse: Inverse
+    def inverse: Expression
 
 }

@@ -49,8 +49,6 @@ private class SinOf(val of: Expression)
         with Sin
         with Invertible {
 
-    type Inverse = Expression //TODO
-
     protected[this] def builder = Sin
 
     def isEmpty = of.isEmpty

@@ -12,8 +12,6 @@ import org.nevec.rjm.BigDecimalMath
 trait Log
         extends Invertible {
 
-    type Inverse = Expression //TODO
-
     def base: Real
 
     def of: Expression

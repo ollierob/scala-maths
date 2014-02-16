@@ -47,8 +47,6 @@ class ArcCosOf(val of: Expression)
         with Invertible
         with ArcCos {
 
-    type Inverse = Expression //TODO
-
     protected[this] def builder = ArcCos
 
     protected[this] def derivative(x: Expression) = -1 / SquareRoot(1 - (x ^ 2))

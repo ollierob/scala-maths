@@ -14,11 +14,11 @@ trait Number
 
     type System >: this.type <: Number
 
-    type Inverse <: Number
-
     final def narrow: System = this
 
     def unary_-(): System
+
+    def inverse: Number
 
     def ?+(that: Number): Option[Number]
 

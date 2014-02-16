@@ -15,8 +15,6 @@ trait Quaternion
 
     type System = Quaternion
 
-    type Inverse = Quaternion
-
     def re: Real
 
     def i: QuaternionI

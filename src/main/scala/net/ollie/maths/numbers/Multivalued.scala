@@ -11,8 +11,6 @@ trait Multivalued
 
     type System = Multivalued
 
-    type Inverse = Multivalued
-
     type Contents <: Number
 
     def principal: Contents
