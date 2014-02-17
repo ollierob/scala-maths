@@ -11,15 +11,15 @@ import scala.math.BigDecimal.RoundingMode.RoundingMode
  */
 sealed trait Precision {
 
-    require(value >= 0)
+    require(digits >= 0)
+
+    def digits: Int
 
     def apply(bd: BigDecimal)(implicit mode: RoundingMode = Precision.DEFAULT_ROUNDING): BigDecimal
 
     def increase: Precision = increaseBy(1)
 
     def increaseBy(value: Int): Precision
-
-    def value: Int
 
     def getType: Class[_ <: Precision]
 
@@ -64,22 +64,22 @@ object Precision {
 
 }
 
-class DecimalPlaces(val value: Int)
+class DecimalPlaces(val digits: Int)
         extends AnyRef
         with Precision {
 
-    require(value >= 0)
+    require(digits >= 0)
 
-    def apply(bd: BigDecimal)(implicit mode: RoundingMode = Precision.DEFAULT_ROUNDING) = bd.setScale(value, mode)
+    def apply(bd: BigDecimal)(implicit mode: RoundingMode = Precision.DEFAULT_ROUNDING) = bd.setScale(digits, mode)
 
-    def increaseBy(value: Int) = new DecimalPlaces(this.value + value)
+    def increaseBy(value: Int) = new DecimalPlaces(this.digits + value)
 
     override def >(that: Precision) = that match {
-        case d: DecimalPlaces => Some(this.value > d.value)
+        case d: DecimalPlaces => Some(this.digits > d.digits)
         case _ => super.>(that)
     }
 
-    override def toString = value.toString + " decimal places"
+    override def toString = digits.toString + " decimal places"
 
     def getType = classOf[DecimalPlaces]
 
@@ -93,28 +93,28 @@ object IntegerPrecision
 
 /**
  * Accurate to N significant figures.
- * @param value
+ * @param digits
  */
-class SignificantFigures(val value: Int)
+class SignificantFigures(val digits: Int)
         extends AnyRef
         with Precision {
 
     import Precision._
 
-    require(value > 0)
+    require(digits > 0)
 
     def apply(bd: BigDecimal)(implicit mode: RoundingMode = Precision.DEFAULT_ROUNDING) = {
-        bd.setScale(value, mode).round(new MathContext(value, mode))
+        bd.setScale(digits, mode).round(new MathContext(digits, mode))
     }
 
-    def increaseBy(value: Int) = new SignificantFigures(this.value + value)
+    def increaseBy(value: Int) = new SignificantFigures(this.digits + value)
 
     override def >(that: Precision) = that match {
-        case s: SignificantFigures => Some(this.value > s.value)
+        case s: SignificantFigures => Some(this.digits > s.digits)
         case _ => super.>(that)
     }
 
-    override def toString = value.toString + " significant figures"
+    override def toString = digits.toString + " significant figures"
 
     def getType = classOf[SignificantFigures]
 

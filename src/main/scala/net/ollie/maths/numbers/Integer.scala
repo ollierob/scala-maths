@@ -88,13 +88,6 @@ object Integer {
 
     def abs(i: Integer): Natural = Natural(i.evaluate.abs)
 
-    def pow(n: Natural): Integer = ???
-
-    def is(n: Number): Option[Integer] = n match {
-        case i: Integer => Some(i)
-        case _ => None
-    }
-
     implicit object IntegerArithmetic
             extends Numeric[Integer] {
 
@@ -106,15 +99,15 @@ object Integer {
 
         def negate(x: Integer): Integer = -x
 
-        def fromInt(x: Int): Integer = x
+        def fromInt(x: Int): Integer = Integer(x)
 
-        def toInt(x: Integer) = x.toInt.get
+        def toInt(x: Integer) = x.evaluate.toInt
 
-        def toLong(x: Integer): Long = x.toInt.get.toLong
+        def toLong(x: Integer): Long = x.evaluate.toLong
 
-        def toFloat(x: Integer): Float = x.toInt.get.toFloat
+        def toFloat(x: Integer): Float = x.evaluate.toFloat
 
-        def toDouble(x: Integer): Double = x.toInt.get.toDouble
+        def toDouble(x: Integer): Double = x.evaluate.toDouble
 
         def compare(x: Integer, y: Integer) = x compare y
 
@@ -126,9 +119,7 @@ class ExactInteger(val int: Int)
         extends AnyRef
         with Integer {
 
-    private lazy val evaluated: BigInt = int
-
-    def evaluate = evaluated
+    def evaluate = BigInt(int)
 
     override def ?+(that: Real) = that match {
         case exact: ExactReal => Some(Real(BigDecimal(evaluate) + exact.of))
@@ -160,9 +151,7 @@ class NegatedInteger(val i: Integer)
 
     override def unary_-() = i
 
-    private lazy val evaluated = -(i.evaluate)
-
-    def evaluate = evaluated
+    def evaluate = -(i.evaluate)
 
     override def isEmpty = super[NegatedReal].isEmpty
 

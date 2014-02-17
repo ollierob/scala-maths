@@ -36,7 +36,7 @@ object IterativelyEvaluate {
     }
 
     private def toBigInt(decimal: BigDecimal, precision: Precision): BigInt = {
-        return precision(decimal.underlying.movePointRight(precision.value)) toBigInt
+        return precision(decimal.underlying.movePointRight(precision.digits)) toBigInt
     }
 
 }

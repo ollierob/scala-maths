@@ -16,7 +16,7 @@ object EulersNumber
     def isEmpty = false
 
     protected[this] def doEvaluate(precision: Precision) = {
-        if (precision.value < 50) precision(E50)
+        if (precision.digits < 50) precision(E50)
         else SERIES.evaluate(precision)
     }
 

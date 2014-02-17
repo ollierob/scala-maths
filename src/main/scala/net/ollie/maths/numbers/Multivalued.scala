@@ -17,7 +17,7 @@ trait Multivalued
 
     def values: Set[Contents]
 
-    def isEmpty = values.forall(_.isEmpty)
+    def isEmpty = values.forall(_.isEmpty) //Also true if no values
 
     def unary_-(): Multivalued = Multivalued.negate(this)
 

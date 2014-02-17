@@ -16,7 +16,7 @@ object Pi
     private lazy val MACHIN: Real = (16 * ArcTan(IntegerFraction(1, 5))) - (4 * ArcTan(IntegerFraction(1, 239)))
 
     protected[this] def doEvaluate(precision: Precision) = {
-        if (precision.value < 100) precision(PI_100)
+        if (precision.digits < 100) precision(PI_100)
         else ??? // MACHIN.evaluate(precision) //TODO this is slow!
     }
 

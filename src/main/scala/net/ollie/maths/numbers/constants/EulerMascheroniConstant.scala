@@ -14,7 +14,7 @@ object EulerMascheroniConstant extends PositiveReal {
     private lazy val INTEGRAL = -Integral(x => Ln(Ln(1 / x)), Zero, Infinity)(SimpsonsIntegrationMethod)
 
     protected[this] def doEvaluate(precision: Precision) = {
-        if (precision.value < 50) precision(E50)
+        if (precision.digits < 50) precision(E50)
         else INTEGRAL.evaluate(precision)
     }
 

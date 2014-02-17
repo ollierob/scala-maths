@@ -84,7 +84,7 @@ object TrapezoidalIntegrationMethod
 
         def evaluationIterator(startPrecision: Precision) = new EvaluationIterator() {
 
-            var N: Int = Math.max(4, startPrecision.value)
+            var N: Int = Math.max(4, startPrecision.digits)
 
             def next(nth: Natural, precision: Precision): BigDecimal = {
                 val h = delta / N
@@ -129,7 +129,7 @@ object SimpsonsIntegrationMethod
 
         def evaluationIterator(startPrecision: Precision) = new EvaluationIterator() {
 
-            var n: Int = even(Math.max(4, startPrecision.value))
+            var n: Int = even(Math.max(4, startPrecision.digits))
 
             def next(nth: Natural, precision: Precision) = {
                 val h = interval / n

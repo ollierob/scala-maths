@@ -360,8 +360,8 @@ class RealProduct(override val terms: Seq[Real])
 
     protected[this] def approx(precision: Precision) = {
         val evaluated = terms.map(_.approximatelyEvaluate(precision))
-        val totalPrecision = Math.max(0, evaluated.foldLeft(precision.value)((current, term) => current + intLength(term)))
-        if (totalPrecision == precision.value) evaluated.product
+        val totalPrecision = Math.max(0, evaluated.foldLeft(precision.digits)((current, term) => current + intLength(term)))
+        if (totalPrecision == precision.digits) evaluated.product
         else {
             val newPrecision = precision.increaseBy(totalPrecision)
             terms.map(_.approximatelyEvaluate(newPrecision)).product

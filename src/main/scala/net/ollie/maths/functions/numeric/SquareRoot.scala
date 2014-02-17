@@ -61,7 +61,7 @@ class PositiveSquareRoot(val of: PositiveReal)
         with ApproximatelyEvaluated {
 
     override def approx(precision: Precision) = {
-        if (precision.value < 16) Math.sqrt(of.approximatelyEvaluate(precision).toDouble)
+        if (precision.digits < 16) Math.sqrt(of.approximatelyEvaluate(precision).toDouble)
         else BigDecimalMath.sqrt(of.approximatelyEvaluate(precision).underlying())
     }
 
