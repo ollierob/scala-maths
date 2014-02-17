@@ -37,6 +37,8 @@ trait Roots[+F <: Number, C <: Number]
 
     def values: Set[C]
 
+    def isEmpty = values.forall(_.isEmpty)
+
     def degree: Natural
 
     override def toString = s"Root($degree)($of)"

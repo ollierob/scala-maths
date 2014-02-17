@@ -18,7 +18,10 @@ trait Expression
         case _ => this
     }
 
-    def replace(variable: Variable, expression: Expression): Expression = if (variable == expression) this else replace(Map((variable, expression)))
+    def replace(variable: Variable, expression: Expression): Expression = {
+        if (variable == expression) this
+        else replace(Map((variable, expression)))
+    }
 
     def replace(variables: Map[Variable, Expression]): Expression
 

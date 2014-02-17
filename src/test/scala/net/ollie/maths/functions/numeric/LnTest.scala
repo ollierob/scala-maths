@@ -1,11 +1,12 @@
 package net.ollie.maths.functions.numeric
 
-import net.ollie.maths.{Number, Variable}
+import net.ollie.maths.Variable
 import net.ollie.maths.numbers._
 import org.junit.runner.RunWith
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.junit.JUnitRunner
-import net.ollie.maths.numbers.constants.{Zero, One, EulersNumber}
+import net.ollie.maths.numbers.constants.{Pi, Zero, One, EulersNumber}
+import net.ollie.maths.numbers.complex.{Complex, ImaginaryUnit}
 
 /**
  * Created by Ollie on 16/01/14.
@@ -23,10 +24,23 @@ class LnTest extends FlatSpec with Matchers {
         Ln(2).evaluate(4 dp) shouldBe BigDecimal("0.6931")
     }
 
-    "Ln(4)" should "evaluate" in {
-        val r = Ln(4)
-        r.evaluate(4 dp) shouldBe BigDecimal("1.3863")
-        r == One shouldBe false
+    behavior of "Ln(4)"
+
+    {
+
+        it should "evaluate" in {
+            Ln(4).evaluate(4 dp) shouldBe BigDecimal("1.3863")
+        }
+
+        it should "be positive" in {
+            Ln(4).isStrictlyPositive shouldBe true
+            Ln(4) > 1 shouldBe true
+        }
+
+        it should "not be empty" in {
+            Ln(4).isEmpty shouldBe false
+        }
+
     }
 
     "1 / Ln(4)" should "evaluate" in {
@@ -42,12 +56,6 @@ class LnTest extends FlatSpec with Matchers {
     "1 / (4 * Ln(4))" should "evaluate" in {
         val r = One / (4 * Ln(4))
         r.evaluate(4 dp) shouldBe BigDecimal("0.1803")
-    }
-
-    "Ln(Ln(4))" should "evaluate" in {
-        val r: Number = Ln(Ln(4))
-        val re: Real = Real(r).get
-        re.evaluate(4 dp) shouldBe BigDecimal("0.3266")
     }
 
     val x = Variable("x")
@@ -68,6 +76,12 @@ class LnTest extends FlatSpec with Matchers {
             val n = 1 / (4 * Ln(4))
         }
 
+        "Ln(Ln(4))" should "evaluate" in {
+            val r: Complex = Ln(Ln(4))
+            val re: Real = Real(r).get
+            re.evaluate(4 dp) shouldBe BigDecimal("0.3266")
+        }
+
     }
 
     "Ln(2x)" should "differentiate to 1/x" in {
@@ -78,6 +92,11 @@ class LnTest extends FlatSpec with Matchers {
 
     "Ln(Exp(x))" should "be x" in {
         Ln(Exp(x)) shouldBe x
+    }
+
+    "Ln(i)" should "equal i Pi/2" in {
+        val z: ComplexLogarithms = Ln(ImaginaryUnit)
+        z.principal shouldBe Complex(Zero, Pi / 2)
     }
 
 }

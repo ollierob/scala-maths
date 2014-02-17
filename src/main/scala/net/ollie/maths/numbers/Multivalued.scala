@@ -15,10 +15,6 @@ trait Multivalued
 
     def principal: Contents
 
-    def values: Set[Contents]
-
-    def isEmpty = values.forall(_.isEmpty) //Also true if no values
-
     def unary_-(): Multivalued = Multivalued.negate(this)
 
     def ?^(that: Number) = None
@@ -26,8 +22,6 @@ trait Multivalued
     def ?*(that: Number)(leftToRight: Boolean) = None
 
     def ?+(that: Number) = None
-
-    override def toString = s"$values"
 
 }
 
@@ -55,6 +49,8 @@ class MultivaluedSingleton[N <: Number](val principal: N)
 
     def values = Set(principal)
 
+    def isEmpty = principal.isEmpty
+
     def inverse = Multivalued(principal.inverse)
 
 }
@@ -65,6 +61,8 @@ class MultivaluedSet[N <: Number](val principal: N, val values: Set[N])
     type Contents = N
 
     require(values.contains(principal))
+
+    def isEmpty = values.forall(_.isEmpty)
 
     def inverse = {
         val p: N = principal
@@ -80,11 +78,11 @@ class NegatedMultivalued[M <: Multivalued](val of: M)
 
     def inverse = (-of).inverse
 
+    def isEmpty = of.isEmpty
+
     override def unary_-() = ??? //of
 
     def principal = -(of.principal)
-
-    def values = of.values.map(-_)
 
     override def toString = s"-$of"
 

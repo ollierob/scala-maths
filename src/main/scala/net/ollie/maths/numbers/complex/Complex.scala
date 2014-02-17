@@ -84,7 +84,10 @@ object Complex
 
     def apply(re: Real, im: Real): Complex = Complex((re, im))
 
-    implicit def apply(re: Real): Complex = Complex(re, Zero)
+    implicit def apply(re: Real): Complex = {
+        if (re.isEmpty) Complex()
+        else Complex(re, Zero)
+    }
 
     def polar(r: Real, theta: Angle): PolarComplex = PolarComplex(r, theta)
 
