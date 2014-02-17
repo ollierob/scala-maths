@@ -4,10 +4,13 @@ import net.ollie.maths.Variable
 import net.ollie.maths.numbers.Infinite
 import org.scalatest.{FlatSpec, Matchers}
 import net.ollie.maths.numbers.constants.{Zero, Pi}
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
 /**
  * Created by Ollie on 10/01/14.
  */
+@RunWith(classOf[JUnitRunner])
 class DiracDeltaTest extends FlatSpec with Matchers {
 
     "delta(0)" should "be infinite" in {
