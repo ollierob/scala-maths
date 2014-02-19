@@ -591,7 +591,7 @@ public class BigDecimalMath {
                                 /* how many digits of tmp do we need in the sum?
                                 */
                 mcloc = new MathContext(err2prec(tmp.doubleValue(), eps));
-                BigDecimal c = pk.divide(k).BigDecimalValue(mcloc);
+                BigDecimal c = pk.divide(k).bigDecimalValue(mcloc);
                 if (k % 2 != 0)
                     log3 = log3.add(c);
                 else
@@ -625,7 +625,7 @@ public class BigDecimalMath {
                                 /* how many digits of tmp do we need in the sum?
                                 */
                 mcloc = new MathContext(err2prec(tmp.doubleValue(), eps));
-                BigDecimal c = pk.divide(k).BigDecimalValue(mcloc);
+                BigDecimal c = pk.divide(k).bigDecimalValue(mcloc);
                 log5 = log5.subtract(c);
                 pk = pk.multiply(r);
             }
@@ -654,7 +654,7 @@ public class BigDecimalMath {
                                 /* how many digits of tmp do we need in the sum?
                                 */
                 mcloc = new MathContext(err2prec(tmp.doubleValue(), eps));
-                BigDecimal c = pk.divide(k).BigDecimalValue(mcloc);
+                BigDecimal c = pk.divide(k).bigDecimalValue(mcloc);
                 log7 = log7.subtract(c);
                 pk = pk.multiply(r);
             }
@@ -710,7 +710,7 @@ public class BigDecimalMath {
                         */
             MathContext mcloc = new MathContext(1 + err2prec(eps));
 
-            final BigDecimal resul = log(r.BigDecimalValue(mcloc));
+            final BigDecimal resul = log(r.bigDecimalValue(mcloc));
 
             return resul.round(mc);
         }
@@ -887,7 +887,7 @@ public class BigDecimalMath {
 
                                 /* Perform the actual calculation as exponentiation of two floating point numbers.
                                 */
-                return pow(x, q.BigDecimalValue(mc));
+                return pow(x, q.bigDecimalValue(mc));
             }
 
         }
@@ -1721,7 +1721,7 @@ public class BigDecimalMath {
             double deltx = 5. * Math.pow(10., -mc.getPrecision()) / psi(qdbl);
 
             MathContext mcx = new MathContext(err2prec(qdbl, deltx));
-            BigDecimal x = q.BigDecimalValue(mcx);
+            BigDecimal x = q.bigDecimalValue(mcx);
 
                         /* forward calculation to the general floating point case */
             return Gamma(x);
@@ -1920,7 +1920,7 @@ public class BigDecimalMath {
             MathContext mcloc = new MathContext(2 + mc.getPrecision() + (int) (Math.log10((double) (n))));
             BigDecimal ftrm = pi(mcloc).multiply(new BigDecimal(2));
             ftrm = ftrm.pow(n);
-            ftrm = multiplyRound(ftrm, betsum.BigDecimalValue(mcloc));
+            ftrm = multiplyRound(ftrm, betsum.bigDecimalValue(mcloc));
             BigDecimal exps = new BigDecimal(0);
 
                         /* the basic accuracy of the accumulated terms before multiplication with 2
@@ -2191,7 +2191,7 @@ public class BigDecimalMath {
             if (Math.abs(r.doubleValue()) < eps)
                 break;
             MathContext mcloc = new MathContext(1 + err2prec(r.doubleValue(), eps));
-            res = res.add(r.BigDecimalValue(mcloc));
+            res = res.add(r.bigDecimalValue(mcloc));
         }
         return res.round(mc);
     } /* broadhurstBBP */
@@ -2343,7 +2343,7 @@ public class BigDecimalMath {
                         /* Convert the rational value with two digits of extra precision
                         */
             MathContext mc = new MathContext(2 + x.precision());
-            BigDecimal fbd = f.BigDecimalValue(mc);
+            BigDecimal fbd = f.bigDecimalValue(mc);
 
                         /* and the precision of the product is then dominated by the precision in x
                         */

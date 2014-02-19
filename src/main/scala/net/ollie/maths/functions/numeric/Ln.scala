@@ -108,10 +108,7 @@ class RealLn(override val of: PositiveReal)
 
     def isEmpty = of == One
 
-    override def abs = {
-        println(s"ABS OF $this")
-        super[Real].abs
-    }
+    override def abs = super[Real].abs
 
     protected[this] def doEvaluate(precision: Precision) = {
         BigDecimalMath.log(of.evaluate(precision).underlying())

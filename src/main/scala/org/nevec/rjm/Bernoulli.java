@@ -9,7 +9,7 @@ import java.util.Vector;
  * @author Richard J. Mathar
  * @since 2006-06-25
  */
-class Bernoulli {
+public class Bernoulli {
     /*
     * The list of all Bernoulli numbers as a vector, degree=0,2,4,....
     */

@@ -61,8 +61,13 @@ class RealToIntegerPower(val base: Real, val power: Integer)
         case _ => super.?*(that)
     }
 
+    private lazy val negate: Boolean = !base.isStrictlyPositive && !power.isEven
+
+    private val baseAbs = base.abs
+
     override def approx(precision: Precision) = {
-        BigDecimalMath.pow(base.evaluate(precision).underlying(), power.evaluate(precision).underlying())
+        val bd: BigDecimal = BigDecimalMath.pow(baseAbs.evaluate(precision).underlying(), power.evaluate(precision).underlying())
+        if (negate) -bd else bd
     }
 
     override def ?==(that: Real) = that match {

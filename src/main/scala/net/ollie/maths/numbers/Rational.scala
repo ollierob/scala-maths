@@ -27,6 +27,8 @@ trait Rational
 
     def isEmpty: Boolean = numerator.isEmpty
 
+    protected[this] def doEvaluate(precision: Precision) = precision(numerator.evaluate(IntegerPrecision) / denominator.evaluate(IntegerPrecision))
+
     override def approximatelyEvaluate(precision: Precision): BigDecimal = {
         precision(numerator.approximatelyEvaluate(precision) / denominator.approximatelyEvaluate(precision))
     }
@@ -145,6 +147,8 @@ class IntegerFraction private[numbers](override val numerator: Integer, override
     override def toConstant = super[Rational].toConstant
 
     override def variables = super[Rational].variables
+
+    override protected[this] def doEvaluate(precision: Precision) = super[Rational].doEvaluate(precision)
 
     override def approximatelyEvaluate(precision: Precision) = super[Rational].approximatelyEvaluate(precision)
 

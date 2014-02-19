@@ -12,7 +12,7 @@ import java.math.RoundingMode;
  * @author Richard J. Mathar
  * @since 2006-06-25
  */
-class Rational implements Cloneable, Comparable<Rational> {
+public class Rational implements Cloneable, Comparable<Rational> {
     /**
      * numerator
      */
@@ -596,7 +596,7 @@ class Rational implements Cloneable, Comparable<Rational> {
      * @return A representation as a BigDecimal floating point number.
      * @since 2008-10-26
      */
-    public BigDecimal BigDecimalValue(MathContext mc) {
+    public BigDecimal bigDecimalValue(MathContext mc) {
                 /* numerator and denominator individually rephrased
                 */
         BigDecimal n = new BigDecimal(a);
@@ -606,7 +606,7 @@ class Rational implements Cloneable, Comparable<Rational> {
                 * 1/4 will appear as 0.25, independent of mc
                 */
         return BigDecimalMath.scalePrec(n.divide(d, mc), mc);
-    } /* Rational.BigDecimalValue */
+    } /* Rational.bigDecimalValue */
 
     /**
      * Return a string in floating point format.

@@ -2,7 +2,7 @@ package net.ollie.maths.methods
 
 import scala.Some
 import scala.collection.mutable
-import scala.collection.mutable.{ArrayBuffer, ListBuffer}
+import scala.collection.mutable.ArrayBuffer
 
 import net.ollie.maths._
 import net.ollie.maths.numbers._
@@ -35,6 +35,12 @@ object Series {
     def apply(f: Integer => Real, start: Integer, end: Integer): Real = {
         if (end < start) return Zero
         def g(i: Int): Real = f(Integer(i) + start)
+        Seq.tabulate((end - start).toInt.get)(g).sum
+    }
+
+    def apply(f: Natural => Real, start: Natural, end: Natural): Real = {
+        if (end < start) return Zero
+        def g(i: Int): Real = f(Natural(i) + start)
         Seq.tabulate((end - start).toInt.get)(g).sum
     }
 
@@ -90,7 +96,7 @@ class Series[+T <: Expression] protected(val terms: Seq[T])
 }
 
 private class FiniteSumOf(f: (Integer) => Expression, start: Integer, end: Integer)
-extends Expression {
+        extends Expression {
 
     private val size = (end - start).toInt.get
 
@@ -152,12 +158,12 @@ private class InfiniteRealSum(f: Integer => Real, start: Integer)
 
     def evaluationIterator(startPrecision: Precision) = new EvaluationIterator {
 
-        val terms: ListBuffer[Real] = new ListBuffer[Real]()
+        var series: Real = Zero
 
         def next(nth: Natural, precision: Precision) = {
             val n: Integer = nth + start
-            terms += f(n)
-            terms.map(_.approximatelyEvaluate(precision)).sum
+            series += f(n)
+            series.evaluate(precision)
         }
 
     }
@@ -172,12 +178,13 @@ private class InfiniteNaturalSum(f: Natural => Real, start: Natural)
 
     def evaluationIterator(startPrecision: Precision) = new EvaluationIterator {
 
-        val terms: ListBuffer[Real] = new ListBuffer[Real]()
+        var series: Real = Zero
 
         def next(nth: Natural, precision: Precision) = {
             val n: Natural = nth + start
-            terms += f(n)
-            terms.map(_.approximatelyEvaluate(precision)).sum
+            series += f(n)
+            //println(n + " => " + series + " => " + series.evaluate(precision))
+            series.evaluate(precision)
         }
 
     }
