@@ -51,7 +51,7 @@ class SeriesTest extends FlatSpec with Matchers {
 
     "Sum of degree*x degree 0 to 5" should "be 15*x" in {
         def f(n: Integer): Expression = n * x
-        val sum = Series(f, 0, 5)
+        val sum = Series(f _, 0, 5)
         println(sum)
         sum.isEmpty shouldBe (false)
         sum.variables shouldBe (Set(x))

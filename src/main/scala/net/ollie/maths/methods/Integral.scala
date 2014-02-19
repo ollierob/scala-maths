@@ -10,7 +10,7 @@ import net.ollie.maths.numbers.constants.Zero
  */
 object Integral {
 
-    def apply(fn: Variable => Univariate, from: Real, to: Real)(implicit method: NumericalIntegrationMethod): Real = {
+    def apply(fn: Variable => Univariate, from: Real, to: Real)(implicit method: NumericalIntegrationMethod = SimpsonsIntegrationMethod): Real = {
         if (from >= to) Zero
         else method(fn, from, to)
     }

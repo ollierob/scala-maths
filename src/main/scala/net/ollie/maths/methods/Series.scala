@@ -27,14 +27,27 @@ object Series {
         case otherwise => new Series(otherwise.toSeq)
     }
 
-    def apply(f: (Integer) => Expression, start: Integer, end: Integer): Expression = {
+    def apply(f: Integer => Expression, start: Integer, end: Integer): Expression = {
         if (end < start) Zero
-        else new FiniteIncrementalSum(f, start, end)
+        else new FiniteSumOf(f, start, end)
     }
 
-    def apply(f: (Natural) => Real, start: Natural): Real = new InfiniteSum(f, start)
+    def apply(f: Integer => Real, start: Integer, end: Integer): Real = {
+        if (end < start) return Zero
+        def g(i: Int): Real = f(Integer(i) + start)
+        Seq.tabulate((end - start).toInt.get)(g).sum
+    }
 
-    def apply[N <: Integer](f: (N) => Real, over: Seq[N]) = if (over.isEmpty) Zero else new SumOver(f, over)
+    def apply(f: Integer => Expression, start: Integer): Expression = new InfiniteSumOf(f, start)
+
+    def apply(f: Integer => Real, start: Integer): Real = new InfiniteRealSum(f, start)
+
+    def apply(f: Natural => Real, start: Natural): Real = new InfiniteNaturalSum(f, start)
+
+    def apply[N <: Integer](f: (N) => Real, over: Seq[N]) = {
+        if (over.isEmpty) Zero
+        else new SumOver(f, over)
+    }
 
 }
 
@@ -76,8 +89,8 @@ class Series[+T <: Expression] protected(val terms: Seq[T])
 
 }
 
-private class FiniteIncrementalSum(f: (Integer) => Expression, start: Integer, end: Integer)
-        extends Expression {
+private class FiniteSumOf(f: (Integer) => Expression, start: Integer, end: Integer)
+extends Expression {
 
     private val size = (end - start).toInt.get
 
@@ -103,7 +116,35 @@ private class FiniteIncrementalSum(f: (Integer) => Expression, start: Integer, e
 
 }
 
-private class InfiniteSum(f: Natural => Real, start: Natural)
+private class InfiniteSumOf(f: Integer => Expression, start: Integer)
+        extends Expression {
+
+    def df(x: Variable): Expression = {
+        def df(i: Integer): Expression = f(i).df(x)
+        val s = if (df(start).isEmpty) start + 1 else start
+        Series(df _, s)
+    }
+
+    private lazy val firstFew: Seq[Expression] = Seq(f(start), f(start + 1))
+
+    def isEmpty = firstFew.forall(_.isEmpty)
+
+    def variables = firstFew.map(_.variables).flatten.toSet
+
+    def toConstant = ??? //TODO
+
+    def replace(variables: Map[Variable, Expression]) = {
+        def replaced(i: Integer): Expression = f(i).replace(variables)
+        Series(replaced _, start)
+    }
+
+    def unary_-() = Expression.negate(this)
+
+    override def toString = s"Σ($start:$Infinity)($f)"
+
+}
+
+private class InfiniteRealSum(f: Integer => Real, start: Integer)
         extends Real
         with IterativelyEvaluated {
 
@@ -115,6 +156,26 @@ private class InfiniteSum(f: Natural => Real, start: Natural)
 
         def next(nth: Natural, precision: Precision) = {
             val n: Integer = nth + start
+            terms += f(n)
+            terms.map(_.approximatelyEvaluate(precision)).sum
+        }
+
+    }
+
+}
+
+private class InfiniteNaturalSum(f: Natural => Real, start: Natural)
+        extends Real
+        with IterativelyEvaluated {
+
+    def isEmpty = false
+
+    def evaluationIterator(startPrecision: Precision) = new EvaluationIterator {
+
+        val terms: ListBuffer[Real] = new ListBuffer[Real]()
+
+        def next(nth: Natural, precision: Precision) = {
+            val n: Natural = nth + start
             terms += f(n)
             terms.map(_.approximatelyEvaluate(precision)).sum
         }

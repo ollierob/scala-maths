@@ -22,7 +22,7 @@ object Ramp
         case _ => 0
     }
 
-    protected[this] def create(expr: Expression) = new Ramp(expr)
+    protected[this] def create(expr: Expression) = new RampOf(expr)
 
     protected[this] def empty = Zero
 
@@ -30,7 +30,7 @@ object Ramp
 
 }
 
-class Ramp(val expression: Expression)
+class RampOf(val expression: Expression)
         extends Represented {
 
     def f = expression * Heaviside(expression)

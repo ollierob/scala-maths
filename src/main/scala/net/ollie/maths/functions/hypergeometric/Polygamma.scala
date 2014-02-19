@@ -1,10 +1,12 @@
 package net.ollie.maths.functions.hypergeometric
 
 import net.ollie.maths._
-import net.ollie.maths.functions.FunctionBuilder
-import net.ollie.maths.numbers.Natural
+import net.ollie.maths.numbers.{Infinity, Precision, Real, Natural}
 import net.ollie.maths.numbers.complex.ComplexInfinity
 import net.ollie.maths.numbers.constants.Zero
+import net.ollie.maths.methods.Integral
+import net.ollie.maths.functions.numeric.Exp
+import net.ollie.maths.functions.FunctionBuilder
 
 /**
  * Created by Ollie on 18/01/14.
@@ -12,17 +14,33 @@ import net.ollie.maths.numbers.constants.Zero
  */
 object Polygamma {
 
-    def apply(order: Natural, n: Number): Number = ???
-
-    def apply(order: Natural, expression: Expression) = order match {
+    def apply(order: Natural, expression: Expression): Expression = order match {
         case Zero => Digamma(expression)
-        case _ => new Polygamma(order, expression)
+        case _ => new PolygammaOf(order, expression)
     }
+
+    def apply(order: Natural, n: Number): Number with Polygamma = Real(order) match {
+        case Some(re) => apply(order, re)
+        case _ => ???
+    }
+
+    def apply(order: Natural, re: Real): Real with Polygamma = new RealPolygamma(order, re)
 
 }
 
-class Polygamma(val order: Natural, val of: Expression)
-        extends Function {
+trait Polygamma {
+
+    def order: Natural
+
+    def of: Expression
+
+    override def toString = s"Polygamma($order)($of)"
+
+}
+
+class PolygammaOf(val order: Natural, val of: Expression)
+        extends Function
+        with Polygamma {
 
     protected[this] def at(n: Number) = Polygamma(order, n)
 
@@ -30,9 +48,19 @@ class Polygamma(val order: Natural, val of: Expression)
 
     def isEmpty = false //TODO
 
-    override def toString = s"Polygamma($order)($of)"
-
     protected[this] def derivative(at: Expression) = Polygamma(order.succ, at)
+
+}
+
+class RealPolygamma(val order: Natural, val of: Real)
+        extends Real
+        with Polygamma {
+
+    def isEmpty = false //TODO
+
+    private lazy val integral: Real = Integral(t => (t ^ order) * Exp(-of * t) / (1 - Exp(-t)), Zero, Infinity)
+
+    protected[this] def doEvaluate(precision: Precision) = integral.evaluate(precision)
 
 }
 
@@ -41,14 +69,16 @@ object Digamma
 
     def apply(n: Number): Number = Polygamma(Zero, n)
 
-    protected[this] def create(expr: Expression) = new Digamma(expr)
+    def apply(re: Real) = Polygamma(Zero, re)
+
+    protected[this] def create(expr: Expression) = new DigammaOf(expr)
 
     protected[this] def empty = ComplexInfinity
 
 }
 
-class Digamma(override val of: Expression)
-        extends Polygamma(0, of) {
+class DigammaOf(override val of: Expression)
+        extends PolygammaOf(0, of) {
 
     override def toString = s"Digamma($of)"
 

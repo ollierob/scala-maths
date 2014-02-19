@@ -31,7 +31,7 @@ class RealSquareRoots(val of: PositiveReal)
 
     def principal = root
 
-    def values = Set[Real](root, -root)
+    def values = Set(root, -root)
 
     override def toString = s"±SquareRoot($of)"
 

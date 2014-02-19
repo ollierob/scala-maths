@@ -3,7 +3,7 @@ package net.ollie.maths.functions
 import net.ollie.maths.{Expression, Variable}
 
 /**
- * Inherited by any class that is a wrapper for a more complicated representation, f.
+ * Inherited by any class that is a wrapper for a more complicated representation, degree.
  * Created by Ollie on 10/01/14.
  */
 trait Represented

@@ -2333,7 +2333,7 @@ public class BigDecimalMath {
      *
      * @param x The left factor.
      * @param f The right factor.
-     * @return The product x*f.
+     * @return The product x*degree.
      * @since 2009-07-30
      */
     static public BigDecimal multiplyRound(final BigDecimal x, final Rational f) {

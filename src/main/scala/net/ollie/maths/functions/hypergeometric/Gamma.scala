@@ -1,11 +1,11 @@
 package net.ollie.maths.functions.hypergeometric
 
 import net.ollie.maths._
-import net.ollie.maths.functions.{FunctionBuilder, UnivariateFunction}
+import net.ollie.maths.functions.{RealFunctionBuilder, UnivariateFunction}
 import net.ollie.maths.functions.numeric.Exp
 import net.ollie.maths.methods.{Integral, SimpsonsIntegrationMethod}
 import net.ollie.maths.numbers._
-import net.ollie.maths.numbers.complex.{ComplexInfinity, Complex}
+import net.ollie.maths.numbers.complex.ComplexInfinity
 import net.ollie.maths.numbers.constants.Zero
 
 /**
@@ -13,30 +13,33 @@ import net.ollie.maths.numbers.constants.Zero
  * @see http://mathworld.wolfram.com/GammaFunction.html
  */
 object Gamma
-        extends FunctionBuilder
+        extends RealFunctionBuilder
         with UnivariateFunction[Real, Real] {
 
-    def apply(n: Number): Number = n match {
-        case Zero => empty
-        case re: Real => apply(re)
-        case _ => ???
-    }
-
     def apply(re: Real): Real = re match {
-        case n: Integer if n.isStrictlyPositive => apply(n.abs)
+        case i: Integer if i.isStrictlyPositive => apply(i.abs)
         case _ => new RealGamma(re)
     }
 
     def apply(n: Natural): Natural = (n.decr) !
 
-    protected[this] def create(expr: Expression) = new Gamma(expr)
+    protected[this] def create(expr: Expression) = new GammaOf(expr)
 
     protected[this] def empty = ComplexInfinity
 
 }
 
-class Gamma(val of: Expression)
-        extends Function {
+trait Gamma {
+
+    def of: Expression
+
+    override def toString = s"Gamma($of)"
+
+}
+
+class GammaOf(val of: Expression)
+        extends Function
+        with Gamma {
 
     protected[this] def at(n: Number) = Gamma(n)
 
@@ -50,11 +53,11 @@ class Gamma(val of: Expression)
 
 }
 
-class RealGamma(val z: Complex)
-        extends Gamma(z)
-        with Real {
+class RealGamma(override val of: Real)
+        extends Real
+        with Gamma {
 
-    private lazy val integral = Integral(t => (t ^ (z - 1)) * Exp(-t), Zero, Infinity)(SimpsonsIntegrationMethod)
+    private lazy val integral = Integral(t => (t ^ (of - 1)) * Exp(-t), Zero, Infinity)(SimpsonsIntegrationMethod)
 
     protected[this] def doEvaluate(precision: Precision) = integral.evaluate(precision)
 
