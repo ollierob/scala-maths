@@ -12,8 +12,8 @@ import net.ollie.maths.numbers.constants.Zero
 @RunWith(classOf[JUnitRunner])
 class SphericalHarmonicTest extends FlatSpec with Matchers {
 
-    val theta = new Variable("theta")
-    val phi = new Variable("phi")
+    val theta = Variable("theta")
+    val phi = Variable("phi")
 
     behavior of "Y(0,0)"
 

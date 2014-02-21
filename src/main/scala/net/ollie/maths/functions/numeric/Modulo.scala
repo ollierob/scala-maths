@@ -1,32 +1,41 @@
 package net.ollie.maths.functions.numeric
 
-import net.ollie.maths.numbers.{Precision, Real}
+import net.ollie.maths.numbers.{Integer, Precision, Real}
 
 /**
  * Created by Ollie on 16/02/14.
  */
 object Modulo {
 
-    def apply(dividend: Real, divisor: Real): Real = {
-        new Modulo(dividend, divisor)
+    def apply(dividend: Real, divisor: Real): Modulo = {
+        new RealModulo(dividend, divisor)
     }
 
 }
 
-class Modulo(val dividend: Real, val divisor: Real)
+trait Modulo
         extends Real {
 
-    private lazy val q: Real = Signum(divisor) * Floor(dividend / divisor.abs)
+    def remainder: Real
+
+    def quotient: Integer
+
+}
+
+class RealModulo(val dividend: Real, val divisor: Real)
+        extends Modulo {
+
+    private lazy val q: Integer = Signum(divisor) * Floor(dividend / divisor.abs)
 
     private lazy val r: Real = dividend - (divisor * q)
 
-    def remainder: Real = r
+    def remainder = r
 
-    def quotient: Real = q
+    def quotient = q
 
     def isEmpty = r.isEmpty
 
-    protected[this] def doEvaluate(precision: Precision) = r.evaluate(precision)
+    protected[this] def doEvaluate(precision: Precision) = remainder.evaluate(precision)
 
     override def toString = s"($dividend % $divisor)"
 

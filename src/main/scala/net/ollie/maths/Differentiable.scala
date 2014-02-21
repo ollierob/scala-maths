@@ -9,3 +9,9 @@ trait Differentiable {
     def df(x: Variable): Differentiable
 
 }
+
+trait Integrable {
+
+    def integrate(x: Variable): Differentiable
+
+}

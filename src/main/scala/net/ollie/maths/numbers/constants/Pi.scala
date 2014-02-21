@@ -17,12 +17,15 @@ object Pi
 
     protected[this] def doEvaluate(precision: Precision) = {
         if (precision.digits < 100) precision(PI_100)
-        else ??? // MACHIN.evaluate(precision) //TODO this is slow!
+        else MACHIN.evaluate(precision) //TODO this is slow!
     }
 
     def isEmpty = false
 
-    def /(that: Natural): PiOrLess = new PiOver(that)
+    def /(that: Natural): PiOrLess = {
+        if (that.isEmpty) ???
+        else new PiOver(that)
+    }
 
     override def toString = "π"
 
@@ -31,14 +34,19 @@ object Pi
 trait PiOrLess
         extends PositiveReal
 
-private class PiOver(val d: Natural)
+class PiOver protected[constants](val over: Natural)
         extends PiOrLess
         with ApproximatelyEvaluated {
 
-    def isEmpty = !Infinite.is(d)
+    require(!over.isEmpty)
 
-    protected[this] def approx(precision: Precision) = Pi.approximatelyEvaluate(precision) / d.approximatelyEvaluate(precision)
+    def isEmpty = !Infinite.is(over)
 
-    override def toString = s"$Pi/$d"
+    protected[this] def approx(precision: Precision) = Pi.approximatelyEvaluate(precision) / over.approximatelyEvaluate(precision)
+
+    override def toString = s"$Pi/$over"
 
 }
+
+object HalfPi
+        extends PiOver(2)

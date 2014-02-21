@@ -45,7 +45,7 @@ object ZeroZeroHarmonic
 
     private final val value: Real = PositiveSquareRoot(One / Pi) / 2
 
-    def f = value
+    def representation = value
 
 }
 
@@ -56,6 +56,6 @@ class LZeroHarmonic(val l: Natural, val theta: Expression)
 
     private val func: Expression = PositiveSquareRoot(((2 * l + 1) !) / (Pi * Natural(4))) * LegendrePolynomial(l, Cos(theta))
 
-    def f = func
+    def representation = func
 
 }

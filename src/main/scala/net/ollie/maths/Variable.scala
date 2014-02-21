@@ -1,37 +1,49 @@
 package net.ollie.maths
 
-import net.ollie.maths.numbers.Real
 import net.ollie.maths.numbers.constants.{Zero, One}
+import java.util.UUID
 
 /**
  * Created by Ollie on 02/01/14.
  */
 object Variable {
 
-    def apply(name: String): Variable = new Variable(name)
+    def apply(name: String): Variable = new NamedVariable(name)
+
+    def random(): Variable = Variable('$' + UUID.randomUUID.toString)
 
 }
 
-class Variable(val name: String)
-        extends AnyRef
-        with Univariate {
+trait Variable
+        extends Univariate {
 
     def variable = this
+
+    def name: String
 
     def isEmpty = false
 
     def toConstant = None
-
-    def unary_-() = Expression.negate(this)
 
     def replace(variables: Map[Variable, Expression]) = variables.get(this) match {
         case Some(expr) => expr
         case _ => this
     }
 
-    def df(x: Variable): Real = if (this == x) One else Zero
+    def df(x: Variable): Univariate = {
+        if (this == x) One
+        else Zero
+    }
 
     override def toString = name
+
+}
+
+private class NamedVariable(val name: String)
+        extends AnyRef
+        with Variable {
+
+    def unary_-() = Expression.negate(this)
 
     override def equals(expression: Expression) = expression match {
         case variable: Variable => this.name == variable.name

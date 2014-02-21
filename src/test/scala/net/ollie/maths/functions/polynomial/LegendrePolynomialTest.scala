@@ -27,6 +27,7 @@ class LegendrePolynomialTest extends FlatSpec with Matchers {
         }
 
         it should "differentiate" in {
+            println(LegendrePolynomial(1, x).df(x).getClass)
             LegendrePolynomial(1, x).df(x) shouldBe One
         }
 

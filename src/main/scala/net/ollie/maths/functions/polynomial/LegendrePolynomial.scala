@@ -43,9 +43,9 @@ object ZeroLegendrePolynomial
 
     def l = Zero
 
-    def f = One
+    def representation = One
 
-    def evaluate = f.evaluate
+    def evaluate = representation.evaluate
 
     override def toString = "LegendreP(0)()"
 
@@ -56,7 +56,7 @@ class OneLegendrePolynomial(val of: Expression)
 
     def l = One
 
-    def f = of
+    def representation = of
 
     override def toString = s"LegendreP(1)($of)"
 
@@ -67,7 +67,7 @@ class SomeLegendrePolynomial(val l: Natural)(val x: Expression)
 
     require(l > One)
 
-    def f = ((((2 * l) - 1) * x * LegendrePolynomial(l - 1, x)) - ((l - 1) * LegendrePolynomial(l - 2, x))) / l
+    def representation = ((((2 * l) - 1) * x * LegendrePolynomial(l - 1, x)) - ((l - 1) * LegendrePolynomial(l - 2, x))) / l
 
     override def df(x: Variable) = l * (x * LegendrePolynomial(l, x) - LegendrePolynomial(l - 1, x)) / ((x ^ 2) + 1)
 

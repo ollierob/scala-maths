@@ -3,7 +3,7 @@ package net.ollie.maths.functions.hypergeometric
 import net.ollie.maths._
 import net.ollie.maths.functions.{RealFunctionBuilder, UnivariateFunction}
 import net.ollie.maths.functions.numeric.Exp
-import net.ollie.maths.methods.{Integral, SimpsonsIntegrationMethod}
+import net.ollie.maths.methods.{Integrate, SimpsonsIntegrationMethod}
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.complex.ComplexInfinity
 import net.ollie.maths.numbers.constants.Zero
@@ -57,7 +57,9 @@ class RealGamma(override val of: Real)
         extends Real
         with Gamma {
 
-    private lazy val integral = Integral(t => (t ^ (of - 1)) * Exp(-t), Zero, Infinity)(SimpsonsIntegrationMethod)
+    private lazy val integral = Integrate(fn _, Zero, Infinity)(SimpsonsIntegrationMethod)
+
+    private def fn(t: Variable): Univariate = (t ^ (of - 1)) * Exp(-t)
 
     protected[this] def doEvaluate(precision: Precision) = integral.evaluate(precision)
 

@@ -18,7 +18,7 @@ class NegatedPolynomial(override val of: Polynomial)
         extends NegatedExpression(of)
         with Polynomial {
 
-    def f = -(of.f)
+    def representation = -(of.representation)
 
     override def variables = super[Polynomial].variables
 
@@ -36,7 +36,7 @@ object ZeroPolynomial
         extends Polynomial
         with Empty {
 
-    def f = Zero
+    def representation = Zero
 
     override def unary_-(): Polynomial with Empty = this
 

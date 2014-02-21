@@ -25,7 +25,7 @@ trait Massive
         case _ => new InvertedMassive(this)
     }
 
-    def unary_-(): Massive = new NegatedMassive(this)
+    def unary_-(): Massive = Massive.negate(this)
 
     def tryReduce: Option[Real]
 
@@ -70,6 +70,8 @@ object Massive {
     }
 
     implicit def apply(re: Real): Massive = if (re.isEmpty) Massive() else new PromotedMassive(re)
+
+    def negate[M <: Massive](m: M): NegatedMassive[M] = new NegatedMassive(m)
 
     def series(terms: Seq[Massive]): Massive = terms.filterNot(_.isEmpty) match {
         case Nil => Massive()
@@ -164,10 +166,10 @@ class PromotedMassive(val re: Real)
 
 }
 
-class NegatedMassive(val of: Massive)
+class NegatedMassive[M <: Massive](val of: M)
         extends Massive {
 
-    override def unary_-() = of
+    override def unary_-(): M = of
 
     def isEmpty = of.isEmpty
 
@@ -179,6 +181,8 @@ class NegatedMassive(val of: Massive)
     override def inverse = -(of.inverse)
 
     override def abs = of.abs
+
+    override def toString = s"-($of)"
 
 }
 

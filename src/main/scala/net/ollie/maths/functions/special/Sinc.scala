@@ -36,7 +36,7 @@ object Sinc
 class Sinc(val of: Expression)
         extends Represented {
 
-    def f = Sin(of) / of
+    def representation = Sin(of) / of
 
     override def replace(variables: Map[Variable, Expression]) = {
         val d = of.replace(variables)

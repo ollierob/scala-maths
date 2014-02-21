@@ -71,7 +71,7 @@ trait Expression
 
     def ^(that: Expression): Expression = Expression.power(this, that)
 
-    override def df(x: Variable): Expression
+    def df(x: Variable): Expression
 
     final override def equals(obj: Any): Boolean = obj match {
         case expr: Expression => this.equals(expr)
@@ -218,17 +218,34 @@ object Univariate {
 
         def unary_-(): Univariate = -n
 
+        override def variables = Set()
+
         def replace(variables: Map[Variable, Expression]) = this
 
-        def toConstant: Option[Number] = n.toConstant
+        def toConstant: Option[Number] = Some(n)
 
         def isEmpty = n.isEmpty
 
+        def variable = ??? //TODO
+
         override def df(x: Variable) = Zero
 
-        def variable = ???
-
         override def dx = Zero
+
+        override def +(that: Expression) = n + that
+
+        override def -(that: Expression) = n - that
+
+        override def ?*(that: Expression)(leftToRight: Boolean): Option[Expression] = n.?*(that)(leftToRight)
+
+        override def /(that: Expression) = n / that
+
+        override def equals(that: Expression) = that match {
+            case n: Number => this.n == n
+            case _ => super.equals(that)
+        }
+
+        override def hashCode = n.hashCode
 
         override def toString = n.toString
 
@@ -281,6 +298,8 @@ trait Univariate
     }
 
     def apply(u: Univariate): Univariate = replace(variable, u)
+
+    def df(x: Variable): Univariate
 
     def dx: Univariate = df(variable)
 

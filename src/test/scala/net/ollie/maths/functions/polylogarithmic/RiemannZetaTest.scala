@@ -1,7 +1,7 @@
 package net.ollie.maths.functions.polylogarithmic
 
 import org.scalatest.{Matchers, FlatSpec}
-import net.ollie.maths.numbers.constants.Half
+import net.ollie.maths.numbers.constants.{Zero, Half}
 import org.scalatest.junit.JUnitRunner
 import org.junit.runner.RunWith
 import net.ollie.maths.numbers.Precision._
@@ -16,8 +16,12 @@ class RiemannZetaTest extends FlatSpec with Matchers {
         RiemannZeta(0) shouldBe -Half
     }
 
-    "Zeta(2)" should "be Pi^2/6" in {
+    "Zeta(2)" should "be Pi^2 / 6" in {
         RiemannZeta(2).evaluate(4 dp) shouldBe BigDecimal("1.6449")
+    }
+
+    "Zeta(3)" should "be 0" in {
+        RiemannZeta(3) shouldBe Zero
     }
 
     "Zeta(4)" should "be Pi^4 / 90" in {

@@ -14,7 +14,7 @@ class RampTest extends FlatSpec with Matchers {
     behavior of "Ramp(x)"
 
     {
-        val x = new Variable("x")
+        val x = Variable("x")
         val r = Ramp(x)
 
         it should "differentiate" in {

@@ -33,7 +33,7 @@ object Ramp
 class RampOf(val expression: Expression)
         extends Represented {
 
-    def f = expression * Heaviside(expression)
+    def representation = expression * Heaviside(expression)
 
     override def toString = s"Ramp($expression)"
 

@@ -9,17 +9,17 @@ import net.ollie.maths.{Expression, Variable}
 trait Represented
         extends Expression {
 
-    def f: Expression
+    def representation: Expression
 
-    def variables = f.variables
+    def variables = representation.variables
 
-    def replace(variables: Map[Variable, Expression]) = f.replace(variables)
+    def replace(variables: Map[Variable, Expression]) = representation.replace(variables)
 
-    def toConstant = f.toConstant
+    def toConstant = representation.toConstant
 
-    def isEmpty = f.isEmpty
+    def isEmpty = representation.isEmpty
 
-    def df(x: Variable): Expression = f.df(x)
+    def df(x: Variable) = representation.df(x)
 
     def unary_-(): Expression = Expression.negate(this)
 

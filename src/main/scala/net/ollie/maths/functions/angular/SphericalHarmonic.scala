@@ -84,7 +84,7 @@ class LMHarmonic(val l: Natural, val m: Integer, val theta: Expression, val phi:
 
     def lpm: Natural = l + m
 
-    def f = (PositiveSquareRoot(((2 * l) + 1) * (lmm !) / (4 * Pi * (lpm !)))
+    def representation = (PositiveSquareRoot(((2 * l) + 1) * (lmm !) / (4 * Pi * (lpm !)))
             * AssociatedLegendrePolynomial(l, m, Cos(theta))
             * Exp(i * m * phi))
 
@@ -102,7 +102,7 @@ class ConjugatedSphericalHarmonic(val ylm: SphericalHarmonic)
 
     override def conjugate = ylm
 
-    def f = (MinusOne ^ m) * ylm.minusM
+    def representation = (MinusOne ^ m) * ylm.minusM
 
     def theta = ylm.theta
 

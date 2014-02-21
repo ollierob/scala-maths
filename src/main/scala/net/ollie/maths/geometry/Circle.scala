@@ -11,7 +11,7 @@ object Circle {
 
     def withRadius(radius: PositiveReal): Circle = new Circle(radius)
 
-    def withDiameter(diameter: PositiveReal) = withRadius(diameter / 2)
+    def withDiameter(diameter: PositiveReal): Circle = withRadius(diameter / 2)
 
 }
 
@@ -25,8 +25,6 @@ class Circle(val radius: PositiveReal)
     def circumference: PositiveReal = 2 * Pi * radius
 
     def perimeter: PositiveReal = circumference
-
-    def sideLength: PositiveReal = circumference
 
     /**
      * @return a square with the same area as this circle.

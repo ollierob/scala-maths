@@ -22,7 +22,7 @@ class DiracDeltaTest extends FlatSpec with Matchers {
     }
 
     "delta(x)" should "be 0 except at 0" in {
-        val x = new Variable("x")
+        val x = Variable("x")
         val d = DiracDelta(x)
         d.isEmpty shouldBe (false)
         d.replace(x, 1).isEmpty shouldBe (true)

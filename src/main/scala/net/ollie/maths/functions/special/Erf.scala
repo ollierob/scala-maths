@@ -1,9 +1,9 @@
 package net.ollie.maths.functions.special
 
-import net.ollie.maths.{Expression, Number}
+import net.ollie.maths.{Univariate, Variable, Expression, Number}
 import net.ollie.maths.functions.{OddBuiltFunction, FunctionBuilder, Represented, UnivariateFunction}
 import net.ollie.maths.functions.numeric.{Exp, PositiveSquareRoot}
-import net.ollie.maths.methods.{Integral, SimpsonsIntegrationMethod}
+import net.ollie.maths.methods.{Integrate, SimpsonsIntegrationMethod}
 import net.ollie.maths.numbers.{Precision, Real}
 import net.ollie.maths.numbers.complex.{Complex, ImaginaryUnit => i}
 import net.ollie.maths.numbers.constants.{Zero, Pi}
@@ -50,7 +50,9 @@ class Erf(val of: Expression)
 class RealErf(val x: Real)
         extends Real {
 
-    private lazy val integral = 2 * Integral(t => Exp(-(t ^ 2)), 0, x)(SimpsonsIntegrationMethod) / PositiveSquareRoot(Pi)
+    private lazy val integral = 2 * Integrate(fn _, 0, x)(SimpsonsIntegrationMethod) / PositiveSquareRoot(Pi)
+
+    private def fn(t: Variable): Univariate = Exp(-(t ^ 2))
 
     protected[this] def doEvaluate(precision: Precision) = integral.evaluate(precision)
 
@@ -88,7 +90,7 @@ class Erfi(val of: Expression)
 
     private val erf = -i * Erf(i * of)
 
-    def f = erf
+    def representation = erf
 
     override def toString = s"Erfi($of)"
 

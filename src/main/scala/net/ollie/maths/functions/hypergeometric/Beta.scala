@@ -32,7 +32,7 @@ object Beta
 class Beta(val x: Expression, val y: Expression)
         extends Represented {
 
-    def f = Gamma(x) * Gamma(y) / Gamma(x + y)
+    def representation = Gamma(x) * Gamma(y) / Gamma(x + y)
 
     override def equals(expression: Expression) = expression match {
         case b: Beta if x == b.x && y == b.y => true

@@ -4,7 +4,7 @@ import net.ollie.maths._
 import net.ollie.maths.numbers.{Infinity, Precision, Real, Natural}
 import net.ollie.maths.numbers.complex.ComplexInfinity
 import net.ollie.maths.numbers.constants.Zero
-import net.ollie.maths.methods.Integral
+import net.ollie.maths.methods.Integrate
 import net.ollie.maths.functions.numeric.Exp
 import net.ollie.maths.functions.FunctionBuilder
 
@@ -58,7 +58,7 @@ class RealPolygamma(val order: Natural, val of: Real)
 
     def isEmpty = false //TODO
 
-    private lazy val integral: Real = Integral(t => (t ^ order) * Exp(-of * t) / (1 - Exp(-t)), Zero, Infinity)
+    private lazy val integral: Real = Integrate(t => (t ^ order) * Exp(-of * t) / (1 - Exp(-t)), Zero, Infinity)
 
     protected[this] def doEvaluate(precision: Precision) = integral.evaluate(precision)
 
