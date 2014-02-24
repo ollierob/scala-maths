@@ -24,11 +24,13 @@ trait BinomialCoefficient
 
 object BinomialCoefficient {
 
+    import Multiset._
+
     def apply(i: Int, j: Int): BinomialCoefficient = apply(Natural(i), Natural(j))
 
-    def apply(n: Integer, k: Integer): Real = n match {
-        case m: Natural => apply(m, k)
-        case _ => (MinusOne ^ k) * Multiset(n.abs, k)
+    def apply(n: Integer, k: Integer): Real = (n, k) match {
+        case _ if n.isStrictlyPositive && k.isStrictlyPositive => apply(n.abs, k.abs)
+        case _ => (MinusOne ^ k) * (n.abs multichoose k)
     }
 
     def apply(n: Natural, k: Natural): BinomialCoefficient = {

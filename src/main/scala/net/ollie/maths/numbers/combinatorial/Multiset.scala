@@ -1,27 +1,39 @@
 package net.ollie.maths.numbers.combinatorial
 
 import net.ollie.maths.numbers.{Natural, Precision, Real}
-import net.ollie.maths.CachedEvaluated
 
 /**
  * Created by Ollie on 22/01/14.
+ * @see http://mathworld.wolfram.com/Multiset.html
  */
 object Multiset {
 
-    def apply(n: Natural, k: Natural): Real = new Multiset(n, k)
+    def choose(n: Natural, k: Natural): Multichoose = new Multichoose(n, k)
+
+    implicit class MultichooseBuilder(val n: Natural) {
+
+        def multichoose(m: Natural) = Multiset.choose(n, m)
+
+    }
+
+    implicit class IntMultichooseBuilder(val i: Int)
+            extends MultichooseBuilder(i) {
+
+        def multichoose(j: Int) = Multiset.choose(i, j)
+
+    }
 
 }
 
-class Multiset(val n: Natural, k: Natural)
-        extends Real
-        with CachedEvaluated {
+class Multichoose(val n: Natural, val k: Natural)
+        extends Real {
 
-    private val binomial = BinomialCoefficient(n + k - 1, k)
-
-    protected[this] def doEvaluate(precision: Precision) = binomial.evaluate(precision)
+    private lazy val binomial = BinomialCoefficient(n + k - 1, k)
 
     def isEmpty = binomial.isEmpty
 
-    override def toString = s"Multiset($n, $k)"
+    def evaluate(precision: Precision) = binomial.evaluate(precision)
+
+    override def toString = s"(($n, $k))"
 
 }
