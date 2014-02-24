@@ -29,13 +29,22 @@ object FibonacciSequence
     private val large: Natural = 1024
 
     protected[this] def create(n: Natural) = {
-        if (n > large) new LargeFibonacci(n)
-        else FibonacciSequence(n - 1) + FibonacciSequence(n - 2)
+        if (n > large) new LargeFibonacciNumber(n)
+        else new FibonacciNumber(n)
     }
 
 }
 
-class LargeFibonacci(val n: Natural)
+class FibonacciNumber(val n: Natural)
+        extends Natural {
+
+    def evaluate = FibonacciSequence(n - 1).evaluate + FibonacciSequence(n - 2).evaluate
+
+    override def toString = s"Fibonacci($n)"
+
+}
+
+class LargeFibonacciNumber(val n: Natural)
         extends Natural {
 
     private lazy val f = ((GoldenRatio ^ n) - ((-GoldenRatio) ^ n)) / PositiveSquareRoot(5)

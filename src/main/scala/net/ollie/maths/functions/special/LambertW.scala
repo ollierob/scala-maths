@@ -3,7 +3,7 @@ package net.ollie.maths.functions.special
 import net.ollie.maths.functions.{UnivariateFunction, ComplexFunctionBuilder, BuiltFunction}
 import net.ollie.maths.{CachedEvaluated, Number, Expression}
 import net.ollie.maths.numbers._
-import net.ollie.maths.numbers.constants.{Zero, One}
+import net.ollie.maths.numbers.constants.{Omega, Zero, One}
 import net.ollie.maths.methods.Series
 import net.ollie.maths.numbers.complex.Complex
 
@@ -22,7 +22,10 @@ object LambertW
         new LambertWBranches(new LambertWZeroComplexBranch(z), new LambertWMinusOneBranch(z))
     }
 
-    def apply(p: PositiveReal) = new LambertWZeroPositiveBranch(p)
+    def apply(p: PositiveReal): PositiveReal = p match {
+        case One => Omega
+        case _ => new LambertWZeroPositiveBranch(p)
+    }
 
     protected[this] def create(expr: Expression) = new LambertWFunction(expr)
 

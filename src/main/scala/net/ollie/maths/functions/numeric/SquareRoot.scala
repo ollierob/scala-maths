@@ -4,9 +4,8 @@ import scala.Some
 
 import net.ollie.maths.{CachedEvaluated, Expression}
 import net.ollie.maths.functions.UnivariateFunction
-import net.ollie.maths.methods.IterativelyEvaluated
 import net.ollie.maths.numbers._
-import net.ollie.maths.numbers.constants.{Half, Zero}
+import net.ollie.maths.numbers.constants.{One, Half, Zero}
 import org.nevec.rjm.BigDecimalMath
 
 /**
@@ -40,9 +39,16 @@ class RealSquareRoots(val of: PositiveReal)
 object PositiveSquareRoot
         extends UnivariateFunction[PositiveReal, PositiveReal] {
 
-    def apply(f: Real): Option[PositiveReal] = f match {
+    def apply(i: Int): PositiveReal = i match {
+        case 0 => Zero
+        case 1 => One
+        case 2 => PositiveSquareRootTwo
+        case _ => PositiveSquareRoot(PositiveReal(i))
+    }
+
+    def apply(re: Real): Option[PositiveReal] = re match {
         case Zero => Some(Zero)
-        case _ if f.isStrictlyPositive => Some(apply(f.abs))
+        case _ if re.isStrictlyPositive => Some(apply(re.abs))
         case _ => None
     }
 
@@ -77,4 +83,7 @@ class PositiveSquareRoot(val of: PositiveReal)
     override def toString = s"+√($of)"
 
 }
+
+object PositiveSquareRootTwo
+        extends PositiveSquareRoot(2)
 
