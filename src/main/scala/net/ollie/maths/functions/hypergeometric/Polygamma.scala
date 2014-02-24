@@ -54,7 +54,8 @@ class PolygammaOf(val order: Natural, val of: Expression)
 
 class RealPolygamma(val order: Natural, val of: Real)
         extends Real
-        with Polygamma {
+        with Polygamma
+        with CachedEvaluated {
 
     def isEmpty = false //TODO
 

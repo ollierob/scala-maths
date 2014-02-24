@@ -1,7 +1,7 @@
 package net.ollie.maths.numbers
 
 import org.nevec.rjm.BigDecimalMath
-import net.ollie.maths.{Number, Operation}
+import net.ollie.maths.{Evaluable, CachedEvaluated, Number, Operation}
 import net.ollie.maths.numbers.constants.{One, Zero}
 import net.ollie.maths.numbers.RealPower.ZeroToPowerZeroIsOne
 
@@ -43,13 +43,16 @@ object PositiveReal {
 
     implicit def apply(int: Int): Natural = Natural(int)
 
-    def inverse(re: PositiveReal): PositiveReal = new PositiveRealInverse(re)
+    def inverse(re: PositiveReal with Evaluable): PositiveReal = new PositiveRealInverse(re)
 
-    def pow(base: PositiveReal, power: Real)(implicit convention: ZeroToPowerZeroConvention = ZeroToPowerZeroIsOne): PositiveReal = (base, power) match {
-        case (Zero, Zero) => convention.value.abs
-        case (_, Zero) => One
-        case (_, One) => base
-        case _ => new PositiveRealPower(base, power)
+    def pow(base: PositiveReal with Evaluable, power: Real with Evaluable)
+            (implicit convention: ZeroToPowerZeroConvention = ZeroToPowerZeroIsOne): PositiveReal = {
+        (base, power) match {
+            case (Zero, Zero) => convention.value.abs
+            case (_, Zero) => One
+            case (_, One) => base
+            case _ => new PositiveRealPower(base, power)
+        }
     }
 
     implicit object Numeric
@@ -57,13 +60,13 @@ object PositiveReal {
 
         def compare(x: PositiveReal, y: PositiveReal) = x compare y
 
-        def toDouble(x: PositiveReal) = x.evaluate(DoublePrecision).toDouble
+        def toDouble(x: PositiveReal) = x.tryEvaluate(DoublePrecision).get.toDouble
 
-        def toFloat(x: PositiveReal) = x.evaluate(SinglePrecision).toFloat
+        def toFloat(x: PositiveReal) = x.tryEvaluate(SinglePrecision).get.toFloat
 
-        def toLong(x: PositiveReal) = x.evaluate(IntegerPrecision).toLong
+        def toLong(x: PositiveReal) = x.tryEvaluate(IntegerPrecision).get.toLong
 
-        def toInt(x: PositiveReal) = x.evaluate(IntegerPrecision).toInt
+        def toInt(x: PositiveReal) = x.tryEvaluate(IntegerPrecision).get.toInt
 
         def fromInt(x: Int) = Natural(x)
 
@@ -83,8 +86,8 @@ object PositiveReal {
 
 }
 
-class PositiveRealInverse(val re: PositiveReal)
-        extends InverseReal(re)
+class PositiveRealInverse(val re: PositiveReal with Evaluable)
+extends InverseReal(re)
         with PositiveReal
 
 /**
@@ -94,9 +97,10 @@ class PositiveRealInverse(val re: PositiveReal)
  */
 class PositiveRealPower(val base: PositiveReal, val power: Real)
         extends PositiveReal
-        with RealPower {
+        with RealPower
+        with CachedEvaluated {
 
-    protected[this] def doEvaluate(precision: Precision) = {
+    protected[this] def doEvaluate(precision: Precision): BigDecimal = {
         BigDecimalMath.pow(base.evaluate(precision).underlying(), power.evaluate(precision).underlying())
     }
 

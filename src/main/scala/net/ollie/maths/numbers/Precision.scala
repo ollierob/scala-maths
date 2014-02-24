@@ -25,6 +25,13 @@ sealed trait Precision {
 
     def >(that: Precision): Option[Boolean] = None
 
+    def >=(that: Precision): Option[Boolean] = {
+        if (this equals that) Some(true)
+        else this > that
+    }
+
+    def equals(that: Precision): Boolean
+
 }
 
 object Precision {
@@ -33,21 +40,23 @@ object Precision {
 
     implicit final val DEFAULT_PRECISION: Precision = DoublePrecision
 
-    implicit class PrecisionApplier(val bd: BigDecimal) extends AnyRef {
+    implicit class PrecisionApplier(val bd: BigDecimal)
+            extends AnyRef {
 
         def to(precision: Precision): BigDecimal = precision(bd)
 
     }
 
-    implicit class PrecisionConverter(val value: Int) extends AnyRef {
+    implicit class PrecisionConverter(val value: Int)
+            extends AnyRef {
 
-        def dp = new DecimalPlaces(value)
+        def dp: DecimalPlaces = new DecimalPlaces(value)
 
-        def decimalPlaces = dp
+        def decimalPlaces: DecimalPlaces = dp
 
-        def sf = new SignificantFigures(value)
+        def sf: SignificantFigures = SignificantFigures(value)
 
-        def significantFigures = sf
+        def significantFigures: SignificantFigures = sf
 
     }
 
@@ -83,6 +92,11 @@ class DecimalPlaces(val digits: Int)
 
     def getType = classOf[DecimalPlaces]
 
+    def equals(that: Precision) = that match {
+        case d: DecimalPlaces => this.digits == d.digits
+        case _ => false
+    }
+
 }
 
 /**
@@ -117,6 +131,17 @@ class SignificantFigures(val digits: Int)
     override def toString = digits.toString + " significant figures"
 
     def getType = classOf[SignificantFigures]
+
+    def equals(that: Precision) = that match {
+        case s: SignificantFigures => this.digits == s.digits
+        case _ => false
+    }
+
+}
+
+object SignificantFigures {
+
+    def apply(digits: Int): SignificantFigures = new SignificantFigures(digits)
 
 }
 

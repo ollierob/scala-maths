@@ -1,6 +1,6 @@
 package net.ollie.maths.functions.angular
 
-import net.ollie.maths.EmptyNumber
+import net.ollie.maths.{CachedEvaluated, EmptyNumber}
 import net.ollie.maths.functions.ModalPair
 import net.ollie.maths.functions.numeric.{Floor, Min, PositiveSquareRoot, TriangleCoefficient}
 import net.ollie.maths.methods.Series
@@ -86,10 +86,13 @@ private class ZeroWigner3J(val lAndM: CyclicTuple3[ModalPair, ModalPair, ModalPa
 
     override def toString = super[EmptyNumber].toString
 
+    override def evaluate(precision: Precision) = super[EmptyNumber].evaluate(precision)
+
 }
 
 private class EvenWigner3J(val l: CyclicTuple3[Natural, Natural, Natural])
-        extends Wigner3j {
+        extends Wigner3j
+        with CachedEvaluated {
 
     require((l1 + l2 + l3).isEven)
 
@@ -115,7 +118,8 @@ private class EvenWigner3J(val l: CyclicTuple3[Natural, Natural, Natural])
 }
 
 private class FullWigner3j(val lAndM: CyclicTuple3[ModalPair, ModalPair, ModalPair])
-        extends Wigner3j {
+        extends Wigner3j
+        with CachedEvaluated {
 
     private val f = ((MinusOne ^ (l1 - l2 - m3))
             * PositiveSquareRoot(TriangleCoefficient(l1, l2, l3))

@@ -28,7 +28,7 @@ class SinTest extends FlatSpec with Matchers {
         }
 
         it should "replace" in {
-            sin.replace(x, 5).toConstant shouldBe (Some(Sin(5)))
+            sin.replace(x, 5).toConstant shouldBe Some(Sin(5))
         }
 
         it should "differentiate" in {
@@ -40,17 +40,17 @@ class SinTest extends FlatSpec with Matchers {
     behavior of "sin(0)"
 
     it should "replace" in {
-        sin.replace(x, 0).toConstant.get shouldBe (Zero)
+        sin.replace(x, 0).toConstant shouldBe Some(Zero)
     }
 
     "Sin(1)" should "evaluate" in {
-        Sin(1 radian).evaluate(4 dp).toString shouldBe ("0.8415")
+        Sin(1 radian).evaluate(4 dp) shouldBe BigDecimal("0.8415")
     }
 
     "Sin(2)" should "evaluate" in {
         val s = Sin(2 radians)
         s.isEmpty shouldBe false
-        s.evaluate(4 dp).toString shouldBe ("0.9093")
+        s.evaluate(4 dp) shouldBe BigDecimal("0.9093")
     }
 
     "Sin(Pi)" should "be empty" in {

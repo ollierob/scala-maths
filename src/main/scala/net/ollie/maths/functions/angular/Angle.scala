@@ -28,7 +28,9 @@ trait Angle
         }
     }
 
-    protected[this] def doEvaluate(precision: Precision) = toRadians.evaluate(precision)
+    def evaluate(precision: Precision) = toRadians.evaluate(precision)
+
+    override def approximatelyEvaluate(precision: Precision) = toRadians.approximatelyEvaluate(precision)
 
     implicit def builder: AngleBuilder[Type]
 
@@ -161,7 +163,7 @@ trait Radians
 
     def toRadians = value
 
-    def reduce = Radians(Modulo(value, 2 * Pi))
+    def reduce = Radians(Modulo(value, 2 * Pi).remainder)
 
     def +(that: Radians): Radians = Radians(this.value + that.value)
 
@@ -213,7 +215,7 @@ class Degrees(val value: Real)
 
     implicit def builder = Degrees.Builder
 
-    def reduce = Degrees(Modulo(value, 360))
+    def reduce = Degrees(Modulo(value, 360).remainder)
 
 }
 

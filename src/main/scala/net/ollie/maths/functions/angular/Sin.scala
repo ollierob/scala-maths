@@ -72,7 +72,8 @@ private class SinOf(val of: Expression)
  */
 class RealSin(val of: Angle)
         extends Real
-        with Sin {
+        with Sin
+        with CachedEvaluated {
 
     private lazy val reduced: Angle = of.reduce
 

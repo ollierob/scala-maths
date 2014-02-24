@@ -1,6 +1,6 @@
 package net.ollie.maths.functions.special
 
-import net.ollie.maths.{Univariate, Variable, Expression, Number}
+import net.ollie.maths._
 import net.ollie.maths.functions.{OddBuiltFunction, FunctionBuilder, Represented, UnivariateFunction}
 import net.ollie.maths.functions.numeric.{Exp, PositiveSquareRoot}
 import net.ollie.maths.methods.{Integrate, SimpsonsIntegrationMethod}
@@ -48,7 +48,8 @@ class Erf(val of: Expression)
 }
 
 class RealErf(val x: Real)
-        extends Real {
+        extends Real
+        with CachedEvaluated {
 
     private lazy val integral = 2 * Integrate(fn _, 0, x)(SimpsonsIntegrationMethod) / PositiveSquareRoot(Pi)
 

@@ -2,7 +2,7 @@ package net.ollie.maths.functions.angular
 
 import net.ollie.maths.functions.{RealFunctionBuilder, BuiltFunction, UnivariateFunction}
 import net.ollie.maths.numbers.complex.Complex
-import net.ollie.maths.{Number, Expression}
+import net.ollie.maths.{CachedEvaluated, Number, Expression}
 import net.ollie.maths.numbers.{Precision, Real}
 import net.ollie.maths.functions.numeric.Exp
 import net.ollie.maths.numbers.constants.One
@@ -51,7 +51,8 @@ class HyperbolicCosOf(val of: Expression)
 
 class RealHyperbolicCos(val of: Real)
         extends Real
-        with HyperbolicCos {
+        with HyperbolicCos
+        with CachedEvaluated {
 
     def isEmpty = false
 

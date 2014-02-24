@@ -91,4 +91,9 @@ class IntegerFractionTest extends FlatSpec with Matchers {
         fraction.approximatelyEvaluate(5 dp) shouldBe BigDecimal("0.00001")
     }
 
+    "3 / 2" should "evaluate" in {
+        IntegerFraction(3, 2).evaluate(4 dp) shouldBe BigDecimal("1.5000")
+        Integer(3) / Integer(2) shouldBe IntegerFraction(3, 2)
+    }
+
 }

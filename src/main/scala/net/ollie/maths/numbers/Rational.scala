@@ -2,8 +2,8 @@ package net.ollie.maths.numbers
 
 import net.ollie.maths.ExpressionFraction
 import net.ollie.maths.functions.numeric.GreatestCommonDivisor
-import net.ollie.maths.methods.ApproximatelyEvaluated
 import net.ollie.maths.numbers.constants.{MinusOne, Zero, One}
+import net.ollie.maths.methods.ApproximatelyEvaluated
 
 /**
  * A number that can be expressed as an integer divided by another integer.
@@ -26,8 +26,6 @@ trait Rational
     override def squared: Rational with PositiveReal = numerator.squared / denominator.squared
 
     def isEmpty: Boolean = numerator.isEmpty
-
-    protected[this] def doEvaluate(precision: Precision) = precision(numerator.evaluate(IntegerPrecision) / denominator.evaluate(IntegerPrecision))
 
     override def approximatelyEvaluate(precision: Precision): BigDecimal = {
         precision(numerator.approximatelyEvaluate(precision) / denominator.approximatelyEvaluate(precision))
@@ -148,10 +146,8 @@ class IntegerFraction private[numbers](override val numerator: Integer, override
 
     override def variables = super[Rational].variables
 
-    override protected[this] def doEvaluate(precision: Precision) = super[Rational].doEvaluate(precision)
-
-    override def approximatelyEvaluate(precision: Precision) = super[Rational].approximatelyEvaluate(precision)
-
-    protected[this] def approx(precision: Precision) = approximatelyEvaluate(precision)
+    protected[this] def doApproximatelyEvaluate(precision: Precision): BigDecimal = {
+        numerator.evaluate(IntegerPrecision) / denominator.evaluate(IntegerPrecision)
+    }
 
 }

@@ -2,7 +2,7 @@ package net.ollie.maths.functions.angular
 
 import net.ollie.maths.functions.{OddBuiltFunction, UnivariateFunction, FunctionBuilder}
 import net.ollie.maths.numbers.{Precision, Real}
-import net.ollie.maths.{Expression, Operation, Number}
+import net.ollie.maths.{CachedEvaluated, Expression, Operation, Number}
 import net.ollie.maths.functions.numeric.{SquareRoot, Signum}
 import net.ollie.maths.numbers.constants.{One, Zero}
 import org.nevec.rjm.BigDecimalMath
@@ -58,11 +58,8 @@ class ArcSinOf(val of: Expression)
 
 class RealArcSin(val of: Real)
         extends Real
-        with ArcSin {
-
-    //private lazy val series = Series(nth _, Zero)
-
-    //private def nth(degree: NaturalNumber): RealNumber = BinomialCoefficient(2 * degree, degree) * (x ^ (2 * degree + 1)) / ((4 ^ degree) * (2 * degree + 1))
+        with ArcSin
+        with CachedEvaluated {
 
     protected[this] def doEvaluate(precision: Precision) = {
         BigDecimalMath.asin(of.approximatelyEvaluate(precision).underlying())

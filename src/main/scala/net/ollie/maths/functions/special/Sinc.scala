@@ -63,7 +63,10 @@ class RealSinc(val x: Real)
 
     def isEmpty = empty
 
-    protected[this] def approx(precision: Precision): BigDecimal = if (isEmpty) 0 else Sin(x).approximatelyEvaluate(precision) / x.approximatelyEvaluate(precision)
+    def doApproximatelyEvaluate(precision: Precision): BigDecimal = {
+        if (isEmpty) 0
+        else Sin(x).approximatelyEvaluate(precision) / x.approximatelyEvaluate(precision)
+    }
 
     override def toString = s"Sinc($x)"
 

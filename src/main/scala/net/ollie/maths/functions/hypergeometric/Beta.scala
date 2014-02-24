@@ -1,6 +1,6 @@
 package net.ollie.maths.functions.hypergeometric
 
-import net.ollie.maths.Expression
+import net.ollie.maths.{CachedEvaluated, Expression}
 import net.ollie.maths.functions.{Represented, SymmetricBivariateFunction}
 import net.ollie.maths.methods.Product
 import net.ollie.maths.numbers._
@@ -48,7 +48,8 @@ class Beta(val x: Expression, val y: Expression)
 
 class RealBeta(override val x: Real, override val y: Real)
         extends Beta(x, y)
-        with Real {
+        with Real
+        with CachedEvaluated {
 
     private val series: Real = (x + y) * Product(nth _, One) / (x * y)
 

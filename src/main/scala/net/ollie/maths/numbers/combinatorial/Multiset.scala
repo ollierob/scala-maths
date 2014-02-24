@@ -1,6 +1,7 @@
 package net.ollie.maths.numbers.combinatorial
 
 import net.ollie.maths.numbers.{Natural, Precision, Real}
+import net.ollie.maths.CachedEvaluated
 
 /**
  * Created by Ollie on 22/01/14.
@@ -12,7 +13,8 @@ object Multiset {
 }
 
 class Multiset(val n: Natural, k: Natural)
-        extends Real {
+        extends Real
+        with CachedEvaluated {
 
     private val binomial = BinomialCoefficient(n + k - 1, k)
 

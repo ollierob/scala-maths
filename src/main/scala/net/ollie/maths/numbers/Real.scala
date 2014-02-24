@@ -12,9 +12,9 @@ import net.ollie.maths.numbers.constants.{Zero, One}
  */
 trait Real
         extends Number
-        with Evaluable
         with Ordered[Real]
-        with MaybeReal {
+        with MaybeReal
+        with Evaluable {
 
     type System = Real
 
@@ -113,7 +113,7 @@ trait Real
             case Some(i) => i
             case _ => that.tryCompareTo(this) match {
                 case Some(j) => -j
-                case _ => this.evaluate(SinglePrecision).compare(that.evaluate(SinglePrecision))
+                case _ => this.evaluate(SinglePrecision).compare(that.evaluate(SinglePrecision)) //TODO this should return 0
             }
         }
     }
@@ -129,20 +129,34 @@ trait Real
         case _ => super.equals(number)
     }
 
-    def equals(that: Real): Boolean = super.equals(that) || (this ?== that match {
-        case Some(b) => b
-        case _ => that ?== this match {
+    def equals(that: Real): Boolean = {
+        super.equals(that) || (this ?== that match {
             case Some(b) => b
-            case _ => this.evaluate(SinglePrecision) == that.evaluate(SinglePrecision)
-        }
-    })
+            case _ => that ?== this match {
+                case Some(b) => b
+                case _ => this ~= that
+            }
+        })
+    }
 
+    /**
+     * Try-equals.
+     */
     def ?==(that: Real): Option[Boolean] = None
+
+    /**
+     * Approximately-equals.
+     */
+    def ~=(that: Real)(implicit precision: Precision = DoublePrecision): Boolean = {
+        this.tryEvaluate(precision) == that.tryEvaluate(precision)
+    }
 
 }
 
 object Real
         extends NumberIdentityArithmetic[Real] {
+
+    private val BD_ZERO = BigDecimal(0)
 
     def apply(): Real = Zero
 
@@ -154,7 +168,9 @@ object Real
 
     implicit def apply(int: Int): Real = Integer(int)
 
-    def apply(value: BigDecimal): Real = if (value == 0) Zero else new ExactReal(value)
+    def apply(d: Double): Real = if (d == 0d) Zero else new ExactDouble(d)
+
+    def apply(bd: BigDecimal): Real = if (bd == BD_ZERO) Zero else new ExactBigDecimal(bd)
 
     def negate(re: Real) = if (re.isEmpty) Zero else new NegatedReal(re)
 
@@ -187,13 +203,13 @@ object Real
 
         def fromInt(x: Int) = Real(x)
 
-        def toInt(x: Real) = x.evaluate(IntegerPrecision).toInt
+        def toInt(x: Real) = x.tryEvaluate(IntegerPrecision).get.toInt
 
-        def toLong(x: Real) = x.evaluate(IntegerPrecision).toLong
+        def toLong(x: Real) = x.tryEvaluate(IntegerPrecision).get.toLong
 
-        def toFloat(x: Real) = x.evaluate(SinglePrecision).toFloat
+        def toFloat(x: Real) = x.tryEvaluate(SinglePrecision).get.toFloat
 
-        def toDouble(x: Real) = x.evaluate(DoublePrecision).toDouble
+        def toDouble(x: Real) = x.tryEvaluate(DoublePrecision).get.toDouble
 
         def compare(x: Real, y: Real) = x.compareTo(y)
 
@@ -211,26 +227,42 @@ trait MaybeReal {
 
     def toReal: Option[Real]
 
+    //    def tryEvaluate(precision: Precision): OptionalBigDecimal = toReal match {
+    //        case Some(re) => re.tryEvaluate(precision)
+    //        case _ => None
+    //    }
+
 }
 
-class ExactReal(val of: BigDecimal)
+class ExactDouble(val of: Double)
         extends AnyRef
-        with Real
-        with ApproximatelyEvaluated {
+        with Real {
+
+    def isEmpty = of == 0d
+
+    def evaluate(precision: Precision) = precision(of)
+
+    override def toString = of.toString
+
+}
+
+class ExactBigDecimal(val of: BigDecimal)
+        extends AnyRef
+        with Real {
 
     override def ?+(that: Real) = that match {
-        case re: ExactReal => Some(Real(this.of + re.of))
+        case re: ExactBigDecimal => Some(Real(this.of + re.of))
         case _ => super.?+(that)
     }
 
     override def ?*(that: Real) = that match {
-        case re: ExactReal => Some(Real(this.of * re.of))
+        case re: ExactBigDecimal => Some(Real(this.of * re.of))
         case _ => super.?*(that)
     }
 
     def isEmpty = of == 0
 
-    override def approx(precision: Precision) = precision(of)
+    def evaluate(precision: Precision) = precision(of)
 
     override def toString = of.toString
 
@@ -239,7 +271,7 @@ class ExactReal(val of: BigDecimal)
 class NegatedReal(val of: Real)
         extends Real {
 
-    protected[this] def doEvaluate(precision: Precision) = -(of.evaluate(precision))
+    def evaluate(precision: Precision) = -(of.evaluate(precision))
 
     override def variables = super[Real].variables
 
@@ -270,118 +302,20 @@ class InverseReal(val of: Real)
         case _ => super.?*(that)
     }
 
-    override def approx(precision: Precision) = 1 / of.evaluate(precision)
+    override def doApproximatelyEvaluate(precision: Precision) = 1 / of.evaluate(precision)
 
     override def toString = s"1/$of"
 
 }
 
 class AbsReal(val of: Real)
-        extends PositiveReal {
-
-    protected[this] def doEvaluate(precision: Precision) = of.evaluate(precision).abs
+        extends PositiveReal
+        with CachedEvaluated {
 
     def isEmpty = of.isEmpty
 
     override def toString = s"|$of|"
 
-}
-
-object RealSeries {
-
-    def apply(left: Real, right: Real): Real = (left, right) match {
-        case (Zero, _) => right
-        case (_, Zero) => left
-        case _ => new RealSeries(Seq(left, right))
-    }
-
-    def apply(terms: Seq[Real]): Real = terms.filterNot(_.isEmpty) match {
-        case Nil => Zero
-        case term :: Nil => term
-        case _ => new RealSeries(terms)
-    }
-
-}
-
-class RealSeries private(override val terms: Seq[Real])
-        extends NumberSeries(terms)
-        with Real
-        with ApproximatelyEvaluated {
-
-    override def toConstant = super[Real].toConstant
-
-    override protected[this] def approx(precision: Precision) = {
-        //println(s":APPROX $this")
-        //println(s": => " + terms.map(_.approximatelyEvaluate(precision)) + " => " +  terms.map(_.approximatelyEvaluate(precision)).sum)
-        terms.map(_.approximatelyEvaluate(precision)).sum
-    }
-
-    override def ?+(that: Real) = {
-        if (that.isEmpty) this
-        Some(RealSeries(that match {
-            case series: RealSeries => simplify(this.terms ++ series.terms)
-            case _ => simplify(terms :+ that)
-        }))
-    }
-
-    override def tryAdd(left: Real, right: Real) = left ?+? right
-
-    override def equals(that: Real) = that match {
-        case series: RealSeries => this.terms == series.terms || super.equals(series)
-        case _ => super.equals(that)
-    }
-
-}
-
-object RealProduct {
-
-    def apply(left: Real, right: Real): Real = {
-        if (left.isEmpty || right.isEmpty) Zero
-        else new RealProduct(Seq(left, right))
-    }
-
-    def apply(terms: Seq[Real]): Real = terms match {
-        case Nil => Zero
-        case item :: Nil => item
-        case _ if terms.contains(Zero) => Zero
-        case _ => new RealProduct(terms)
-    }
-
-}
-
-class RealProduct(override val terms: Seq[Real])
-        extends NumberProduct(terms)
-        with Real
-        with ApproximatelyEvaluated {
-
-    override def ?*(that: Real) = Some(RealProduct(simplify(terms :+ that)))
-
-    protected[this] def tryMultiply(left: Real, right: Real) = left ?*? right
-
-    protected[this] def approx(precision: Precision) = {
-        val evaluated = terms.map(_.approximatelyEvaluate(precision))
-        val totalPrecision = Math.max(0, evaluated.foldLeft(precision.digits)((current, term) => current + intLength(term)))
-        if (totalPrecision == precision.digits) evaluated.product
-        else {
-            val newPrecision = precision.increaseBy(totalPrecision)
-            terms.map(_.approximatelyEvaluate(newPrecision)).product
-        }
-    }
-
-    /**
-     * Count the number of integer digits in the given bigdecimal.
-     * @param bd
-     * @return
-     */
-    private def intLength(bd: BigDecimal): Int = {
-        val bi = bd.toBigInt
-        if (bi > BigInt(9)) 0
-        else bi.toString.length
-    }
-
-    override def equals(that: Real) = that match {
-        case product: RealProduct => this.terms == product.terms || super.equals(product)
-        case _ => super.equals(that)
-    }
+    protected[this] def doEvaluate(precision: Precision) = of.evaluate(precision).abs
 
 }

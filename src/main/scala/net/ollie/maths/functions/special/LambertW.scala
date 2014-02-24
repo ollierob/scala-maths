@@ -1,7 +1,7 @@
 package net.ollie.maths.functions.special
 
 import net.ollie.maths.functions.{UnivariateFunction, ComplexFunctionBuilder, BuiltFunction}
-import net.ollie.maths.{Number, Expression}
+import net.ollie.maths.{CachedEvaluated, Number, Expression}
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.constants.{Zero, One}
 import net.ollie.maths.methods.Series
@@ -62,7 +62,8 @@ abstract class LambertWZeroBranch(val of: Number)
 
 class LambertWZeroPositiveBranch(override val of: PositiveReal)
         extends LambertWZeroBranch(of)
-        with PositiveReal {
+        with PositiveReal
+        with CachedEvaluated {
 
     private lazy val taylor = Series(nth _, One)
 

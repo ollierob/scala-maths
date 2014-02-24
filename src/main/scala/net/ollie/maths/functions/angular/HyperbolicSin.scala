@@ -2,7 +2,7 @@ package net.ollie.maths.functions.angular
 
 import net.ollie.maths.functions.{RealFunctionBuilder, BuiltFunction, UnivariateFunction}
 import net.ollie.maths.numbers.complex.Complex
-import net.ollie.maths.{Number, Expression}
+import net.ollie.maths.{CachedEvaluated, Number, Expression}
 import net.ollie.maths.numbers.{Precision, Real}
 import net.ollie.maths.numbers.constants.Zero
 import net.ollie.maths.functions.numeric.Exp
@@ -52,7 +52,8 @@ class HyperbolicSinOf(val of: Expression)
 
 class RealHyperbolicSin(val of: Real)
         extends Real
-        with HyperbolicSin {
+        with HyperbolicSin
+        with CachedEvaluated {
 
     def isEmpty = of.isEmpty
 

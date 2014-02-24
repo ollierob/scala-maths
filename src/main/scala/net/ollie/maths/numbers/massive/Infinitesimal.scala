@@ -22,7 +22,7 @@ trait Infinitesimal
 
     def compareTo(that: Infinitesimal): Int = 0
 
-    protected[this] def doEvaluate(precision: Precision) = 0
+    def evaluate(precision: Precision) = 0
 
     override def toString = "~0"
 

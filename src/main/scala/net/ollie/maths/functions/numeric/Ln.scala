@@ -54,8 +54,10 @@ object Ln
         case _ => apply(Complex(re)).principal
     }
 
-    def apply(re: PositiveReal): Real with Ln = {
-        new RealLn(re)
+    def apply(re: PositiveReal): Real = re match {
+        case One => Zero
+        case EulersNumber => One
+        case _ => new RealLn(re)
     }
 
     def apply(z: Complex): ComplexLogarithms = new ComplexLn(z)
@@ -71,7 +73,8 @@ object Ln
 
 }
 
-trait Ln extends Log {
+trait Ln
+        extends Log {
 
     def of: Expression
 
@@ -100,7 +103,8 @@ class LnOf(val of: Expression)
 
 class RealLn(override val of: PositiveReal)
         extends Real
-        with Ln {
+        with Ln
+        with CachedEvaluated {
 
     require(!of.isEmpty)
 

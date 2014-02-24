@@ -1,6 +1,6 @@
 package net.ollie.maths.functions.numeric
 
-import net.ollie.maths.Expression
+import net.ollie.maths.{CachedEvaluated, Expression}
 import net.ollie.maths.functions.{Represented, TrivariateFunction}
 import net.ollie.maths.functions.hypergeometric.Gamma
 import net.ollie.maths.numbers.{Natural, PositiveReal, Precision}
@@ -30,7 +30,8 @@ private class TriangleCoefficient(val a: Expression, val b: Expression, val c: E
 }
 
 private class TriangleCoefficientOf(val a: Natural, val b: Natural, val c: Natural)
-        extends PositiveReal {
+        extends PositiveReal
+        with CachedEvaluated {
 
     require(a + b >= c)
     require(a + c >= b)

@@ -14,9 +14,9 @@ trait Integer
 
     final def denominator = One
 
-    protected override def doEvaluate(precision: Precision): BigDecimal = precision(BigDecimal(evaluate))
+    override def evaluate(precision: Precision): BigDecimal = precision(BigDecimal(evaluate))
 
-    override def approximatelyEvaluate(precision: Precision) = BigDecimal(evaluate)
+    override def approximatelyEvaluate(precision: Precision) = evaluate(precision)
 
     def evaluate: BigInt
 
@@ -122,11 +122,13 @@ class ExactInteger(val int: Int)
     def evaluate = BigInt(int)
 
     override def ?+(that: Real) = that match {
-        case exact: ExactReal => Some(Real(BigDecimal(evaluate) + exact.of))
+        case exact: ExactBigDecimal => Some(Real(BigDecimal(evaluate) + exact.of))
         case _ => super.?+(that)
     }
 
     override def unary_-(): Integer = Integer(-int)
+
+    override def evaluate(precision: Precision) = precision(int)
 
     override def toString = int.toString
 

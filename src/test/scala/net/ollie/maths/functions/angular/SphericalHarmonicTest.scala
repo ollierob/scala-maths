@@ -22,15 +22,15 @@ class SphericalHarmonicTest extends FlatSpec with Matchers {
         val ylm = SphericalHarmonic(0, 0, theta, phi)
 
         it should "have zero order and degree" in {
-            ylm.l shouldBe (Zero)
-            ylm.order shouldBe (Zero)
-            ylm.m shouldBe (Zero)
-            ylm.degree shouldBe (Zero)
+            ylm.l shouldBe Zero
+            ylm.order shouldBe Zero
+            ylm.m shouldBe Zero
+            ylm.degree shouldBe Zero
         }
 
         it should "differentiate" in {
-            ylm.df(theta).isEmpty shouldBe (true)
-            ylm.df(phi).isEmpty shouldBe (true)
+            ylm.df(theta).isEmpty shouldBe true
+            ylm.df(phi).isEmpty shouldBe true
         }
 
         it should "conjugate" in {
@@ -54,7 +54,6 @@ class SphericalHarmonicTest extends FlatSpec with Matchers {
 
         it should "differentiate" in {
             val df = ylm.df(theta)
-            println(df)
         }
 
     }

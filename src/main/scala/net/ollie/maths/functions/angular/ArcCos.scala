@@ -2,7 +2,7 @@ package net.ollie.maths.functions.angular
 
 import net.ollie.maths.functions.{BuiltFunction, UnivariateFunction, FunctionBuilder}
 import net.ollie.maths.numbers.{Precision, Real}
-import net.ollie.maths.{Invertible, Expression, Number}
+import net.ollie.maths.{CachedEvaluated, Invertible, Expression, Number}
 import net.ollie.maths.numbers.constants.{One, Pi}
 import net.ollie.maths.functions.numeric.SquareRoot
 import org.nevec.rjm.BigDecimalMath
@@ -59,7 +59,8 @@ class ArcCosOf(val of: Expression)
 
 class RealArcCos(override val of: Real)
         extends Real
-        with ArcCos {
+        with ArcCos
+        with CachedEvaluated {
 
     protected[this] def doEvaluate(precision: Precision) = BigDecimalMath.acos(of.evaluate(precision).underlying())
 

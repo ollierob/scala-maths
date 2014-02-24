@@ -74,7 +74,7 @@ class BinomialZero(val n: Natural, val k: Natural)
 
     override def variables = super[EmptyNumber].variables
 
-    override def doEvaluate(precision: Precision) = super[EmptyNumber].doEvaluate(precision)
+    override def evaluate(precision: Precision) = super[EmptyNumber].evaluate(precision)
 
     override def df(x: Variable) = Zero
 

@@ -4,6 +4,7 @@ import org.scalatest.{FlatSpec, Matchers}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import net.ollie.maths.numbers.constants.Pi
+import Precision._
 
 /**
  * Created by Ollie on 14/01/14.
@@ -22,12 +23,14 @@ class RealSeriesTest extends FlatSpec with Matchers {
         }
 
         it should "add 1" in {
-            series + 1 shouldBe (RealSeries(2, Pi))
-            1 + series shouldBe (RealSeries(2, Pi))
+            series + 1 shouldBe RealSeries(2, Pi)
+            1 + series shouldBe RealSeries(2, Pi)
         }
 
         it should "add to itself" in {
-            series + series shouldBe (RealSeries(2, 2 * Pi))
+            val s2 = series + series
+            s2.evaluate(4 dp) shouldBe BigDecimal("8.2832")
+            s2 shouldBe 2 + (2 * Pi)
         }
 
     }

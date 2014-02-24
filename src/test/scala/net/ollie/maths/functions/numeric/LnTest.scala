@@ -44,7 +44,8 @@ class LnTest extends FlatSpec with Matchers {
     }
 
     "1 / Ln(4)" should "evaluate" in {
-        val r = 1 / Ln(4)
+        val r = Ln(4).inverse
+        println(r + " => " + r.getClass)
         r.evaluate(4 dp) shouldBe BigDecimal("0.7213")
     }
 

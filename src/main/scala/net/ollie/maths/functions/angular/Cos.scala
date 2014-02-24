@@ -64,14 +64,10 @@ class CosOf(val of: Expression)
 
 class RealCos(override val of: Angle)
         extends Real
-        with Cos {
-
-    private lazy val reduced = of.reduce
-
-    //private lazy val series = MaclaurinSeries(Cos, of.toRadians)
+        with Cos
+        with CachedEvaluated {
 
     protected[this] def doEvaluate(precision: Precision) = {
-        //series.evaluate(precision)
         precision(BigDecimalMath.cos(of.evaluate(precision).underlying()))
     }
 

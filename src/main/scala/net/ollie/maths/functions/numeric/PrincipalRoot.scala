@@ -5,6 +5,7 @@ import org.nevec.rjm.BigDecimalMath
 import net.ollie.maths.methods.{EvaluationIterator, IterativelyEvaluated}
 import net.ollie.maths.numbers.complex.{ImaginaryUnit, Complex}
 import net.ollie.maths.numbers.constants.{MinusOne, One, Zero}
+import net.ollie.maths.CachedEvaluated
 
 /**
  * Created by Ollie on 15/02/14.
@@ -42,7 +43,8 @@ object PrincipalRoot {
 }
 
 private class DirectPrincipalRoot(val of: PositiveReal, val n: Int)
-        extends PrincipalRoot {
+        extends PrincipalRoot
+        with CachedEvaluated {
 
     def degree = n
 
@@ -62,7 +64,7 @@ private class NewtonPrincipalRoot(val of: PositiveReal, val degree: Natural)
 
     def initialGuess: Real = of / degree
 
-    def evaluationIterator(startPrecision: Precision) = new EvaluationIterator {
+    override def evaluationIterator(startPrecision: Precision) = new EvaluationIterator {
 
         var x = initialGuess
 
@@ -73,5 +75,7 @@ private class NewtonPrincipalRoot(val of: PositiveReal, val degree: Natural)
         }
 
     }
+
+    protected[this] def doApproximatelyEvaluate(precision: Precision) = evaluate(precision)
 
 }

@@ -41,6 +41,8 @@ trait EmptyNumber
         with Number
         with Evaluable {
 
+    private val ZERO = BigDecimal(0)
+
     def abs: PositiveReal with EmptyNumber = Zero
 
     override def unary_-(): EmptyNumber with System = this
@@ -51,7 +53,7 @@ trait EmptyNumber
 
     override def toString = super[Empty].toString
 
-    protected def doEvaluate(precision: Precision) = BigDecimal(0) to precision
+    def evaluate(precision: Precision) = ZERO to precision
 
     override def toConstant: Option[System] = Some(this.narrow)
 

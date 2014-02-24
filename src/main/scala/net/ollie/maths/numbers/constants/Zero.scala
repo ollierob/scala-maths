@@ -16,9 +16,7 @@ object Zero
 
     def evaluate = i
 
-    private final val d = BigDecimal("0")
-
-    def evaluate(precision: Precision) = d to precision
+    override def evaluate(precision: Precision) = super[EmptyNumber].evaluate(precision)
 
     override def isEmpty = super[EmptyNumber].isEmpty
 
@@ -44,9 +42,9 @@ object Zero
 
     override def *(that: Natural) = this
 
-    override def doEvaluate(precision: Precision) = super[EmptyNumber].doEvaluate(precision)
-
     override def replace(variables: Map[Variable, Expression]) = this
+
+    override def ~=(that: Real)(implicit precision: Precision) = that.isEmpty || super.~=(that)
 
     override def toString = super[EmptyNumber].toString
 

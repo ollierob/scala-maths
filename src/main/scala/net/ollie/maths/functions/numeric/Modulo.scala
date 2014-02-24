@@ -1,6 +1,6 @@
 package net.ollie.maths.functions.numeric
 
-import net.ollie.maths.numbers.{Integer, Precision, Real}
+import net.ollie.maths.numbers.{Integer, Real}
 
 /**
  * Created by Ollie on 16/02/14.
@@ -13,8 +13,7 @@ object Modulo {
 
 }
 
-trait Modulo
-        extends Real {
+trait Modulo {
 
     def remainder: Real
 
@@ -25,17 +24,15 @@ trait Modulo
 class RealModulo(val dividend: Real, val divisor: Real)
         extends Modulo {
 
-    private lazy val q: Integer = Signum(divisor) * Floor(dividend / divisor.abs)
+    private lazy val q: Integer = {
+        Signum(divisor) * Floor(dividend / divisor.abs)
+    }
 
     private lazy val r: Real = dividend - (divisor * q)
 
     def remainder = r
 
     def quotient = q
-
-    def isEmpty = r.isEmpty
-
-    protected[this] def doEvaluate(precision: Precision) = remainder.evaluate(precision)
 
     override def toString = s"($dividend % $divisor)"
 

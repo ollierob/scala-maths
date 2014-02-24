@@ -4,6 +4,7 @@ import org.scalatest.{Matchers, FlatSpec}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import Precision._
+import net.ollie.maths.numbers.constants.Pi
 
 /**
  * Created by Ollie on 15/01/14.
@@ -17,6 +18,10 @@ class RealProductTest extends FlatSpec with Matchers {
         val product = new RealProduct(Seq(small, large))
         product.evaluate(4 dp) shouldBe BigDecimal("1.0000")
         product.evaluate(5 dp) shouldBe BigDecimal("0.99998")
+    }
+
+    "2 * Pi" should "evaluate" in {
+        RealProduct(Seq(2, Pi)).evaluate(16 dp) shouldBe BigDecimal("6.2831853071795865")
     }
 
 }

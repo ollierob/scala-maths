@@ -26,4 +26,10 @@ class PrecisionTest extends FlatSpec with Matchers {
         output.underlying() shouldBe new java.math.BigDecimal("1.234")
     }
 
+    it should "be geq than itself" in {
+        val precision = SignificantFigures(4)
+        precision == precision shouldBe true
+        precision >= precision shouldBe Some(true)
+    }
+
 }

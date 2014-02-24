@@ -1,8 +1,8 @@
 package net.ollie.maths.numbers
 
-import net.ollie.maths.methods.ApproximatelyEvaluated
 import net.ollie.maths.numbers.constants.{Zero, One}
 import org.nevec.rjm.BigDecimalMath
+import net.ollie.maths.CachedEvaluated
 
 /**
  * Created by Ollie on 12/01/14.
@@ -52,7 +52,7 @@ object RealPower {
 
 class RealToIntegerPower(val base: Real, val power: Integer)
         extends RealPower
-        with ApproximatelyEvaluated {
+        with CachedEvaluated {
 
     override def ?*(that: Real) = that match {
         case pow: RealToIntegerPower if base == pow.base => Some(RealPower(base, power + pow.power))
@@ -65,16 +65,15 @@ class RealToIntegerPower(val base: Real, val power: Integer)
 
     private val baseAbs = base.abs
 
-    override def approx(precision: Precision) = {
-        val bd: BigDecimal = BigDecimalMath.pow(baseAbs.evaluate(precision).underlying(), power.evaluate(precision).underlying())
-        if (negate) -bd else bd
-    }
-
     override def ?==(that: Real) = that match {
         case pow: RealToIntegerPower if base == pow.base => Some(power == pow.power)
         case _ => super.?==(that)
     }
 
+    override protected[this] def doEvaluate(precision: Precision): BigDecimal = {
+        val bd: BigDecimal = BigDecimalMath.pow(baseAbs.evaluate(precision).underlying(), power.evaluate(precision).underlying())
+        if (negate) -bd else bd
+    }
 }
 
 trait ZeroToPowerZeroConvention {

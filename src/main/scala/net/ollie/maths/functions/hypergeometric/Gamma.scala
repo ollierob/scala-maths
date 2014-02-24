@@ -55,13 +55,14 @@ class GammaOf(val of: Expression)
 
 class RealGamma(override val of: Real)
         extends Real
-        with Gamma {
+        with Gamma
+        with CachedEvaluated {
 
     private lazy val integral = Integrate(fn _, Zero, Infinity)(SimpsonsIntegrationMethod)
 
     private def fn(t: Variable): Univariate = (t ^ (of - 1)) * Exp(-t)
 
-    protected[this] def doEvaluate(precision: Precision) = integral.evaluate(precision)
+    protected[this] override def doEvaluate(precision: Precision) = integral.evaluate(precision)
 
     override def isEmpty = false //Gamma is not zero anywhere.
 

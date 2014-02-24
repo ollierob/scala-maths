@@ -192,7 +192,8 @@ private class InfiniteNaturalSum(f: Natural => Real, start: Natural)
 }
 
 private class SumOver[N <: Integer](f: N => Real, over: Seq[N])
-        extends Real {
+        extends Real
+        with CachedEvaluated {
 
     private val series: Iterable[Real] = {
         val terms = new ArrayBuffer[Real](over.size)

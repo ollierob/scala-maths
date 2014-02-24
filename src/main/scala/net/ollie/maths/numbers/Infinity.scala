@@ -1,6 +1,6 @@
 package net.ollie.maths.numbers
 
-import net.ollie.maths.{Number, Empty}
+import net.ollie.maths.{NotEvaluable, Number, Empty}
 import net.ollie.maths.numbers.constants.Zero
 
 /**
@@ -8,11 +8,10 @@ import net.ollie.maths.numbers.constants.Zero
  * Created by Ollie on 05/01/14.
  * @see http://mathworld.wolfram.com/AffinelyExtendedRealNumbers.html
  */
-trait Infinite {
+trait Infinite
+        extends NotEvaluable {
 
     def isEmpty = false
-
-    protected[this] def doEvaluate(precision: Precision): BigDecimal = ??? //TODO tie to Evaluable
 
     def abs: PositiveReal with Infinite = Infinity
 
@@ -47,6 +46,8 @@ trait RealInfinity
     }
 
     override def tryCompareTo(that: Real) = Some(this.compareTo(that))
+
+    override def tryEvaluate(precision: Precision) = super[Infinite].tryEvaluate(precision)
 
     override def ?==(that: Real) = Some(this eq that)
 

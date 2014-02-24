@@ -16,7 +16,9 @@ trait Surreal
 
     override def abs = nearest.abs
 
-    protected[this] def doEvaluate(precision: Precision) = nearest.evaluate(precision)
+    def evaluate(precision: Precision): BigDecimal = nearest.evaluate(precision)
+
+    override def approximatelyEvaluate(precision: Precision): BigDecimal = nearest.approximatelyEvaluate(precision)
 
     def left: SurrealSet
 
@@ -106,7 +108,7 @@ object EmptyForm
 
     override def isEmpty = true
 
-    override def doEvaluate(precision: Precision) = super[EmptyNumber].doEvaluate(precision)
+    override def evaluate(precision: Precision) = super[EmptyNumber].evaluate(precision)
 
     override def toString = super[EmptyNumber].toString
 
@@ -122,7 +124,9 @@ object InfiniteForm
 
     def nearest = Infinity
 
-    protected[this] override def doEvaluate(precision: Precision) = Infinity.evaluate(precision)
+    override def evaluate(precision: Precision) = Infinity.evaluate(precision)
+
+    override def tryEvaluate(precision: Precision) = super[Infinite].tryEvaluate(precision)
 
     def left = ???
 
@@ -144,7 +148,7 @@ object InfinitesimalForm
 
     def right = ??? //TODO
 
-    override def doEvaluate(precision: Precision) = super[Surreal].doEvaluate(precision)
+    override def evaluate(precision: Precision) = super[Surreal].evaluate(precision)
 
     override def isEmpty = super[Surreal].isEmpty
 

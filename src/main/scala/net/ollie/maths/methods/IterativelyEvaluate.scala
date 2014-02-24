@@ -1,6 +1,6 @@
 package net.ollie.maths.methods
 
-import net.ollie.maths.Evaluable
+import net.ollie.maths.CachedEvaluated
 import net.ollie.maths.numbers.{Natural, Precision}
 import net.ollie.maths.numbers.constants.Zero
 
@@ -21,14 +21,15 @@ object IterativelyEvaluate {
             current = iterator.next(n, currentPrecision)
             val next = toBigInt(current, precision)
             continue = next.compare(previous) != 0
-            if (continue) life = true
+            if (continue)
+                life = true
             else {
                 continue = life;
                 life = false
             }
             if (continue) {
                 previous = next
-                currentPrecision = precision.increase
+                currentPrecision = currentPrecision.increase
                 n = n.succ
             }
         }
@@ -41,37 +42,42 @@ object IterativelyEvaluate {
 
 }
 
+/**
+ * Keeps iterating over an evaluation at increasing precision until it converges.
+ * Highest precision result is cached.
+ */
 trait IterativelyEvaluated
-        extends Evaluable {
+        extends CachedEvaluated {
 
-    protected[this] def doEvaluate(precision: Precision) = IterativelyEvaluate(precision, this)
+    final def doEvaluate(precision: Precision): BigDecimal = IterativelyEvaluate(precision, this)
 
     def evaluationIterator(startPrecision: Precision): EvaluationIterator
+
+}
+
+/**
+ * Keeps iterating over an approximate evaluation at increasing precision until it converges.
+ * Highest precision result is cached.
+ */
+trait ApproximatelyEvaluated
+        extends IterativelyEvaluated {
+
+    def evaluationIterator(startPrecision: Precision) = new EvaluationIterator {
+
+        def next(nth: Natural, precision: Precision) = approximatelyEvaluate(precision)
+
+    }
+
+    override final def approximatelyEvaluate(precision: Precision): BigDecimal = {
+        precision(doApproximatelyEvaluate(precision))
+    }
+
+    protected[this] def doApproximatelyEvaluate(precision: Precision): BigDecimal
 
 }
 
 trait EvaluationIterator {
 
     def next(nth: Natural, precision: Precision): BigDecimal
-
-}
-
-/**
- * Evaluated at an ever increasing precision.
- */
-trait ApproximatelyEvaluated
-        extends IterativelyEvaluated {
-
-    private lazy val it = new EvaluationIterator {
-
-        def next(nth: Natural, precision: Precision) = approximatelyEvaluate(precision)
-
-    }
-
-    final def evaluationIterator(startPrecision: Precision) = it
-
-    override def approximatelyEvaluate(precision: Precision): BigDecimal = approx(precision)
-
-    protected[this] def approx(precision: Precision): BigDecimal
 
 }

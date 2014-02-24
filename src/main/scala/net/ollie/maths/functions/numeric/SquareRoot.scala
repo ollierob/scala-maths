@@ -2,9 +2,9 @@ package net.ollie.maths.functions.numeric
 
 import scala.Some
 
-import net.ollie.maths.Expression
+import net.ollie.maths.{CachedEvaluated, Expression}
 import net.ollie.maths.functions.UnivariateFunction
-import net.ollie.maths.methods.ApproximatelyEvaluated
+import net.ollie.maths.methods.IterativelyEvaluated
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.constants.{Half, Zero}
 import org.nevec.rjm.BigDecimalMath
@@ -58,11 +58,11 @@ object PositiveSquareRoot
 class PositiveSquareRoot(val of: PositiveReal)
         extends AnyRef
         with PositiveReal
-        with ApproximatelyEvaluated {
+        with CachedEvaluated {
 
-    override def approx(precision: Precision) = {
+    override def doEvaluate(precision: Precision) = {
         if (precision.digits < 16) Math.sqrt(of.approximatelyEvaluate(precision).toDouble)
-        else BigDecimalMath.sqrt(of.approximatelyEvaluate(precision).underlying())
+        else BigDecimalMath.sqrt(of.evaluate(precision).underlying())
     }
 
     def isEmpty = of.isEmpty

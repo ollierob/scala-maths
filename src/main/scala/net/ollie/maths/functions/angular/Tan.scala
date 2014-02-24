@@ -2,9 +2,9 @@ package net.ollie.maths.functions.angular
 
 import net.ollie.maths.{Expression, Number}
 import net.ollie.maths.functions.{OddBuiltFunction, RealFunctionBuilder, FunctionBuilder, UnivariateFunction}
-import net.ollie.maths.methods.ApproximatelyEvaluated
 import net.ollie.maths.numbers.{Precision, Real}
 import net.ollie.maths.numbers.constants.Zero
+import net.ollie.maths.methods.ApproximatelyEvaluated
 
 /**
  * Created by Ollie on 18/01/14.
@@ -48,7 +48,7 @@ class RealTan(override val of: Angle)
 
     private lazy val f: Real = Sin(of) / Cos(of)
 
-    override def approx(precision: Precision) = f.approximatelyEvaluate(precision)
+    protected[this] def doApproximatelyEvaluate(precision: Precision) = f.approximatelyEvaluate(precision)
 
     override def toConstant = Some(this)
 

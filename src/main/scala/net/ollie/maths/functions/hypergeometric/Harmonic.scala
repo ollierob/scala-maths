@@ -4,6 +4,7 @@ import net.ollie.maths.numbers.{Integer, Precision, Natural, Real}
 import net.ollie.maths.numbers.constants.{One, EulerMascheroniConstant}
 import net.ollie.maths.functions.UnivariateFunction
 import net.ollie.maths.methods.Series
+import net.ollie.maths.CachedEvaluated
 
 /**
  * Created by Ollie on 17/02/14.
@@ -30,7 +31,8 @@ trait Harmonic
 
 class SmallRealHarmonic(val degree: Natural)
         extends Real
-        with Harmonic {
+        with Harmonic
+        with CachedEvaluated {
 
     def isEmpty = false
 
@@ -38,13 +40,14 @@ class SmallRealHarmonic(val degree: Natural)
 
     private def nth(i: Integer): Real = 1 / i
 
-    protected[this] def doEvaluate(precision: Precision) = series.evaluate(precision)
+    protected[this] override def doEvaluate(precision: Precision) = series.evaluate(precision)
 
 }
 
 class LargeRealHarmonic(val degree: Natural)
         extends Real
-        with Harmonic {
+        with Harmonic
+        with CachedEvaluated {
 
     require(!degree.isEmpty)
 
@@ -52,6 +55,6 @@ class LargeRealHarmonic(val degree: Natural)
 
     private lazy val repr: Real = EulerMascheroniConstant + Digamma(degree + 1)
 
-    protected[this] def doEvaluate(precision: Precision) = repr.evaluate(precision)
+    protected[this] override def doEvaluate(precision: Precision) = repr.evaluate(precision)
 
 }
