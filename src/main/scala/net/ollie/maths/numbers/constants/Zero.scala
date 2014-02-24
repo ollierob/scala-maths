@@ -24,7 +24,7 @@ object Zero
 
     override def inverse: PositiveReal with Rational = Operation.undefined //UnsignedInfinity //TODO
 
-    override def unary_-() = this
+    override def unary_- = this
 
     override def abs = this
 

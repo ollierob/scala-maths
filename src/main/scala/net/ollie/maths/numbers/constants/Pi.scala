@@ -2,7 +2,6 @@ package net.ollie.maths.numbers.constants
 
 import net.ollie.maths.numbers._
 import net.ollie.maths.functions.angular.ArcTan
-import net.ollie.maths.CachedEvaluated
 import net.ollie.maths.methods.ApproximatelyEvaluated
 
 /**
@@ -11,13 +10,12 @@ import net.ollie.maths.methods.ApproximatelyEvaluated
  * @see http://mathworld.wolfram.com/MachinsFormula.html
  */
 object Pi
-        extends PositiveReal
-        with CachedEvaluated {
+        extends PositiveReal {
 
     private val PI_100 = BigDecimal("3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679")
     private lazy val MACHIN: Real = (16 * ArcTan(IntegerFraction(1, 5))) - (4 * ArcTan(IntegerFraction(1, 239)))
 
-    protected[this] def doEvaluate(precision: Precision) = {
+    def evaluate(precision: Precision) = {
         if (precision.digits < 100) precision(PI_100)
         else MACHIN.evaluate(precision) //TODO this is slow!
     }
@@ -52,3 +50,6 @@ class PiOver protected[constants](val over: Natural)
 
 object HalfPi
         extends PiOver(2)
+
+object QuarterPi
+        extends PiOver(4)

@@ -59,7 +59,7 @@ trait CachedEvaluated
             case _ =>
         }
 
-        val evaluated = this.doEvaluate(precision)
+        val evaluated = this.doEvaluate(precision) to precision //Ensure evaluated at the correct precision
 
         if (max.isDefined) {
             precision > max.get._1 match {
@@ -77,5 +77,10 @@ trait CachedEvaluated
     protected[this] def doEvaluate(precision: Precision): BigDecimal
 
     protected[this] def cache(precision: Precision): Boolean = true
+
+    protected[this] def atMaxPrecision: Option[BigDecimal] = max match {
+        case Some((p, bd)) => Some(bd)
+        case _ => None
+    }
 
 }
