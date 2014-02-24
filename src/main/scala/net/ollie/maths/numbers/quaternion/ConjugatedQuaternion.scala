@@ -4,20 +4,22 @@ package net.ollie.maths.numbers.quaternion
 /**
  * Created by Ollie on 11/01/14.
  */
-class ConjugatedQuaternion(q: Quaternion)
+class ConjugatedQuaternion(val of: Quaternion)
         extends AnyRef
         with Quaternion {
 
-    def re = q.re
+    override def isEmpty = of.isEmpty
 
-    def i = -(q.i)
+    def re = of.re
 
-    def j = -(q.j)
+    def i = -(of.i)
 
-    def k = -(q.k)
+    def j = -(of.j)
 
-    override def conjugate = q
+    def k = -(of.k)
 
-    override def toString = s"($q)*"
+    override def conjugate = of
+
+    override def toString = s"($of)*"
 
 }
