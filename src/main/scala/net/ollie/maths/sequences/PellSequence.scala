@@ -11,11 +11,17 @@ import net.ollie.maths.functions.numeric.PositiveSquareRoot
 object PellSequence
         extends CachingSequence {
 
+    private val large: Natural = 1024
+
     type Element = Natural
 
     protected[this] def initial = Map(Zero -> Zero, One -> One)
 
     protected[this] def create(n: Natural) = new SmallPellNumber(n)
+
+    override protected[this] def shouldCache(n: Natural) = n < large
+
+    override protected[this] def createNoCache(n: Natural) = new LargePellNumber(n)
 
 }
 
@@ -42,6 +48,6 @@ class LargePellNumber(val n: Natural)
 
     private lazy val binet = (((1 + PositiveSquareRoot(2)) ^ n) + ((1 - PositiveSquareRoot(2)) ^ n)) / (2 * PositiveSquareRoot(2))
 
-    protected[this] def evaluate = binet.evaluate(IntegerPrecision).toBigInt
+    override def evaluate = binet.evaluate(IntegerPrecision).toBigInt
 
 }
