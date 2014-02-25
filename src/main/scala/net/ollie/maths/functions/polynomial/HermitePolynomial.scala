@@ -17,7 +17,7 @@ trait HermitePolynomial
 
     def of: Expression
 
-    override def toString = s"Hermite($n, $of)"
+    override def toString = s"HermiteP($n)($of)"
 
 }
 
@@ -25,10 +25,10 @@ object HermitePolynomial {
 
     def apply(n: Natural): Integer = HermiteSequence(n)
 
-    def apply(n: Natural, of: Expression): HermitePolynomial = {
+    def apply(n: Natural)(of: Expression): HermitePolynomial = {
         n match {
             case Zero => new ZeroHermitePolynomial(of)
-            case _ => new HermitePolynomialOf(n, of)
+            case _ => new HermitePolynomialOf(n)(of)
         }
     }
 
@@ -42,8 +42,8 @@ class ZeroHermitePolynomial(val of: Expression)
 
 }
 
-class HermitePolynomialOf(val n: Natural, val of: Expression)
-        extends HermitePolynomial {
+class HermitePolynomialOf(val n: Natural)(val of: Expression)
+extends HermitePolynomial {
 
     private lazy val repr: Expression = {
         if (of.isEmpty) HermiteSequence(n)

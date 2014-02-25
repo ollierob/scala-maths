@@ -21,28 +21,32 @@ sealed trait ChebyshevPolynomial
  * @see http://mathworld.wolfram.com/ChebyshevPolynomialoftheFirstKind.html
  */
 trait ChebyshevFirstKind
-        extends ChebyshevPolynomial
+        extends ChebyshevPolynomial {
+
+    def of: Expression
+
+    override def toString = s"ChebyshevT($n)($of)"
+
+}
 
 object ChebyshevFirstKind {
 
     def apply(n: Natural)(expression: Expression): ChebyshevFirstKind = n match {
-        case Zero => TZero
+        case Zero => new TZero(expression)
         case One => new TOne(expression)
         case _ => new TAny(n, expression)
     }
 
 }
 
-private object TZero
-        extends ChebyshevFirstKind {
+private class TZero(val of: Expression)
+extends ChebyshevFirstKind {
 
     def n = Zero
 
     def representation = One
 
     override def df(x: Variable) = One.df(x)
-
-    override def toString = "Chebyshev1(0)()"
 
 }
 
@@ -53,8 +57,6 @@ private class TOne(val of: Expression)
 
     def representation = of
 
-    override def toString = s"Chebyshev1(1)($of)"
-
 }
 
 private class TAny(val n: Natural, val of: Expression)
@@ -64,34 +66,36 @@ private class TAny(val n: Natural, val of: Expression)
 
     override def df(x: Variable) = n * ChebyshevSecondKind(n - 1)(x)
 
-    override def toString = s"Chebyshev1($n)($of)"
-
 }
 
 /**
  * @see http://mathworld.wolfram.com/ChebyshevPolynomialoftheSecondKind.html
  */
 trait ChebyshevSecondKind
-        extends ChebyshevPolynomial
+        extends ChebyshevPolynomial {
+
+    def of: Expression
+
+    override def toString = s"ChebyshevU($n)($of)"
+
+}
 
 object ChebyshevSecondKind {
 
-    def apply(n: Natural)(diff: Expression): ChebyshevSecondKind = n match {
-        case Zero => UZero
-        case One => new UOne(diff)
-        case _ => new RecursiveUAny(n, diff)
+    def apply(n: Natural)(of: Expression): ChebyshevSecondKind = n match {
+        case Zero => new UZero(of)
+        case One => new UOne(of)
+        case _ => new RecursiveUAny(n)(of)
     }
 
 }
 
-private object UZero
-        extends ChebyshevSecondKind {
+private class UZero(val of: Expression)
+extends ChebyshevSecondKind {
 
     def n = Zero
 
     def representation = One
-
-    override def toString = "Chebyshev2(0)()"
 
 }
 
@@ -101,8 +105,6 @@ private class UOne(val of: Expression)
     def n = One
 
     def representation = 2 * of
-
-    override def toString = s"Chebyshev2(1)($of)"
 
 }
 
@@ -121,8 +123,8 @@ private class UAny(override val n: Natural, val of: Expression)
 
 }
 
-private class RecursiveUAny(override val n: Natural, val of: Expression)
-        extends ChebyshevSecondKind {
+private class RecursiveUAny(override val n: Natural)(val of: Expression)
+extends ChebyshevSecondKind {
 
     def representation = (2 * of * ChebyshevSecondKind(n - 1)(of)) - ChebyshevSecondKind(n - 2)(of)
 

@@ -15,14 +15,14 @@ trait LegendrePolynomial
 
     override def isEmpty = false
 
-    override def toString = "P(" + l + ")"
+    override def toString = s"LegendreP($l)($of)"
 
 }
 
 object LegendrePolynomial {
 
     def apply(l: Natural, z: Expression): LegendrePolynomial = l match {
-        case Zero => ZeroLegendrePolynomial
+        case Zero => new ZeroLegendrePolynomial(z)
         case One => new OneLegendrePolynomial(z)
         case _ => new SomeLegendrePolynomial(l)(z)
     }
@@ -36,18 +36,13 @@ object LegendrePolynomial {
 
 }
 
-object ZeroLegendrePolynomial
-        extends LegendrePolynomial {
+class ZeroLegendrePolynomial(val of: Expression)
+        extends ConstantPolynomial(One)
+        with LegendrePolynomial {
 
     //could mixin Natural, but this makes negation ugly.
 
     def l = Zero
-
-    def representation = One
-
-    def evaluate = representation.evaluate
-
-    override def toString = "LegendreP(0)()"
 
 }
 
@@ -58,19 +53,15 @@ class OneLegendrePolynomial(val of: Expression)
 
     def representation = of
 
-    override def toString = s"LegendreP(1)($of)"
-
 }
 
-class SomeLegendrePolynomial(val l: Natural)(val x: Expression)
+class SomeLegendrePolynomial(val l: Natural)(val of: Expression)
         extends LegendrePolynomial {
 
     require(l > One)
 
-    def representation = ((((2 * l) - 1) * x * LegendrePolynomial(l - 1, x)) - ((l - 1) * LegendrePolynomial(l - 2, x))) / l
+    def representation = ((((2 * l) - 1) * of * LegendrePolynomial(l - 1, of)) - ((l - 1) * LegendrePolynomial(l - 2, of))) / l
 
     override def df(x: Variable) = l * (x * LegendrePolynomial(l, x) - LegendrePolynomial(l - 1, x)) / ((x ^ 2) + 1)
-
-    override def toString = s"LegendreP($l)($x)"
 
 }

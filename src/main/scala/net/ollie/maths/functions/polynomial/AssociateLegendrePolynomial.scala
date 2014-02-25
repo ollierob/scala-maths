@@ -12,7 +12,9 @@ trait AssociatedLegendrePolynomial
         extends Modal
         with Represented {
 
-    override def toString = s"P($l, $m)"
+    def of: Expression
+
+    override def toString = s"LegendreP($l, $m)($of)"
 
 }
 
@@ -27,7 +29,7 @@ object AssociatedLegendrePolynomial {
 
     def apply(l: Natural, m: Integer, x: Expression): AssociatedLegendrePolynomial = m match {
         case Zero => LegendrePolynomial(l, x)
-        case _ if m.abs > l => new EmptyAssociatedLegendrePolynomial(l, m)
+        case _ if m.abs > l => new EmptyAssociatedLegendrePolynomial(l, m, x)
         case _ => new RegularAssociatedLegendrePolynomial(l, m, x)
     }
 
@@ -36,7 +38,7 @@ object AssociatedLegendrePolynomial {
 /**
  * When |m| > l the polynomial is empty.
  */
-class EmptyAssociatedLegendrePolynomial(val l: Natural, val m: Integer)
+class EmptyAssociatedLegendrePolynomial(val l: Natural, val m: Integer, val of: Expression)
         extends AssociatedLegendrePolynomial
         with Empty {
 
@@ -54,7 +56,7 @@ class EmptyAssociatedLegendrePolynomial(val l: Natural, val m: Integer)
 
 }
 
-class RegularAssociatedLegendrePolynomial(val l: Natural, val m: Integer, val x: Expression)
+class RegularAssociatedLegendrePolynomial(val l: Natural, val m: Integer, val of: Expression)
         extends AssociatedLegendrePolynomial {
 
     import net.ollie.maths.functions.polynomial.{AssociatedLegendrePolynomial => Plm}
@@ -62,7 +64,7 @@ class RegularAssociatedLegendrePolynomial(val l: Natural, val m: Integer, val x:
     require(l <= m.abs)
 
     def representation = {
-        ((((2 * l) - 1) * Plm(l - 1, m, x)) - ((l + m) * Plm(l - 2, m, x))) / (l - m + 1)
+        ((((2 * l) - 1) * Plm(l - 1, m, of)) - ((l + m) * Plm(l - 2, m, of))) / (l - m + 1)
     }
 
 }
