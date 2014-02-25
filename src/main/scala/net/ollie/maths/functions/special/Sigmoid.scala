@@ -1,7 +1,7 @@
 package net.ollie.maths.functions.special
 
-import net.ollie.maths.{Expression, Number}
-import net.ollie.maths.functions.{FunctionBuilder, UnivariateFunction}
+import net.ollie.maths.Expression
+import net.ollie.maths.functions.{RealFunctionBuilder, UnivariateFunction}
 import net.ollie.maths.functions.numeric.Exp
 import net.ollie.maths.numbers.Real
 import net.ollie.maths.numbers.constants.Half
@@ -11,13 +11,8 @@ import net.ollie.maths.numbers.constants.Half
  * @see http://mathworld.wolfram.com/SigmoidFunction.html
  */
 object Sigmoid
-        extends FunctionBuilder
+        extends RealFunctionBuilder
         with UnivariateFunction[Real, Real] {
-
-    def apply(n: Number): Number = n match {
-        case re: Real => apply(re)
-        case _ => ???
-    }
 
     def apply(re: Real): Real = 1 / (1 + Exp(-re))
 

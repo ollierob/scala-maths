@@ -14,7 +14,7 @@ object BernoulliSequence
 
     type Element = Rational
 
-    private val bernoulli = new Bernoulli
+    private val calculator = new Bernoulli
 
     override def apply(n: Natural): Rational = n match {
         case One => -Half
@@ -25,7 +25,7 @@ object BernoulliSequence
     protected[this] def initial = Map(Zero -> One, One -> -Half)
 
     protected[this] def create(n: Natural): Rational = n.toInt match {
-        case Some(m) => new BernoulliNumber(m, bernoulli)
+        case Some(m) => new BernoulliNumber(m, calculator)
         case _ => ??? //TODO
     }
 
@@ -33,17 +33,19 @@ object BernoulliSequence
 
 }
 
-private class BernoulliNumber(val n: Int, val b: Bernoulli)
+private class BernoulliNumber(val n: Int, val calculator: Bernoulli)
         extends Rational
         with ApproximatelyEvaluated {
 
-    private lazy val rational = b.at(n)
+    private lazy val rational = calculator.at(n)
 
     def numerator = Integer(rational.numer())
 
     def denominator = Integer(rational.denom())
 
-    override protected[this] def doApproximatelyEvaluate(precision: Precision) = numerator.evaluate(precision) / denominator.evaluate(precision)
+    override protected[this] def doApproximatelyEvaluate(precision: Precision) = {
+        numerator.evaluate(precision) / denominator.evaluate(precision)
+    }
 
     override def toString = s"Bernoulli($n)"
 

@@ -9,14 +9,14 @@ import scala.collection.mutable
  */
 trait Sequence {
 
-    def apply(n: Natural): Expression
+    type Element <: Expression
+
+    def apply(n: Natural): Element
 
 }
 
 trait CachingSequence
         extends Sequence {
-
-    type Element <: Expression
 
     private val cache = new mutable.HashMap[Natural, Element]() ++ initial
 

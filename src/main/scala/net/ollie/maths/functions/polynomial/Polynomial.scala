@@ -6,6 +6,7 @@ import net.ollie.maths.numbers.constants.Zero
 
 /**
  * Created by Ollie on 08/01/14.
+ * @see http://mathworld.wolfram.com/Polynomial.html
  */
 trait Polynomial
         extends Represented {
@@ -49,3 +50,6 @@ object ZeroPolynomial
     override def isEmpty = super[Empty].isEmpty
 
 }
+
+abstract class ConstantPolynomial[N <: Number](val representation: N)
+        extends Polynomial

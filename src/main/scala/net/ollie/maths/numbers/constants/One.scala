@@ -59,3 +59,6 @@ object MinusOne
     override def equals(re: Real) = (this eq re) || super.equals(re)
 
 }
+
+object Two
+        extends ExactNatural(2)

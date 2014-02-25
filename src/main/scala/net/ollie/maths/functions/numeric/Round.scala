@@ -4,7 +4,7 @@ import scala.math.BigDecimal.RoundingMode
 import scala.math.BigDecimal.RoundingMode.RoundingMode
 
 import net.ollie.maths.functions.UnivariateFunction
-import net.ollie.maths.numbers.{Integer, IntegerPrecision, Real}
+import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.Precision._
 
 /**
@@ -39,6 +39,8 @@ sealed trait Round
         val bd = re.evaluate(Round.ONE_DP)
         Integer(bd.setScale(0, roundingMode).toBigInt())
     }
+
+    def apply(p: PositiveReal): Natural = apply(p.asInstanceOf[Real]).abs
 
 }
 
