@@ -13,7 +13,8 @@ object Ramp
         with UnivariateFunction[Real, Real] {
 
     def apply(re: Real): Real = re match {
-        case _ if re >= 0 => re
+        case _ if re.isStrictlyPositive => re
+        case Zero => Zero
         case _ => 0
     }
 

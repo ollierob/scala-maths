@@ -1,7 +1,7 @@
 package net.ollie.maths.functions.numeric
 
 import net.ollie.maths._
-import net.ollie.maths.functions.{FunctionBuilder, UnivariateFunction}
+import net.ollie.maths.functions.{BuiltFunction, FunctionBuilder, UnivariateFunction}
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.constants.Zero
 
@@ -12,9 +12,12 @@ object DiracDelta
         extends UnivariateFunction[Number, PositiveReal]
         with FunctionBuilder {
 
-    def apply(n: Number): PositiveReal = if (n.isEmpty) Infinity else Zero
+    def apply(n: Number): PositiveReal = {
+        if (n.isEmpty) Infinity
+        else Zero
+    }
 
-    protected[this] def create(expr: Expression) = new DiracDelta(expr)
+    protected[this] def create(expr: Expression) = new DiracDeltaOf(expr)
 
     protected[this] def empty = Infinity
 
@@ -22,18 +25,16 @@ object DiracDelta
 
 }
 
-class DiracDelta(val expression: Expression)
-        extends Function {
+class DiracDeltaOf(val expression: Expression)
+        extends BuiltFunction {
 
     protected[this] def of = expression
 
-    def isEmpty = false
-
-    protected[this] def at(n: Number) = DiracDelta(n)
-
-    protected[this] def apply(expr: Expression) = DiracDelta(expr)
+    def isEmpty = !expression.isEmpty
 
     protected[this] def derivative(at: Expression) = -DiracDelta(at) / at
+
+    override protected[this] def builder = DiracDelta
 
     override def toString = s"δ($of)"
 
