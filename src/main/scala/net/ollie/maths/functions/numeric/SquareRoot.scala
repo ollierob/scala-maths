@@ -7,6 +7,7 @@ import net.ollie.maths.functions.UnivariateFunction
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.constants.{One, Half, Zero}
 import org.nevec.rjm.BigDecimalMath
+import net.ollie.maths.numbers.complex.Complex
 
 /**
  * Created by Ollie on 08/01/14.
@@ -15,7 +16,9 @@ object SquareRoot {
 
     def apply(x: Expression): Expression = x ^ Half
 
-    def apply(re: PositiveReal) = new RealSquareRoots(re)
+    def apply(re: Real): Roots[Real, Complex] = Roots(re, 2)
+
+    def apply(re: PositiveReal): Roots[PositiveReal, Real] = new RealSquareRoots(re)
 
 }
 
@@ -67,7 +70,7 @@ class PositiveSquareRoot(val of: PositiveReal)
         with CachedEvaluated {
 
     override def doEvaluate(precision: Precision) = {
-        if (precision.digits < 16) Math.sqrt(of.approximatelyEvaluate(precision).toDouble)
+        if (precision.digits < 16) Math.sqrt(of.evaluate(precision).toDouble)
         else BigDecimalMath.sqrt(of.evaluate(precision).underlying())
     }
 

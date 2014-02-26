@@ -3,7 +3,7 @@ package net.ollie.maths.numbers
 import scala.collection.mutable
 
 import net.ollie.maths.Operation
-import net.ollie.maths.numbers.constants.{Zero, One}
+import net.ollie.maths.numbers.constants.{Two, Zero, One}
 
 /**
  * Positive integer classes.
@@ -60,6 +60,7 @@ object Natural {
     implicit def apply(int: Int): Natural = int match {
         case 0 => Zero
         case 1 => One
+        case 2 => Two
         case _ => new ExactNatural(int)
     }
 

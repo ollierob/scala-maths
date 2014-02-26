@@ -55,9 +55,6 @@ object RealPower {
         case _ => ??? //TODO
     }
 
-    /**
-     *
-     */
     trait ZeroToPowerZeroConvention {
 
         def value: Real
@@ -81,7 +78,7 @@ object RealPower {
 }
 
 /**
- * +x^(a/b) is equal to +x^a * bth root of x
+ * x^(a/b) is equal to the bth root of x^a
  * @param base
  * @param power
  */
