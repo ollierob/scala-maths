@@ -187,6 +187,7 @@ object Real
     implicit object RealArithmetic
             extends AdditionArithmetic[Real, Real, Real]
             with MultiplicationArithmetic[Real, Real, Real]
+            with ExponentiationArithmetic[Real, Real, RealPower]
             with TetrationArithmetic[Real, Real, Massive]
             with IdentityArithmetic[Real, Real]
             with scala.math.Numeric[Real] {
@@ -214,6 +215,8 @@ object Real
         def compare(x: Real, y: Real) = x.compareTo(y)
 
         def multiply(left: Real, right: Real) = left * right
+
+        def exponentiate(base: Real, power: Real) = RealPower(base, power)
 
         def tetrate(base: Real, tower: Real) = PowerTower(base, tower)
 

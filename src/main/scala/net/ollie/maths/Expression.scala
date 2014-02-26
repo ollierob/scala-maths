@@ -168,7 +168,7 @@ class ExpressionFraction(val numerator: Expression, val denominator: Expression)
 }
 
 class ExpressionPower(val base: Expression, val power: Expression)
-        extends Expression {
+        extends Exponentiated {
 
     def unary_-() = Expression.negate(this)
 
@@ -184,15 +184,11 @@ class ExpressionPower(val base: Expression, val power: Expression)
 
     def variables = base.variables ++: power.variables
 
-    def isEmpty = base.isEmpty
-
     override def ^(x: Expression) = base ^ (power + x)
 
     override def df(x: Variable) = {
         (base ^ (power - 1)) * ((base.df(x) * power) + (base * Ln(base) * power.df(x)))
     }
-
-    override def toString = s"($base ^ $power)"
 
 }
 

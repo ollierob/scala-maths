@@ -2,19 +2,27 @@ package net.ollie.maths.numbers
 
 import net.ollie.maths.numbers.constants.{Zero, One}
 import org.nevec.rjm.BigDecimalMath
-import net.ollie.maths.CachedEvaluated
+import net.ollie.maths.{Exponentiated, CachedEvaluated}
+import net.ollie.maths.numbers.complex.Complex
+import net.ollie.maths.functions.numeric.Roots
 
 /**
  * Created by Ollie on 12/01/14.
  */
 trait RealPower
-        extends Real {
+        extends Multivalued {
 
-    protected def base: Real
+    type Contents = Complex
 
-    protected def power: Real
+    def base: Real
 
-    override def isEmpty = base.isEmpty
+    def power: Real
+
+    def isEmpty = base.isEmpty
+
+    def values: Set[Complex]
+
+    def inverse = RealPower(base, -power)
 
     override def toString = s"($base ^ $power)"
 
@@ -22,6 +30,11 @@ trait RealPower
 
 object RealPower {
 
+    def apply(base: Int, power: Int): Real = apply(Integer(base), Integer(power))
+
+    /**
+     * Single-valued integer power.
+     */
     def apply(base: Real, power: Integer)(implicit convention: ZeroToPowerZeroConvention = ZeroToPowerZeroIsOne): Real = {
         (base, power) match {
             case (Zero, Zero) => convention.value
@@ -30,8 +43,25 @@ object RealPower {
             case (One, _) => One
             case (_, Zero) => One
             case (_, One) => base
-            case _ => new RealToIntegerPower(base, power)
+            case _ => new PrincipalRealToIntegerPower(base, power)
         }
+    }
+
+    /**
+     * Multi-valued real powers.
+     */
+    def apply(base: Real, power: Real): RealPower = power match {
+        case r: Rational => new RealToRationalPower(base, r)
+        case _ => ??? //TODO
+    }
+
+    /**
+     *
+     */
+    trait ZeroToPowerZeroConvention {
+
+        def value: Real
+
     }
 
     object ZeroToPowerZeroIsUndefined
@@ -50,12 +80,31 @@ object RealPower {
 
 }
 
-class RealToIntegerPower(val base: Real, val power: Integer)
-        extends RealPower
+/**
+ * +x^(a/b) is equal to +x^a * bth root of x
+ * @param base
+ * @param power
+ */
+private class RealToRationalPower(val base: Real, val power: Rational)
+        extends RealPower {
+
+    private val primary = base ^ (power.numerator)
+
+    private lazy val roots: Roots[Real, Complex] = Roots(primary, power.denominator)
+
+    def principal: Complex = roots.principal
+
+    def values: Set[Complex] = roots.values
+
+}
+
+class PrincipalRealToIntegerPower(val base: Real, val power: Integer)
+        extends Real
+        with Exponentiated
         with CachedEvaluated {
 
     override def ?*(that: Real) = that match {
-        case pow: RealToIntegerPower if base == pow.base => Some(RealPower(base, power + pow.power))
+        case pow: PrincipalRealToIntegerPower if base == pow.base => Some(RealPower(base, power + pow.power))
         case _ if that == base => Some(RealPower(base, power + 1))
         case _ if that == -base => Some(-RealPower(base, power + 1))
         case _ => super.?*(that)
@@ -66,7 +115,7 @@ class RealToIntegerPower(val base: Real, val power: Integer)
     private val baseAbs = base.abs
 
     override def ?==(that: Real) = that match {
-        case pow: RealToIntegerPower if base == pow.base => Some(power == pow.power)
+        case pow: PrincipalRealToIntegerPower if base == pow.base => Some(power == pow.power)
         case _ => super.?==(that)
     }
 
@@ -74,11 +123,5 @@ class RealToIntegerPower(val base: Real, val power: Integer)
         val bd: BigDecimal = BigDecimalMath.pow(baseAbs.evaluate(precision).underlying(), power.evaluate(precision).underlying())
         if (negate) -bd else bd
     }
-}
-
-trait ZeroToPowerZeroConvention {
-
-    def value: Real
 
 }
-

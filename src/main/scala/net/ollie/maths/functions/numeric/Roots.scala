@@ -3,7 +3,7 @@ package net.ollie.maths.functions.numeric
 import net.ollie.maths.numbers._
 import net.ollie.maths.{IdentityArithmetic, EmptyNumber, Number}
 import net.ollie.maths.numbers.complex.Complex
-import net.ollie.maths.numbers.constants.{Pi, One, Zero}
+import net.ollie.maths.numbers.constants.{Unity, Pi, One, Zero}
 import scala.collection.mutable.ArrayBuffer
 
 /**
@@ -12,12 +12,12 @@ import scala.collection.mutable.ArrayBuffer
 object Roots {
 
     def apply(of: Real, degree: Natural): Roots[Real, Complex] = of match {
-        case Zero => new EmptyRoots[Zero.type, Complex](Zero, degree)
+        case Zero => new EmptyRoots[Real, Complex](Zero, degree)
         case One => Roots.unity(degree)
         case _ => new NonEmptyRoots(of, degree)
     }
 
-    def unity(degree: Natural): Roots[One.type, Complex] = new RootsOfUnity(degree)
+    def unity(degree: Natural): Roots[Unity, Complex] = new RootsOfUnity(degree)
 
 }
 

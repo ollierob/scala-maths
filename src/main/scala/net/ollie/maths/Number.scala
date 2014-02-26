@@ -62,7 +62,7 @@ trait Number
      */
     def ^[R <: Number, Combined <: Number](power: R)
             (implicit exponentiation: ExponentiationArithmetic[System, R#System, Combined]): Combined = {
-        exponentiation.exponent(this, power.narrow)
+        exponentiation.exponentiate(this, power.narrow)
     }
 
     def ?^(that: Number): Option[Number]

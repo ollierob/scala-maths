@@ -22,7 +22,7 @@ trait MultiplicationArithmetic[-Left, -Right, +Combined] {
 
 trait ExponentiationArithmetic[-Left, -Right, +Combined] {
 
-    def exponent(base: Left, power: Right): Combined
+    def exponentiate(base: Left, power: Right): Combined
 
 }
 

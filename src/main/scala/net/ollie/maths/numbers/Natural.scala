@@ -143,10 +143,12 @@ class NaturalFraction(override val numerator: Natural, override val denominator:
 }
 
 class NaturalPower(override val base: Natural, override val power: Natural)
-        extends RealToIntegerPower(base, power)
+        extends PrincipalRealToIntegerPower(base, power)
         with Natural {
 
     override def isEven = base.isEven || power.isEven
+
+    override def isEmpty = super[PrincipalRealToIntegerPower].isEmpty
 
     def evaluate = power.toInt match {
         case Some(i: Int) => base.evaluate.pow(i)

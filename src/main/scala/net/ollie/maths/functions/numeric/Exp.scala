@@ -69,7 +69,7 @@ class ExpOf(val of: Expression)
 }
 
 class RealExp(val of: Real)
-        extends PositiveRealPower(EulersNumber, of)
+        extends PrincipalPositiveRealPower(EulersNumber, of)
         with Exp {
 
     require(MinusInfinity != of)
