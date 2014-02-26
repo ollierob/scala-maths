@@ -1,7 +1,7 @@
 package net.ollie.maths.functions.numeric
 
-import net.ollie.maths.{Expression, Number}
-import net.ollie.maths.functions.{FunctionBuilder, Represented, UnivariateFunction}
+import net.ollie.maths.Expression
+import net.ollie.maths.functions.{RealFunctionBuilder, Represented, UnivariateFunction}
 import net.ollie.maths.numbers.Real
 import net.ollie.maths.numbers.constants.Zero
 
@@ -9,15 +9,10 @@ import net.ollie.maths.numbers.constants.Zero
  * Created by Ollie on 11/01/14.
  */
 object Ramp
-        extends UnivariateFunction[Real, Real]
-        with FunctionBuilder {
+        extends RealFunctionBuilder
+        with UnivariateFunction[Real, Real] {
 
-    def apply(n: Number): Number = n match {
-        case re: Real => apply(re)
-        case _ => ???
-    }
-
-    def apply(re: Real) = re match {
+    def apply(re: Real): Real = re match {
         case _ if re >= 0 => re
         case _ => 0
     }
