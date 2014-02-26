@@ -17,7 +17,7 @@ object Roots {
         case _ => new NonEmptyRoots(of, degree)
     }
 
-    def unity(degree: Natural): Roots[Unity, Complex] = new RootsOfUnity(degree)
+    def unity(degree: Natural): Roots[Real with Unity, Complex] = new RootsOfUnity(degree)
 
 }
 

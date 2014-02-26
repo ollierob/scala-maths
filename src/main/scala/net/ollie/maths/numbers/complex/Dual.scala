@@ -3,7 +3,7 @@ package net.ollie.maths.numbers.complex
 import net.ollie.maths._
 import net.ollie.maths.numbers.Real
 import scala.Some
-import net.ollie.maths.numbers.constants.{Zero, One}
+import net.ollie.maths.numbers.constants.{Unity, Zero, One}
 
 /**
  * Created by Ollie on 28/01/14.
@@ -50,6 +50,10 @@ trait Dual
 object Dual
         extends ComplexBuilder[Dual] {
 
+    def zero: Dual with Empty = DualZero
+
+    def one: Dual with Unity = ???
+
     def unitSquared = Zero
 
     def apply(n: Number): Option[Dual] = n match {
@@ -69,9 +73,9 @@ object Dual
             with MultiplicationArithmetic[Real, Dual, Dual]
             with IdentityArithmetic[Real, Dual] {
 
-        override def zero = DualZero
+        override def zero = Dual.zero
 
-        override def one = One
+        override def one = Dual.one
 
         override def promote(from: Real) = Dual(from)
 

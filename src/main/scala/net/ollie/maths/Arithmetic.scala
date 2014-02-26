@@ -1,34 +1,36 @@
 package net.ollie.maths
 
+import net.ollie.maths.numbers.constants.{Unity, One, Zero}
+
 /**
  * Elementary arithmetic operators.
  * Created by Ollie on 01/01/14.
  */
-trait AdditionArithmetic[-Left, -Right, +Combined] {
+trait AdditionArithmetic[-Left, -Right, +Result] {
 
-    def zero: Combined
+    def zero: Result with Empty
 
-    def add(left: Left, right: Right): Combined
-
-}
-
-trait MultiplicationArithmetic[-Left, -Right, +Combined] {
-
-    def one: Combined
-
-    def multiply(left: Left, right: Right): Combined
+    def add(left: Left, right: Right): Result
 
 }
 
-trait ExponentiationArithmetic[-Left, -Right, +Combined] {
+trait MultiplicationArithmetic[-Left, -Right, +Result] {
 
-    def exponentiate(base: Left, power: Right): Combined
+    def one: Result with Unity
+
+    def multiply(left: Left, right: Right): Result
 
 }
 
-trait TetrationArithmetic[-Left, -Right, +Combined] {
+trait ExponentiationArithmetic[-Base, -Power, +Result] {
 
-    def tetrate(base: Left, tower: Right): Combined
+    def exponentiate(base: Base, power: Power): Result
+
+}
+
+trait TetrationArithmetic[-Base, -Tower, +Result] {
+
+    def tetrate(base: Base, tower: Tower): Result
 
 }
 
@@ -40,6 +42,10 @@ trait NumberIdentityArithmetic[+To] {
         case Some(f) => apply(f)
         case _ => None
     }
+
+    def zero: To with Empty
+
+    def one: To with Unity
 
 }
 

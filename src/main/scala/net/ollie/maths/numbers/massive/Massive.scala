@@ -3,7 +3,7 @@ package net.ollie.maths.numbers.massive
 import net.ollie.maths._
 import net.ollie.maths.numbers._
 import scala.Some
-import net.ollie.maths.numbers.constants.{Zero, One}
+import net.ollie.maths.numbers.constants.{Unity, Zero, One}
 
 /**
  * Real finite numbers that (probably) cannot be expressed in decimal form because they are so large.
@@ -59,7 +59,12 @@ trait Massive
 
 }
 
-object Massive {
+object Massive
+        extends NumberIdentityArithmetic[Massive] {
+
+    def zero: Massive with EmptyNumber = MassiveZero
+
+    def one: Massive with Unity = MassiveOne
 
     def apply(): Massive = MassiveZero
 
@@ -93,9 +98,9 @@ object Massive {
             with AdditionArithmetic[Real, Massive, Massive]
             with MultiplicationArithmetic[Real, Massive, Massive] {
 
-        def zero = Zero
+        def zero = Massive.zero
 
-        def one = One
+        def one = Massive.one
 
         def promote(from: Real) = from
 
@@ -111,9 +116,9 @@ object Massive {
             extends AdditionArithmetic[Massive, Real, Massive]
             with MultiplicationArithmetic[Massive, Real, Massive] {
 
-        def zero = Zero
+        def zero = Massive.zero
 
-        def one = One
+        def one = Massive.one
 
         def multiply(left: Massive, right: Real) = left * Massive(right)
 
@@ -163,6 +168,14 @@ class PromotedMassive(val re: Real)
     override def toString = re.toString
 
     override def hashCode = re.hashCode
+
+}
+
+object MassiveOne
+        extends PromotedMassive(One)
+        with Unity {
+
+    override def abs = super[Unity].abs
 
 }
 

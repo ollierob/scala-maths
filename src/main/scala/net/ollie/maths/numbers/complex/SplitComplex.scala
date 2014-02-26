@@ -1,8 +1,8 @@
 package net.ollie.maths.numbers.complex
 
 import net.ollie.maths.numbers.{PositiveReal, Real}
-import net.ollie.maths.Number
-import net.ollie.maths.numbers.constants.{Zero, One}
+import net.ollie.maths.{EmptyNumber, Empty, Number}
+import net.ollie.maths.numbers.constants.{Unity, Zero, One}
 
 /**
  * Created by Ollie on 04/02/14.
@@ -22,6 +22,12 @@ trait SplitComplex
 
     def modulus: Real = re.squared - s.squared
 
+    def ?^(that: Number): Option[Number] = ???
+
+    def ?*(that: Number)(leftToRight: Boolean): Option[Number] = ???
+
+    def ?+(that: Number): Option[Number] = ???
+
     override def equals(z: ComplexLike) = z match {
         case s: SplitComplex => this.equals(s)
         case _ => super.equals(z)
@@ -35,6 +41,10 @@ trait SplitComplex
 
 object SplitComplex
         extends ComplexBuilder[SplitComplex] {
+
+    def zero: SplitComplex with Empty = SplitComplexZero
+
+    def one: SplitComplex with Unity = ???
 
     override def apply(n: Number): Option[SplitComplex] = n match {
         case re: Real => Some(re)
@@ -58,5 +68,29 @@ class CartesianSplitComplex(val re: Real, val s: Real)
     override def ?*(that: Number)(leftToRight: Boolean): Option[Number] = ???
 
     override def ?+(that: Number): Option[Number] = ???
+
+}
+
+private object SplitComplexZero
+        extends SplitComplex
+        with EmptyNumber {
+
+    def re = Zero
+
+    def s = Zero
+
+    override def abs = super[EmptyNumber].abs
+
+}
+
+private object SplitComplexOne
+        extends SplitComplex
+        with Unity {
+
+    override def abs = super[Unity].abs
+
+    def re = One
+
+    def s = Zero
 
 }

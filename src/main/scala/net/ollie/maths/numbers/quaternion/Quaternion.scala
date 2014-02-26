@@ -4,7 +4,7 @@ import net.ollie.maths._
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.complex.{MaybeComplex, Complex}
 import scala.Some
-import net.ollie.maths.numbers.constants.{Zero, One}
+import net.ollie.maths.numbers.constants.{Unity, Zero}
 import net.ollie.maths.functions.numeric.PositiveSquareRoot
 
 /**
@@ -99,23 +99,25 @@ trait Quaternion
 object Quaternion
         extends NumberIdentityArithmetic[Quaternion] {
 
+    def zero: Quaternion with Empty = QuaternionZero
+
+    def one: Quaternion with Unity = QuaternionOne
+
     def apply(n: Number): Option[Quaternion] = n match {
-        case Zero => Some(Quaternion())
+        case Zero => Some(zero)
         case re: Real => Some(Quaternion(re))
         case z: Complex => Some(Quaternion(z))
         case q: Quaternion => Some(q)
         case _ => None
     }
 
-    def apply(): Quaternion = QuaternionZero
-
     implicit def apply(re: Real): Quaternion = {
-        if (re.isEmpty) Quaternion()
+        if (re.isEmpty) zero
         else new QuaternionR(re)
     }
 
     implicit def apply(z: Complex): Quaternion = {
-        if (z.isEmpty) Quaternion()
+        if (z.isEmpty) zero
         else Quaternion(z.re, z.im, Zero, Zero)
     }
 
@@ -137,10 +139,6 @@ object Quaternion
         if (q.isEmpty) QuaternionZero
         else new ConjugatedQuaternion(q)
     }
-
-    def zero: Quaternion with Empty = QuaternionZero
-
-    def one: Quaternion = Quaternion(One)
 
     implicit object RealQuaternionArithmetic
             extends AdditionArithmetic[Real, Quaternion, Quaternion]
@@ -213,6 +211,14 @@ object QuaternionZero
     override def variables = super[EmptyNumber].variables
 
     override def df(x: Variable) = super[Quaternion].df(x)
+
+}
+
+private object QuaternionOne
+        extends QuaternionR(1)
+        with Unity {
+
+    override def abs = super[Unity].abs
 
 }
 

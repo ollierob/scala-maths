@@ -6,7 +6,7 @@ import net.ollie.maths.functions.angular.{Angle, ArcTan}
 import net.ollie.maths.functions.numeric.PositiveSquareRoot
 import net.ollie.maths.numbers._
 import scala.Some
-import net.ollie.maths.numbers.constants.{MinusOne, Zero, One}
+import net.ollie.maths.numbers.constants.{Unity, MinusOne, Zero}
 
 /**
  * Created by Ollie on 04/01/14.
@@ -63,7 +63,9 @@ object Complex
 
     override def unitSquared = MinusOne
 
-    def apply(): Complex with Empty = ComplexZero
+    def zero: Complex with EmptyNumber = ComplexZero
+
+    def one: Complex with Unity = ComplexOne
 
     def apply(n: Number): Option[Complex] = n match {
         case re: Real => Some(Complex(re))
@@ -77,7 +79,7 @@ object Complex
     }
 
     implicit def apply(pair: (Real, Real)): Complex = pair match {
-        case (Zero, Zero) => Complex()
+        case (Zero, Zero) => zero
         case (Zero, _) => Imaginary(pair._2)
         case _ => new CartesianComplex(pair._1, pair._2)
     }
@@ -85,7 +87,7 @@ object Complex
     def apply(re: Real, im: Real): Complex = Complex((re, im))
 
     implicit def apply(re: Real): Complex = {
-        if (re.isEmpty) Complex()
+        if (re.isEmpty) zero
         else Complex(re, Zero)
     }
 
@@ -102,9 +104,9 @@ object Complex
 
         def multiply(left: Real, right: Complex) = Complex(left) * right
 
-        def zero = ComplexZero
+        def zero = Complex.zero
 
-        def one = One
+        def one = Complex.one
 
     }
 
@@ -116,9 +118,9 @@ object Complex
 
         def multiply(left: Complex, right: Real) = left * Complex(right)
 
-        def zero = ComplexZero
+        def zero = Complex.zero
 
-        def one = One
+        def one = Complex.one
 
     }
 
@@ -153,5 +155,13 @@ object ComplexZero
     override def arg = indeterminate
 
     override def toString = super[EmptyNumber].toString
+
+}
+
+private object ComplexOne
+        extends CartesianComplex(1, 0)
+        with Unity {
+
+    override def abs = super[Unity].abs
 
 }

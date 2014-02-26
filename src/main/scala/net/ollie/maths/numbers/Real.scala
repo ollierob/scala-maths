@@ -5,7 +5,7 @@ import scala.Some
 import net.ollie.maths._
 import net.ollie.maths.methods.ApproximatelyEvaluated
 import net.ollie.maths.numbers.massive.{PowerTower, Massive}
-import net.ollie.maths.numbers.constants.{Zero, One}
+import net.ollie.maths.numbers.constants.{Unity, Zero, One}
 
 /**
  * Created by Ollie on 01/01/14.
@@ -158,7 +158,9 @@ object Real
 
     private val BD_ZERO = BigDecimal(0)
 
-    def apply(): Real = Zero
+    def zero = Zero
+
+    def one = One
 
     def apply(from: Number): Option[Real] = from match {
         case re: Real => Some(re)
@@ -192,6 +194,10 @@ object Real
             with IdentityArithmetic[Real, Real]
             with scala.math.Numeric[Real] {
 
+        override def zero: Real with Empty = Zero
+
+        override def one: Real with Unity = One
+
         def add(x: Real, y: Real) = plus(x, y)
 
         def plus(x: Real, y: Real) = x + y
@@ -220,7 +226,7 @@ object Real
 
         def tetrate(base: Real, tower: Real) = PowerTower(base, tower)
 
-        override def promote(from: Real) = from
+        def promote(from: Real) = from
 
     }
 

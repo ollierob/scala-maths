@@ -6,11 +6,12 @@ import scala.Some
 
 /**
  * Created by Ollie on 09/02/14.
+ * @see http://mathworld.wolfram.com/Unity.html
  */
 trait Unity
-        extends Integer {
+        extends Number {
 
-    override def abs = One
+    def abs = One
 
 }
 
@@ -19,6 +20,8 @@ object One
         with Unity {
 
     override def ! = this
+
+    override def abs = super[Unity].abs
 
     override def unary_-() = MinusOne
 
@@ -55,6 +58,8 @@ object MinusOne
     override def unary_-() = One
 
     override def ^(that: Integer): Integer = if (that.isEven) One else this
+
+    override def abs = super[Unity].abs
 
     override def equals(re: Real) = (this eq re) || super.equals(re)
 
