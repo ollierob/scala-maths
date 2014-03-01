@@ -75,9 +75,9 @@ class Series[+T <: Expression] protected(val terms: Seq[T])
         else current.get ?+ result.get
     }
 
-    override def +(that: Expression) = that match {
-        case s: Series[_] => Series(terms ++: s.terms)
-        case _ => Series(terms :+ that)
+    override def ?+(that: Expression)(leftToRight: Boolean) = that match {
+        case s: Series[_] => Some(Series(if (leftToRight) terms ++: s.terms else s.terms ++: terms))
+        case _ => Some(Series(if (leftToRight) terms :+ that else that +: terms))
     }
 
     def :+(that: Expression) = that match {

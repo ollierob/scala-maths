@@ -57,9 +57,9 @@ private class SinOf(val of: Expression)
 
     def inverse = ArcSin(of)
 
-    override def /(that: Expression) = {
-        if (of equals that) Sinc(of)
-        else super./(that)
+    override def ?/(that: Expression) = {
+        if (of equals that) Some(Sinc(of))
+        else super.?/(that)
     }
 
     override def toString = s"Sin($of)"

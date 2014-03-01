@@ -21,6 +21,11 @@ trait Number
 
     def inverse: Number
 
+    override def ?+(that: Expression)(leftToRight: Boolean): Option[Expression] = that.toConstant match {
+        case Some(n) => this ?+ n
+        case _ => super.?+(that)(leftToRight)
+    }
+
     def ?+(that: Number): Option[Number]
 
     def +[R <: Number, Combined <: Number](that: R)

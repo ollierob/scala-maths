@@ -3,7 +3,7 @@ package net.ollie.maths
 import net.ollie.maths.functions.numeric.Ln
 import net.ollie.maths.methods.{Product, Series}
 import net.ollie.maths.numbers.Integer
-import net.ollie.maths.numbers.constants.Zero
+import net.ollie.maths.numbers.constants.{One, Zero}
 
 /**
  * Created by Ollie on 01/01/14.
@@ -31,9 +31,19 @@ trait Expression
 
     def isEmpty: Boolean
 
-    def +(that: Expression): Expression = Expression.series(this, that)
+    final def +(that: Expression): Expression = this ?+? that match {
+        case Some(expression) => expression
+        case _ => Expression.series(this, that)
+    }
 
     def -(that: Expression): Expression = this + (-that)
+
+    final def ?+?(that: Expression): Option[Expression] = this.?+(that)(true) match {
+        case Some(x) => Some(x)
+        case _ => that.?+(this)(false)
+    }
+
+    def ?+(that: Expression)(leftToRight: Boolean): Option[Expression] = None
 
     /**
      * This times that. Will create an expression product if the multiplication cannot be simplified.
@@ -54,10 +64,7 @@ trait Expression
      */
     final def ?*?(that: Expression): Option[Expression] = this.?*(that)(true) match {
         case Some(x) => Some(x)
-        case _ => that.?*(this)(false) match {
-            case Some(x) => Some(x)
-            case _ => None
-        }
+        case _ => that.?*(this)(false)
     }
 
     /**
@@ -67,7 +74,12 @@ trait Expression
      */
     def ?*(that: Expression)(leftToRight: Boolean): Option[Expression] = None
 
-    def /(that: Expression): Expression = Expression.divide(this, that)
+    final def /(that: Expression): Expression = this ?/ that match {
+        case Some(x) => x
+        case _ => Expression.divide(this, that)
+    }
+
+    def ?/(that: Expression): Option[Expression] = None
 
     def ^(that: Expression): Expression = Expression.power(this, that)
 
@@ -95,7 +107,8 @@ object Expression {
     }
 
     def power(base: Expression, power: Expression): Expression = (base, power) match {
-        case (Zero, _) => Zero
+        case _ if base.isEmpty => Zero
+        case (_, One) => base
         case _ => new ExpressionPower(base, power)
     }
 
@@ -190,6 +203,7 @@ class ExpressionPower(val base: Expression, val power: Expression)
     override def ^(x: Expression) = base ^ (power + x)
 
     override def df(x: Variable) = {
+        println(s"DERIV OF $this")
         (base ^ (power - 1)) * ((base.df(x) * power) + (base * Ln(base) * power.df(x)))
     }
 
@@ -235,13 +249,13 @@ object Univariate {
 
         override def dx = Zero
 
-        override def +(that: Expression) = n + that
+        override def ?+(that: Expression)(leftToRight: Boolean) = n.?+(that)(leftToRight)
 
         override def -(that: Expression) = n - that
 
         override def ?*(that: Expression)(leftToRight: Boolean): Option[Expression] = n.?*(that)(leftToRight)
 
-        override def /(that: Expression) = n / that
+        override def ?/(that: Expression) = n ?/ that
 
         override def equals(that: Expression) = that match {
             case n: Number => this.n == n
@@ -270,11 +284,11 @@ object Univariate {
 
         def variable = expression.variables.iterator.next()
 
-        override def +(that: Expression) = expression + that
+        override def ?+(that: Expression)(leftToRight: Boolean) = expression.?+(that)(leftToRight)
 
         override def ?*(that: Expression)(leftToRight: Boolean) = expression.?*(that)(leftToRight)
 
-        override def /(that: Expression) = expression / that
+        override def ?/(that: Expression) = expression ?/ that
 
         override def ^(that: Expression) = expression ^ that
 

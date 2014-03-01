@@ -26,9 +26,9 @@ trait Empty
 
     override def unary_-(): Empty = Zero
 
-    override def +(that: Expression) = that
+    override def ?+(that: Expression)(leftToRight: Boolean): Option[Expression] = Some(that)
 
-    override def ?*(that: Expression)(leftToRight: Boolean) = Some(this)
+    override def ?*(that: Expression)(leftToRight: Boolean): Option[Expression] = Some(this)
 
     override def df(x: Variable): Empty
 

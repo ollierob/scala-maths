@@ -28,6 +28,11 @@ trait Real
 
     def abs: PositiveReal = Real.abs(this)
 
+    override def ?+(that: Expression)(leftToRight: Boolean) = Real(that.toConstant) match {
+        case Some(r) => Some(this + r) //Order is irrelevant
+        case _ => super.?+(that)(leftToRight)
+    }
+
     def +(that: Real): Real = this ?+ that match {
         case Some(n) => n
         case _ => that ?+ this match {
@@ -55,6 +60,11 @@ trait Real
     }
 
     def -(that: Real): Real = this + (-that)
+
+    override def ?*(that: Expression)(leftToRight: Boolean): Option[Expression] = Real(that.toConstant) match {
+        case Some(re) => Some(this * re)
+        case _ => super.?*(that)(leftToRight)
+    }
 
     def *(that: Real): Real = {
         this ?* that match {

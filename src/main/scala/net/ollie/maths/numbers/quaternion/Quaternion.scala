@@ -36,19 +36,23 @@ trait Quaternion
 
     def conjugate: Quaternion = Quaternion.conjugate(this)
 
-    def norm: PositiveReal = PositiveSquareRoot(re.squared + i.re.squared + j.re.squared + k.re.squared)
+    def norm: PositiveReal = {
+        PositiveSquareRoot(re.squared + i.coefficient.squared + j.coefficient.squared + k.coefficient.squared)
+    }
 
     def abs: PositiveReal = PositiveSquareRoot(norm)
 
-    def isEmpty = re.isEmpty && i.isEmpty && j.isEmpty && k.isEmpty
+    def isEmpty: Boolean = re.isEmpty && i.isEmpty && j.isEmpty && k.isEmpty
 
-    def inverse: Quaternion = conjugate / Quaternion.RealQuaternionArithmetic.apply(norm.squared)
+    def inverse: Quaternion = conjugate / norm.squared
 
     override def toReal: Option[Real] = if (i.isEmpty && j.isEmpty && k.isEmpty) Some(re) else None
 
     def toComplex: Option[Complex] = if (j.isEmpty && k.isEmpty) Some(Complex(re, i.coefficient)) else None
 
     override def df(x: Variable) = QuaternionZero
+
+    //With-quaternion arithmetic
 
     def +(that: Quaternion): Quaternion = {
         Quaternion(re + that.re, i + that.i, j + that.j, k + that.k)
@@ -57,13 +61,23 @@ trait Quaternion
     def *(that: Quaternion): Quaternion = {
         Quaternion(
             re * that.re + i * that.i + j * that.j + k * that.k,
-            that.i * re + j * that.k + k * that.j,
-            that.j * re + k * that.i + i * that.k,
-            that.k * re + i * that.j + j * that.i
+            (that.i * re) + (i * that.re) + (j * that.k) + (k * that.j),
+            (that.j * re) + (i * that.k) + (j * that.re) + (k * that.i),
+            (that.k * re) + (i * that.j) + (j * that.i) + (k * that.re)
         )
     }
 
     def /(that: Quaternion): Quaternion = this * that.inverse
+
+    //With-real arithmetic
+
+    def +(that: Real): Quaternion = {
+        Quaternion(re + that, i, j, k)
+    }
+
+    def -(that: Real): Quaternion = {
+        Quaternion(re - that, i, j, k)
+    }
 
     def *(that: Real): Quaternion = {
         Quaternion(re * that, i * that, j * that, k * that)
@@ -73,23 +87,32 @@ trait Quaternion
         Quaternion(re / that, i / that, j / that, k / that)
     }
 
+    //With-number arithmetic
+
     def ?+(that: Number) = Quaternion(that) match {
         case Some(q) => Some(this + q)
         case _ => None
     }
 
     def ?*(that: Number)(leftToRight: Boolean): Option[Number] = Quaternion(that) match {
-        case Some(q) => if (leftToRight) Some(this * q) else Some(q * this)
+        case Some(q) => Some(if (leftToRight) this * q else q * this)
         case _ => None
     }
 
-    def ?^(that: Number) = ???
+    def ?^(that: Number) = None //TODO
 
     override def toString: String = s"$re + $i + $j + $k"
 
-    override def equals(n: Number) = n match {
-        case q: Quaternion => this.re == q.re
+    override def equals(n: Number) = Quaternion(n) match {
+        case Some(q) => this equals q
         case _ => super.equals(n)
+    }
+
+    def equals(q: Quaternion): Boolean = {
+        (this.re == q.re
+                && this.i.coefficient == q.i.coefficient
+                && this.j.coefficient == q.j.coefficient
+                && this.k.coefficient == q.k.coefficient)
     }
 
     override def hashCode = re.hashCode + 3 * i.hashCode + 7 * j.hashCode + 11 * k.hashCode
@@ -105,9 +128,9 @@ object Quaternion
 
     def apply(n: Number): Option[Quaternion] = n match {
         case Zero => Some(zero)
+        case q: Quaternion => Some(q)
         case re: Real => Some(Quaternion(re))
         case z: Complex => Some(Quaternion(z))
-        case q: Quaternion => Some(q)
         case _ => None
     }
 
@@ -120,6 +143,12 @@ object Quaternion
         if (z.isEmpty) zero
         else Quaternion(z.re, z.im, Zero, Zero)
     }
+
+    val i: QuaternionI = i(1)
+
+    val j: QuaternionJ = j(1)
+
+    val k: QuaternionK = k(1)
 
     implicit def i(re: Real): QuaternionI = new QuaternionI(re)
 
@@ -145,9 +174,9 @@ object Quaternion
             with MultiplicationArithmetic[Real, Quaternion, Quaternion]
             with NumberConversionArithmetic[Real, Quaternion] {
 
-        def add(left: Real, right: Quaternion) = Quaternion(left) + right
+        def add(re: Real, q: Quaternion) = Quaternion(re) + q
 
-        def multiply(left: Real, right: Quaternion) = Quaternion(left) * right
+        def multiply(re: Real, q: Quaternion) = Quaternion(re) * q
 
         def apply(re: Real) = Quaternion(re)
 
@@ -178,9 +207,9 @@ object Quaternion
             extends AdditionArithmetic[Quaternion, Complex, Quaternion]
             with MultiplicationArithmetic[Quaternion, Complex, Quaternion] {
 
-        def add(left: Quaternion, right: Complex) = left + Quaternion(right)
+        def add(q: Quaternion, z: Complex) = q + Quaternion(z)
 
-        def multiply(left: Quaternion, right: Complex) = left * Quaternion(right)
+        def multiply(q: Quaternion, z: Complex) = q * Quaternion(z)
 
         def zero = Quaternion.zero
 
@@ -225,11 +254,13 @@ private object QuaternionOne
 class QuaternionR(val re: Real)
         extends Quaternion {
 
-    final def i = QuaternionZero.i
+    override def isEmpty = re.isEmpty
 
-    final def j = QuaternionZero.j
+    final def i = Zero
 
-    final def k = QuaternionZero.k
+    final def j = Zero
+
+    final def k = Zero
 
     override def toString = re.toString
 
@@ -245,6 +276,8 @@ class QuaternionI(val coefficient: Real)
     final def j = Zero
 
     final def k = Zero
+
+    override def isEmpty = coefficient.isEmpty
 
     override def unary_-(): QuaternionI = -coefficient
 
@@ -281,6 +314,8 @@ class QuaternionJ(val coefficient: Real)
 
     final def k = Zero
 
+    override def isEmpty = coefficient.isEmpty
+
     override def unary_-(): QuaternionJ = -coefficient
 
     override def conjugate: QuaternionJ = -coefficient
@@ -315,6 +350,8 @@ class QuaternionK(val coefficient: Real)
     final def j = Zero
 
     final def k = this
+
+    override def isEmpty = coefficient.isEmpty
 
     override def unary_-(): QuaternionK = -coefficient
 
