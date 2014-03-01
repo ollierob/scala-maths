@@ -1,6 +1,6 @@
 package net.ollie.maths.numbers.constants
 
-import net.ollie.maths.{Operation, Expression, EmptyNumber, Variable}
+import net.ollie.maths.{Operation, Expression, EmptyConstant, Variable}
 import net.ollie.maths.numbers._
 import scala.Some
 
@@ -10,15 +10,15 @@ import scala.Some
  */
 object Zero
         extends Natural
-        with EmptyNumber {
+        with EmptyConstant {
 
     private final val i = BigInt(0)
 
     def evaluate = i
 
-    override def evaluate(precision: Precision) = super[EmptyNumber].evaluate(precision)
+    override def evaluate(precision: Precision) = super[EmptyConstant].evaluate(precision)
 
-    override def isEmpty = super[EmptyNumber].isEmpty
+    override def isEmpty = super[EmptyConstant].isEmpty
 
     override def isEven = true
 
@@ -46,6 +46,6 @@ object Zero
 
     override def ~=(that: Real)(implicit precision: Precision) = that.isEmpty || super.~=(that)
 
-    override def toString = super[EmptyNumber].toString
+    override def toString = super[EmptyConstant].toString
 
 }

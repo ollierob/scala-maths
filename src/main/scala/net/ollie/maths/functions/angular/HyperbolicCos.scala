@@ -2,7 +2,7 @@ package net.ollie.maths.functions.angular
 
 import net.ollie.maths.functions.{RealFunctionBuilder, BuiltFunction, UnivariateFunction}
 import net.ollie.maths.numbers.complex.Complex
-import net.ollie.maths.{CachedEvaluated, Number, Expression}
+import net.ollie.maths.{CachedEvaluated, Constant, Expression}
 import net.ollie.maths.numbers.{Precision, Real}
 import net.ollie.maths.functions.numeric.Exp
 import net.ollie.maths.numbers.constants.One
@@ -14,7 +14,7 @@ object HyperbolicCos
         extends RealFunctionBuilder
         with UnivariateFunction[Complex, Complex] {
 
-    override def apply(n: Number): Number = Complex(n) match {
+    override def apply(n: Constant): Constant = Complex(n) match {
         case Some(z) => apply(z)
         case _ => super.apply(n)
     }

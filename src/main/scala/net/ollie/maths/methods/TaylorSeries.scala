@@ -44,7 +44,7 @@ private class TaylorSeries(val f: Univariate, val x: Real, val a: Real)(implicit
 
         def nthTerm(n: Natural): Real = fNDash(a) * (xMinusA ^ n) / (n !)
 
-        implicit def convert(n: Number): Real = conversion(n).get
+        implicit def convert(n: Constant): Real = conversion(n).get
 
     }
 

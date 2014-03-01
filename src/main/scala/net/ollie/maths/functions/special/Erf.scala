@@ -16,7 +16,7 @@ object Erf
         extends FunctionBuilder
         with UnivariateFunction[Real, Real] {
 
-    def apply(n: Number): Number = n match {
+    def apply(n: Constant): Constant = n match {
         case re: Real => apply(re)
         case z: Complex => apply(z.toReal.getOrElse(???))
         case _ => ???
@@ -71,7 +71,7 @@ object Erfi
         extends FunctionBuilder
         with UnivariateFunction[Complex, Complex] {
 
-    def apply(n: Number) = n match {
+    def apply(n: Constant) = n match {
         case re: Real => apply(Complex(re))
         case z: Complex => apply(z)
         case _ => ???

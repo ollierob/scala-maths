@@ -22,7 +22,7 @@ trait Empty
 
     def variables = Set.empty
 
-    def toConstant: Option[Number] = Some(Zero)
+    def toConstant: Option[Constant] = Some(Zero)
 
     override def unary_-(): Empty = Zero
 
@@ -36,18 +36,18 @@ trait Empty
 
 }
 
-trait EmptyNumber
+trait EmptyConstant
         extends Empty
-        with Number
+        with Constant
         with Evaluable {
 
     private val ZERO = BigDecimal(0)
 
-    def abs: PositiveReal with EmptyNumber = Zero
+    def abs: PositiveReal with EmptyConstant = Zero
 
-    override def unary_-(): EmptyNumber with System = this
+    override def unary_-(): EmptyConstant with System = this
 
-    override def variables = super[Number].variables
+    override def variables = super[Constant].variables
 
     override def isEmpty = super[Empty].isEmpty
 

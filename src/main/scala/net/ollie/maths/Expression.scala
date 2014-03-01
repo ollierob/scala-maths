@@ -25,7 +25,7 @@ trait Expression
 
     def replace(variables: Map[Variable, Expression]): Expression
 
-    def toConstant: Option[Number]
+    def toConstant: Option[Constant]
 
     def variables: Set[Variable]
 
@@ -132,7 +132,7 @@ class NegatedExpression(val of: Expression)
 
     def unary_-() = of
 
-    override def toConstant: Option[Number] = of.toConstant match {
+    override def toConstant: Option[Constant] = of.toConstant match {
         case Some(n) => Some(-n)
         case _ => None
     }
@@ -152,9 +152,9 @@ class ExpressionFraction(val numerator: Expression, val denominator: Expression)
 
     def replace(variables: Map[Variable, Expression]) = numerator.replace(variables) / denominator.replace(variables)
 
-    def toConstant: Option[Number] = numerator.toConstant match {
-        case Some(n: Number) => denominator.toConstant match {
-            case Some(d: Number) => n ?*? d.inverse
+    def toConstant: Option[Constant] = numerator.toConstant match {
+        case Some(n: Constant) => denominator.toConstant match {
+            case Some(d: Constant) => n ?*? d.inverse
             case _ => None
         }
         case _ => None
@@ -225,13 +225,13 @@ trait Nonvariate
 object Univariate {
 
     implicit def convert(expression: Expression): Univariate = expression match {
-        case n: Number => new NonvariateWrapper(n)
+        case n: Constant => new NonvariateWrapper(n)
         case u: Univariate => u
         case _ if (expression.variables.size == 1) => new UnivariateWrapper(expression)
         case _ => ???
     }
 
-    private class NonvariateWrapper(val n: Number)
+    private class NonvariateWrapper(val n: Constant)
             extends AnyRef
             with Univariate {
 
@@ -241,7 +241,7 @@ object Univariate {
 
         def replace(variables: Map[Variable, Expression]) = this
 
-        def toConstant: Option[Number] = Some(n)
+        def toConstant: Option[Constant] = Some(n)
 
         def isEmpty = n.isEmpty
 
@@ -260,7 +260,7 @@ object Univariate {
         override def ?/(that: Expression) = n ?/ that
 
         override def equals(that: Expression) = that match {
-            case n: Number => this.n == n
+            case n: Constant => this.n == n
             case _ => super.equals(that)
         }
 
@@ -311,8 +311,8 @@ trait Univariate
 
     def variables = Set(variable)
 
-    def apply[R <: Number](n: Number)(implicit conversion: NumberIdentityArithmetic[R]): R = {
-        val out: Number = replace(variable, n).toConstant.get
+    def apply[R <: Constant](n: Constant)(implicit conversion: NumberIdentityArithmetic[R]): R = {
+        val out: Constant = replace(variable, n).toConstant.get
         conversion(out).get
     }
 

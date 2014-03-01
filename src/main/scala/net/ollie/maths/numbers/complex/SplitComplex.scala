@@ -1,7 +1,7 @@
 package net.ollie.maths.numbers.complex
 
 import net.ollie.maths.numbers.{PositiveReal, Real}
-import net.ollie.maths.{EmptyNumber, Empty, Number}
+import net.ollie.maths.{EmptyConstant, Empty, Constant}
 import net.ollie.maths.numbers.constants.{Unity, Zero, One}
 
 /**
@@ -22,11 +22,11 @@ trait SplitComplex
 
     def modulus: Real = re.squared - s.squared
 
-    def ?^(that: Number): Option[Number] = ???
+    def ?^(that: Constant): Option[Constant] = ???
 
-    def ?*(that: Number)(leftToRight: Boolean): Option[Number] = ???
+    def ?*(that: Constant)(leftToRight: Boolean): Option[Constant] = ???
 
-    def ?+(that: Number): Option[Number] = ???
+    def ?+(that: Constant): Option[Constant] = ???
 
     override def equals(z: ComplexLike) = z match {
         case s: SplitComplex => this.equals(s)
@@ -46,7 +46,7 @@ object SplitComplex
 
     def one: SplitComplex with Unity = ???
 
-    override def apply(n: Number): Option[SplitComplex] = n match {
+    override def apply(n: Constant): Option[SplitComplex] = n match {
         case re: Real => Some(re)
         case z: SplitComplex => Some(z)
         case _ => None
@@ -63,23 +63,23 @@ object SplitComplex
 class CartesianSplitComplex(val re: Real, val s: Real)
         extends SplitComplex {
 
-    override def ?^(that: Number): Option[Number] = ???
+    override def ?^(that: Constant): Option[Constant] = ???
 
-    override def ?*(that: Number)(leftToRight: Boolean): Option[Number] = ???
+    override def ?*(that: Constant)(leftToRight: Boolean): Option[Constant] = ???
 
-    override def ?+(that: Number): Option[Number] = ???
+    override def ?+(that: Constant): Option[Constant] = ???
 
 }
 
 private object SplitComplexZero
         extends SplitComplex
-        with EmptyNumber {
+        with EmptyConstant {
 
     def re = Zero
 
     def s = Zero
 
-    override def abs = super[EmptyNumber].abs
+    override def abs = super[EmptyConstant].abs
 
 }
 

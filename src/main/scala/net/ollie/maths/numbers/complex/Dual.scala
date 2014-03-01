@@ -24,17 +24,17 @@ trait Dual
 
     def abs = re.abs
 
-    def ?+(that: Number) = that match {
+    def ?+(that: Constant) = that match {
         case d: Dual => Some(this + d)
         case _ => None
     }
 
-    def ?*(that: Number)(leftToRight: Boolean) = that match {
+    def ?*(that: Constant)(leftToRight: Boolean) = that match {
         case d: Dual => Some(this * d)
         case _ => None
     }
 
-    def ?^(that: Number) = None
+    def ?^(that: Constant) = None
 
     override def equals(z: ComplexLike) = z match {
         case d: Dual => this equals d
@@ -56,7 +56,7 @@ object Dual
 
     def unitSquared = Zero
 
-    def apply(n: Number): Option[Dual] = n match {
+    def apply(n: Constant): Option[Dual] = n match {
         case re: Real => Some(Dual(re))
         case d: Dual => Some(d)
         case _ => None
@@ -85,7 +85,7 @@ object Dual
 
     }
 
-    def at(function: Univariate, d: Dual): Number = {
+    def at(function: Univariate, d: Dual): Constant = {
         function(d.re)(Real) + (d.d * function.dx(d.d)(Real))
     }
 
@@ -96,13 +96,13 @@ class RegularDual(val re: Real, val d: Real)
 
 object DualZero
         extends Dual
-        with EmptyNumber {
+        with EmptyConstant {
 
     override def re = Zero
 
     override def d = Zero
 
-    override def abs = super[EmptyNumber].abs
+    override def abs = super[EmptyConstant].abs
 
     override def unary_-() = this
 

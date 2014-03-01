@@ -62,13 +62,13 @@ class Series[+T <: Expression] protected(val terms: Seq[T])
 
     protected[this] def apply(expressions: Seq[Expression]) = Series(expressions)
 
-    def toConstant: Option[Number] = {
-        val mapped: Seq[Option[Number]] = terms.map(_.toConstant)
-        val zero: Option[Number] = Some(Zero)
+    def toConstant: Option[Constant] = {
+        val mapped: Seq[Option[Constant]] = terms.map(_.toConstant)
+        val zero: Option[Constant] = Some(Zero)
         mapped.foldLeft(zero)(add)
     }
 
-    private def add(result: Option[Number], current: Option[Number]): Option[Number] = {
+    private def add(result: Option[Constant], current: Option[Constant]): Option[Constant] = {
         if (!result.isDefined || !current.isDefined) return None
         val n = result.get ?+ current.get
         if (n.isDefined) n

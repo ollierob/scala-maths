@@ -17,7 +17,7 @@ object Exp
         extends ComplexFunctionBuilder
         with UnivariateFunction[Complex, Complex] {
 
-    type Z = Number
+    type Z = Constant
 
     override def apply(re: Real): Real = re match {
         case Zero => empty
@@ -58,7 +58,7 @@ class ExpOf(val of: Expression)
 
     def isEmpty = false
 
-    protected[this] def at(n: Number) = Exp(n)
+    protected[this] def at(n: Constant) = Exp(n)
 
     protected[this] def apply(at: Expression) = Exp(at)
 

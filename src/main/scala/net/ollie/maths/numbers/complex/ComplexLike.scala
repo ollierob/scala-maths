@@ -1,13 +1,13 @@
 package net.ollie.maths.numbers.complex
 
 import net.ollie.maths.numbers.{MaybeReal, Real}
-import net.ollie.maths.{NumberIdentityArithmetic, Number}
+import net.ollie.maths.{NumberIdentityArithmetic, Constant}
 
 /**
  * Created by Ollie on 01/02/14.
  */
 trait ComplexLike
-        extends Number
+        extends Constant
         with MaybeReal {
 
     self =>
@@ -62,7 +62,7 @@ trait ComplexLike
 
     def /(that: System): System = this * that.inverse
 
-    override def equals(n: Number) = n match {
+    override def equals(n: Constant) = n match {
         case re: Real => unre.isEmpty && this.re == re
         case z: ComplexLike => this.equals(z)
         case _ => super.equals(n)

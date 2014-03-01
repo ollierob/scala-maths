@@ -1,6 +1,6 @@
 package net.ollie.maths.functions.special
 
-import net.ollie.maths.{Expression, Number, Variable}
+import net.ollie.maths.{Expression, Constant, Variable}
 import net.ollie.maths.functions.{FunctionBuilder, Represented, UnivariateFunction}
 import net.ollie.maths.functions.angular.Sin
 import net.ollie.maths.methods.ApproximatelyEvaluated
@@ -15,7 +15,7 @@ object Sinc
         extends FunctionBuilder
         with UnivariateFunction[Real, Real] {
 
-    def apply(n: Number) = n match {
+    def apply(n: Constant) = n match {
         case Zero => empty
         case re: Real => apply(re)
         case _ => ???

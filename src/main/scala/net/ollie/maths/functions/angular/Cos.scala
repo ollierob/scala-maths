@@ -91,7 +91,7 @@ class RealCos(override val of: Angle)
 object Sec
         extends FunctionBuilder {
 
-    def apply(n: Number) = Cos(n).inverse
+    def apply(n: Constant) = Cos(n).inverse
 
     def apply(re: Real): Real = Cos(re).inverse
 

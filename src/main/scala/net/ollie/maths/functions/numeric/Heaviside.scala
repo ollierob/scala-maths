@@ -12,7 +12,7 @@ object Heaviside
         extends UnivariateFunction[Real, Real]
         with FunctionBuilder {
 
-    def apply(n: Number): Number = n match {
+    def apply(n: Constant): Constant = n match {
         case re: Real => apply(re)
         case _ => ???
     }

@@ -1,7 +1,7 @@
 package net.ollie.maths.numbers
 
 import net.ollie.maths.numbers.constants.Zero
-import net.ollie.maths.{NotEvaluable, NumberSeries}
+import net.ollie.maths.{NotEvaluable, ConstantSeries}
 import net.ollie.maths.methods.ApproximatelyEvaluated
 import net.ollie.utils.OptionalBigDecimal
 
@@ -25,7 +25,7 @@ object RealSeries {
 }
 
 class RealSeries private(override val terms: Seq[Real])
-        extends NumberSeries(terms)
+        extends ConstantSeries(terms)
         with Real
         with ApproximatelyEvaluated {
 

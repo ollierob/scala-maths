@@ -19,7 +19,7 @@ object Polygamma {
         case _ => new PolygammaOf(order, expression)
     }
 
-    def apply(order: Natural, n: Number): Number with Polygamma = Real(order) match {
+    def apply(order: Natural, n: Constant): Constant with Polygamma = Real(order) match {
         case Some(re) => apply(order, re)
         case _ => ???
     }
@@ -42,7 +42,7 @@ class PolygammaOf(val order: Natural, val of: Expression)
         extends Composition
         with Polygamma {
 
-    protected[this] def at(n: Number) = Polygamma(order, n)
+    protected[this] def at(n: Constant) = Polygamma(order, n)
 
     protected[this] def apply(expr: Expression) = Polygamma(order, expr)
 
@@ -68,7 +68,7 @@ class RealPolygamma(val order: Natural, val of: Real)
 object Digamma
         extends FunctionBuilder {
 
-    def apply(n: Number): Number = Polygamma(Zero, n)
+    def apply(n: Constant): Constant = Polygamma(Zero, n)
 
     def apply(re: Real) = Polygamma(Zero, re)
 

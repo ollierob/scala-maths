@@ -16,7 +16,7 @@ import net.ollie.maths.numbers.constants.{Unity, Zero, One}
  * @see [[PowerTower]]
  */
 trait Massive
-        extends Number {
+        extends Constant {
 
     type System = Massive
 
@@ -42,18 +42,18 @@ trait Massive
 
     final def *(that: Real): Massive = this * Massive(that)
 
-    def ?+(that: Number): Option[Number] = that match {
+    def ?+(that: Constant): Option[Constant] = that match {
         case re: Real => Some(this + Massive(re))
         case m: Massive => Some(this + m)
         case _ => None
     }
 
-    def ?*(that: Number)(leftToRight: Boolean) = that match {
+    def ?*(that: Constant)(leftToRight: Boolean) = that match {
         case m: Massive => Some(m)
         case _ => None
     }
 
-    def ?^(that: Number) = ???
+    def ?^(that: Constant) = ???
 
     override def df(x: Variable) = MassiveZero
 
@@ -62,13 +62,13 @@ trait Massive
 object Massive
         extends NumberIdentityArithmetic[Massive] {
 
-    def zero: Massive with EmptyNumber = MassiveZero
+    def zero: Massive with EmptyConstant = MassiveZero
 
     def one: Massive with Unity = MassiveOne
 
     def apply(): Massive = MassiveZero
 
-    def apply(n: Number): Option[Massive] = n match {
+    def apply(n: Constant): Option[Massive] = n match {
         case re: Real => Some(Massive(re))
         case m: Massive => Some(m)
         case _ => None
@@ -108,7 +108,7 @@ object Massive
 
         def multiply(left: Real, right: Massive): Massive = Massive(left) * right
 
-        def convert(n: Number) = Massive(n)
+        def convert(n: Constant) = Massive(n)
 
     }
 
@@ -130,7 +130,7 @@ object Massive
 
 object MassiveZero
         extends Massive
-        with EmptyNumber {
+        with EmptyConstant {
 
     override def isEmpty = true
 
@@ -138,11 +138,11 @@ object MassiveZero
 
     override def inverse = Zero.inverse
 
-    override def ?+(that: Number) = Some(that)
+    override def ?+(that: Constant) = Some(that)
 
-    override def ?*(that: Number)(leftToRight: Boolean) = Some(this)
+    override def ?*(that: Constant)(leftToRight: Boolean) = Some(this)
 
-    override def variables = super[EmptyNumber].variables
+    override def variables = super[EmptyConstant].variables
 
     override def unary_-() = this
 
@@ -208,7 +208,7 @@ class InvertedMassive(val of: Massive)
 }
 
 class MassiveSeries(override val terms: Seq[Massive])
-        extends NumberSeries(terms)
+        extends ConstantSeries(terms)
         with Massive {
 
     override def unary_-() = Massive.series(terms.map(-_))
@@ -228,7 +228,7 @@ class MassiveSeries(override val terms: Seq[Massive])
 }
 
 class MassiveProduct(override val terms: Seq[Massive])
-        extends NumberProduct(terms)
+        extends ConstantProduct(terms)
         with Massive {
 
     override def *(that: Massive) = Massive.product(simplify(that match {

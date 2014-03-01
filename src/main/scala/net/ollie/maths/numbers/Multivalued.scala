@@ -1,38 +1,38 @@
 package net.ollie.maths.numbers
 
-import net.ollie.maths.Number
+import net.ollie.maths.Constant
 
 /**
  * TODO should have a  (Very difficult!)
  * Created by Ollie on 09/02/14.
  */
 trait Multivalued
-        extends Number {
+        extends Constant {
 
     type System = Multivalued
 
-    type Contents <: Number
+    type Contents <: Constant
 
     def principal: Contents
 
     def unary_-(): Multivalued = Multivalued.negate(this)
 
-    def ?^(that: Number) = None
+    def ?^(that: Constant) = None
 
-    def ?*(that: Number)(leftToRight: Boolean) = None
+    def ?*(that: Constant)(leftToRight: Boolean) = None
 
-    def ?+(that: Number) = None
+    def ?+(that: Constant) = None
 
 }
 
 object Multivalued {
 
-    def apply(n: Number): Multivalued = n match {
+    def apply(n: Constant): Multivalued = n match {
         case m: Multivalued => m
         case _ => new MultivaluedSingleton(n)
     }
 
-    def apply[N <: Number](principal: N, values: Set[N]): Multivalued = {
+    def apply[N <: Constant](principal: N, values: Set[N]): Multivalued = {
         new MultivaluedSet(principal, values)
     }
 
@@ -42,7 +42,7 @@ object Multivalued {
 
 }
 
-class MultivaluedSingleton[N <: Number](val principal: N)
+class MultivaluedSingleton[N <: Constant](val principal: N)
         extends Multivalued {
 
     type Contents = N
@@ -55,7 +55,7 @@ class MultivaluedSingleton[N <: Number](val principal: N)
 
 }
 
-class MultivaluedSet[N <: Number](val principal: N, val values: Set[N])
+class MultivaluedSet[N <: Constant](val principal: N, val values: Set[N])
         extends Multivalued {
 
     type Contents = N

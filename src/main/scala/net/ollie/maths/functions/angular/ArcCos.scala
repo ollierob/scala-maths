@@ -2,7 +2,7 @@ package net.ollie.maths.functions.angular
 
 import net.ollie.maths.functions.{BuiltFunction, UnivariateFunction, FunctionBuilder}
 import net.ollie.maths.numbers.{Precision, Real}
-import net.ollie.maths.{CachedEvaluated, Invertible, Expression, Number}
+import net.ollie.maths.{CachedEvaluated, Invertible, Expression, Constant}
 import net.ollie.maths.numbers.constants.{One, Pi}
 import net.ollie.maths.functions.numeric.SquareRoot
 import org.nevec.rjm.BigDecimalMath
@@ -20,7 +20,7 @@ object ArcCos
 
     import Angle._
 
-    def apply(n: Number) = n match {
+    def apply(n: Constant) = n match {
         case re: Real => apply(re)
         case _ => ???
     }

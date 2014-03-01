@@ -33,19 +33,19 @@ trait Complex
 
     override def toReal = super[MaybeComplex].toReal
 
-    def ?+(that: Number) = that match {
+    def ?+(that: Constant) = that match {
         case re: Real => Some(this + Complex(re))
         case z: Complex => Some(this + z)
         case _ => None
     }
 
-    override def ?*(that: Number)(leftToRight: Boolean) = that match {
+    override def ?*(that: Constant)(leftToRight: Boolean) = that match {
         case re: Real => Some(this * Complex(re))
         case z: Complex => Some(this * z)
         case _ => None
     }
 
-    def ?^(that: Number) = ???
+    def ?^(that: Constant) = ???
 
     override def equals(z: ComplexLike): Boolean = z match {
         case z: Complex => this equals z
@@ -63,11 +63,11 @@ object Complex
 
     override def unitSquared = MinusOne
 
-    def zero: Complex with EmptyNumber = ComplexZero
+    def zero: Complex with EmptyConstant = ComplexZero
 
     def one: Complex with Unity = ComplexOne
 
-    def apply(n: Number): Option[Complex] = n match {
+    def apply(n: Constant): Option[Complex] = n match {
         case re: Real => Some(Complex(re))
         case z: Complex => Some(z)
         case m: MaybeComplex => m.toComplex
@@ -140,7 +140,7 @@ trait MaybeComplex
 
 object ComplexZero
         extends Complex
-        with EmptyNumber {
+        with EmptyConstant {
 
     def re = Zero
 
@@ -154,7 +154,7 @@ object ComplexZero
 
     override def arg = indeterminate
 
-    override def toString = super[EmptyNumber].toString
+    override def toString = super[EmptyConstant].toString
 
 }
 

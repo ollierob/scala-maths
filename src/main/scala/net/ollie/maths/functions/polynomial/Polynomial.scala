@@ -51,5 +51,5 @@ object ZeroPolynomial
 
 }
 
-abstract class ConstantPolynomial[N <: Number](val representation: N)
+abstract class ConstantPolynomial[N <: Constant](val representation: N)
         extends Polynomial

@@ -11,7 +11,7 @@ import net.ollie.maths.numbers.constants.{Unity, Zero, One}
  * Created by Ollie on 01/01/14.
  */
 trait Real
-        extends Number
+        extends Constant
         with Ordered[Real]
         with MaybeReal
         with Evaluable {
@@ -22,7 +22,7 @@ trait Real
 
     override def unary_-(): Real = Real.negate(this)
 
-    override def df(x: Variable): Real with EmptyNumber = Zero
+    override def df(x: Variable): Real with EmptyConstant = Zero
 
     def inverse: Real = Real.inverse(this)
 
@@ -54,7 +54,7 @@ trait Real
         }
     }
 
-    def ?+(that: Number) = that match {
+    def ?+(that: Constant) = that match {
         case re: Real => Some(this + re)
         case _ => None
     }
@@ -100,7 +100,7 @@ trait Real
      * @param that
      * @return
      */
-    def ?*(that: Number)(leftToRight: Boolean) = that match {
+    def ?*(that: Constant)(leftToRight: Boolean) = that match {
         case re: Real => Some(this * re)
         case _ => None
     }
@@ -109,7 +109,7 @@ trait Real
 
     def ^(that: Integer): Real = Real.pow(this, that)
 
-    def ?^(that: Number): Option[Number] = that match {
+    def ?^(that: Constant): Option[Constant] = that match {
         case int: Integer => Some(this ^ int)
         case re: Real if this.isStrictlyPositive => ??? // Some(this.abs ^ re) //TODO multivalued
         case _ => None
@@ -134,7 +134,7 @@ trait Real
 
     protected def tryCompareTo(that: Real): Option[Int] = None
 
-    override def equals(number: Number) = number match {
+    override def equals(number: Constant) = number match {
         case re: Real => this.equals(re)
         case _ => super.equals(number)
     }
@@ -172,7 +172,7 @@ object Real
 
     def one = One
 
-    def apply(from: Number): Option[Real] = from match {
+    def apply(from: Constant): Option[Real] = from match {
         case re: Real => Some(re)
         case m: MaybeReal => m.toReal
         case _ => None

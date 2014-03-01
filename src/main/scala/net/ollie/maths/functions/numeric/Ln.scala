@@ -46,7 +46,7 @@ object Log10 {
 object Ln
         extends ComplexFunctionBuilder {
 
-    override type Z = Number
+    override type Z = Constant
 
     override def apply(re: Real): Complex = re match {
         case _ if re.isStrictlyPositive => Complex(Ln(re.abs))
@@ -89,7 +89,7 @@ class LnOf(val of: Expression)
         with Composition
         with Ln {
 
-    protected[this] def at(n: Number) = Ln(n)
+    protected[this] def at(n: Constant) = Ln(n)
 
     protected[this] def apply(expr: Expression) = Ln(expr)
 
@@ -143,6 +143,6 @@ class ComplexLn(val of: Complex)
 
     def isEmpty = false
 
-    def inverse: Number = ??? //TODO
+    def inverse: Constant = ??? //TODO
 
 }

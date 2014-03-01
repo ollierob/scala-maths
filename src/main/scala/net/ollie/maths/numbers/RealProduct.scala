@@ -1,7 +1,7 @@
 package net.ollie.maths.numbers
 
 import net.ollie.maths.numbers.constants.Zero
-import net.ollie.maths.{NotEvaluable, NumberProduct}
+import net.ollie.maths.{NotEvaluable, ConstantProduct}
 import net.ollie.maths.methods.ApproximatelyEvaluated
 import net.ollie.utils.OptionalBigDecimal
 
@@ -25,7 +25,7 @@ object RealProduct {
 }
 
 class RealProduct(override val terms: Seq[Real])
-        extends NumberProduct(terms)
+        extends ConstantProduct(terms)
         with Real
         with ApproximatelyEvaluated {
 

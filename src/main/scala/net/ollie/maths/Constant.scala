@@ -6,44 +6,44 @@ import net.ollie.maths.numbers.constants.Zero
 /**
  * Created by Ollie on 02/01/14.
  */
-trait Number
+trait Constant
         extends Nonvariate
         with Invertible
         with Integrable {
 
     self =>
 
-    type System >: this.type <: Number
+    type System >: this.type <: Constant
 
     final def narrow: System = this
 
     def unary_-(): System
 
-    def inverse: Number
+    def inverse: Constant
 
     override def ?+(that: Expression)(leftToRight: Boolean): Option[Expression] = that.toConstant match {
         case Some(n) => this ?+ n
         case _ => super.?+(that)(leftToRight)
     }
 
-    def ?+(that: Number): Option[Number]
+    def ?+(that: Constant): Option[Constant]
 
-    def +[R <: Number, Combined <: Number](that: R)
+    def +[R <: Constant, Combined <: Constant](that: R)
             (implicit addition: AdditionArithmetic[System, R#System, Combined]): Combined = {
         addition.add(this, that.narrow)
     }
 
-    def -[R <: Number, Combined <: Number](that: R)
+    def -[R <: Constant, Combined <: Constant](that: R)
             (implicit addition: AdditionArithmetic[System, R#System, Combined]): Combined = {
         addition.add(this, -that)
     }
 
     override def ?*(that: Expression)(leftToRight: Boolean) = that match {
-        case n: Number => this.?*(n)(leftToRight)
+        case n: Constant => this.?*(n)(leftToRight)
         case _ => super.?*(that)(leftToRight)
     }
 
-    final def ?*?(that: Number): Option[Number] = this.?*(that)(true) match {
+    final def ?*?(that: Constant): Option[Constant] = this.?*(that)(true) match {
         case Some(n) => Some(n)
         case _ => that.?*(this)(false) match {
             case Some(n) => Some(n)
@@ -51,9 +51,9 @@ trait Number
         }
     }
 
-    def ?*(that: Number)(leftToRight: Boolean): Option[Number]
+    def ?*(that: Constant)(leftToRight: Boolean): Option[Constant]
 
-    def *[R <: Number, Combined <: Number](that: R)
+    def *[R <: Constant, Combined <: Constant](that: R)
             (implicit multiplication: MultiplicationArithmetic[System, R#System, Combined]): Combined = {
         multiplication.multiply(this, that.narrow)
     }
@@ -66,12 +66,12 @@ trait Number
      * @tparam Combined result type
      * @return a number
      */
-    def ^[R <: Number, Combined <: Number](power: R)
+    def ^[R <: Constant, Combined <: Constant](power: R)
             (implicit exponentiation: ExponentiationArithmetic[System, R#System, Combined]): Combined = {
         exponentiation.exponentiate(this, power.narrow)
     }
 
-    def ?^(that: Number): Option[Number]
+    def ?^(that: Constant): Option[Constant]
 
     /**
      * Tetration.
@@ -82,12 +82,12 @@ trait Number
      * @return
      * @see http://mathworld.wolfram.com/PowerTower.html
      */
-    def ^^[R <: Number, Combined <: Number](tower: R)
+    def ^^[R <: Constant, Combined <: Constant](tower: R)
             (implicit tetration: TetrationArithmetic[System, R#System, Combined]): Combined = {
         tetration.tetrate(this, tower.narrow)
     }
 
-    override def df(x: Variable): EmptyNumber = Zero
+    override def df(x: Variable): EmptyConstant = Zero
 
     override protected[this] def integral(x: Variable) = this * x
 
@@ -96,19 +96,19 @@ trait Number
     override def replace(variables: Map[Variable, Expression]): System = narrow
 
     final override def equals(expr: Expression) = expr match {
-        case n: Number => this.equals(n)
+        case n: Constant => this.equals(n)
         case _ => expr.toConstant match {
-            case Some(n: Number) => this.equals(n)
+            case Some(n: Constant) => this.equals(n)
             case _ => super.equals(expr)
         }
     }
 
-    def equals(n: Number) = super.equals(n)
+    def equals(n: Constant) = super.equals(n)
 
 }
 
-abstract class NumberSeries[N <: Number](val terms: Seq[N])
-        extends Number {
+abstract class ConstantSeries[N <: Constant](val terms: Seq[N])
+        extends Constant {
 
     require(!terms.isEmpty)
 
@@ -135,8 +135,8 @@ abstract class NumberSeries[N <: Number](val terms: Seq[N])
 
 }
 
-abstract class NumberProduct[N <: Number](val terms: Seq[N])
-        extends Number {
+abstract class ConstantProduct[N <: Constant](val terms: Seq[N])
+        extends Constant {
 
     require(!terms.isEmpty)
 

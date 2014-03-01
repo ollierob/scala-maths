@@ -11,7 +11,7 @@ import net.ollie.maths.functions.numeric.PositiveSquareRoot
  * Created by Ollie on 11/01/14.
  */
 trait Quaternion
-        extends Number
+        extends Constant
         with MaybeComplex {
 
     type System = Quaternion
@@ -89,21 +89,21 @@ trait Quaternion
 
     //With-number arithmetic
 
-    def ?+(that: Number) = Quaternion(that) match {
+    def ?+(that: Constant) = Quaternion(that) match {
         case Some(q) => Some(this + q)
         case _ => None
     }
 
-    def ?*(that: Number)(leftToRight: Boolean): Option[Number] = Quaternion(that) match {
+    def ?*(that: Constant)(leftToRight: Boolean): Option[Constant] = Quaternion(that) match {
         case Some(q) => Some(if (leftToRight) this * q else q * this)
         case _ => None
     }
 
-    def ?^(that: Number) = None //TODO
+    def ?^(that: Constant) = None //TODO
 
     override def toString: String = s"$re + $i + $j + $k"
 
-    override def equals(n: Number) = Quaternion(n) match {
+    override def equals(n: Constant) = Quaternion(n) match {
         case Some(q) => this equals q
         case _ => super.equals(n)
     }
@@ -126,7 +126,7 @@ object Quaternion
 
     def one: Quaternion with Unity = QuaternionOne
 
-    def apply(n: Number): Option[Quaternion] = n match {
+    def apply(n: Constant): Option[Quaternion] = n match {
         case Zero => Some(zero)
         case q: Quaternion => Some(q)
         case re: Real => Some(Quaternion(re))
@@ -221,7 +221,7 @@ object Quaternion
 
 object QuaternionZero
         extends Quaternion
-        with EmptyNumber {
+        with EmptyConstant {
 
     def re = Zero
 
@@ -235,9 +235,9 @@ object QuaternionZero
 
     override def unary_-() = this
 
-    override def isEmpty = super[EmptyNumber].isEmpty
+    override def isEmpty = super[EmptyConstant].isEmpty
 
-    override def variables = super[EmptyNumber].variables
+    override def variables = super[EmptyConstant].variables
 
     override def df(x: Variable) = super[Quaternion].df(x)
 

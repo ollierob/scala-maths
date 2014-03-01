@@ -20,7 +20,7 @@ object Product {
         case _ => new Product(expressions)
     }
 
-    def apply[N <: Number](f: (Integer) => N, range: Range)(implicit multiplication: MultiplicationArithmetic[N#System, N#System, N#System]): N#System = {
+    def apply[N <: Constant](f: (Integer) => N, range: Range)(implicit multiplication: MultiplicationArithmetic[N#System, N#System, N#System]): N#System = {
         var product: N#System = multiplication.one
         for (j <- range) {
             product = multiplication.multiply(product, f(j).narrow)
@@ -28,7 +28,7 @@ object Product {
         product
     }
 
-    def apply[N <: Number](f: (Integer) => N, min: Integer, max: Integer)(implicit multiplication: MultiplicationArithmetic[N#System, N#System, N#System]): N#System = {
+    def apply[N <: Constant](f: (Integer) => N, min: Integer, max: Integer)(implicit multiplication: MultiplicationArithmetic[N#System, N#System, N#System]): N#System = {
         apply(f, min.toInt.get to max.toInt.get)(multiplication)
     }
 
@@ -102,13 +102,13 @@ class Product[+T <: Expression](val terms: Seq[T])
 
     def isEmpty = terms.exists(_.isEmpty)
 
-    def toConstant: Option[Number] = {
+    def toConstant: Option[Constant] = {
         val constants = terms.map(_.toConstant)
-        val one: Option[Number] = Some(One)
+        val one: Option[Constant] = Some(One)
         constants.foldLeft(one)(multiply)
     }
 
-    private def multiply(result: Option[Number], current: Option[Number]): Option[Number] = {
+    private def multiply(result: Option[Constant], current: Option[Constant]): Option[Constant] = {
         if (!result.isDefined || !current.isDefined) return None
         result.get ?*? current.get
     }

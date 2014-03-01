@@ -101,18 +101,18 @@ class RealSin(val of: Angle)
 private object SinZero
         extends Real
         with Sin
-        with EmptyNumber {
+        with EmptyConstant {
 
     val of = Zero
 
-    override def abs = super[EmptyNumber].abs
+    override def abs = super[EmptyConstant].abs
 
 }
 
 object Cosec
         extends FunctionBuilder {
 
-    def apply(n: Number) = Sin(n).inverse
+    def apply(n: Constant) = Sin(n).inverse
 
     protected[this] def create(expr: Expression) = 1 / Sin(expr)
 

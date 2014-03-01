@@ -1,7 +1,7 @@
 package net.ollie.maths.functions.numeric
 
 import net.ollie.maths.numbers._
-import net.ollie.maths.{NumberConversionArithmetic, EmptyNumber, Number}
+import net.ollie.maths.{NumberConversionArithmetic, EmptyConstant, Constant}
 import net.ollie.maths.numbers.complex.Complex
 import net.ollie.maths.numbers.constants.{Unity, Pi, One, Zero}
 import scala.collection.mutable.ArrayBuffer
@@ -26,7 +26,7 @@ object Roots {
  * @tparam F type of the number we are taking the roots of.
  * @tparam C type of the roots.
  */
-trait Roots[+F <: Number, C <: Number]
+trait Roots[+F <: Constant, C <: Constant]
         extends Multivalued {
 
     type Contents = C
@@ -45,7 +45,7 @@ trait Roots[+F <: Number, C <: Number]
 
 }
 
-class EmptyRoots[+F <: EmptyNumber, C <: Number](val of: F, val degree: Natural)
+class EmptyRoots[+F <: EmptyConstant, C <: Constant](val of: F, val degree: Natural)
         (implicit conversion: NumberConversionArithmetic[F, C])
         extends Roots[F, C] {
 
@@ -57,7 +57,7 @@ class EmptyRoots[+F <: EmptyNumber, C <: Number](val of: F, val degree: Natural)
 
 }
 
-abstract class FirstRoot[F <: Number](val principal: F)
+abstract class FirstRoot[F <: Constant](val principal: F)
         extends Roots[F, F] {
 
     def degree = One

@@ -1,6 +1,6 @@
 package net.ollie.maths.numbers.combinatorial
 
-import net.ollie.maths.{EmptyNumber, Variable}
+import net.ollie.maths.{EmptyConstant, Variable}
 import net.ollie.maths.functions.numeric.{Floor, GreatestCommonDivisor}
 import net.ollie.maths.numbers._
 import net.ollie.maths.methods.Product
@@ -62,7 +62,7 @@ object BinomialCoefficient {
 
 class BinomialZero(val n: Natural, val k: Natural)
         extends BinomialCoefficient
-        with EmptyNumber {
+        with EmptyConstant {
 
     require(n < k)
 
@@ -74,9 +74,9 @@ class BinomialZero(val n: Natural, val k: Natural)
 
     override def isEmpty = true
 
-    override def variables = super[EmptyNumber].variables
+    override def variables = super[EmptyConstant].variables
 
-    override def evaluate(precision: Precision) = super[EmptyNumber].evaluate(precision)
+    override def evaluate(precision: Precision) = super[EmptyConstant].evaluate(precision)
 
     override def df(x: Variable) = Zero
 

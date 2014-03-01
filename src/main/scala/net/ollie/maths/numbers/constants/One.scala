@@ -1,7 +1,7 @@
 package net.ollie.maths.numbers.constants
 
 import net.ollie.maths.numbers._
-import net.ollie.maths.{Expression, Number}
+import net.ollie.maths.{Expression, Constant}
 import scala.Some
 
 /**
@@ -9,7 +9,7 @@ import scala.Some
  * @see http://mathworld.wolfram.com/Unity.html
  */
 trait Unity
-        extends Number {
+        extends Constant {
 
     def abs = One
 
@@ -35,7 +35,7 @@ object One
 
     override def ?*(that: Expression)(leftToRight: Boolean) = Some(that)
 
-    override def ?*(that: Number)(leftToRight: Boolean): Option[Number] = Some(that)
+    override def ?*(that: Constant)(leftToRight: Boolean): Option[Constant] = Some(that)
 
     override def ?*(that: Real) = Some(that)
 
@@ -47,7 +47,7 @@ object One
 
     override def ^(that: Natural) = this
 
-    override def ?^(that: Number) = Some(this)
+    override def ?^(that: Constant) = Some(this)
 
 }
 

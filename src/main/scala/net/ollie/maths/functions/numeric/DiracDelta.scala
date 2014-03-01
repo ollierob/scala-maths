@@ -9,10 +9,10 @@ import net.ollie.maths.numbers.constants.Zero
  * Created by Ollie on 05/01/14.
  */
 object DiracDelta
-        extends UnivariateFunction[Number, PositiveReal]
+        extends UnivariateFunction[Constant, PositiveReal]
         with FunctionBuilder {
 
-    def apply(n: Number): PositiveReal = {
+    def apply(n: Constant): PositiveReal = {
         if (n.isEmpty) Infinity
         else Zero
     }

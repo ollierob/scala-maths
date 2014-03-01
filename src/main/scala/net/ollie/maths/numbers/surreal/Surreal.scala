@@ -1,6 +1,6 @@
 package net.ollie.maths.numbers.surreal
 
-import net.ollie.maths.{EmptyNumber, Variable}
+import net.ollie.maths.{EmptyConstant, Variable}
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.massive.Infinitesimal
 import net.ollie.maths.numbers.constants.Zero
@@ -56,7 +56,7 @@ trait Surreal
 
 object Surreal {
 
-    def apply(): Surreal with EmptyNumber = EmptyForm
+    def apply(): Surreal with EmptyConstant = EmptyForm
 
     implicit def apply(re: Real): Surreal = re match {
         case s: Surreal => s
@@ -88,7 +88,7 @@ object Surreal {
  */
 object EmptyForm
         extends Surreal
-        with EmptyNumber {
+        with EmptyConstant {
 
     def left = SurrealSet()
 
@@ -108,9 +108,9 @@ object EmptyForm
 
     override def isEmpty = true
 
-    override def evaluate(precision: Precision) = super[EmptyNumber].evaluate(precision)
+    override def evaluate(precision: Precision) = super[EmptyConstant].evaluate(precision)
 
-    override def toString = super[EmptyNumber].toString
+    override def toString = super[EmptyConstant].toString
 
 }
 

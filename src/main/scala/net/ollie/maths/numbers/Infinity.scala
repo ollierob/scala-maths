@@ -1,6 +1,6 @@
 package net.ollie.maths.numbers
 
-import net.ollie.maths.{NotEvaluable, Number, Empty}
+import net.ollie.maths.{NotEvaluable, Constant, Empty}
 import net.ollie.maths.numbers.constants.Zero
 
 /**
@@ -19,7 +19,7 @@ trait Infinite
 
 object Infinite {
 
-    def is(n: Number): Boolean = n match {
+    def is(n: Constant): Boolean = n match {
         case i: Infinite => true
         case _ => false
     }

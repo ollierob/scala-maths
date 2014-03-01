@@ -1,6 +1,6 @@
 package net.ollie.maths.functions.angular
 
-import net.ollie.maths.{Expression, Number}
+import net.ollie.maths.{Expression, Constant}
 import net.ollie.maths.functions.{OddBuiltFunction, RealFunctionBuilder, FunctionBuilder, UnivariateFunction}
 import net.ollie.maths.numbers.{Precision, Real}
 import net.ollie.maths.numbers.constants.Zero
@@ -62,7 +62,7 @@ class RealTan(override val of: Angle)
 object CoTan
         extends FunctionBuilder {
 
-    def apply(n: Number): Number = Tan(n).inverse
+    def apply(n: Constant): Constant = Tan(n).inverse
 
     def apply(re: Angle): Real = Tan(re).inverse
 

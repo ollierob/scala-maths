@@ -13,12 +13,12 @@ trait Composition
 
     def variables = of.variables
 
-    def toConstant: Option[Number] = of.toConstant match {
+    def toConstant: Option[Constant] = of.toConstant match {
         case Some(n) => Some(at(n))
         case _ => None
     }
 
-    protected[this] def at(n: Number): Number
+    protected[this] def at(n: Constant): Constant
 
     def replace(variables: Map[Variable, Expression]) = apply(of.replace(variables))
 

@@ -12,7 +12,7 @@ import net.ollie.maths.numbers.complex.Complex
  */
 trait FunctionBuilder {
 
-    def apply(n: Number): Number
+    def apply(n: Constant): Constant
 
     def apply(expression: Expression): Expression = expression.toConstant match {
         case Some(n) => apply(n)
@@ -29,21 +29,21 @@ trait FunctionBuilder {
 trait RealFunctionBuilder
         extends FunctionBuilder {
 
-    def apply(n: Number): Number = Real(n) match {
+    def apply(n: Constant): Constant = Real(n) match {
         case Some(re) => apply(re)
         case _ => ???
     }
 
-    def apply(re: Real): Number
+    def apply(re: Real): Constant
 
 }
 
 trait ComplexFunctionBuilder
         extends RealFunctionBuilder {
 
-    type Z <: Number
+    type Z <: Constant
 
-    override def apply(n: Number): Z = Complex(n) match {
+    override def apply(n: Constant): Z = Complex(n) match {
         case Some(z) => z.toReal match {
             case Some(re) => apply(re)
             case _ => apply(z)
@@ -65,7 +65,7 @@ trait BuiltFunction
 
     protected[this] def builder: FunctionBuilder
 
-    override protected[this] def at(n: Number) = builder(n)
+    override protected[this] def at(n: Constant) = builder(n)
 
     override protected[this] def apply(x: Expression) = builder(x)
 

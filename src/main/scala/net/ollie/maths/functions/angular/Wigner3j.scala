@@ -1,6 +1,6 @@
 package net.ollie.maths.functions.angular
 
-import net.ollie.maths.{CachedEvaluated, EmptyNumber}
+import net.ollie.maths.{CachedEvaluated, EmptyConstant}
 import net.ollie.maths.functions.ModalPair
 import net.ollie.maths.functions.numeric.{Floor, Min, PositiveSquareRoot, TriangleCoefficient}
 import net.ollie.maths.methods.Series
@@ -78,15 +78,15 @@ trait Wigner3j
 
 private class ZeroWigner3J(val lAndM: CyclicTuple3[ModalPair, ModalPair, ModalPair])
         extends Wigner3j
-        with EmptyNumber {
+        with EmptyConstant {
 
     override def isEmpty = true
 
     override def abs = Zero
 
-    override def toString = super[EmptyNumber].toString
+    override def toString = super[EmptyConstant].toString
 
-    override def evaluate(precision: Precision) = super[EmptyNumber].evaluate(precision)
+    override def evaluate(precision: Precision) = super[EmptyConstant].evaluate(precision)
 
 }
 

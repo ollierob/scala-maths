@@ -33,7 +33,7 @@ trait PositiveReal
 
 object PositiveReal {
 
-    def apply(n: Number): Option[PositiveReal] = Real(n) match {
+    def apply(n: Constant): Option[PositiveReal] = Real(n) match {
         case Some(re) => apply(re)
         case _ => None
     }

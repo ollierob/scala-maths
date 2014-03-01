@@ -1,7 +1,7 @@
 package net.ollie.maths.functions.special
 
 import net.ollie.maths.functions.{UnivariateFunction, ComplexFunctionBuilder, BuiltFunction}
-import net.ollie.maths.{CachedEvaluated, Number, Expression}
+import net.ollie.maths.{CachedEvaluated, Constant, Expression}
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.constants.{Omega, Zero, One}
 import net.ollie.maths.methods.Series
@@ -53,8 +53,8 @@ class LambertWFunction(val of: Expression)
 
 }
 
-abstract class LambertWZeroBranch(val of: Number)
-        extends Number
+abstract class LambertWZeroBranch(val of: Constant)
+        extends Constant
         with LambertW {
 
     def isEmpty = of.isEmpty

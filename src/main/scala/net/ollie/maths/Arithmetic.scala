@@ -36,9 +36,9 @@ trait TetrationArithmetic[-Base, -Tower, +Result] {
 
 trait NumberIdentityArithmetic[+To] {
 
-    def apply(n: Number): Option[To]
+    def apply(n: Constant): Option[To]
 
-    def apply(n: Option[Number]): Option[To] = n match {
+    def apply(n: Option[Constant]): Option[To] = n match {
         case Some(f) => apply(f)
         case _ => None
     }

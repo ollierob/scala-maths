@@ -41,7 +41,7 @@ class GammaOf(val of: Expression)
         extends Composition
         with Gamma {
 
-    protected[this] def at(n: Number) = Gamma(n)
+    protected[this] def at(n: Constant) = Gamma(n)
 
     protected[this] def apply(expr: Expression) = Gamma(expr)
 
