@@ -33,7 +33,7 @@ trait HyperbolicCos {
 
     def of: Expression
 
-    override def toString = s"Cosh($of)"
+    override def toString = s"HyperbolicCos($of)"
 
 }
 

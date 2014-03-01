@@ -3,7 +3,7 @@ package net.ollie.maths.numbers
 import scala.collection.mutable
 
 import net.ollie.maths.Operation
-import net.ollie.maths.numbers.constants.{Two, Zero, One}
+import net.ollie.maths.numbers.constants.{Three, Two, Zero, One}
 
 /**
  * Positive integer classes.
@@ -61,6 +61,7 @@ object Natural {
         case 0 => Zero
         case 1 => One
         case 2 => Two
+        case 3 => Three
         case _ => new ExactNatural(int)
     }
 

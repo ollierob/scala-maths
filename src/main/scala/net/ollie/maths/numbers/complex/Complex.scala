@@ -59,7 +59,7 @@ trait Complex
 }
 
 object Complex
-        extends ComplexBuilder[Complex] {
+        extends ComplexLikeBuilder[Complex] {
 
     override def unitSquared = MinusOne
 

@@ -40,7 +40,7 @@ trait SplitComplex
 }
 
 object SplitComplex
-        extends ComplexBuilder[SplitComplex] {
+        extends ComplexLikeBuilder[SplitComplex] {
 
     def zero: SplitComplex with Empty = SplitComplexZero
 

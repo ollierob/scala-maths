@@ -1,6 +1,6 @@
 package net.ollie.maths.functions.angular
 
-import net.ollie.maths.functions.{RealFunctionBuilder, BuiltFunction, UnivariateFunction}
+import net.ollie.maths.functions.{OddBuiltFunction, RealFunctionBuilder, BuiltFunction, UnivariateFunction}
 import net.ollie.maths.numbers.complex.Complex
 import net.ollie.maths.{CachedEvaluated, Number, Expression}
 import net.ollie.maths.numbers.{Precision, Real}
@@ -34,12 +34,12 @@ trait HyperbolicSin
 
     def of: Expression
 
-    override def toString = s"Sinh($of)"
+    override def toString = s"HyperbolicSin($of)"
 
 }
 
 class HyperbolicSinOf(val of: Expression)
-        extends BuiltFunction
+        extends OddBuiltFunction
         with HyperbolicSin {
 
     protected[this] def builder = HyperbolicSin

@@ -9,8 +9,8 @@ trait TrivariateFunction[-F1, -F2, -F3, +T] {
 
 }
 
-trait HomogeneousTrivariateFunction[F]
-        extends TrivariateFunction[F, F, F, F]
-
 trait SymmetricTrivariateFunction[-F, +T]
         extends TrivariateFunction[F, F, F, T]
+
+trait HomogeneousTrivariateFunction[F]
+        extends SymmetricTrivariateFunction[F, F]

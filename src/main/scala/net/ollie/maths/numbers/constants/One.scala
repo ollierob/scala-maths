@@ -67,3 +67,12 @@ object MinusOne
 
 object Two
         extends ExactNatural(2)
+        with Prime {
+
+    override def isEven = true
+
+}
+
+object Three
+        extends ExactNatural(3)
+        with Prime

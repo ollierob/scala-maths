@@ -14,7 +14,7 @@ trait ComplexLike
 
     type System >: this.type <: ComplexLike {type System = self.System}
 
-    implicit protected[this] def builder: ComplexBuilder[System]
+    implicit protected[this] def builder: ComplexLikeBuilder[System]
 
     def re: Real
 
@@ -72,7 +72,7 @@ trait ComplexLike
 
 }
 
-trait ComplexBuilder[System]
+trait ComplexLikeBuilder[System]
         extends NumberIdentityArithmetic[System] {
 
     def unitSquared: Real

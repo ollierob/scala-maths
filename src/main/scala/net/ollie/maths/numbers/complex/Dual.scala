@@ -3,7 +3,7 @@ package net.ollie.maths.numbers.complex
 import net.ollie.maths._
 import net.ollie.maths.numbers.Real
 import scala.Some
-import net.ollie.maths.numbers.constants.{Unity, Zero, One}
+import net.ollie.maths.numbers.constants.{Unity, Zero}
 
 /**
  * Created by Ollie on 28/01/14.
@@ -48,11 +48,11 @@ trait Dual
 }
 
 object Dual
-        extends ComplexBuilder[Dual] {
+        extends ComplexLikeBuilder[Dual] {
 
     def zero: Dual with Empty = DualZero
 
-    def one: Dual with Unity = ???
+    def one: Dual with Unity = DualOne
 
     def unitSquared = Zero
 
@@ -107,5 +107,13 @@ object DualZero
     override def unary_-() = this
 
     override def conjugate = this
+
+}
+
+object DualOne
+        extends RegularDual(1, 0)
+        with Unity {
+
+    override def abs = super[Unity].abs
 
 }

@@ -4,13 +4,22 @@ package net.ollie.maths.numbers
  * Created by Ollie on 18/01/14.
  */
 trait Prime
-        extends Natural
+        extends Natural {
+
+    override def isEmpty = false
+
+    override def isEven = false
+
+}
 
 object Prime {
 
     private val DEFAULT_CALCULATOR = RjmPrimes
 
-    def apply(n: Natural): Option[Prime] = if (is(n)) Some(new KnownPrime(n)) else None
+    def apply(n: Natural): Option[Prime] = {
+        if (is(n)) Some(new KnownPrime(n))
+        else None
+    }
 
     def is(n: Natural)(implicit calculator: PrimeCalculator = DEFAULT_CALCULATOR): Boolean = n match {
         case p: Prime => true
