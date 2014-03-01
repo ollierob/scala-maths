@@ -94,11 +94,11 @@ object Complex
     def polar(r: Real, theta: Angle): PolarComplex = PolarComplex(r, theta)
 
     implicit object RealComplexArithmetic
-            extends IdentityArithmetic[Real, Complex]
+            extends NumberConversionArithmetic[Real, Complex]
             with AdditionArithmetic[Real, Complex, Complex]
             with MultiplicationArithmetic[Real, Complex, Complex] {
 
-        def promote(re: Real) = re
+        def apply(re: Real) = re
 
         def add(left: Real, right: Complex) = Complex(left) + right
 

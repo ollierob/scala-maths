@@ -71,17 +71,17 @@ object Dual
     implicit object RealDualArithmetic
             extends AdditionArithmetic[Real, Dual, Dual]
             with MultiplicationArithmetic[Real, Dual, Dual]
-            with IdentityArithmetic[Real, Dual] {
+            with NumberConversionArithmetic[Real, Dual] {
 
         override def zero = Dual.zero
 
         override def one = Dual.one
 
-        override def promote(from: Real) = Dual(from)
+        override def apply(from: Real) = Dual(from)
 
-        override def add(left: Real, right: Dual) = promote(left) + right
+        override def add(left: Real, right: Dual) = apply(left) + right
 
-        override def multiply(left: Real, right: Dual) = promote(left) * right
+        override def multiply(left: Real, right: Dual) = apply(left) * right
 
     }
 

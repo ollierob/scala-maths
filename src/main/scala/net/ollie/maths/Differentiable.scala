@@ -6,12 +6,18 @@ package net.ollie.maths
  */
 trait Differentiable {
 
+    /**
+     * Differentiate with respect to the variable x.
+     */
     def df(x: Variable): Differentiable
 
 }
 
 trait Integrable {
 
+    /**
+     * Integrate with respect to the variable x.
+     */
     def integrate(x: Variable): Differentiable
 
 }

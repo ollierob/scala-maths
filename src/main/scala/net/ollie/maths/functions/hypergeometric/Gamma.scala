@@ -38,7 +38,7 @@ trait Gamma {
 }
 
 class GammaOf(val of: Expression)
-        extends Function
+        extends Composition
         with Gamma {
 
     protected[this] def at(n: Number) = Gamma(n)

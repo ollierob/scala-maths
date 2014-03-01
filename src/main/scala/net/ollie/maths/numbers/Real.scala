@@ -191,7 +191,7 @@ object Real
             with MultiplicationArithmetic[Real, Real, Real]
             with ExponentiationArithmetic[Real, Real, RealPower]
             with TetrationArithmetic[Real, Real, Massive]
-            with IdentityArithmetic[Real, Real]
+            with NumberConversionArithmetic[Real, Real]
             with scala.math.Numeric[Real] {
 
         override def zero: Real with Empty = Zero
@@ -226,7 +226,7 @@ object Real
 
         def tetrate(base: Real, tower: Real) = PowerTower(base, tower)
 
-        def promote(from: Real) = from
+        def apply(from: Real) = from
 
     }
 

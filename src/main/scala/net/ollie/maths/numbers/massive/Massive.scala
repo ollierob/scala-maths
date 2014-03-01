@@ -94,7 +94,7 @@ object Massive
     }
 
     implicit object RealMassiveArithmetic
-            extends IdentityArithmetic[Real, Massive]
+            extends NumberConversionArithmetic[Real, Massive]
             with AdditionArithmetic[Real, Massive, Massive]
             with MultiplicationArithmetic[Real, Massive, Massive] {
 
@@ -102,7 +102,7 @@ object Massive
 
         def one = Massive.one
 
-        def promote(from: Real) = from
+        def apply(from: Real) = from
 
         def add(left: Real, right: Massive) = Massive(left) + right
 

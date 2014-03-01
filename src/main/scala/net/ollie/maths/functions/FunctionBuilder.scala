@@ -26,31 +26,6 @@ trait FunctionBuilder {
 
 }
 
-/**
- *
- */
-trait BuiltFunction
-        extends Function {
-
-    protected[this] def builder: FunctionBuilder
-
-    protected[this] def at(n: Number) = builder(n)
-
-    protected[this] def apply(x: Expression) = builder(x)
-
-}
-
-/**
- * Builds an odd expression.
- * @see http://mathworld.wolfram.com/OddFunction.html
- */
-trait OddBuiltFunction
-        extends BuiltFunction {
-
-    override def unary_-() = apply(-of)
-
-}
-
 trait RealFunctionBuilder
         extends FunctionBuilder {
 
@@ -79,5 +54,30 @@ trait ComplexFunctionBuilder
     def apply(re: Real): Z = apply(Complex(re))
 
     def apply(z: Complex): Z
+
+}
+
+/**
+ * Function built by a function builder.
+ */
+trait BuiltFunction
+        extends Composition {
+
+    protected[this] def builder: FunctionBuilder
+
+    override protected[this] def at(n: Number) = builder(n)
+
+    override protected[this] def apply(x: Expression) = builder(x)
+
+}
+
+/**
+ * Builds an odd function.
+ * @see http://mathworld.wolfram.com/OddFunction.html
+ */
+trait OddBuiltFunction
+        extends BuiltFunction {
+
+    override def unary_-() = apply(-of)
 
 }

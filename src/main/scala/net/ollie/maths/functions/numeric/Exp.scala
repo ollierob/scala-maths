@@ -53,7 +53,7 @@ trait Exp
 
 class ExpOf(val of: Expression)
         extends Exp
-        with Function
+        with Composition
         with Invertible {
 
     def isEmpty = false

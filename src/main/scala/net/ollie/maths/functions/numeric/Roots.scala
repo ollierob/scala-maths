@@ -1,7 +1,7 @@
 package net.ollie.maths.functions.numeric
 
 import net.ollie.maths.numbers._
-import net.ollie.maths.{IdentityArithmetic, EmptyNumber, Number}
+import net.ollie.maths.{NumberConversionArithmetic, EmptyNumber, Number}
 import net.ollie.maths.numbers.complex.Complex
 import net.ollie.maths.numbers.constants.{Unity, Pi, One, Zero}
 import scala.collection.mutable.ArrayBuffer
@@ -46,12 +46,12 @@ trait Roots[+F <: Number, C <: Number]
 }
 
 class EmptyRoots[+F <: EmptyNumber, C <: Number](val of: F, val degree: Natural)
-        (implicit conversion: IdentityArithmetic[F, C])
+        (implicit conversion: NumberConversionArithmetic[F, C])
         extends Roots[F, C] {
 
     def inverse = ??? //TODO
 
-    def principal = conversion.promote(of)
+    def principal = conversion.apply(of)
 
     def values = Set(principal)
 

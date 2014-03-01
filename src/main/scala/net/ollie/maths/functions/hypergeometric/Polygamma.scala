@@ -39,7 +39,7 @@ trait Polygamma {
 }
 
 class PolygammaOf(val order: Natural, val of: Expression)
-        extends Function
+        extends Composition
         with Polygamma {
 
     protected[this] def at(n: Number) = Polygamma(order, n)

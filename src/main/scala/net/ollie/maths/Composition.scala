@@ -1,13 +1,12 @@
 package net.ollie.maths
 
 /**
- * Some function of an expression.
+ * A function of a function.
  *
  * Created by Ollie on 05/01/14.
- *
  * @see http://mathworld.wolfram.com/Composition.html
  */
-trait Function
+trait Composition
         extends Expression {
 
     protected[this] def of: Expression
@@ -23,6 +22,9 @@ trait Function
 
     def replace(variables: Map[Variable, Expression]) = apply(of.replace(variables))
 
+    /**
+     * Chain rule.
+     */
     def df(x: Variable) = of.df(x) * derivative(of)
 
     def unary_-() = Expression.negate(this)

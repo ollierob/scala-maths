@@ -42,7 +42,7 @@ trait Quaternion
 
     def isEmpty = re.isEmpty && i.isEmpty && j.isEmpty && k.isEmpty
 
-    def inverse: Quaternion = conjugate / Quaternion.RealQuaternionArithmetic.promote(norm.squared)
+    def inverse: Quaternion = conjugate / Quaternion.RealQuaternionArithmetic.apply(norm.squared)
 
     override def toReal: Option[Real] = if (i.isEmpty && j.isEmpty && k.isEmpty) Some(re) else None
 
@@ -143,13 +143,13 @@ object Quaternion
     implicit object RealQuaternionArithmetic
             extends AdditionArithmetic[Real, Quaternion, Quaternion]
             with MultiplicationArithmetic[Real, Quaternion, Quaternion]
-            with IdentityArithmetic[Real, Quaternion] {
+            with NumberConversionArithmetic[Real, Quaternion] {
 
         def add(left: Real, right: Quaternion) = Quaternion(left) + right
 
         def multiply(left: Real, right: Quaternion) = Quaternion(left) * right
 
-        def promote(re: Real) = Quaternion(re)
+        def apply(re: Real) = Quaternion(re)
 
         def one = Quaternion.one
 
@@ -160,13 +160,13 @@ object Quaternion
     implicit object ComplexQuaternionArithmetic
             extends AdditionArithmetic[Complex, Quaternion, Quaternion]
             with MultiplicationArithmetic[Complex, Quaternion, Quaternion]
-            with IdentityArithmetic[Complex, Quaternion] {
+            with NumberConversionArithmetic[Complex, Quaternion] {
 
         def add(z: Complex, q: Quaternion) = Quaternion(z) + q
 
         def multiply(z: Complex, q: Quaternion) = Quaternion(z) * q
 
-        def promote(z: Complex) = z
+        def apply(z: Complex) = z
 
         def zero = Quaternion.zero
 

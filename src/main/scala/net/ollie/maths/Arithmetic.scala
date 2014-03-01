@@ -49,12 +49,12 @@ trait NumberIdentityArithmetic[+To] {
 
 }
 
-trait IdentityArithmetic[-From, +To] {
+trait NumberConversionArithmetic[-From, +To] {
 
-    def promote(from: From): To
+    def apply(from: From): To
 
-    def promote(from: Option[From]): Option[To] = from match {
-        case Some(f) => Some(promote(f))
+    def apply(from: Option[From]): Option[To] = from match {
+        case Some(f) => Some(apply(f))
         case _ => None
     }
 

@@ -86,7 +86,7 @@ trait Ln
 
 class LnOf(val of: Expression)
         extends Log
-        with Function
+        with Composition
         with Ln {
 
     protected[this] def at(n: Number) = Ln(n)
