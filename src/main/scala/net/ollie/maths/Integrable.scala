@@ -1,5 +1,7 @@
 package net.ollie.maths
 
+import java.util.concurrent.atomic.AtomicLong
+
 /**
  * Created by Ollie on 01/03/14.
  */
@@ -14,8 +16,16 @@ trait Integrable {
 
 }
 
-private class IntegrationConstant
+private object IntegrationConstant {
+
+    val counter = new AtomicLong(0L);
+
+}
+
+class IntegrationConstant
         extends Nonvariate {
+
+    private val id = IntegrationConstant.counter.getAndIncrement()
 
     def isEmpty = false
 
@@ -25,6 +35,6 @@ private class IntegrationConstant
 
     override def equals(e: Expression) = this eq e
 
-    override def toString = "IntegrationConstant"
+    override def toString = s"IntegrationConstant:$id"
 
 }
