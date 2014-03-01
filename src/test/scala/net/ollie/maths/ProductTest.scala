@@ -83,6 +83,10 @@ class ProductTest extends FlatSpec with Matchers {
             p.replace(z, y).replace(y, x).variables shouldBe Set(x)
         }
 
+        it should "divide by z" in {
+            p / z shouldBe x * y
+        }
+
     }
 
 }

@@ -12,29 +12,3 @@ trait Differentiable {
     def df(x: Variable): Differentiable
 
 }
-
-trait Integrable {
-
-    /**
-     * Integrate with respect to the variable x.
-     */
-    def integrate(x: Variable): Expression = integral(x) + new ConstantOfIntegration
-
-    protected[this] def integral(x: Variable): Expression
-
-}
-
-private class ConstantOfIntegration
-        extends Nonvariate {
-
-    def isEmpty = false
-
-    def toConstant = None
-
-    def unary_- = this
-
-    override def equals(e: Expression) = this eq e
-
-    override def toString = "IntegrationConstant"
-
-}

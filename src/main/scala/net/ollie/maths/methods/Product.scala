@@ -93,6 +93,13 @@ class Product[+T <: Expression](val terms: Seq[T])
         Product(simplify(expressions))
     }
 
+    override def ?/(that: Expression) = {
+        terms.last ?/ that match {
+            case Some(x) => Some(apply(terms.init :+ x))
+            case _ => super.?/(that)
+        }
+    }
+
     def isEmpty = terms.exists(_.isEmpty)
 
     def toConstant: Option[Number] = {
@@ -137,6 +144,6 @@ class InfiniteRealProduct(f: (Natural) => Real, start: Natural)
 
     }
 
-    def isEmpty = f(0).isEmpty || f(1).isEmpty //TODO more terms?
+    def isEmpty = f(start).isEmpty || f(start.succ).isEmpty //TODO more terms?
 
 }

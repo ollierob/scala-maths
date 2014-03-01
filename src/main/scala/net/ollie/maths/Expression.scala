@@ -79,7 +79,10 @@ trait Expression
         case _ => Expression.divide(this, that)
     }
 
-    def ?/(that: Expression): Option[Expression] = None
+    def ?/(that: Expression): Option[Expression] = {
+        if (this equals that) Some(One)
+        else None
+    }
 
     def ^(that: Expression): Expression = Expression.power(this, that)
 
