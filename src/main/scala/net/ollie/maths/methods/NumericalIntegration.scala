@@ -15,7 +15,7 @@ trait NumericalIntegrationMethod {
     }
 
     def apply(fn: Variable => Univariate, from: Real, to: Real): DefiniteIntegral with Real = {
-        val t = Variable("$t")
+        val t = Variable.temporary()
         apply(fn(t), from, to)
     }
 

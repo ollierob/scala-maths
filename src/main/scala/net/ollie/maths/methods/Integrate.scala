@@ -1,6 +1,6 @@
 package net.ollie.maths.methods
 
-import net.ollie.maths.{Expression, Univariate, Variable}
+import net.ollie.maths.{Integrable, Expression, Univariate, Variable}
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.constants.Zero
 
@@ -22,12 +22,20 @@ object Integrate {
         else method(integrand, from, to)
     }
 
-    def apply(integrand: Expression, wrt: Variable, from: Expression, to: Expression): DefiniteIntegral = {
-        new DefiniteIntegralOf(integrand, wrt, from, to)
+    def apply(integrand: Expression, wrt: Variable, from: Expression, to: Expression): Expression = {
+        integrand match {
+            case i: Integrable => Integrate(i.asInstanceOf[Integrable], wrt, from, to)
+            case _ => new DefiniteIntegralOf(integrand, wrt, from, to)
+        }
     }
 
-    def apply(fn: Variable => Expression, from: Expression, to: Expression): DefiniteIntegral = {
-        val v = Variable.random()
+    def apply(integrand: Integrable, wrt: Variable, from: Expression, to: Expression): Expression = {
+        val integral = integrand.integrate(wrt)
+        return integral.replace(wrt, to) - integral.replace(wrt, from)
+    }
+
+    def apply(fn: Variable => Expression, from: Expression, to: Expression): Expression = {
+        val v = Variable.temporary()
         Integrate(fn(v), v, from, to)
     }
 
@@ -88,7 +96,7 @@ class InfiniteIntegral(val integrand: Univariate, val from: Real)
 
 }
 
-class DefiniteIntegralOf(val integrand: Expression, val variable: Variable, val from: Expression, val to: Expression)
+private class DefiniteIntegralOf(val integrand: Expression, val variable: Variable, val from: Expression, val to: Expression)
         extends DefiniteIntegral {
 
     def df(x: Variable) = ???
@@ -103,7 +111,7 @@ class DefiniteIntegralOf(val integrand: Expression, val variable: Variable, val 
 
 }
 
-class IndefiniteIntegralOf(val integrand: Expression, val variable: Variable)
+private class IndefiniteIntegralOf(val integrand: Expression, val variable: Variable)
         extends Integral {
 
     def df(x: Variable) = {

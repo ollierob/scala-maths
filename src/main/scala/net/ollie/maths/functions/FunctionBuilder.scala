@@ -14,9 +14,9 @@ trait FunctionBuilder {
 
     def apply(n: Number): Number
 
-    def apply(expression: Expression): Expression = expression match {
-        case e if e.isEmpty => empty
-        case n: Number => apply(n)
+    def apply(expression: Expression): Expression = expression.toConstant match {
+        case Some(n) => apply(n)
+        case _ if expression.isEmpty => empty
         case _ => create(expression)
     }
 

@@ -10,12 +10,13 @@ object Variable {
 
     def apply(name: String): Variable = new NamedVariable(name)
 
-    def random(): Variable = Variable('$' + UUID.randomUUID.toString)
+    def temporary(): Variable = Variable('$' + UUID.randomUUID.toString)
 
 }
 
 trait Variable
-        extends Univariate {
+        extends Univariate
+        with Integrable {
 
     def variable = this
 
@@ -32,6 +33,11 @@ trait Variable
 
     def df(x: Variable): Univariate = {
         if (this == x) One
+        else Zero
+    }
+
+    override protected[this] def integral(x: Variable): Expression = {
+        if (this == x) (this ^ 2) / 2
         else Zero
     }
 

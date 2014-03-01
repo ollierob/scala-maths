@@ -8,7 +8,8 @@ import net.ollie.maths.numbers.constants.Zero
  */
 trait Number
         extends Nonvariate
-        with Invertible {
+        with Invertible
+        with Integrable {
 
     self =>
 
@@ -83,9 +84,11 @@ trait Number
 
     override def df(x: Variable): EmptyNumber = Zero
 
+    override protected[this] def integral(x: Variable) = this * x
+
     def toConstant: Option[System] = Some(narrow)
 
-    def replace(variables: Map[Variable, Expression]): System = narrow
+    override def replace(variables: Map[Variable, Expression]): System = narrow
 
     final override def equals(expr: Expression) = expr match {
         case n: Number => this.equals(n)

@@ -78,7 +78,10 @@ trait Expression
         case _ => super.equals(obj)
     }
 
-    def equals(expr: Expression): Boolean = if (this.isEmpty) expr.isEmpty else super.equals(expr)
+    def equals(expr: Expression): Boolean = {
+        if (this.isEmpty) expr.isEmpty
+        else super.equals(expr)
+    }
 
 }
 
@@ -194,6 +197,10 @@ class ExpressionPower(val base: Expression, val power: Expression)
 
 trait Nonvariate
         extends Expression {
+
+    def df(x: Variable): Empty = Zero
+
+    def replace(variables: Map[Variable, Expression]): Nonvariate = this
 
     def variables = Set()
 
