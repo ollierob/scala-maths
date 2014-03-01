@@ -24,7 +24,7 @@ class DiracDeltaTest extends FlatSpec with Matchers {
     "delta(x)" should "be 0 except at 0" in {
         val x = Variable("x")
         val d = DiracDelta(x)
-        d.isEmpty shouldBe (false)
+        d.isEmpty shouldBe true
         d.replace(x, 1).isEmpty shouldBe (true)
         d.replace(x, 0).isInstanceOf[Infinite] shouldBe (true)
         d.replace(x, Pi).isEmpty shouldBe (true)

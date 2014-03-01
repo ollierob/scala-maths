@@ -9,5 +9,8 @@ trait BivariateFunction[-F1, -F2, +T] {
 
 }
 
+trait HomogeneousBivariateFunction[F]
+        extends BivariateFunction[F, F, F]
+
 trait SymmetricBivariateFunction[-F, +T]
         extends BivariateFunction[F, F, T]
