@@ -27,7 +27,6 @@ class TriangleTest extends FlatSpec with Matchers {
         }
 
         it should "have a right angle" in {
-            println(t)
             t.isRight shouldBe true
         }
 

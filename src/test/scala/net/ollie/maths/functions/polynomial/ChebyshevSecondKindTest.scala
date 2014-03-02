@@ -45,7 +45,6 @@ class ChebyshevSecondKindTest extends FlatSpec with Matchers {
 
         it should "evaluate" in {
             val y = Variable("y")
-            println(u3.replace(x, y))
             u3.replace(x, 0).toConstant shouldBe Some(Zero)
             u3.replace(x, 1).toConstant shouldBe Some(Natural(8 - 4))
         }
