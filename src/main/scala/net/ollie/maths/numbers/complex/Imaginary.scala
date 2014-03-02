@@ -32,7 +32,7 @@ class Imaginary(val coefficient: Real)
 
     override def /(that: Real): Imaginary = coefficient / that
 
-    def ^(that: Integer): Complex = {
+    override def ^(that: Integer): Complex = {
         val c: Real = coefficient ^ that
         val i: Complex = Modulo(that, 4).remainder.toInt.get match {
             case 0 => One

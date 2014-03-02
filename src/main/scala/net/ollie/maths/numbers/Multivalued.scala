@@ -3,7 +3,6 @@ package net.ollie.maths.numbers
 import net.ollie.maths.Constant
 
 /**
- * TODO should have a  (Very difficult!)
  * Created by Ollie on 09/02/14.
  */
 trait Multivalued

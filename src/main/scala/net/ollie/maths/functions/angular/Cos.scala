@@ -71,12 +71,14 @@ class RealCos(override val of: Angle)
         precision(BigDecimalMath.cos(of.evaluate(precision).underlying()))
     }
 
-    val isEmpty = {
+    private lazy val empty: Boolean = {
         (2 * of / Pi) match {
             case i: Integer => !i.isEven
             case _ => false
         }
     }
+
+    def isEmpty = empty
 
     override def inverse = super[Real].inverse
 

@@ -6,7 +6,7 @@ import net.ollie.maths.functions.angular.{Angle, ArcTan}
 import net.ollie.maths.functions.numeric.PositiveSquareRoot
 import net.ollie.maths.numbers._
 import scala.Some
-import net.ollie.maths.numbers.constants.{Unity, MinusOne, Zero}
+import net.ollie.maths.numbers.constants.{One, Unity, MinusOne, Zero}
 
 /**
  * Created by Ollie on 04/01/14.
@@ -32,6 +32,15 @@ trait Complex
     def toComplex = Some(this)
 
     override def toReal = super[MaybeComplex].toReal
+
+    override def ^(that: Expression) = Complex(that.toConstant) match {
+        case Some(z) => this ^ z
+        case _ => super.^(that)
+    }
+
+    def ^(that: Real): ComplexPower = this ^ Complex(that)
+
+    def ^(that: Integer): Complex = Complex.pow(this, that)
 
     def ^(that: Complex): ComplexPower = Complex.pow(this, that)
 
@@ -94,6 +103,8 @@ object Complex
         if (re.isEmpty) zero
         else Complex(re, Zero)
     }
+
+    def pow(base: Complex, power: Integer): Complex = ComplexPower(base, power)
 
     def pow(base: Complex, power: Complex): ComplexPower = ComplexPower(base, power)
 

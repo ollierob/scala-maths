@@ -8,6 +8,6 @@ import net.ollie.maths.numbers.Real
 class CartesianComplex(val re: Real, val im: Real)
         extends Complex {
 
-    override def toString = re.toString + " + " + im.toString + "i"
+    override def toString = "(" + re.toString + " + " + im.toString + "i)"
 
 }

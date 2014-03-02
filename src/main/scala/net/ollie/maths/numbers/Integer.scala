@@ -119,7 +119,7 @@ class ExactInteger(val int: Int)
         extends AnyRef
         with Integer {
 
-    def evaluate = BigInt(int)
+    val evaluate = BigInt(int)
 
     override def ?+(that: Real) = that match {
         case exact: ExactBigDecimal => Some(Real(BigDecimal(evaluate) + exact.of))
