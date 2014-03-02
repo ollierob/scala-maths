@@ -35,7 +35,7 @@ object Multivalued {
         new MultivaluedSet(principal, values)
     }
 
-    def negate[M <: Multivalued](m: M): Multivalued = {
+    def negate[M <: Multivalued](m: M): NegatedMultivalued[M] = {
         new NegatedMultivalued(m)
     }
 

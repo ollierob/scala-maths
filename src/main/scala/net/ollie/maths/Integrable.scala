@@ -1,6 +1,8 @@
 package net.ollie.maths
 
 import java.util.concurrent.atomic.AtomicLong
+import net.ollie.maths.numbers.Multivalued
+import net.ollie.maths.numbers.constants.Zero
 
 /**
  * Created by Ollie on 01/03/14.
@@ -8,9 +10,11 @@ import java.util.concurrent.atomic.AtomicLong
 trait Integrable {
 
     /**
-     * Integrate with respect to the variable x.
+     * Integrate with respect to the variable x. Adds an integration constant.
      */
-    def integrate(x: Variable): Expression = integral(x) + new IntegrationConstant
+    def integrate(x: Variable): Expression = {
+        integral(x) + new IntegrationConstant
+    }
 
     protected[this] def integral(x: Variable): Expression
 
@@ -23,17 +27,19 @@ private object IntegrationConstant {
 }
 
 class IntegrationConstant
-        extends Nonvariate {
+        extends Multivalued {
 
-    private val id = IntegrationConstant.counter.getAndIncrement()
+    type Contents = Constant
 
     def isEmpty = false
 
-    def toConstant = None
+    def principal = Zero
 
-    def unary_- = this
+    def inverse = this
 
-    override def equals(e: Expression) = this eq e
+    override def unary_-() = this
+
+    private val id = IntegrationConstant.counter.getAndIncrement()
 
     override def toString = s"IntegrationConstant:$id"
 

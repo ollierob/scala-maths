@@ -90,8 +90,6 @@ trait Constant
 
     override def df(x: Variable): EmptyConstant = Zero
 
-    override protected[this] def integral(x: Variable) = this * x
-
     def toConstant: Option[System] = Some(narrow)
 
     override def replace(variables: Map[Variable, Expression]): System = narrow

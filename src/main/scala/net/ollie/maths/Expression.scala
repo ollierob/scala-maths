@@ -212,13 +212,16 @@ class ExpressionPower(val base: Expression, val power: Expression)
 }
 
 trait Nonvariate
-        extends Expression {
+        extends Expression
+        with Integrable {
 
     def df(x: Variable): Empty = Zero
 
     def replace(variables: Map[Variable, Expression]): Nonvariate = this
 
     def variables = Set()
+
+    override protected[this] def integral(x: Variable) = this * x
 
 }
 
@@ -255,7 +258,9 @@ object Univariate {
 
         override def -(that: Expression) = n - that
 
-        override def ?*(that: Expression)(leftToRight: Boolean): Option[Expression] = n.?*(that)(leftToRight)
+        override def ?*(that: Expression)(leftToRight: Boolean): Option[Expression] = {
+            n.?*(that)(leftToRight)
+        }
 
         override def ?/(that: Expression) = n ?/ that
 
