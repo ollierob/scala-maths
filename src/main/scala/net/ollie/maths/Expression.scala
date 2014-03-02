@@ -221,6 +221,8 @@ trait Nonvariate
 
     def variables = Set()
 
+    override def integrate(x: Variable): Univariate = super.integrate(x)
+
     override protected[this] def integral(x: Variable) = this * x
 
 }
