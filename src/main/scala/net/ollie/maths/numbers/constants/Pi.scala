@@ -40,7 +40,7 @@ class PiOver protected[constants](val over: Natural)
 
     require(!over.isEmpty)
 
-    def isEmpty = !Infinite.is(over)
+    def isEmpty = Infinite.is(over)
 
     def doApproximatelyEvaluate(precision: Precision) = Pi.approximatelyEvaluate(precision) / over.approximatelyEvaluate(precision)
 
