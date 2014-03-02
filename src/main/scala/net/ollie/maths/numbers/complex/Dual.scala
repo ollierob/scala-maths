@@ -1,7 +1,7 @@
 package net.ollie.maths.numbers.complex
 
 import net.ollie.maths._
-import net.ollie.maths.numbers.Real
+import net.ollie.maths.numbers.{EmptyConstant, Real}
 import scala.Some
 import net.ollie.maths.numbers.constants.{Unity, Zero}
 

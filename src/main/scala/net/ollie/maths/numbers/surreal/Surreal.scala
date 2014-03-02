@@ -1,6 +1,6 @@
 package net.ollie.maths.numbers.surreal
 
-import net.ollie.maths.{EmptyConstant, Variable}
+import net.ollie.maths.Variable
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.massive.Infinitesimal
 import net.ollie.maths.numbers.constants.Zero

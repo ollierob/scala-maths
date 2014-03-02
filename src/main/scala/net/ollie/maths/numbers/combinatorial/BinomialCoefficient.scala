@@ -1,6 +1,6 @@
 package net.ollie.maths.numbers.combinatorial
 
-import net.ollie.maths.{EmptyConstant, Variable}
+import net.ollie.maths.Variable
 import net.ollie.maths.functions.numeric.{Floor, GreatestCommonDivisor}
 import net.ollie.maths.numbers._
 import net.ollie.maths.methods.Product

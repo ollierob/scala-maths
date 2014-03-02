@@ -1,7 +1,7 @@
 package net.ollie.maths.numbers.complex
 
-import net.ollie.maths.numbers.{PositiveReal, Real}
-import net.ollie.maths.{EmptyConstant, Empty, Constant}
+import net.ollie.maths.numbers.{EmptyConstant, PositiveReal, Real}
+import net.ollie.maths.{Empty, Constant}
 import net.ollie.maths.numbers.constants.{Unity, Zero, One}
 
 /**

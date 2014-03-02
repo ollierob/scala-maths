@@ -2,6 +2,7 @@ package net.ollie.maths
 
 import scala.collection.mutable
 import net.ollie.maths.numbers.constants.Zero
+import net.ollie.maths.numbers.EmptyConstant
 
 /**
  * Created by Ollie on 02/01/14.
@@ -15,7 +16,7 @@ trait Constant
 
     type System >: this.type <: Constant
 
-    final def narrow: System = this
+    def narrow: System = this
 
     def unary_-(): System
 

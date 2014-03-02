@@ -1,6 +1,6 @@
 package net.ollie.maths.numbers.constants
 
-import net.ollie.maths.{Operation, Expression, EmptyConstant, Variable}
+import net.ollie.maths.{Operation, Expression, Variable}
 import net.ollie.maths.numbers._
 import scala.Some
 

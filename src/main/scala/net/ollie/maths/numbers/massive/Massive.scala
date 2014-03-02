@@ -146,7 +146,7 @@ object MassiveZero
 
     override def unary_-() = this
 
-    override def toConstant: Option[Massive] = Some(this)
+    override def toConstant: Option[Massive with EmptyConstant] = Some(this)
 
     override def df(x: Variable) = this
 

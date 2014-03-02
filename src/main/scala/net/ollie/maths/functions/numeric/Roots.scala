@@ -1,7 +1,7 @@
 package net.ollie.maths.functions.numeric
 
 import net.ollie.maths.numbers._
-import net.ollie.maths.{NumberConversionArithmetic, EmptyConstant, Constant}
+import net.ollie.maths.{NumberConversionArithmetic, Constant}
 import net.ollie.maths.numbers.complex.Complex
 import net.ollie.maths.numbers.constants.{Unity, Pi, One, Zero}
 import scala.collection.mutable.ArrayBuffer

@@ -82,7 +82,10 @@ object Integer {
 
     implicit def apply(int: BigInt): Integer = if (int > 0) Natural(int) else if (int == MINUS_ONE) MinusOne else new ExactBigInteger(int)
 
-    def negate(i: Integer): Integer = new NegatedInteger(i)
+    def negate(i: Integer): Integer = {
+        if (i.isEmpty) i
+        else new NegatedInteger(i)
+    }
 
     def divide(numerator: Integer, denominator: Integer): Rational = IntegerFraction(numerator, denominator)
 

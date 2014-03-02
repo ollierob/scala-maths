@@ -107,7 +107,7 @@ object Natural {
 
 }
 
-class ExactNatural(int: Int)
+class ExactNatural(override val int: Int)
         extends ExactInteger(int)
         with Natural {
 
@@ -115,24 +115,11 @@ class ExactNatural(int: Int)
 
 }
 
-class ExactBigNatural(int: BigInt)
-        extends ExactBigInteger(int)
+class ExactBigNatural(override val evaluate: BigInt)
+        extends ExactBigInteger(evaluate)
         with Natural {
 
-    require(int >= 0)
-
-}
-
-class Factorial(val n: Natural)
-        extends Natural {
-
-    private lazy val evaluated = n.evaluate * (n.decr !).evaluate
-
-    def evaluate = evaluated
-
-    override def isEven = n > 1
-
-    override def toString = n.toString + "!"
+    require(evaluate >= 0)
 
 }
 
@@ -158,5 +145,18 @@ class NaturalPower(override val base: Natural, override val power: Natural)
         case Some(i: Int) => base.evaluate.pow(i)
         case _ => ??? //TODO
     }
+
+}
+
+class Factorial(val n: Natural)
+        extends Natural {
+
+    private lazy val evaluated = n.evaluate * (n.decr !).evaluate
+
+    def evaluate = evaluated
+
+    override def isEven = n > 1
+
+    override def toString = n.toString + "!"
 
 }

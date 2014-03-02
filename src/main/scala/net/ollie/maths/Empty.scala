@@ -1,6 +1,6 @@
 package net.ollie.maths
 
-import net.ollie.maths.numbers.{PositiveReal, Precision}
+import net.ollie.maths.numbers.PositiveReal
 import net.ollie.maths.numbers.constants.Zero
 
 /**
@@ -22,7 +22,7 @@ trait Empty
 
     def variables = Set.empty
 
-    def toConstant: Option[Constant] = Some(Zero)
+    def toConstant: Option[Constant with Empty] = Some(Zero)
 
     override def unary_-(): Empty = Zero
 
@@ -36,27 +36,4 @@ trait Empty
 
 }
 
-trait EmptyConstant
-        extends Empty
-        with Constant
-        with Evaluable {
 
-    private val ZERO = BigDecimal(0)
-
-    def abs: PositiveReal with EmptyConstant = Zero
-
-    override def unary_-(): EmptyConstant with System = this
-
-    override def variables = super[Constant].variables
-
-    override def isEmpty = super[Empty].isEmpty
-
-    override def toString = super[Empty].toString
-
-    def evaluate(precision: Precision) = ZERO to precision
-
-    override def toConstant: Option[System] = Some(this.narrow)
-
-    override def ?*(that: Expression)(leftToRight: Boolean) = super[Empty].?*(that)(leftToRight)
-
-}

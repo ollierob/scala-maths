@@ -6,9 +6,6 @@ package net.ollie.maths
  */
 trait Differentiable {
 
-    /**
-     * Differentiate with respect to the variable x.
-     */
     def df(x: Variable): Differentiable
 
 }

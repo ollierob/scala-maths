@@ -1,6 +1,6 @@
 package net.ollie.maths.functions.angular
 
-import net.ollie.maths.{CachedEvaluated, EmptyConstant}
+import net.ollie.maths.CachedEvaluated
 import net.ollie.maths.functions.ModalPair
 import net.ollie.maths.functions.numeric.{Floor, Min, PositiveSquareRoot, TriangleCoefficient}
 import net.ollie.maths.methods.Series
