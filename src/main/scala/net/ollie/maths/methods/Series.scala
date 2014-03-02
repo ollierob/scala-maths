@@ -183,7 +183,6 @@ private class InfiniteNaturalSum(f: Natural => Real, start: Natural)
         def next(nth: Natural, precision: Precision) = {
             val n: Natural = nth + start
             series += f(n)
-            //println(n + " => " + series + " => " + series.evaluate(precision))
             series.evaluate(precision)
         }
 

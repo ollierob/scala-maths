@@ -7,6 +7,7 @@ import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.junit.JUnitRunner
 import net.ollie.maths.numbers.constants.{Pi, Zero, One, EulersNumber}
 import net.ollie.maths.numbers.complex.{Complex, ImaginaryUnit}
+import scala.Some
 
 /**
  * Created by Ollie on 16/01/14.
@@ -45,7 +46,6 @@ class LnTest extends FlatSpec with Matchers {
 
     "1 / Ln(4)" should "evaluate" in {
         val r = Ln(4).inverse
-        println(r + " => " + r.getClass)
         r.evaluate(4 dp) shouldBe BigDecimal("0.7213")
     }
 

@@ -37,7 +37,6 @@ private class TaylorSeries(val f: Univariate, val x: Real, val a: Real)(implicit
 
         def next(n: Natural, precision: Precision): BigDecimal = {
             series += nthTerm(n)
-            //println(fNDash + " => " + series)
             fNDash = fNDash.dx
             series.evaluate(precision)
         }

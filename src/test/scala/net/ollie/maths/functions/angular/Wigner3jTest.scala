@@ -48,7 +48,6 @@ class Wigner3jTest extends FlatSpec with Matchers {
 
     "Wigner3j((1,1), (2,1), (3,-2))" should "evaluate" in {
         val r = Wigner3j((1, 2, 3), (1, 1, -2))
-        println(r)
         r.isEmpty shouldBe false
         r.evaluate(4 dp) shouldBe BigDecimal("-0.3086")
     }

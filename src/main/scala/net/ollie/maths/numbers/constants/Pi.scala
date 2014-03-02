@@ -10,7 +10,7 @@ import net.ollie.maths.methods.ApproximatelyEvaluated
  * @see http://mathworld.wolfram.com/MachinsFormula.html
  */
 object Pi
-        extends PositiveReal {
+        extends PiOrLess {
 
     private val PI_100 = BigDecimal("3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679")
     private lazy val MACHIN: Real = (16 * ArcTan(IntegerFraction(1, 5))) - (4 * ArcTan(IntegerFraction(1, 239)))
@@ -22,9 +22,12 @@ object Pi
 
     def isEmpty = false
 
-    def /(that: Natural): PiOrLess = {
-        if (that.isEmpty) ???
-        else new PiOver(that)
+    def /(that: Natural): PiOrLess = that.toInt match {
+        case Some(0) => ???
+        case Some(1) => Pi
+        case Some(2) => HalfPi
+        case Some(4) => QuarterPi
+        case _ => new PiOver(that)
     }
 
     override def toString = "π"

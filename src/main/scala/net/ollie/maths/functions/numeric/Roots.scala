@@ -71,13 +71,13 @@ class NonEmptyRoots(val of: Real, val degree: Natural)
 
     def inverse = Roots(of.inverse, degree)
 
-    private lazy val complexPrincipal: Complex = PrincipalRoot(of.abs, degree) * PrincipalRoot(Signum(of), degree)
+    val principal: Complex = {
+        PrincipalRoot(of.abs, degree) * PrincipalRoot(Signum(of), degree)
+    }
 
-    private lazy val complexValues: Set[Complex] = Roots.unity(degree).values.map(_ * complexPrincipal)
-
-    def principal = complexPrincipal
-
-    def values = complexValues
+    val values: Set[Complex] = {
+        Roots.unity(degree).values.map(_ * principal)
+    }
 
 }
 
@@ -97,7 +97,7 @@ class RootsOfUnity(val degree: Natural)
 
     def principal = One
 
-    private lazy val vals: Set[Complex] = {
+    val values: Set[Complex] = {
         val n = degree.toInt.get
         val roots = new ArrayBuffer[Complex](n)
         for (k <- 1 to n) {
@@ -106,8 +106,6 @@ class RootsOfUnity(val degree: Natural)
         roots += principal
         roots.toSet
     }
-
-    def values = vals
 
     override def toString = s"RootsOfUnity($degree)"
 

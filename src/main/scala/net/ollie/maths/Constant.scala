@@ -95,12 +95,9 @@ trait Constant
 
     override def replace(variables: Map[Variable, Expression]): System = narrow
 
-    final override def equals(expr: Expression) = expr match {
-        case n: Constant => this.equals(n)
-        case _ => expr.toConstant match {
-            case Some(n: Constant) => this.equals(n)
-            case _ => super.equals(expr)
-        }
+    final override def equals(expr: Expression) = expr.toConstant match {
+        case Some(n) => this.equals(n)
+        case _ => super.equals(expr)
     }
 
     def equals(n: Constant) = super.equals(n)

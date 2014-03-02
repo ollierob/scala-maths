@@ -25,9 +25,7 @@ class ExpressionPowerTest extends FlatSpec with Matchers {
     it should "differentiate" in {
         val f = x ^ x
         val df = f.df(x)
-        println(df)
         df.isEmpty shouldBe false
-        println(df.replace(x, One))
         df.replace(x, One).toConstant shouldBe Some(One)
     }
 

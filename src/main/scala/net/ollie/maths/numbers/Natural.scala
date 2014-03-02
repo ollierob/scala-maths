@@ -76,6 +76,8 @@ object Natural {
         case _ => Left(int)
     }
 
+    def unapply(n: Natural): Option[Int] = n.toInt
+
     def divide(numerator: Natural, denominator: Natural): PositiveReal with Rational = IntegerFraction.common(numerator, denominator) match {
         case Some(m) => m.abs
         case _ => IntegerFraction.reduce(numerator, denominator) match {

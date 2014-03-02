@@ -51,7 +51,6 @@ class ExpTest extends FlatSpec with Matchers {
         val two = Integer(2)
         val exp = Exp(two * x)
         val d = exp.df(x)
-        println(d)
         d.replace(x, 0).toConstant.get shouldBe (two)
     }
 

@@ -13,12 +13,20 @@ class PiTest extends FlatSpec with Matchers {
 
     behavior of "Pi"
 
-    it should "evaluate to 8 dp" in {
-        Pi.evaluate(8 dp) shouldBe BigDecimal("3.14159265")
-    }
+    {
 
-    it should "evaluate to 8 sf" in {
-        Pi.evaluate(8 sf) shouldBe BigDecimal("3.1415927")
+        it should "evaluate to 8 dp" in {
+            Pi.evaluate(8 dp) shouldBe BigDecimal("3.14159265")
+        }
+
+        it should "evaluate to 8 sf" in {
+            Pi.evaluate(8 sf) shouldBe BigDecimal("3.1415927")
+        }
+
+        it should "not be empty" in {
+            Pi shouldNot be(Zero)
+        }
+
     }
 
     behavior of "Pi * 2"
@@ -29,12 +37,20 @@ class PiTest extends FlatSpec with Matchers {
 
     behavior of "Pi / 2"
 
-    it should "evaluate to 8 dp" in {
-        Pi / 2 evaluate (8 dp) shouldBe BigDecimal("1.57079633")
-    }
+    {
 
-    it should "evaluate to 8 sf" in {
-        Pi / 2 evaluate (8 sf) shouldBe BigDecimal("1.5707963")
+        it should "evaluate to 8 dp" in {
+            Pi / 2 evaluate (8 dp) shouldBe BigDecimal("1.57079633")
+        }
+
+        it should "evaluate to 8 sf" in {
+            Pi / 2 evaluate (8 sf) shouldBe BigDecimal("1.5707963")
+        }
+
+        it should "not be empty" in {
+            Pi / 2 shouldNot be(Zero)
+        }
+
     }
 
 }

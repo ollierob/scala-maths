@@ -85,14 +85,12 @@ class RealSin(val of: Angle)
 
     override def toConstant = Some(this)
 
-    private lazy val empty: Boolean = {
+    val isEmpty = {
         (reduced / Pi).toRadians.value match {
             case i: Integer => true
             case _ => false
         }
     }
-
-    def isEmpty = empty
 
     override def toString = s"Sin($of)"
 

@@ -17,6 +17,18 @@ class ZeroTest extends FlatSpec with Matchers {
         Zero.isEmpty shouldBe true
     }
 
+    it should "not equal non-empty" in {
+        Zero == One shouldBe false
+    }
+
+    it should "not be strictly positive" in {
+        Zero.isStrictlyPositive shouldBe false
+    }
+
+    it should "be even" in {
+        Zero.isEven shouldBe true
+    }
+
     //    it should "invert" in {
     //        val i = Zero.inverse
     //        i.abs shouldBe Infinity

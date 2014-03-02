@@ -19,7 +19,6 @@ class BetaTest extends FlatSpec with Matchers {
 
     it should "differentiate with respect to x" in {
         val beta = Beta(x, y)
-        println(beta.df(x))
     }
 
     "Beta(1, 1)" should "equal 1" in {
