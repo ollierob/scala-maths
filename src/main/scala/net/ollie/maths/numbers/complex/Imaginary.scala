@@ -2,9 +2,9 @@ package net.ollie.maths.numbers.complex
 
 import net.ollie.maths.{Empty, EmptyConstant}
 import net.ollie.maths.functions.angular.RightAngle
-import net.ollie.maths.functions.numeric.Signum
-import net.ollie.maths.numbers.Real
-import net.ollie.maths.numbers.constants.{Zero, One}
+import net.ollie.maths.functions.numeric.{Modulo, Signum}
+import net.ollie.maths.numbers.{Integer, Real}
+import net.ollie.maths.numbers.constants.{Unity, Zero, One}
 
 /**
  * Created by Ollie on 12/01/14.
@@ -26,9 +26,22 @@ class Imaginary(val coefficient: Real)
 
     override def arg = RightAngle * Signum(coefficient)
 
+    override def *(that: Real): Imaginary = Imaginary(coefficient * that)
+
     def *(that: Imaginary): Real = -(coefficient * that.coefficient)
 
     override def /(that: Real): Imaginary = coefficient / that
+
+    def ^(that: Integer): Complex = {
+        val c: Real = coefficient ^ that
+        val i: Complex = Modulo(that, 4).remainder.toInt.get match {
+            case 0 => One
+            case 1 => ImaginaryUnit
+            case 2 => -One
+            case 3 => -ImaginaryUnit
+        }
+        i * c
+    }
 
     override def equals(that: Complex): Boolean = that match {
         case i: Imaginary => this.coefficient == i.coefficient
@@ -70,7 +83,10 @@ object ImaginaryZero
 }
 
 object ImaginaryUnit
-        extends Imaginary(One) {
+        extends Imaginary(One)
+        with Unity {
+
+    override def abs = super[Unity].abs
 
     override def toString = "i"
 

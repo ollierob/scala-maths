@@ -37,6 +37,11 @@ class ComplexTest extends FlatSpec with Matchers {
             z.isEmpty shouldBe false
         }
 
+        it should "not equal 3 + 2i" in {
+            z == Complex(3, 2) shouldBe false
+            z.equals(Complex(3, 2)) shouldBe false
+        }
+
         it should "abs" in {
             z.abs shouldBe PositiveSquareRoot(13)
         }
@@ -66,7 +71,6 @@ class ComplexTest extends FlatSpec with Matchers {
         it should "divide by 5 + 7i" in {
             val z2 = Complex(5, 7)
             z / z2 shouldBe (Complex(Integer(31) / Integer(74), Integer(1) / Integer(74)))
-            println(z / z2)
         }
 
     }

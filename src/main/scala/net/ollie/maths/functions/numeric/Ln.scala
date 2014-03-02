@@ -134,15 +134,15 @@ trait ComplexLogarithms
 
 }
 
-class ComplexLn(val of: Complex)
+private class ComplexLn(val of: Complex)
         extends ComplexLogarithms {
 
     require(!of.isEmpty)
 
-    def principal = Complex(Ln(of.abs), of.arg)
+    val principal = Complex(Ln(of.abs), of.arg)
 
     def isEmpty = false
 
-    def inverse: Constant = ??? //TODO
+    def inverse = ??? //TODO
 
 }

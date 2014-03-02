@@ -1,29 +1,33 @@
 package net.ollie.maths.numbers.complex
 
 import net.ollie.maths.functions.angular.{Angle, Cos, Sin}
-import net.ollie.maths.numbers.{PositiveReal, Real}
+import net.ollie.maths.numbers.Real
 
 /**
  * Created by Ollie on 12/01/14.
  */
-class PolarComplex protected(val r: PositiveReal, val theta: Angle)
+trait PolarComplex
         extends Complex {
 
-    def re = r * Cos(theta)
+    def r: Real
 
-    def im = r * Sin(theta)
+    def theta: Angle
 
     override def abs = r.abs
 
     override def arg = theta
 
-    override def toString = s"$r * e^($theta i)"
+    def re = abs * Cos(arg)
+
+    def im = abs * Sin(arg)
+
+    override def toString = s"$abs * e^($arg i)"
 
 }
 
 object PolarComplex {
 
-    def apply(r: Real, theta: Angle): PolarComplex = new PolarComplex(r.abs, theta)
+    def apply(r: Real, theta: Angle): PolarComplex = new PolarComplexOf(r, theta)
 
     def apply(z: Complex): PolarComplex = z match {
         case p: PolarComplex => p
@@ -31,3 +35,6 @@ object PolarComplex {
     }
 
 }
+
+private class PolarComplexOf(val r: Real, val theta: Angle)
+        extends PolarComplex

@@ -33,6 +33,8 @@ trait Complex
 
     override def toReal = super[MaybeComplex].toReal
 
+    def ^(that: Complex): ComplexPower = Complex.pow(this, that)
+
     def ?+(that: Constant) = that match {
         case re: Real => Some(this + Complex(re))
         case z: Complex => Some(this + z)
@@ -45,14 +47,16 @@ trait Complex
         case _ => None
     }
 
-    def ?^(that: Constant) = ???
+    def ?^(that: Constant) = None
 
     override def equals(z: ComplexLike): Boolean = z match {
         case z: Complex => this equals z
         case _ => super.equals(z)
     }
 
-    def equals(that: Complex) = this.re == that.re && this.im == that.im
+    def equals(that: Complex) = {
+        this.re == that.re && this.im == that.im
+    }
 
     override def hashCode = re.hashCode * im.hashCode
 
@@ -91,36 +95,44 @@ object Complex
         else Complex(re, Zero)
     }
 
+    def pow(base: Complex, power: Complex): ComplexPower = ComplexPower(base, power)
+
     def polar(r: Real, theta: Angle): PolarComplex = PolarComplex(r, theta)
 
     implicit object RealComplexArithmetic
             extends NumberConversionArithmetic[Real, Complex]
             with AdditionArithmetic[Real, Complex, Complex]
-            with MultiplicationArithmetic[Real, Complex, Complex] {
+            with MultiplicationArithmetic[Real, Complex, Complex]
+            with ExponentiationArithmetic[Real, Complex, ComplexPower] {
 
         def apply(re: Real) = re
+
+        def zero = Complex.zero
+
+        def one = Complex.one
 
         def add(left: Real, right: Complex) = Complex(left) + right
 
         def multiply(left: Real, right: Complex) = Complex(left) * right
 
-        def zero = Complex.zero
-
-        def one = Complex.one
+        def exponentiate(base: Real, power: Complex) = Complex(base) ^ power
 
     }
 
     implicit object ComplexRealArithmetic
             extends AdditionArithmetic[Complex, Real, Complex]
-            with MultiplicationArithmetic[Complex, Real, Complex] {
+            with MultiplicationArithmetic[Complex, Real, Complex]
+            with ExponentiationArithmetic[Complex, Real, ComplexPower] {
+
+        def zero = Complex.zero
+
+        def one = Complex.one
 
         def add(left: Complex, right: Real) = left + Complex(right)
 
         def multiply(left: Complex, right: Real) = left * Complex(right)
 
-        def zero = Complex.zero
-
-        def one = Complex.one
+        def exponentiate(base: Complex, power: Real) = base ^ Complex(power)
 
     }
 
