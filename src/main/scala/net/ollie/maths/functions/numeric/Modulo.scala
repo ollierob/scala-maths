@@ -11,6 +11,8 @@ object Modulo {
         new RealModulo(dividend, divisor)
     }
 
+    def apply(divided: Integer, divisor: Integer): IntegerModulo = new IntegerModulo(divided, divisor)
+
 }
 
 trait Modulo {
@@ -35,5 +37,12 @@ class RealModulo(val dividend: Real, val divisor: Real)
     def quotient = q
 
     override def toString = s"($dividend % $divisor)"
+
+}
+
+class IntegerModulo(override val dividend: Integer, override val divisor: Integer)
+        extends RealModulo(dividend, divisor) {
+
+    override def remainder: Integer = dividend - (divisor * quotient)
 
 }
