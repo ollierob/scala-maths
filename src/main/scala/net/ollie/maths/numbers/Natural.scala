@@ -111,7 +111,7 @@ class ExactNatural(override val int: Int)
         extends ExactInteger(int)
         with Natural {
 
-    require(int >= 0)
+    require(int >= 0, "Int [" + int + "] was not positive!")
 
 }
 
@@ -119,7 +119,7 @@ class ExactBigNatural(override val evaluate: BigInt)
         extends ExactBigInteger(evaluate)
         with Natural {
 
-    require(evaluate >= 0)
+    require(evaluate >= 0, "BigInt [" + evaluate + "] was not positive!")
 
 }
 

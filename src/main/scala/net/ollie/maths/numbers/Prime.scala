@@ -2,6 +2,7 @@ package net.ollie.maths.numbers
 
 /**
  * Created by Ollie on 18/01/14.
+ * @see http://mathworld.wolfram.com/PrimeNumber.html
  */
 trait Prime
         extends Natural {
@@ -24,7 +25,7 @@ object Prime {
     def is(n: Natural)(implicit calculator: PrimeCalculator = DEFAULT_CALCULATOR): Boolean = n match {
         case p: Prime => true
         case _ if n.isEven => false
-        case _ => n == new NextPrime(n)
+        case _ => n == next(n)(calculator)
     }
 
     def next(n: Natural)(implicit calculator: PrimeCalculator = DEFAULT_CALCULATOR): Prime = n match {
@@ -32,8 +33,11 @@ object Prime {
         case _ => new NextPrime(if (n.isEven) n.succ else n)
     }
 
+    /**
+     * Prime-counting function.
+     */
     def pi(n: Natural)(implicit calculator: PrimeCalculator = DEFAULT_CALCULATOR): Natural = {
-        Natural(calculator.pi(n.evaluate))
+        new PrimePi(n)(calculator)
     }
 
 }
@@ -55,6 +59,17 @@ private class KnownPrime(val n: Natural)
         with Prime {
 
     def evaluate = n.evaluate
+
+}
+
+private class PrimePi(val of: Natural)(implicit calculator: PrimeCalculator)
+        extends Natural {
+
+    private lazy val evaluated = calculator.pi(of.evaluate)
+
+    def evaluate = evaluated
+
+    override def toString = s"PrimePi($of)"
 
 }
 

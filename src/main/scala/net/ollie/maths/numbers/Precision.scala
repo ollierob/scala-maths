@@ -1,9 +1,9 @@
 package net.ollie.maths.numbers
 
 import java.math.MathContext
-
 import scala.math.BigDecimal.RoundingMode
 import scala.math.BigDecimal.RoundingMode.RoundingMode
+import Precision._
 
 /**
  * Precision object that allows specification to a number of significant figures, decimal places, or bytes.
@@ -11,15 +11,13 @@ import scala.math.BigDecimal.RoundingMode.RoundingMode
  */
 sealed trait Precision {
 
-    require(digits >= 0)
-
-    def digits: Int
+    def digits: Natural
 
     def apply(bd: BigDecimal)(implicit mode: RoundingMode = Precision.DEFAULT_ROUNDING): BigDecimal
 
     def increase: Precision = increaseBy(1)
 
-    def increaseBy(value: Int): Precision
+    def increaseBy(value: Natural): Precision
 
     def getType: Class[_ <: Precision]
 
@@ -73,15 +71,15 @@ object Precision {
 
 }
 
-class DecimalPlaces(val digits: Int)
+class DecimalPlaces(val digits: Natural)
         extends AnyRef
         with Precision {
 
-    require(digits >= 0)
+    def apply(bd: BigDecimal)(implicit mode: RoundingMode = Precision.DEFAULT_ROUNDING) = {
+        bd.setScale(digits.toInt.get, mode)
+    }
 
-    def apply(bd: BigDecimal)(implicit mode: RoundingMode = Precision.DEFAULT_ROUNDING) = bd.setScale(digits, mode)
-
-    def increaseBy(value: Int) = new DecimalPlaces(this.digits + value)
+    def increaseBy(value: Natural) = new DecimalPlaces(this.digits + value)
 
     override def >(that: Precision) = that match {
         case d: DecimalPlaces => Some(this.digits > d.digits)
@@ -109,19 +107,18 @@ object IntegerPrecision
  * Accurate to N significant figures.
  * @param digits
  */
-class SignificantFigures(val digits: Int)
+class SignificantFigures(val digits: Natural)
         extends AnyRef
         with Precision {
 
-    import Precision._
-
-    require(digits > 0)
+    require(digits.isStrictlyPositive)
+    private val digitsI = digits.toInt.get
 
     def apply(bd: BigDecimal)(implicit mode: RoundingMode = Precision.DEFAULT_ROUNDING) = {
-        bd.setScale(digits, mode).round(new MathContext(digits, mode))
+        bd.setScale(digitsI, mode).round(new MathContext(digitsI, mode))
     }
 
-    def increaseBy(value: Int) = new SignificantFigures(this.digits + value)
+    def increaseBy(value: Natural) = new SignificantFigures(this.digits + value)
 
     override def >(that: Precision) = that match {
         case s: SignificantFigures => Some(this.digits > s.digits)

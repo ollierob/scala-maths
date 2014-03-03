@@ -35,7 +35,7 @@ class RealProduct(override val terms: Seq[Real])
 
     def doApproximatelyEvaluate(precision: Precision) = {
         val evaluated = terms.map(_.approximatelyEvaluate(precision))
-        val totalPrecision = evaluated.foldLeft(precision.digits)((current, term) => current + intLength(term))
+        val totalPrecision = evaluated.foldLeft(precision.digits.asInstanceOf[Integer])((current, term) => current + intLength(term))
         if (totalPrecision <= precision.digits) evaluated.product
         else {
             val newPrecision = precision.increaseBy(totalPrecision - precision.digits)

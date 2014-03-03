@@ -20,8 +20,6 @@ object Pi
         else MACHIN.evaluate(precision) //TODO this is slow!
     }
 
-    def isEmpty = false
-
     def /(that: Natural): PiOrLess = that.toInt match {
         case Some(0) => ???
         case Some(1) => Pi
@@ -35,7 +33,7 @@ object Pi
 }
 
 trait PiOrLess
-        extends PositiveReal
+        extends PositiveNamedReal
 
 class PiOver protected[constants](val over: Natural)
         extends PiOrLess
@@ -43,7 +41,7 @@ class PiOver protected[constants](val over: Natural)
 
     require(!over.isEmpty)
 
-    def isEmpty = Infinite.is(over)
+    override def isEmpty = Infinite.is(over)
 
     def doApproximatelyEvaluate(precision: Precision) = Pi.approximatelyEvaluate(precision) / over.approximatelyEvaluate(precision)
 

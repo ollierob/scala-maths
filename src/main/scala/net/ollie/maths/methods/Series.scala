@@ -13,18 +13,22 @@ import net.ollie.maths.numbers.constants.Zero
  */
 object Series {
 
-    def apply(left: Expression, right: Expression): Expression = (left, right) match {
-        case _ if left.isEmpty => right
-        case _ if right.isEmpty => left
-        case (_, s: Series[_]) => s :+ left
-        case (s: Series[_], _) => s + right
-        case _ => new Series(Seq(left, right))
+    def apply(left: Expression, right: Expression): Expression = {
+        (left, right) match {
+            case _ if left.isEmpty => right
+            case _ if right.isEmpty => left
+            case (_, s: Series[_]) => s :+ left
+            case (s: Series[_], _) => s + right
+            case _ => new Series(Seq(left, right))
+        }
     }
 
-    def apply(terms: Iterable[Expression]): Expression = terms.filterNot(_.isEmpty) match {
-        case Nil => Zero
-        case expr :: Nil => expr
-        case otherwise => new Series(otherwise.toSeq)
+    def apply(terms: Iterable[Expression]): Expression = {
+        terms.filterNot(_.isEmpty) match {
+            case Nil => Zero
+            case expr :: Nil => expr
+            case otherwise => new Series(otherwise.toSeq)
+        }
     }
 
     def apply(f: Integer => Expression, start: Integer, end: Integer): Expression = {
@@ -44,11 +48,21 @@ object Series {
         Seq.tabulate((end - start).toInt.get)(g).sum
     }
 
-    def apply(f: Integer => Expression, start: Integer): Expression = new InfiniteSumOf(f, start)
+    def apply(f: Integer => Expression, start: Integer): Expression = {
+        new InfiniteSumOf(f, start)
+    }
 
-    def apply(f: Integer => Real, start: Integer): Real = new InfiniteRealSum(f, start)
+    def apply(f: Natural => Expression, start: Natural): Expression = {
+        ???
+    }
 
-    def apply(f: Natural => Real, start: Natural): Real = new InfiniteNaturalSum(f, start)
+    def apply(f: Integer => Real, start: Integer): Real = {
+        new InfiniteRealSum(f, start)
+    }
+
+    def apply(f: Natural => Real, start: Natural): Real = {
+        new InfiniteNaturalSum(f, start)
+    }
 
     def apply[N <: Integer](f: (N) => Real, over: Seq[N]) = {
         if (over.isEmpty) Zero

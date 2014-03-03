@@ -36,11 +36,12 @@ object Sinc
 class Sinc(val of: Expression)
         extends Represented {
 
-    def representation = Sin(of) / of
+    def representation = Expression.divide(Sin(of), of)
 
     override def replace(variables: Map[Variable, Expression]) = {
         val d = of.replace(variables)
-        if (d.isEmpty) singularityValue else Sin(of).replace(variables) / d
+        if (d.isEmpty) singularityValue
+        else Sin(of).replace(variables) / d
     }
 
     override def unary_-() = Expression.negate(this)

@@ -21,7 +21,9 @@ trait NumericalIntegrationMethod {
 
     def finite(of: Univariate, from: Real, to: Real): DefiniteIntegral with Real
 
-    def toInfinity(of: Univariate, from: Real): DefiniteIntegral with Real = ??? //new InfiniteIntegral(of, degree)(this)
+    def toInfinity(of: Univariate, from: Real): DefiniteIntegral with Real = {
+        ??? //new InfiniteIntegral(of, degree)(this)
+    }
 
     def betweenInfinities(of: Univariate): DefiniteIntegral = ???
 
@@ -45,7 +47,7 @@ object TrapezoidalIntegrationMethod
 
         def evaluationIterator(startPrecision: Precision) = new EvaluationIterator() {
 
-            var N: Int = Math.max(4, startPrecision.digits)
+            var N: Int = Math.max(4, startPrecision.digits.toInt.get)
 
             def next(nth: Natural, precision: Precision): BigDecimal = {
                 val h = delta / N
@@ -95,7 +97,7 @@ object SimpsonsIntegrationMethod
 
         def evaluationIterator(startPrecision: Precision) = new EvaluationIterator() {
 
-            var n: Int = even(Math.max(4, startPrecision.digits))
+            var n: Int = even(Math.max(4, startPrecision.digits.toInt.get))
 
             def next(nth: Natural, precision: Precision) = {
                 val h = interval / n

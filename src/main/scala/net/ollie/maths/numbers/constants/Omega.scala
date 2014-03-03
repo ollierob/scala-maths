@@ -1,6 +1,6 @@
 package net.ollie.maths.numbers.constants
 
-import net.ollie.maths.numbers.{Real, Natural, Precision, PositiveReal}
+import net.ollie.maths.numbers.{Real, Natural, Precision}
 import net.ollie.maths.methods.{EvaluationIterator, IterativelyEvaluated}
 import net.ollie.maths.functions.numeric.Exp
 
@@ -10,7 +10,7 @@ import net.ollie.maths.functions.numeric.Exp
  * @see http://oeis.org/A030178
  */
 object Omega
-        extends PositiveReal {
+        extends PositiveNamedReal {
 
     private val OMEGA_100 = BigDecimal("0.5671432904097838729999686622103555497538157871865125081351310792230457930866845666932194469617522945")
     private lazy val ITERATION = new IterativelyEvaluated {
@@ -30,8 +30,6 @@ object Omega
         }
 
     }
-
-    def isEmpty = false
 
     def evaluate(precision: Precision) = {
         if (precision.digits < 100) precision(OMEGA_100)
