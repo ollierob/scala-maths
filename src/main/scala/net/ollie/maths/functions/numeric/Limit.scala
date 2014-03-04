@@ -17,7 +17,7 @@ object Limit {
         apply(function, limit, false)
     }
 
-    def apply(function: Variable => Univariate, limit: Real, fromAbove: Boolean): Real = {
+    private def apply(function: Variable => Univariate, limit: Real, fromAbove: Boolean): Real = {
         val x = Variable.virtual
         new RealLimit(function(x), limit, fromAbove)
     }

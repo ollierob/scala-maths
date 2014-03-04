@@ -1,7 +1,7 @@
 package net.ollie.maths.functions.hypergeometric
 
 import net.ollie.maths._
-import net.ollie.maths.functions.{RealFunctionBuilder, UnivariateFunction}
+import net.ollie.maths.functions.{BuiltFunction, RealFunctionBuilder, UnivariateFunction}
 import net.ollie.maths.functions.numeric.Exp
 import net.ollie.maths.methods.{Integrate, SimpsonsIntegrationMethod}
 import net.ollie.maths.numbers._
@@ -29,25 +29,24 @@ object Gamma
 
 }
 
-trait Gamma {
+trait Gamma
+        extends UpperIncompleteGamma {
 
-    def of: Expression
+    final override def from = Zero
 
     override def toString = s"Gamma($of)"
 
 }
 
 class GammaOf(val of: Expression)
-        extends Composition
+        extends BuiltFunction
         with Gamma {
-
-    protected[this] def at(n: Constant) = Gamma(n)
-
-    protected[this] def apply(expr: Expression) = Gamma(expr)
 
     def isEmpty = false
 
     protected[this] def derivative(z: Expression) = Gamma(z) * Digamma(z)
+
+    protected[this] def builder = Gamma
 
     override def toString = s"Gamma($of)"
 
@@ -58,9 +57,9 @@ class RealGamma(override val of: Real)
         with Gamma
         with CachedEvaluated {
 
-    private lazy val integral = Integrate(fn _, Zero, Infinity)(SimpsonsIntegrationMethod)
-
     private def fn(t: Variable): Univariate = (t ^ (of - 1)) * Exp(-t)
+
+    private lazy val integral = Integrate(fn _, Zero, Infinity)(SimpsonsIntegrationMethod)
 
     protected[this] override def doEvaluate(precision: Precision) = integral.evaluate(precision)
 
