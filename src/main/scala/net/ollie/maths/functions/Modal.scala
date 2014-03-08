@@ -7,9 +7,13 @@ import net.ollie.maths.numbers.{Integer, Natural}
  */
 trait Modal {
 
-    def l: Natural
+    def degree: Natural
 
-    def m: Integer
+    def l = degree
+
+    def order: Integer
+
+    def m = order
 
 }
 
@@ -19,14 +23,14 @@ object ModalPair {
 
 }
 
-class ModalPair(val l: Natural, val m: Integer)
+class ModalPair(val degree: Natural, val order: Integer)
         extends Modal {
 
     override def equals(that: Any) = that match {
-        case pair: ModalPair => this.l == pair.l && this.m == pair.m
+        case pair: ModalPair => this.degree == pair.degree && this.order == pair.order
         case _ => super.equals(that)
     }
 
-    override def toString = s"($l, $m)"
+    override def toString = s"($degree, $order)"
 
 }

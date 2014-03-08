@@ -22,9 +22,9 @@ class SphericalHarmonicTest extends FlatSpec with Matchers {
         val ylm = SphericalHarmonic(0, 0, theta, phi)
 
         it should "have zero order and degree" in {
-            ylm.l shouldBe Zero
+            ylm.degree shouldBe Zero
             ylm.order shouldBe Zero
-            ylm.m shouldBe Zero
+            ylm.order shouldBe Zero
             ylm.degree shouldBe Zero
         }
 
@@ -47,8 +47,8 @@ class SphericalHarmonicTest extends FlatSpec with Matchers {
 
         it should "conjugate" in {
             val c = ylm.conjugate
-            c.l shouldBe ylm.l
-            c.m shouldBe -(ylm.m)
+            c.degree shouldBe ylm.degree
+            c.order shouldBe -(ylm.order)
             c.conjugate shouldBe ylm
         }
 

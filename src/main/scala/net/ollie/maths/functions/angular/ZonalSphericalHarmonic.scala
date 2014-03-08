@@ -14,7 +14,7 @@ import net.ollie.maths.numbers.constants.{Zero, One, Pi}
 trait ZonalSphericalHarmonic
         extends SphericalHarmonic {
 
-    override final def m = Zero
+    override final def order = Zero
 
     final def phi = Zero
 
@@ -22,7 +22,7 @@ trait ZonalSphericalHarmonic
 
     override final def conjugate: ZonalSphericalHarmonic = this
 
-    override def toString = "Z(" + l + ")"
+    override def toString = "Z(" + degree + ")"
 
 }
 
@@ -41,7 +41,7 @@ object ZeroZeroHarmonic
 
     def theta = Zero
 
-    def l = Zero
+    def degree = Zero
 
     private final val value: Real = PositiveSquareRoot(One / Pi) / 2
 
@@ -49,13 +49,15 @@ object ZeroZeroHarmonic
 
 }
 
-class LZeroHarmonic(val l: Natural, val theta: Expression)
+class LZeroHarmonic(val degree: Natural, val theta: Expression)
         extends AnyRef
         with ZonalSphericalHarmonic
         with Represented {
 
-    private val func: Expression = PositiveSquareRoot(((2 * l + 1) !) / (Pi * Natural(4))) * LegendrePolynomial(l, Cos(theta))
+    private lazy val repr: Expression = {
+        PositiveSquareRoot(((2 * degree + 1) !) / (Pi * Natural(4))) * LegendrePolynomial(degree)(Cos(theta))
+    }
 
-    def representation = func
+    def representation = repr
 
 }

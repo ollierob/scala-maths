@@ -13,11 +13,7 @@ import net.ollie.maths.sequences.HermiteSequence
 trait HermitePolynomial
         extends Polynomial {
 
-    def n: Natural
-
-    def of: Expression
-
-    override def toString = s"HermiteP($n)($of)"
+    override def toString = s"HermiteP($degree)($of)"
 
 }
 
@@ -38,16 +34,16 @@ class ZeroHermitePolynomial(val of: Expression)
         extends ConstantPolynomial(One)
         with HermitePolynomial {
 
-    def n = Zero
+    def degree = Zero
 
 }
 
-class HermitePolynomialOf(val n: Natural)(val of: Expression)
-extends HermitePolynomial {
+class HermitePolynomialOf(val degree: Natural)(val of: Expression)
+        extends HermitePolynomial {
 
     private lazy val repr: Expression = {
-        if (of.isEmpty) HermiteSequence(n)
-        else (MinusOne ^ n) * Exp(of ^ 2) * Differentiate(Exp((-of) ^ 2), n)
+        if (of.isEmpty) HermiteSequence(degree)
+        else (MinusOne ^ degree) * Exp(of ^ 2) * Differentiate(Exp((-of) ^ 2), degree)
     }
 
     def representation = repr

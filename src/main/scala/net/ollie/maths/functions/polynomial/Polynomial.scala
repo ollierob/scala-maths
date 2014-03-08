@@ -3,6 +3,7 @@ package net.ollie.maths.functions.polynomial
 import net.ollie.maths._
 import net.ollie.maths.functions.Represented
 import net.ollie.maths.numbers.constants.Zero
+import net.ollie.maths.numbers.Natural
 
 /**
  * Created by Ollie on 08/01/14.
@@ -10,6 +11,10 @@ import net.ollie.maths.numbers.constants.Zero
  */
 trait Polynomial
         extends Represented {
+
+    def degree: Natural
+
+    def of: Expression
 
     override def unary_-(): Polynomial = new NegatedPolynomial(this)
 
@@ -20,6 +25,8 @@ class NegatedPolynomial(override val of: Polynomial)
         with Polynomial {
 
     def representation = -(of.representation)
+
+    def degree = of.degree
 
     override def variables = super[Polynomial].variables
 
@@ -33,11 +40,11 @@ class NegatedPolynomial(override val of: Polynomial)
 
 }
 
-object ZeroPolynomial
+trait EmptyPolynomial
         extends Polynomial
         with Empty {
 
-    def representation = Zero
+    def representation: Expression with Empty = Zero
 
     override def unary_-(): Polynomial with Empty = this
 

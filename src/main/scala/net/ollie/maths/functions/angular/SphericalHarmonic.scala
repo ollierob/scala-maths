@@ -15,25 +15,9 @@ trait SphericalHarmonic
         extends Expression
         with Modal {
 
-    require(l >= m.abs)
-
-    /**
-     * The degree.
-     * @return
-     */
-    def l: Natural
-
-    def degree = l
-
-    /**
-     * The order. Should satisfy |m| <= l.
-     * @return
-     */
-    def m: Integer
+    require(degree >= order.abs)
 
     def minusM: SphericalHarmonic
-
-    def order = m
 
     def theta: Expression
 
@@ -41,7 +25,7 @@ trait SphericalHarmonic
 
     def conjugate: SphericalHarmonic = SphericalHarmonic.conjugate(this)
 
-    override def toString = s"Y($l,$m)"
+    override def toString = s"Y($degree,$order)"
 
 }
 
@@ -62,33 +46,33 @@ object SphericalHarmonic {
 
 }
 
-private class EmptyHarmonic(val l: Natural, val m: Integer, val theta: Expression, val phi: Expression)
+private class EmptyHarmonic(val degree: Natural, val order: Integer, val theta: Expression, val phi: Expression)
         extends SphericalHarmonic
         with Empty {
 
-    def minusM = SphericalHarmonic(l, -m, theta, phi)
+    def minusM = SphericalHarmonic(degree, -order, theta, phi)
 
     override def df(x: Variable) = Zero
 
-    def replace(variables: Map[Variable, Expression]) = SphericalHarmonic(l, m, theta.replace(variables), phi.replace(variables))
+    def replace(variables: Map[Variable, Expression]) = SphericalHarmonic(degree, order, theta.replace(variables), phi.replace(variables))
 
 }
 
-class LMHarmonic(val l: Natural, val m: Integer, val theta: Expression, val phi: Expression)
+class LMHarmonic(val degree: Natural, val order: Integer, val theta: Expression, val phi: Expression)
         extends SphericalHarmonic
         with Represented {
 
-    require(l >= m.abs)
+    require(degree >= order.abs)
 
-    def lmm: Natural = l - m
+    def lmm: Natural = degree - order
 
-    def lpm: Natural = l + m
+    def lpm: Natural = degree + order
 
-    def representation = (PositiveSquareRoot(((2 * l) + 1) * (lmm !) / (4 * Pi * (lpm !)))
-            * AssociatedLegendrePolynomial(l, m, Cos(theta))
-            * Exp(i * m * phi))
+    def representation = (PositiveSquareRoot(((2 * degree) + 1) * (lmm !) / (4 * Pi * (lpm !)))
+            * AssociatedLegendrePolynomial(degree, order)(Cos(theta))
+            * Exp(i * order * phi))
 
-    def minusM = SphericalHarmonic(l, -m, theta, phi)
+    def minusM = SphericalHarmonic(degree, -order, theta, phi)
 
 }
 
@@ -96,13 +80,13 @@ class ConjugatedSphericalHarmonic(val ylm: SphericalHarmonic)
         extends SphericalHarmonic
         with Represented {
 
-    def l = ylm.l
+    def degree = ylm.degree
 
-    def m = -(ylm.m)
+    def order = -(ylm.order)
 
     override def conjugate = ylm
 
-    def representation = (MinusOne ^ m) * ylm.minusM
+    def representation = (MinusOne ^ order) * ylm.minusM
 
     def theta = ylm.theta
 

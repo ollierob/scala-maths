@@ -11,24 +11,24 @@ trait LegendrePolynomial
         extends AssociatedLegendrePolynomial
         with Polynomial {
 
-    override def m = Zero
+    override def order = Zero
 
     override def isEmpty = false
 
-    override def toString = s"LegendreP($l)($of)"
+    override def toString = s"LegendreP($degree)($of)"
 
 }
 
 object LegendrePolynomial {
 
-    def apply(l: Natural, z: Expression): LegendrePolynomial = l match {
+    def apply(l: Natural)(z: Expression): LegendrePolynomial = l match {
         case Zero => new ZeroLegendrePolynomial(z)
         case One => new OneLegendrePolynomial(z)
         case _ => new SomeLegendrePolynomial(l)(z)
     }
 
     def apply(l: Natural, re: Real): Real = {
-        LegendrePolynomial(l, re.asInstanceOf[Expression]).toConstant match {
+        LegendrePolynomial(l)(re).toConstant match {
             case Some(re: Real) => re
             case _ => ???
         }
@@ -42,26 +42,30 @@ class ZeroLegendrePolynomial(val of: Expression)
 
     //could mixin Natural, but this makes negation ugly.
 
-    def l = Zero
+    def degree = Zero
 
 }
 
 class OneLegendrePolynomial(val of: Expression)
         extends LegendrePolynomial {
 
-    def l = One
+    def degree = One
 
     def representation = of
 
 }
 
-class SomeLegendrePolynomial(val l: Natural)(val of: Expression)
+class SomeLegendrePolynomial(val degree: Natural)(val of: Expression)
         extends LegendrePolynomial {
 
-    require(l > One)
+    require(degree > One)
 
-    def representation = ((((2 * l) - 1) * of * LegendrePolynomial(l - 1, of)) - ((l - 1) * LegendrePolynomial(l - 2, of))) / l
+    def representation = {
+        ((((2 * degree) - 1) * of * LegendrePolynomial(degree - 1)(of)) - ((degree - 1) * LegendrePolynomial(degree - 2)(of))) / degree
+    }
 
-    override def df(x: Variable) = l * (x * LegendrePolynomial(l, x) - LegendrePolynomial(l - 1, x)) / ((x ^ 2) + 1)
+    override def df(x: Variable) = {
+        degree * (x * LegendrePolynomial(degree)(x) - LegendrePolynomial(degree - 1)(x)) / ((x ^ 2) + 1)
+    }
 
 }

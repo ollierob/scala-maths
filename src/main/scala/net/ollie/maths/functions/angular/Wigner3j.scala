@@ -43,17 +43,17 @@ trait Wigner3j
 
     def lAndM: CyclicTuple3[ModalPair, ModalPair, ModalPair]
 
-    def l1: Natural = lAndM._1.l
+    def l1: Natural = lAndM._1.degree
 
-    def l2: Natural = lAndM._2.l
+    def l2: Natural = lAndM._2.degree
 
-    def l3: Natural = lAndM._3.l
+    def l3: Natural = lAndM._3.degree
 
-    def m1: Integer = lAndM._1.m
+    def m1: Integer = lAndM._1.order
 
-    def m2: Integer = lAndM._2.m
+    def m2: Integer = lAndM._2.order
 
-    def m3: Integer = lAndM._3.m
+    def m3: Integer = lAndM._3.order
 
     def isEmpty = !evenSum || !zeroSum || !triangleInequality
 

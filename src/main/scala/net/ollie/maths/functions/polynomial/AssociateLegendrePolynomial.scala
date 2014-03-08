@@ -10,27 +10,25 @@ import net.ollie.maths.numbers.constants.Zero
  */
 trait AssociatedLegendrePolynomial
         extends Modal
-        with Represented {
+        with Polynomial {
 
-    def of: Expression
-
-    override def toString = s"LegendreP($l, $m)($of)"
+    override def toString = s"LegendreP($degree, $order)($of)"
 
 }
 
 object AssociatedLegendrePolynomial {
 
-    def apply(l: Int, m: Int, x: Expression): AssociatedLegendrePolynomial = apply(Integer(l), Integer(m), x)
+    def apply(l: Int, m: Int)(x: Expression): AssociatedLegendrePolynomial = apply(Integer(l), Integer(m))(x)
 
-    def apply(l: Integer, m: Integer, x: Expression): AssociatedLegendrePolynomial = l match {
-        case _ if l >= 0 => apply(l.abs, m, x)
-        case _ => apply(l.abs - 1, m, x)
+    def apply(l: Integer, m: Integer)(x: Expression): AssociatedLegendrePolynomial = l match {
+        case _ if l >= 0 => apply(l.abs, m)(x)
+        case _ => apply(l.abs - 1, m)(x)
     }
 
-    def apply(l: Natural, m: Integer, x: Expression): AssociatedLegendrePolynomial = m match {
-        case Zero => LegendrePolynomial(l, x)
-        case _ if m.abs > l => new EmptyAssociatedLegendrePolynomial(l, m, x)
-        case _ => new RegularAssociatedLegendrePolynomial(l, m, x)
+    def apply(l: Natural, m: Integer)(x: Expression): AssociatedLegendrePolynomial = m match {
+        case Zero => LegendrePolynomial(l)(x)
+        case _ if m.abs > l => new EmptyAssociatedLegendrePolynomial(l, m)(x)
+        case _ => new RegularAssociatedLegendrePolynomial(l, m)(x)
     }
 
 }
@@ -38,33 +36,19 @@ object AssociatedLegendrePolynomial {
 /**
  * When |m| > l the polynomial is empty.
  */
-class EmptyAssociatedLegendrePolynomial(val l: Natural, val m: Integer, val of: Expression)
+private class EmptyAssociatedLegendrePolynomial(val degree: Natural, val order: Integer)(val of: Expression)
         extends AssociatedLegendrePolynomial
-        with Empty {
+        with EmptyPolynomial
 
-    require(m.abs > l)
-
-    def representation = Zero
-
-    override def isEmpty = super[Empty].isEmpty
-
-    override def variables = super[Empty].variables
-
-    override def toConstant = super[Empty].toConstant
-
-    override def df(x: Variable) = Zero
-
-}
-
-class RegularAssociatedLegendrePolynomial(val l: Natural, val m: Integer, val of: Expression)
+private class RegularAssociatedLegendrePolynomial(val degree: Natural, val order: Integer)(val of: Expression)
         extends AssociatedLegendrePolynomial {
 
     import net.ollie.maths.functions.polynomial.{AssociatedLegendrePolynomial => Plm}
 
-    require(l <= m.abs)
+    require(degree <= order.abs)
 
     def representation = {
-        ((((2 * l) - 1) * Plm(l - 1, m, of)) - ((l + m) * Plm(l - 2, m, of))) / (l - m + 1)
+        ((((2 * l) - 1) * Plm(degree - 1, order)(of)) - ((degree + order) * Plm(degree - 2, order)(of))) / (degree - order + 1)
     }
 
 }

@@ -18,16 +18,16 @@ class LegendrePolynomialTest extends FlatSpec with Matchers {
 
     {
 
-        val p1 = LegendrePolynomial(1, x)
+        val p1 = LegendrePolynomial(1)(x)
 
         it should "be x" in {
             LegendrePolynomial(1, Zero) shouldBe Zero
             LegendrePolynomial(1, Pi) shouldBe Pi
-            LegendrePolynomial(1, x).replace(x, Pi).toConstant shouldBe Some(Pi)
+            LegendrePolynomial(1)(x).replace(x, Pi).toConstant shouldBe Some(Pi)
         }
 
         it should "differentiate" in {
-            LegendrePolynomial(1, x).df(x) shouldBe One
+            LegendrePolynomial(1)(x).df(x) shouldBe One
         }
 
     }
@@ -36,7 +36,7 @@ class LegendrePolynomialTest extends FlatSpec with Matchers {
 
     {
 
-        val p2 = LegendrePolynomial(2, x)
+        val p2 = LegendrePolynomial(2)(x)
 
         it should "be (3x^2 - 1)/2" in {
             p2.replace(x, Zero).toConstant shouldBe Some(-One / 2)

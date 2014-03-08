@@ -25,7 +25,7 @@ object BernoulliSequence
     protected[this] def initial = Map(Zero -> One, One -> -Half)
 
     protected[this] def create(n: Natural): Rational = n.toInt match {
-        case Some(m) => new BernoulliNumber(m, calculator)
+        case Some(m) => new SmallBernoulliNumber(m, calculator)
         case _ => ??? //TODO
     }
 
@@ -33,7 +33,7 @@ object BernoulliSequence
 
 }
 
-private class BernoulliNumber(val n: Int, val calculator: Bernoulli)
+private class SmallBernoulliNumber(val n: Int, val calculator: Bernoulli)
         extends Rational
         with ApproximatelyEvaluated {
 

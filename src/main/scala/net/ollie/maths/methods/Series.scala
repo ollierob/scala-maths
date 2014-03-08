@@ -33,7 +33,12 @@ object Series {
 
     def apply(f: Integer => Expression, start: Integer, end: Integer): Expression = {
         if (end < start) Zero
-        else new FiniteSumOf(f, start, end)
+        else new IntegerFiniteSumOf(f, start, end)
+    }
+
+    def apply(f: Natural => Expression, start: Natural, end: Natural): Expression = {
+        if (end < start) Zero
+        else new NaturalFiniteSumOf(f, start, end)
     }
 
     def apply(f: Integer => Real, start: Integer, end: Integer): Real = {
@@ -109,16 +114,32 @@ class Series[+T <: Expression] protected(val terms: Seq[T])
 
 }
 
-private class FiniteSumOf(f: (Integer) => Expression, start: Integer, end: Integer)
+private class NaturalFiniteSumOf(f: (Natural) => Expression, start: Natural, end: Natural)
+        extends FiniteSumOf(f, start, end) {
+
+    override def add(i: Int): Expression = f(start + i)
+
+}
+
+private class IntegerFiniteSumOf(f: (Integer) => Expression, start: Integer, end: Integer)
+        extends FiniteSumOf(f, start, end) {
+
+    override def add(i: Int): Expression = f(start + i)
+
+}
+
+private abstract class FiniteSumOf[I <: Integer](f: (I) => Expression, start: I, end: I)
         extends Expression {
 
     private val size = (end - start).toInt.get
 
     private lazy val series: Expression = {
         val terms: mutable.ArrayBuffer[Expression] = new mutable.ArrayBuffer[Expression](size)
-        for (i <- 0 to size) terms += f(start + i)
+        for (i <- 0 to size) terms += add(i) //f(start + i)
         Series(terms)
     }
+
+    protected[this] def add(i: Int): Expression
 
     def unary_-() = Expression.negate(this)
 
