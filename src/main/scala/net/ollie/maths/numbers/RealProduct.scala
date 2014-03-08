@@ -24,10 +24,12 @@ object RealProduct {
 
 }
 
-class RealProduct(override val terms: Seq[Real])
-        extends ConstantProduct(terms)
+private class RealProduct(override val terms: Seq[Real])
+        extends ConstantProduct(terms)(Real)
         with Real
         with ApproximatelyEvaluated {
+
+    override protected[this] def apply(terms: Seq[Real]) = RealProduct(terms)
 
     override def ?*(that: Real) = Some(RealProduct(simplify(terms :+ that)))
 

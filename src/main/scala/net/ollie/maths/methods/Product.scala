@@ -37,9 +37,17 @@ object Product {
 }
 
 class Product[+T <: Expression](val terms: Seq[T])
-        extends Aggregate {
+        extends Aggregate
+        with Multiplied {
 
     require(!terms.isEmpty)
+
+    def left: T = terms.head
+
+    def right: Expression = terms match {
+        case head :: Nil => One
+        case head :: tail => Product(tail)
+    }
 
     override def ?*(that: Expression)(leftToRight: Boolean) = Some(if (leftToRight) tailTimes(that) else headTimes(that))
 
@@ -100,7 +108,7 @@ class Product[+T <: Expression](val terms: Seq[T])
         }
     }
 
-    def isEmpty = terms.exists(_.isEmpty)
+    override def isEmpty = terms.exists(_.isEmpty)
 
     def toConstant: Option[Constant] = {
         val constants = terms.map(_.toConstant)
@@ -123,8 +131,6 @@ class Product[+T <: Expression](val terms: Seq[T])
     }
 
     override def toString = terms.mkString("(", " * ", ")")
-
-    override def hashCode = terms.hashCode
 
 }
 

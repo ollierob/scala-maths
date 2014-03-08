@@ -228,8 +228,10 @@ class MassiveSeries(override val terms: Seq[Massive])
 }
 
 class MassiveProduct(override val terms: Seq[Massive])
-        extends ConstantProduct(terms)
+        extends ConstantProduct(terms)(Massive)
         with Massive {
+
+    override protected[this] def apply(terms: Seq[Massive]) = Massive.product(terms)
 
     override def *(that: Massive) = Massive.product(simplify(that match {
         case p: MassiveProduct => terms ++ p.terms

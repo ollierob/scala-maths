@@ -132,9 +132,20 @@ abstract class ConstantSeries[N <: Constant](val terms: Seq[N])
 }
 
 abstract class ConstantProduct[N <: Constant](val terms: Seq[N])
-        extends Constant {
+        (implicit identity: NumberIdentityArithmetic[N])
+        extends Constant
+        with Multiplied {
 
     require(!terms.isEmpty)
+
+    def left: N = terms.head
+
+    def right: N = terms match {
+        case head :: Nil => identity.one
+        case head :: tail => apply(tail)
+    }
+
+    protected[this] def apply(terms: Seq[N]): N
 
     protected[this] def simplify(terms: Seq[N]): Seq[N] = {
         var simplified = false
@@ -153,7 +164,9 @@ abstract class ConstantProduct[N <: Constant](val terms: Seq[N])
 
     protected[this] def tryMultiply(left: N, right: N): Option[N]
 
-    def isEmpty = terms.find(_.isEmpty).isDefined
+    override def isEmpty = terms.exists(_.isEmpty)
+
+    override def hashCode = terms.hashCode
 
     override def toString = terms.mkString("(", " * ", ")")
 
