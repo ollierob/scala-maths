@@ -10,6 +10,17 @@ import net.ollie.maths.functions.numeric.Exp
  * Created by Ollie on 02/03/14.
  * @see http://mathworld.wolfram.com/IncompleteGammaFunction.html
  */
+trait UpperIncompleteGamma
+        extends Expression {
+
+    def of: Expression
+
+    def from: Expression
+
+    override def toString = s"IncompleteGamma($from:$Infinity)($of)"
+
+}
+
 object UpperIncompleteGamma
         extends HomogeneousBivariateFunction[Real] {
 
@@ -20,17 +31,6 @@ object UpperIncompleteGamma
     def apply(of: Expression, from: Expression): UpperIncompleteGamma = {
         new UpperIncompleteGammaOf(of, from)
     }
-
-}
-
-trait UpperIncompleteGamma
-        extends Expression {
-
-    def of: Expression
-
-    def from: Expression
-
-    override def toString = s"IncompleteGamma($from:$Infinity)($of)"
 
 }
 

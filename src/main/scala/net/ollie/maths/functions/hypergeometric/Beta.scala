@@ -12,10 +12,21 @@ import java.util.Objects
  * Created by Ollie on 22/01/14.
  * @see http://mathworld.wolfram.com/BetaFunction.html
  */
+trait Beta
+        extends Expression {
+
+    def x: Expression
+
+    def y: Expression
+
+    override def toString = s"Beta($x, $y)"
+
+}
+
 object Beta
         extends SymmetricBivariateFunction[Real, Complex] {
 
-    def apply(x: Expression, y: Expression): Expression = new Beta(x, y)
+    def apply(x: Expression, y: Expression): Beta = new BetaOf(x, y)
 
     def apply(x: Real, y: Real): Complex = (x, y) match {
         case (Zero, Zero) => empty
@@ -29,8 +40,9 @@ object Beta
 
 }
 
-class Beta(val x: Expression, val y: Expression)
-        extends Represented {
+class BetaOf(val x: Expression, val y: Expression)
+        extends Beta
+        with Represented {
 
     def representation = Gamma(x) * Gamma(y) / Gamma(x + y)
 
@@ -42,16 +54,16 @@ class Beta(val x: Expression, val y: Expression)
 
     override def hashCode = Objects.hash(x, y)
 
-    override def toString = s"Beta($x, $y)"
-
 }
 
-class RealBeta(override val x: Real, override val y: Real)
-        extends Beta(x, y)
+class RealBeta(val x: Real, val y: Real)
+        extends Beta
         with Real
         with CachedEvaluated {
 
-    private val series: Real = (x + y) * Product(nth _, One) / (x * y)
+    def isEmpty = false //TODO
+
+    private lazy val series: Real = (x + y) * Product(nth _, One) / (x * y)
 
     private def nth(n: Natural): Real = (1 + ((x * y) / (n * (x + y + n)))).inverse
 

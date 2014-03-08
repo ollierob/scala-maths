@@ -10,6 +10,15 @@ import net.ollie.maths.CachedEvaluated
  * Created by Ollie on 17/02/14.
  * @see http://mathworld.wolfram.com/HarmonicNumber.html
  */
+trait Harmonic
+        extends GeneralizedHarmonic {
+
+    def power = One
+
+    override def toString = s"Harmonic($degree)"
+
+}
+
 object Harmonic
         extends UnivariateFunction[Natural, Real] {
 
@@ -17,15 +26,6 @@ object Harmonic
         if (degree < 10) new SmallRealHarmonic(degree)
         else new LargeRealHarmonic(degree)
     }
-
-}
-
-trait Harmonic
-        extends GeneralizedHarmonic {
-
-    def power = One
-
-    override def toString = s"Harmonic($degree)"
 
 }
 

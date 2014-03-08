@@ -12,6 +12,15 @@ import net.ollie.maths.numbers.constants.Zero
  * Created by Ollie on 18/01/14.
  * @see http://mathworld.wolfram.com/GammaFunction.html
  */
+trait Gamma
+        extends UpperIncompleteGamma {
+
+    final override def from = Zero
+
+    override def toString = s"Gamma($of)"
+
+}
+
 object Gamma
         extends RealFunctionBuilder
         with UnivariateFunction[Real, Real] {
@@ -26,15 +35,6 @@ object Gamma
     protected[this] def create(expr: Expression) = new GammaOf(expr)
 
     protected[this] def empty = ComplexInfinity
-
-}
-
-trait Gamma
-        extends UpperIncompleteGamma {
-
-    final override def from = Zero
-
-    override def toString = s"Gamma($of)"
 
 }
 

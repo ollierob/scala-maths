@@ -12,6 +12,13 @@ import net.ollie.maths.functions.BivariateFunction
  * @see http://mathworld.wolfram.com/BernoulliPolynomial.html
  * @see [[net.ollie.maths.sequences.BernoulliSequence]]
  */
+trait BernoulliPolynomial
+        extends Polynomial {
+
+    override def toString = s"BernoulliPolynomial($degree)($of)"
+
+}
+
 object BernoulliPolynomial
         extends BivariateFunction[Natural, Real, Real] {
 
@@ -23,13 +30,6 @@ object BernoulliPolynomial
         case Some(re) => re
         case _ => ???
     }
-
-}
-
-trait BernoulliPolynomial
-        extends Polynomial {
-
-    override def toString = s"Bernoulli($degree)($of)"
 
 }
 

@@ -8,6 +8,13 @@ import net.ollie.maths.functions.{BivariateFunction, Represented}
  * Created by Ollie on 04/03/14.
  * @see http://mathworld.wolfram.com/EulerPolynomial.html
  */
+trait EulerPolynomial
+        extends Polynomial {
+
+    override def toString = s"EulerPolynomial($degree)($of)"
+
+}
+
 object EulerPolynomial
         extends BivariateFunction[Natural, Real, Real] {
 
@@ -19,13 +26,6 @@ object EulerPolynomial
         case Some(re) => re
         case _ => ???
     }
-
-}
-
-trait EulerPolynomial
-        extends Polynomial {
-
-    override def toString = s"EulerPolynomial($degree)($of)"
 
 }
 
