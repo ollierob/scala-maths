@@ -22,7 +22,7 @@ trait Real
 
     override def unary_-(): Real = Real.negate(this)
 
-    override def df(x: Variable): Real with EmptyConstant = Zero
+    override def df(x: Variable): Real with Empty = Zero
 
     def inverse: Real = Real.inverse(this)
 

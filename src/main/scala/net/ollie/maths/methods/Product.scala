@@ -121,7 +121,7 @@ class Product[+T <: Expression](val terms: Seq[T])
         result.get ?*? current.get
     }
 
-    def df(x: Variable) = {
+    override def df(x: Variable) = {
         var sum: Expression = Zero
         for (i <- 0 to terms.length - 1) {
             val d: Expression = terms(i).df(x)

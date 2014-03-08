@@ -103,6 +103,8 @@ class PrincipalPositiveRealPower(val base: PositiveReal, val power: Real)
         with Exponentiated
         with CachedEvaluated {
 
+    override def df(x: Variable) = super[PositiveReal].df(x)
+
     protected[this] def doEvaluate(precision: Precision): BigDecimal = {
         BigDecimalMath.pow(base.evaluate(precision).underlying(), power.evaluate(precision).underlying())
     }

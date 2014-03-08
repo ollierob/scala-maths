@@ -2,7 +2,7 @@ package net.ollie.maths.numbers
 
 import net.ollie.maths.numbers.constants.{Zero, One}
 import org.nevec.rjm.BigDecimalMath
-import net.ollie.maths.{Exponentiated, CachedEvaluated}
+import net.ollie.maths.{Variable, Exponentiated, CachedEvaluated}
 import net.ollie.maths.numbers.complex.Complex
 import net.ollie.maths.functions.numeric.Roots
 
@@ -120,5 +120,7 @@ class PrincipalRealToIntegerPower(val base: Real, val power: Integer)
         val bd: BigDecimal = BigDecimalMath.pow(baseAbs.evaluate(precision).underlying(), power.evaluate(precision).underlying())
         if (negate) -bd else bd
     }
+
+    override def df(x: Variable) = super[Real].df(x)
 
 }

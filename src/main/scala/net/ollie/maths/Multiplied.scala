@@ -14,6 +14,10 @@ trait Multiplied
 
     def right: Expression
 
+    override def df(x: Variable): Expression = {
+        (left.df(x) * right) + (left * right.df(x))
+    }
+
     override def isEmpty = left.isEmpty || right.isEmpty
 
     override def toString = s"($left * $right)"

@@ -1,7 +1,7 @@
 package net.ollie.maths.numbers.complex
 
 import net.ollie.maths.numbers.{Integer, Real, Multivalued}
-import net.ollie.maths.Exponentiated
+import net.ollie.maths.{Variable, Exponentiated}
 import net.ollie.maths.functions.numeric.{Exp, ComplexLogarithms, Ln}
 import net.ollie.maths.functions.angular.Angle
 import Angle._
@@ -22,6 +22,8 @@ trait ComplexPower
     def power: Complex
 
     def inverse = ComplexPower(base, -power)
+
+    override def df(x: Variable) = super[Multivalued].df(x)
 
     override def toString = "Multivalued(" + super.toString + ")"
 
@@ -54,6 +56,8 @@ private class ComplexPowers(val base: Complex, val power: Complex)
 
         val theta: Angle = (base * log.principal).im radians
 
+        override def df(x: Variable) = super[PolarComplex].df(x)
+
         override def isEmpty = super[Exponentiated].isEmpty
 
     }
@@ -74,5 +78,7 @@ private class ComplexToIntegerPower(val base: Complex, val power: Integer)
     def theta = p.arg * power
 
     override def isEmpty = super[PolarComplex].isEmpty
+
+    override def df(x: Variable) = super[PolarComplex].df(x)
 
 }

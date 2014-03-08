@@ -205,10 +205,6 @@ class ExpressionPower(val base: Expression, val power: Expression)
 
     override def ^(x: Expression) = base ^ (power + x)
 
-    override def df(x: Variable) = {
-        (base ^ (power - 1)) * ((base.df(x) * power) + (base * Ln(base) * power.df(x)))
-    }
-
 }
 
 trait Nonvariate

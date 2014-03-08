@@ -88,7 +88,7 @@ trait Constant
         tetration.tetrate(this, tower.narrow)
     }
 
-    override def df(x: Variable): EmptyConstant = Zero
+    override def df(x: Variable): Constant with Empty = Zero
 
     def toConstant: Option[System] = Some(narrow)
 
@@ -165,6 +165,8 @@ abstract class ConstantProduct[N <: Constant](val terms: Seq[N])
     protected[this] def tryMultiply(left: N, right: N): Option[N]
 
     override def isEmpty = terms.exists(_.isEmpty)
+
+    override def df(x: Variable) = super[Constant].df(x)
 
     override def hashCode = terms.hashCode
 
