@@ -32,6 +32,8 @@ trait Empty
 
     override def df(x: Variable): Empty
 
+    override def hashCode = 0
+
     override def toString = "0"
 
 }

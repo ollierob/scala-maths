@@ -23,12 +23,12 @@ trait EmptyConstant
 
     override def isEmpty = super[Empty].isEmpty
 
-    override def toString = super[Empty].toString
-
     def evaluate(precision: Precision) = ZERO to precision
 
     override def toConstant: Option[System with EmptyConstant] = Some(this.narrow)
 
     override def ?*(that: Expression)(leftToRight: Boolean) = super[Empty].?*(that)(leftToRight)
+
+    override def toString = super[Empty].toString
 
 }

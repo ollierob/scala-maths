@@ -12,8 +12,6 @@ trait Constant
         with Invertible
         with Integrable {
 
-    self =>
-
     type System >: this.type <: Constant
 
     def narrow: System = this
