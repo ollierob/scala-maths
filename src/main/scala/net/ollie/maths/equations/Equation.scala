@@ -13,4 +13,8 @@ trait Equation {
 
     def variables: Set[Variable] = left.variables ++ right.variables
 
+    def replace(variables: Map[Variable, Expression]): Equation
+
+    override def toString = s"$left == $right"
+
 }

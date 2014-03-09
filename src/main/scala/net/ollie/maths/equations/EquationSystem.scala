@@ -11,8 +11,17 @@ trait EquationSystem {
 
     def variables = equations.map(_.variables).flatten.toSet
 
-    def replace(variables: Map[Variable, Expression]): EquationSystem
+    def replace(variables: Map[Variable, Expression])(implicit builder: EquationSystemBuilder): EquationSystem = {
+        val replaced = equations.map(_.replace(variables))
+        builder(replaced)
+    }
 
     def trySolve: Option[Solution]
+
+}
+
+trait EquationSystemBuilder {
+
+    def apply(equations: Seq[Equation]): EquationSystem
 
 }
