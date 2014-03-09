@@ -1,8 +1,7 @@
 package net.ollie.maths
 
 import scala.collection.mutable
-import net.ollie.maths.numbers.constants.Zero
-import net.ollie.maths.numbers.EmptyConstant
+import net.ollie.maths.numbers.constants.{One, Unity, Zero}
 
 /**
  * Created by Ollie on 02/01/14.
@@ -98,6 +97,85 @@ trait Constant
     }
 
     def equals(n: Constant) = super.equals(n)
+
+}
+
+object Constant {
+
+    implicit object ConstantArithmetic
+            extends MultiplicationArithmetic[Constant#System, Constant#System, Constant] {
+
+        def one: Constant with Unity = One
+
+        def multiply(left: Constant#System, right: Constant#System): Constant = {
+            left.?*?(right) match {
+                case Some(n) => n
+                case _ => new MultipliedConstant(left, right)
+            }
+        }
+
+    }
+
+    private class NegatedConstant(val of: Constant)
+            extends Constant {
+
+        type System = Constant
+
+        def isEmpty = of.isEmpty
+
+        def ?^(that: Constant) = None
+
+        def ?*(that: Constant)(leftToRight: Boolean) = None
+
+        def ?+(that: Constant) = None
+
+        def inverse = -(of.inverse)
+
+        def unary_-() = of
+
+        override def toString = s"-$of"
+
+    }
+
+    private class MultipliedConstant(val left: Constant, val right: Constant)
+            extends Constant
+            with Multiplied {
+
+        type System = Constant
+
+        def ?^(that: Constant) = None
+
+        def ?*(that: Constant)(leftToRight: Boolean) = {
+            if (leftToRight) that.?*(left)(true)
+            else that.?*(right)(true)
+        }
+
+        def ?+(that: Constant) = None
+
+        def inverse = new InvertedConstant(this)
+
+        def unary_-() = new NegatedConstant(this)
+
+        override def df(x: Variable) = super[Constant].df(x)
+
+    }
+
+    private class InvertedConstant(val inverse: Constant)
+            extends Constant {
+
+        type System = Constant
+
+        def isEmpty = false
+
+        def ?^(that: Constant) = inverse ?^ (-that)
+
+        def ?*(that: Constant)(leftToRight: Boolean) = None
+
+        def ?+(that: Constant) = None
+
+        def unary_-() = (-inverse).inverse
+
+    }
 
 }
 

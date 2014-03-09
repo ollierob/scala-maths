@@ -16,17 +16,25 @@ trait Polynomial
 
     def of: Expression
 
-    override def unary_-(): Polynomial = new NegatedPolynomial(this)
+    override def unary_-(): Polynomial = Polynomial.negate(this)
 
 }
 
-class NegatedPolynomial(override val of: Polynomial)
+object Polynomial {
+
+    def negate[P <: Polynomial](p: P): NegatedPolynomial[P] = new NegatedPolynomial[P](p)
+
+}
+
+class NegatedPolynomial[P <: Polynomial](override val of: P)
         extends NegatedExpression(of)
         with Polynomial {
 
     def representation = -(of.representation)
 
     def degree = of.degree
+
+    override def unary_-(): P = of
 
     override def variables = super[Polynomial].variables
 

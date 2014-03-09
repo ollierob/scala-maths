@@ -1,6 +1,5 @@
 package net.ollie.maths
 
-import net.ollie.maths.functions.numeric.Ln
 import net.ollie.maths.methods.{Product, Series}
 import net.ollie.maths.numbers.Integer
 import net.ollie.maths.numbers.constants.{One, Zero}
@@ -305,8 +304,8 @@ object Univariate {
 
 }
 
-trait Univariate
-        extends Expression {
+trait Univariate //TODO make variable optional
+extends Expression {
 
     def unary_-(): Univariate
 

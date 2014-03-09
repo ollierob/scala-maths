@@ -41,7 +41,8 @@ class VariableTest extends FlatSpec with Matchers {
         it should "integrate with respect to itself" in {
             val integral = x.integrate(x)
             integral.toConstant shouldBe None //Because of constant of integration
-            integral.df(x) shouldBe x
+            val d = integral.df(x)
+            d.replace(x, One) shouldBe One
         }
 
     }

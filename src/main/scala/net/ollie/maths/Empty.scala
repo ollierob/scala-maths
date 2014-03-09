@@ -1,6 +1,5 @@
 package net.ollie.maths
 
-import net.ollie.maths.numbers.PositiveReal
 import net.ollie.maths.numbers.constants.Zero
 
 /**
@@ -28,7 +27,9 @@ trait Empty
 
     override def ?+(that: Expression)(leftToRight: Boolean): Option[Expression] = Some(that)
 
-    override def ?*(that: Expression)(leftToRight: Boolean): Option[Expression] = Some(this)
+    override def ?*(that: Expression)(leftToRight: Boolean): Option[Expression] = Some(Zero)
+
+    override def ?/(that: Expression): Option[Expression] = Some(Zero)
 
     override def df(x: Variable): Empty
 
