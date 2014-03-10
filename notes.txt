@@ -13,7 +13,8 @@ Quick notes:
 
     The third type should be surreal; we need an ugly "subtyping" of the reals, or knowledge of all subtypes.
     Also a real function applied to a surreal should (statically) return a surreal.
-
+    Reals may also suffer widening to their superclass, Constant, which may in turn widen to Expression.
+    
 
 * Object-inheritance is upside-down
 
