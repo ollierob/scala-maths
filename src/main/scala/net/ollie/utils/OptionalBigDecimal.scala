@@ -1,6 +1,7 @@
 package net.ollie.utils
 
 /**
+ * Value class for optional BigDecimal.
  * Created by Ollie on 22/02/14.
  */
 trait OptionalBigDecimal {
@@ -28,9 +29,11 @@ object OptionalBigDecimal {
 
 }
 
-final case class SomeBigDecimal(d: BigDecimal)
+final case class SomeBigDecimal(val d: BigDecimal)
         extends AnyRef
         with OptionalBigDecimal {
+
+    require(d != null)
 
     def isDefined = true
 
