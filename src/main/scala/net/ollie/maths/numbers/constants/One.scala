@@ -69,6 +69,8 @@ object Two
         extends ExactNatural(2)
         with Prime {
 
+    override def ! = this
+
     override def isEven = true
 
 }

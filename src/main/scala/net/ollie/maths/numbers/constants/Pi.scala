@@ -32,7 +32,7 @@ object Pi
 
 }
 
-trait PiOrLess
+sealed trait PiOrLess
         extends PositiveNamedReal
 
 class PiOver protected[constants](val over: Natural)
