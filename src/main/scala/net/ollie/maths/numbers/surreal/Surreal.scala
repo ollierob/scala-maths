@@ -2,7 +2,6 @@ package net.ollie.maths.numbers.surreal
 
 import net.ollie.maths.Variable
 import net.ollie.maths.numbers._
-import net.ollie.maths.numbers.massive.Infinitesimal
 import net.ollie.maths.numbers.constants.Zero
 
 /**
@@ -135,24 +134,6 @@ object InfiniteForm
     override def +(that: Surreal) = this
 
     override def toString = "surreal(ω)"
-
-}
-
-object InfinitesimalForm
-        extends Surreal
-        with Infinitesimal {
-
-    def nearest = Zero
-
-    def left = Zero
-
-    def right = ??? //TODO
-
-    override def evaluate(precision: Precision) = super[Surreal].evaluate(precision)
-
-    override def isEmpty = super[Surreal].isEmpty
-
-    override def toString = "surreal(ε)"
 
 }
 

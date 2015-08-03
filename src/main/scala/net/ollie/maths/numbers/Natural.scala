@@ -1,9 +1,9 @@
 package net.ollie.maths.numbers
 
-import scala.collection.mutable
-
 import net.ollie.maths.Operation
-import net.ollie.maths.numbers.constants.{Three, Two, Zero, One}
+import net.ollie.maths.numbers.constants.{One, Three, Two, Zero}
+
+import scala.collection.mutable
 
 /**
  * Positive integer classes.
@@ -111,7 +111,7 @@ class ExactNatural(override val int: Int)
         extends ExactInteger(int)
         with Natural {
 
-    require(int >= 0, "Int [" + int + "] was not positive!")
+    require(int >= 0, "Int [" + int + "] is not positive!")
 
 }
 
@@ -119,7 +119,7 @@ class ExactBigNatural(override val evaluate: BigInt)
         extends ExactBigInteger(evaluate)
         with Natural {
 
-    require(evaluate >= 0, "BigInt [" + evaluate + "] was not positive!")
+    require(evaluate >= 0, "BigInt [" + evaluate + "] is not positive!")
 
 }
 

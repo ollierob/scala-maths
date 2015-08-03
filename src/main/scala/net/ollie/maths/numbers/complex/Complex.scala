@@ -1,12 +1,11 @@
 package net.ollie.maths.numbers.complex
 
-import net.ollie.maths._
 import net.ollie.maths.Operation.indeterminate
+import net.ollie.maths._
 import net.ollie.maths.functions.angular.{Angle, ArcTan}
 import net.ollie.maths.functions.numeric.PositiveSquareRoot
 import net.ollie.maths.numbers._
-import scala.Some
-import net.ollie.maths.numbers.constants.{One, Unity, MinusOne, Zero}
+import net.ollie.maths.numbers.constants.{MinusOne, Unity, Zero}
 
 /**
  * Created by Ollie on 04/01/14.
@@ -182,7 +181,7 @@ object ComplexZero
 }
 
 private object ComplexOne
-        extends CartesianComplex(1, 0)
+        extends CartesianComplex(re = 1, im = 0)
         with Unity {
 
     override def abs = super[Unity].abs

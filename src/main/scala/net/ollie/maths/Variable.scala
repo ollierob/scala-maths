@@ -1,8 +1,9 @@
 package net.ollie.maths
 
-import net.ollie.maths.numbers.constants.{Zero, One}
 import java.util.UUID
+
 import net.ollie.maths.numbers.Real
+import net.ollie.maths.numbers.constants.{One, Zero}
 
 /**
  * Created by Ollie on 02/01/14.
@@ -11,7 +12,7 @@ object Variable {
 
     def apply(name: String): Variable = new NamedVariable(name)
 
-    def virtual: Variable = Variable('$' + UUID.randomUUID.toString)
+    def virtual: Variable = Variable("$" + UUID.randomUUID.toString)
 
 }
 

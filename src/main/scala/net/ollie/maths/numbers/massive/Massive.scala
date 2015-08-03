@@ -2,8 +2,7 @@ package net.ollie.maths.numbers.massive
 
 import net.ollie.maths._
 import net.ollie.maths.numbers._
-import scala.Some
-import net.ollie.maths.numbers.constants.{Unity, Zero, One}
+import net.ollie.maths.numbers.constants.{One, Unity, Zero}
 
 /**
  * Real finite numbers that (probably) cannot be expressed in decimal form because they are so large.
@@ -16,20 +15,19 @@ import net.ollie.maths.numbers.constants.{Unity, Zero, One}
  * @see [[PowerTower]]
  */
 trait Massive
-        extends Constant {
+        extends Constant
+        with MaybeReal {
 
     type System = Massive
 
-    def inverse: Real = this.tryReduce match {
+    override def inverse: Constant = this.toReal match {
         case Some(re) => re.inverse
         case _ => new InvertedMassive(this)
     }
 
-    def unary_-(): Massive = Massive.negate(this)
+    override def unary_-(): Massive = Massive.negate(this)
 
-    def tryReduce: Option[Real]
-
-    def abs: PositiveReal = this.tryReduce match {
+    def abs: PositiveReal = this.toReal match {
         case Some(re) => re.abs
         case _ => Infinity
     }
@@ -42,20 +40,22 @@ trait Massive
 
     final def *(that: Real): Massive = this * Massive(that)
 
-    def ?+(that: Constant): Option[Constant] = that match {
+    override def ?+(that: Constant): Option[Constant] = that match {
         case re: Real => Some(this + Massive(re))
         case m: Massive => Some(this + m)
         case _ => None
     }
 
-    def ?*(that: Constant)(leftToRight: Boolean) = that match {
+    override def ?*(that: Constant)(leftToRight: Boolean) = that match {
         case m: Massive => Some(m)
         case _ => None
     }
 
-    def ?^(that: Constant) = ???
+    override def ?^(that: Constant) = ???
 
     override def df(x: Variable) = MassiveZero
+
+    override def isEmpty = false
 
 }
 
@@ -150,6 +150,8 @@ object MassiveZero
 
     override def df(x: Variable) = this
 
+    override def toReal: Option[Real] = ???
+
     def tryReduce = Some(Zero)
 
 }
@@ -161,9 +163,9 @@ class PromotedMassive(val re: Real)
 
     override def inverse = re.inverse
 
-    def isEmpty = re.isEmpty
+    override def isEmpty = re.isEmpty
 
-    def tryReduce = Some(re)
+    def toReal = Some(re)
 
     override def toString = re.toString
 
@@ -184,9 +186,9 @@ class NegatedMassive[M <: Massive](val of: M)
 
     override def unary_-(): M = of
 
-    def isEmpty = of.isEmpty
+    override def isEmpty = of.isEmpty
 
-    def tryReduce = of.tryReduce match {
+    def toReal = of.toReal match {
         case Some(re) => Some(-re)
         case _ => None
     }
@@ -202,8 +204,11 @@ class NegatedMassive[M <: Massive](val of: M)
 class InvertedMassive(val of: Massive)
         extends Infinitesimal {
 
-    //TODO inverse should return massive
-    //TODO inverse shouldn't assume positive
+    override def compareTo(that: Infinitesimal): Int = ???
+
+    override def inverse = of
+
+    override def toReal: Option[Real] = ???
 
 }
 
@@ -218,7 +223,7 @@ class MassiveSeries(override val terms: Seq[Massive])
         case _ => terms :+ that
     }))
 
-    def tryReduce: Option[Real] = terms.map(_.tryReduce) match {
+    def toReal: Option[Real] = terms.map(_.toReal) match {
         case e if e.contains(None) => None
         case otherwise => Some(otherwise.map(_.get).sum)
     }
@@ -238,7 +243,7 @@ class MassiveProduct(override val terms: Seq[Massive])
         case _ => terms :+ that
     }))
 
-    def tryReduce: Option[Real] = terms.map(_.tryReduce) match {
+    def toReal: Option[Real] = terms.map(_.toReal) match {
         case e if e.contains(None) => None
         case otherwise => Some(otherwise.map(_.get).product)
     }

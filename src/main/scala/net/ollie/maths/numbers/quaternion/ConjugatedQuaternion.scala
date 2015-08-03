@@ -1,6 +1,5 @@
 package net.ollie.maths.numbers.quaternion
 
-
 /**
  * Created by Ollie on 11/01/14.
  */

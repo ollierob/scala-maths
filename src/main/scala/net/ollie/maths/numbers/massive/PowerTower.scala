@@ -1,7 +1,7 @@
 package net.ollie.maths.numbers.massive
 
 import net.ollie.maths.numbers.Real
-import net.ollie.maths.numbers.constants.{Zero, One}
+import net.ollie.maths.numbers.constants.{One, Zero}
 
 /**
  * Created by Ollie on 12/01/14.
@@ -16,9 +16,9 @@ object PowerTower {
 class PowerTower(val base: Real, val tower: Real)
         extends Massive {
 
-    def isEmpty = base.isEmpty
+    override def isEmpty = base.isEmpty || tower.isEmpty
 
-    def tryReduce = base match {
+    def toReal = base match {
         case Zero => Some(Zero)
         case One => Some(One)
         case _ => None //TODO

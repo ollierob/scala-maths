@@ -1,9 +1,10 @@
 package net.ollie.maths.functions.numeric
 
 import net.ollie.maths.numbers._
-import net.ollie.maths.{NumberConversionArithmetic, Constant}
 import net.ollie.maths.numbers.complex.Complex
-import net.ollie.maths.numbers.constants.{Unity, Pi, One, Zero}
+import net.ollie.maths.numbers.constants.{One, Pi, Unity, Zero}
+import net.ollie.maths.{Constant, NumberConversionArithmetic}
+
 import scala.collection.mutable.ArrayBuffer
 
 /**
@@ -11,8 +12,14 @@ import scala.collection.mutable.ArrayBuffer
  */
 object Roots {
 
+    /**
+     * The positive root of a real number has complex values.
+     * @param of
+     * @param degree
+     * @return
+     */
     def apply(of: Real, degree: Natural): Roots[Real, Complex] = of match {
-        case Zero => new EmptyRoots[Real, Complex](Zero, degree)
+        case Zero => new EmptyRoots[Zero.type, Complex](Zero, degree)
         case One => Roots.unity(degree)
         case _ => new NonEmptyRoots(of, degree)
     }
@@ -46,7 +53,7 @@ trait Roots[+F <: Constant, C <: Constant]
 }
 
 class EmptyRoots[+F <: EmptyConstant, C <: Constant](val of: F, val degree: Natural)
-        (implicit conversion: NumberConversionArithmetic[F, C])
+                                                    (implicit conversion: NumberConversionArithmetic[F, C])
         extends Roots[F, C] {
 
     def inverse = ??? //TODO

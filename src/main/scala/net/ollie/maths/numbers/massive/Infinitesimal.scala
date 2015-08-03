@@ -1,7 +1,8 @@
 package net.ollie.maths.numbers.massive
 
-import net.ollie.maths.numbers.{Precision, Real, PositiveReal}
 import net.ollie.maths.numbers.constants.Zero
+import net.ollie.maths.numbers.{MaybeReal, Precision, Real}
+import net.ollie.maths.{AdditionArithmetic, Constant}
 
 /**
  * Real finite numbers that (probably) cannot be expressed in decimal form because they are so small.
@@ -9,21 +10,43 @@ import net.ollie.maths.numbers.constants.Zero
  * @see [[Massive]]
  */
 trait Infinitesimal
-        extends PositiveReal {
+        extends Constant
+        with MaybeReal {
 
-    def isEmpty = false
+    type System = Infinitesimal
 
-    override protected def tryCompareTo(that: Real): Option[Int] = that match {
-        case Zero => Some(1) //Greater than zero
-        case i: Infinitesimal => Some(this compareTo i)
-        case _ if that.isStrictlyPositive => Some(-1) //Smaller than positive numbers
-        case _ => Some(1) //Greater than negative numbers
-    }
+    override def isEmpty = false
 
-    def compareTo(that: Infinitesimal): Int = 0
+    def compareTo(that: Infinitesimal): Int
+
+    def inverse: Constant
 
     def evaluate(precision: Precision) = 0
 
+    override def unary_-() = ???
+
+    override def ?+(that: Constant): Option[Constant] = that match {
+        case re: Real => Some(re)
+        case _ => ???
+    }
+
+    override def ?*(that: Constant)(leftToRight: Boolean): Option[Constant] = ???
+
+    override def ?^(that: Constant): Option[Constant] = ???
+
     override def toString = "~0"
+
+}
+
+object Infinitesimal {
+
+    implicit object InfinitesimalRealArithmetic
+            extends AdditionArithmetic[Real, Infinitesimal, Real] {
+
+        override def zero = Zero
+
+        override def add(left: Real, right: Infinitesimal) = left
+
+    }
 
 }

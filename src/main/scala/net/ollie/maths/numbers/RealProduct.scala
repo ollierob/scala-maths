@@ -1,8 +1,8 @@
 package net.ollie.maths.numbers
 
-import net.ollie.maths.numbers.constants.Zero
-import net.ollie.maths.{NotEvaluable, ConstantProduct}
 import net.ollie.maths.methods.ApproximatelyEvaluated
+import net.ollie.maths.numbers.constants.Zero
+import net.ollie.maths.{ConstantProduct, NotEvaluable}
 import net.ollie.utils.OptionalBigDecimal
 
 /**
@@ -37,10 +37,12 @@ private class RealProduct(override val terms: Seq[Real])
 
     def doApproximatelyEvaluate(precision: Precision) = {
         val evaluated = terms.map(_.approximatelyEvaluate(precision))
-        val totalPrecision = evaluated.foldLeft(precision.digits.asInstanceOf[Integer])((current, term) => current + intLength(term))
-        if (totalPrecision <= precision.digits) evaluated.product
-        else {
-            val newPrecision = precision.increaseBy(totalPrecision - precision.digits)
+        val totalPrecision: Integer = evaluated.foldLeft(precision.digits.asInstanceOf[Integer])((current, term) => current + intLength(term))
+        if (totalPrecision <= precision.digits) {
+            evaluated.product;
+        } else {
+            val diff: Natural = Natural.convert(totalPrecision - precision.digits);
+            val newPrecision = precision.increaseBy(diff)
             terms.map(_.approximatelyEvaluate(newPrecision)).product
         }
     }
