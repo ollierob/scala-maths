@@ -1,15 +1,15 @@
 package net.ollie.maths.numbers
 
-import net.ollie.maths.numbers.constants.{Zero, One}
-import org.nevec.rjm.BigDecimalMath
-import net.ollie.maths.{Variable, Exponentiated, CachedEvaluated}
-import net.ollie.maths.numbers.complex.Complex
 import net.ollie.maths.functions.numeric.Roots
+import net.ollie.maths.numbers.complex.Complex
+import net.ollie.maths.numbers.constants.{One, Zero}
+import net.ollie.maths.{CachedEvaluated, Exponentiated, Variable}
+import org.nevec.rjm.BigDecimalMath
 
 /**
  * Created by Ollie on 12/01/14.
  */
-trait RealPower
+trait RealExponent
         extends Multivalued {
 
     type Contents = Complex
@@ -22,13 +22,13 @@ trait RealPower
 
     def values: Set[Complex]
 
-    def inverse = RealPower(base, -power)
+    def inverse = RealExponent(base, -power)
 
     override def toString = s"($base ^ $power)"
 
 }
 
-object RealPower {
+object RealExponent {
 
     def apply(base: Int, power: Int): Real = apply(Integer(base), Integer(power))
 
@@ -50,8 +50,8 @@ object RealPower {
     /**
      * Multi-valued real powers.
      */
-    def apply(base: Real, power: Real): RealPower = power match {
-        case r: Rational => new RealToRationalPower(base, r)
+    def apply(base: Real, power: Real): RealExponent = power match {
+        case r: Rational => new RealToRationalExponent(base, r)
         case _ => ??? //TODO
     }
 
@@ -82,8 +82,8 @@ object RealPower {
  * @param base
  * @param power
  */
-private class RealToRationalPower(val base: Real, val power: Rational)
-        extends RealPower {
+private class RealToRationalExponent(val base: Real, val power: Rational)
+        extends RealExponent {
 
     private val primary = base ^ (power.numerator)
 
@@ -101,9 +101,9 @@ class PrincipalRealToIntegerPower(val base: Real, val power: Integer)
         with CachedEvaluated {
 
     override def ?*(that: Real) = that match {
-        case pow: PrincipalRealToIntegerPower if base == pow.base => Some(RealPower(base, power + pow.power))
-        case _ if that == base => Some(RealPower(base, power + 1))
-        case _ if that == -base => Some(-RealPower(base, power + 1))
+        case pow: PrincipalRealToIntegerPower if base == pow.base => Some(RealExponent(base, power + pow.power))
+        case _ if that == base => Some(RealExponent(base, power + 1))
+        case _ if that == -base => Some(-RealExponent(base, power + 1))
         case _ => super.?*(that)
     }
 

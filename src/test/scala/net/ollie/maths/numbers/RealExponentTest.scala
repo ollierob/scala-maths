@@ -1,29 +1,30 @@
 package net.ollie.maths.numbers
 
-import org.scalatest.{Matchers, FlatSpec}
+import net.ollie.maths.numbers.Precision._
+import net.ollie.maths.numbers.complex.Complex
+import net.ollie.maths.numbers.constants.One
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import net.ollie.maths.numbers.constants.One
-import Precision._
-import net.ollie.maths.numbers.complex.Complex
-import scala.collection.mutable.{ArrayBuffer, ListBuffer}
+import org.scalatest.{FlatSpec, Matchers}
+
+import scala.collection.mutable.ArrayBuffer
 
 /**
  * Created by Ollie on 14/01/14.
  */
 @RunWith(classOf[JUnitRunner])
-class RealPowerTest extends FlatSpec with Matchers {
+class RealExponentTest extends FlatSpec with Matchers {
 
     behavior of "1^3"
 
     it should "equal 1" in {
-        val p = RealPower(1, 3)
+        val p = RealExponent(1, 3)
         p shouldEqual One
     }
 
     it should "equal 1^4" in {
-        val p1 = RealPower(1, 3)
-        val p2 = RealPower(1, 4)
+        val p1 = RealExponent(1, 3)
+        val p2 = RealExponent(1, 4)
         p1 shouldEqual p2
         p2 shouldEqual p1
     }
@@ -32,7 +33,7 @@ class RealPowerTest extends FlatSpec with Matchers {
 
     {
 
-        val power: RealPower = Integer(5) ^ IntegerFraction(2, 3)
+        val power: RealExponent = Integer(5) ^ IntegerFraction(2, 3)
 
         it should "have 3 values" in {
             power.values.size shouldBe 3

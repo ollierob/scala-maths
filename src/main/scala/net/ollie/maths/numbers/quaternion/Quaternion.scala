@@ -1,11 +1,10 @@
 package net.ollie.maths.numbers.quaternion
 
 import net.ollie.maths._
-import net.ollie.maths.numbers._
-import net.ollie.maths.numbers.complex.{MaybeComplex, Complex}
-import scala.Some
-import net.ollie.maths.numbers.constants.{Unity, Zero}
 import net.ollie.maths.functions.numeric.PositiveSquareRoot
+import net.ollie.maths.numbers._
+import net.ollie.maths.numbers.complex.{Complex, MaybeComplex}
+import net.ollie.maths.numbers.constants.{Unity, Zero}
 
 /**
  * Created by Ollie on 11/01/14.
@@ -234,6 +233,8 @@ object QuaternionZero
     override def abs = Zero
 
     override def unary_-() = this
+
+    override def toReal = super.toReal
 
     override def isEmpty = super[EmptyConstant].isEmpty
 

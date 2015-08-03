@@ -12,13 +12,17 @@ import net.ollie.maths.numbers.constants.{One, Unity, Zero}
  *
  * Created by Ollie on 12/01/14.
  * @see [[Infinitesimal]]
- * @see [[PowerTower]]
+ * @see [[NaturalTetration]]
  */
 trait Massive
         extends Constant
         with MaybeReal {
 
     type System = Massive
+
+    override final def toReal: Option[Real] = Some(closestReal)
+
+    def closestReal: Real = Infinity
 
     override def inverse: Constant = this.toReal match {
         case Some(re) => re.inverse
@@ -150,7 +154,7 @@ object MassiveZero
 
     override def df(x: Variable) = this
 
-    override def toReal: Option[Real] = ???
+    override def closestReal = Infinity
 
     def tryReduce = Some(Zero)
 
@@ -165,7 +169,7 @@ class PromotedMassive(val re: Real)
 
     override def isEmpty = re.isEmpty
 
-    def toReal = Some(re)
+    override def closestReal = re
 
     override def toString = re.toString
 
@@ -188,10 +192,7 @@ class NegatedMassive[M <: Massive](val of: M)
 
     override def isEmpty = of.isEmpty
 
-    def toReal = of.toReal match {
-        case Some(re) => Some(-re)
-        case _ => None
-    }
+    override def closestReal = -of.closestReal
 
     override def inverse = -(of.inverse)
 
@@ -203,8 +204,6 @@ class NegatedMassive[M <: Massive](val of: M)
 
 class InvertedMassive(val of: Massive)
         extends Infinitesimal {
-
-    override def compareTo(that: Infinitesimal): Int = ???
 
     override def inverse = of
 
@@ -223,10 +222,7 @@ class MassiveSeries(override val terms: Seq[Massive])
         case _ => terms :+ that
     }))
 
-    def toReal: Option[Real] = terms.map(_.toReal) match {
-        case e if e.contains(None) => None
-        case otherwise => Some(otherwise.map(_.get).sum)
-    }
+    override def closestReal = terms.map(_.closestReal).reduceLeft((l, r) => l + r)
 
     protected[this] def tryAdd(left: Massive, right: Massive) = None
 
@@ -243,10 +239,7 @@ class MassiveProduct(override val terms: Seq[Massive])
         case _ => terms :+ that
     }))
 
-    def toReal: Option[Real] = terms.map(_.toReal) match {
-        case e if e.contains(None) => None
-        case otherwise => Some(otherwise.map(_.get).product)
-    }
+    override def closestReal = terms.map(_.closestReal).reduceLeft((l, r) => l * r)
 
     protected[this] def tryMultiply(left: Massive, right: Massive) = None
 

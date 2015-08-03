@@ -1,7 +1,8 @@
 package net.ollie.maths
 
-import scala.collection.mutable
 import net.ollie.maths.numbers.constants.{One, Unity, Zero}
+
+import scala.collection.mutable
 
 /**
  * Created by Ollie on 02/01/14.
@@ -78,7 +79,7 @@ trait Constant
      * @tparam R
      * @tparam Combined
      * @return
-     * @see http://mathworld.wolfram.com/PowerTower.html
+     * @see http://mathworld.wolfram.com/Tetration.html
      */
     def ^^[R <: Constant, Combined <: Constant](tower: R)
             (implicit tetration: TetrationArithmetic[System, R#System, Combined]): Combined = {

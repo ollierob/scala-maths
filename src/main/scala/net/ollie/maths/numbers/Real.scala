@@ -1,11 +1,8 @@
 package net.ollie.maths.numbers
 
-import scala.Some
-
 import net.ollie.maths._
 import net.ollie.maths.methods.ApproximatelyEvaluated
-import net.ollie.maths.numbers.massive.{PowerTower, Massive}
-import net.ollie.maths.numbers.constants.{Unity, Zero, One}
+import net.ollie.maths.numbers.constants.{One, Unity, Zero}
 
 /**
  * Created by Ollie on 01/01/14.
@@ -194,13 +191,12 @@ object Real
         case _ => new AbsReal(re)
     }
 
-    def pow(base: Real, power: Integer): Real = RealPower(base, power)
+    def pow(base: Real, power: Integer): Real = RealExponent(base, power)
 
     implicit object RealArithmetic
             extends AdditionArithmetic[Real, Real, Real]
             with MultiplicationArithmetic[Real, Real, Real]
-            with ExponentiationArithmetic[Real, Real, RealPower]
-            with TetrationArithmetic[Real, Real, Massive]
+            with ExponentiationArithmetic[Real, Real, RealExponent]
             with NumberConversionArithmetic[Real, Real]
             with scala.math.Numeric[Real] {
 
@@ -232,9 +228,7 @@ object Real
 
         def multiply(left: Real, right: Real) = left * right
 
-        def exponentiate(base: Real, power: Real) = RealPower(base, power)
-
-        def tetrate(base: Real, tower: Real) = PowerTower(base, tower)
+        def exponentiate(base: Real, power: Real) = RealExponent(base, power)
 
         def apply(from: Real) = from
 

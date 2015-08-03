@@ -1,10 +1,9 @@
 package net.ollie.maths.numbers
 
-import org.nevec.rjm.BigDecimalMath
 import net.ollie.maths._
+import net.ollie.maths.numbers.RealExponent.{ZeroToPowerZeroConvention, ZeroToPowerZeroIsOne}
 import net.ollie.maths.numbers.constants.{One, Zero}
-import net.ollie.maths.numbers.RealPower.{ZeroToPowerZeroConvention, ZeroToPowerZeroIsOne}
-import scala.Some
+import org.nevec.rjm.BigDecimalMath
 
 /**
  * Numbers known to be equal to or greater than zero at compile time.
@@ -23,7 +22,7 @@ trait PositiveReal
 
     def /(that: PositiveReal): PositiveReal = this * that.inverse
 
-    def ^(that: Real): RealPower = RealPower(this, that)
+    def ^(that: Real): RealExponent = RealExponent(this, that)
 
     override def ^(that: Integer): PositiveReal = PositiveReal.pow(this, that)
 

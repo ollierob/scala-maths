@@ -1,7 +1,7 @@
 package net.ollie.maths.numbers
 
-import net.ollie.maths.{Empty, Expression, Evaluable, Constant}
 import net.ollie.maths.numbers.constants.Zero
+import net.ollie.maths.{Constant, Empty, Evaluable, Expression}
 
 /**
  * Created by Ollie on 02/03/14.
@@ -9,7 +9,8 @@ import net.ollie.maths.numbers.constants.Zero
 trait EmptyConstant
         extends Empty
         with Constant
-        with Evaluable {
+        with Evaluable
+        with MaybeReal {
 
     private val ZERO = BigDecimal(0)
 
