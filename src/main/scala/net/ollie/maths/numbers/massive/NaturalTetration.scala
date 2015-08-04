@@ -24,7 +24,8 @@ class NaturalTetration(val a: Natural, val n: Natural)
         case Zero => Zero
         case One => One
         case _ => n match {
-            case Zero | One => One
+            case Zero => One
+            case One => a
             case _ => a ^ NaturalTetration(a, n - 1).closestReal
         }
     }
