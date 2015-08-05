@@ -40,7 +40,8 @@ object Ackermann {
 
 }
 
-trait Ackermann extends Massive {
+trait Ackermann
+        extends Massive {
 
     def m: Natural
 
@@ -59,9 +60,11 @@ trait Ackermann extends Massive {
 
 }
 
-private class ExplicitAckermann(val m: Natural, val n: Natural, override val closestReal: Natural) extends Ackermann
+private class ExplicitAckermann(val m: Natural, val n: Natural, override val closestReal: Natural)
+        extends Ackermann
 
-private class ZeroNAckermann(val m: Natural)(implicit val cache: AckermannCache) extends Ackermann {
+private class ZeroNAckermann(val m: Natural)(implicit val cache: AckermannCache)
+        extends Ackermann {
 
     override def n = Zero
 
@@ -76,7 +79,8 @@ private class ZeroNAckermann(val m: Natural)(implicit val cache: AckermannCache)
 
 }
 
-private class LargeAckermann(val m: Natural, val n: Natural)(implicit val cache: AckermannCache) extends Ackermann {
+private class LargeAckermann(val m: Natural, val n: Natural)(implicit val cache: AckermannCache)
+        extends Ackermann {
 
     private lazy val closest = {
         System.out.println(s"A($m,$n) = A(" + (m - 1) + s",A($m," + (n - 1) + ")")

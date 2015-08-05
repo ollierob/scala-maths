@@ -1,7 +1,8 @@
 package net.ollie.utils
 
 import java.util.concurrent.ConcurrentHashMap
-import java.util.function
+
+import scala.collection.JavaConversions._
 
 /**
  * Created by Ollie on 05/08/2015.
@@ -9,13 +10,9 @@ import java.util.function
 abstract class ValueCache[K, V]
         extends (K => V) {
 
-    private val cache = new ConcurrentHashMap[K, V]
+    private val cache: scala.collection.concurrent.Map[K, V] = new ConcurrentHashMap[K, V]
 
-    private val func = new function.Function[K, V] {
-        override def apply(k: K) = compute(k)
-    }
-
-    def apply(key: K) = cache.computeIfAbsent(key, func)
+    def apply(key: K) = cache.getOrElseUpdate(key, compute(key))
 
     protected def compute(key: K): V
 
