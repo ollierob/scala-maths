@@ -38,7 +38,7 @@ trait MaybeEvaluable {
 trait NotEvaluable
         extends MaybeEvaluable {
 
-    def evaluate(precision: Precision): BigDecimal = Arithmetic.exception("Cannot evaluate")
+    def evaluate(precision: Precision): BigDecimal = Operation.illegal(s"Cannot evaluate $this")
 
     override def tryEvaluate(precision: Precision): OptionalBigDecimal = OptionalBigDecimal.none
 

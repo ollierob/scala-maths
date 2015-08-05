@@ -2,7 +2,7 @@ package net.ollie.maths.numbers
 
 import net.ollie.maths.numbers.Natural.FactorialCache
 import net.ollie.maths.numbers.constants.{One, Three, Two, Zero}
-import net.ollie.maths.{Arithmetic, NotEvaluable, Operation}
+import net.ollie.maths.{NotEvaluable, Operation}
 import net.ollie.utils.ValueCache
 
 /**
@@ -67,7 +67,11 @@ object Natural {
 
     implicit def convert(int: Integer): Natural = apply(int).right.getOrElse(Operation.illegal(s"Int $int is negative!"))
 
-    def apply(int: BigInt): Natural = if (int == ZERO) Zero else if (int == ONE) One else new ExactBigNatural(int);
+    def apply(int: BigInt): Natural = int match {
+        case ZERO => Zero
+        case ONE => One
+        case _ => new ExactBigNatural(int)
+    }
 
     def apply(int: Integer): Either[Integer, Natural] = int match {
         case Zero => Right(Zero)
@@ -173,9 +177,9 @@ object NaturalInfinity
 
     override def isEmpty = false
 
-    override def evaluate(precision: Precision) = Arithmetic.exception("Cannot evaluate")
+    override def evaluate(precision: Precision) = Operation.overflow(s"Cannot evaluate $this")
 
-    override def evaluate = Arithmetic.exception("Cannot evaluate")
+    override def evaluate = Operation.overflow(s"Cannot evaluate $this")
 
     override def inverse = Zero
 

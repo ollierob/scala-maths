@@ -1,7 +1,7 @@
 package net.ollie.maths
 
 /**
- * Multiplication of two expressions.
+ * Multiplication of two expressions. If either expression is empty then so is their multiplication.
  *
  * Commutativity is not assumed, nor asked for, as it cannot be known for non-constant expressions.
  *

@@ -10,7 +10,7 @@ trait Aggregate
 
     def unary_-() = Expression.negate(this)
 
-    def variables = terms.map(_.variables).flatten.toSet
+    def variables = terms flatMap (_.variables) toSet
 
     def replace(variables: Map[Variable, Expression]) = apply(terms.map(_.replace(variables)))
 

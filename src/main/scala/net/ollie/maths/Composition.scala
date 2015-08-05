@@ -13,7 +13,7 @@ trait Composition
 
     def variables = of.variables
 
-    def toConstant: Option[Constant] = of.toConstant match {
+    def toConstant: Option[Constant] = of toConstant match {
         case Some(n) => Some(at(n))
         case _ => None
     }

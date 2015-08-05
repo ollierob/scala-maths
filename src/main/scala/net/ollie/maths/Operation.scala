@@ -9,6 +9,8 @@ object Operation {
 
     def indeterminate = throw new IndeterminateOperationException
 
+    def overflow(message: String) = throw new ArithmeticOverflowException(message)
+
     def illegal(message: String) = throw new IllegalOperationException(message)
 
     def ?!? = undefined
@@ -18,5 +20,7 @@ object Operation {
 class UndefinedOperationException extends Exception
 
 class IndeterminateOperationException extends Exception
+
+class ArithmeticOverflowException extends ArithmeticException
 
 class IllegalOperationException(message: String) extends Exception(message)
