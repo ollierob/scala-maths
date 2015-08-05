@@ -1,8 +1,8 @@
 package net.ollie.maths.numbers.constants
 
+import net.ollie.maths.numbers.Natural.FactorialCache
 import net.ollie.maths.numbers._
-import net.ollie.maths.{Expression, Constant}
-import scala.Some
+import net.ollie.maths.{Constant, Expression}
 
 /**
  * Created by Ollie on 09/02/14.
@@ -19,7 +19,7 @@ object One
         extends ExactNatural(1)
         with Unity {
 
-    override def ! = this
+    override def !(implicit cache: FactorialCache) = this
 
     override def abs = super[Unity].abs
 
@@ -69,7 +69,7 @@ object Two
         extends ExactNatural(2)
         with Prime {
 
-    override def ! = this
+    override def !(implicit cache: FactorialCache) = this
 
     override def isEven = true
 

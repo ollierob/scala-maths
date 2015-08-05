@@ -36,4 +36,20 @@ class AckermannTest extends FlatSpec with Matchers {
         Ackermann(2, 1).closestReal shouldBe Natural(5)
     }
 
+    "A(2,2)" should "equal 7" in {
+        Ackermann(2, 2).closestReal shouldBe Natural(7)
+    }
+
+    "A(3,3)" should "equal 61" in {
+        Ackermann(3, 3).closestReal shouldBe Natural(61)
+    }
+
+    "A(3,2)" should "equal 29" in {
+        Ackermann(3, 2).closestReal shouldBe Natural(29)
+    }
+
+    "A(4,1)" should "equal 65533" in {
+        Ackermann(4, 1).closestReal shouldBe Natural(65533)
+    }
+
 }

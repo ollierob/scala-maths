@@ -1,8 +1,8 @@
 package net.ollie.maths.numbers.constants
 
-import net.ollie.maths.{Operation, Expression, Variable}
+import net.ollie.maths.numbers.Natural.FactorialCache
 import net.ollie.maths.numbers._
-import scala.Some
+import net.ollie.maths.{Expression, Operation, Variable}
 
 /**
  * Empty real number.
@@ -30,7 +30,7 @@ object Zero
 
     override def succ = One
 
-    override def ! = One
+    override def !(implicit cache: FactorialCache) = One
 
     override def df(x: Variable) = this
 

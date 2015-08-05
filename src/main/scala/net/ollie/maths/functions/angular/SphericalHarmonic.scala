@@ -1,12 +1,12 @@
 package net.ollie.maths.functions.angular
 
 import net.ollie.maths._
-import net.ollie.maths.functions.{Modal, Represented}
 import net.ollie.maths.functions.numeric.{Exp, PositiveSquareRoot}
 import net.ollie.maths.functions.polynomial.AssociatedLegendrePolynomial
+import net.ollie.maths.functions.{Modal, Represented}
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.complex.{ImaginaryUnit => i}
-import net.ollie.maths.numbers.constants.{MinusOne, Zero, Pi}
+import net.ollie.maths.numbers.constants.{MinusOne, Pi, Zero}
 
 /**
  * Created by Ollie on 08/01/14.
@@ -64,9 +64,9 @@ class LMHarmonic(val degree: Natural, val order: Integer, val theta: Expression,
 
     require(degree >= order.abs)
 
-    def lmm: Natural = degree - order
+    lazy val lmm: Natural = degree - order
 
-    def lpm: Natural = degree + order
+    lazy val lpm: Natural = degree + order
 
     def representation = (PositiveSquareRoot(((2 * degree) + 1) * (lmm !) / (4 * Pi * (lpm !)))
             * AssociatedLegendrePolynomial(degree, order)(Cos(theta))

@@ -1,9 +1,9 @@
 package net.ollie.maths.numbers
 
+import net.ollie.maths.numbers.Natural.FactorialCache
 import net.ollie.maths.numbers.constants.{One, Three, Two, Zero}
 import net.ollie.maths.{Arithmetic, NotEvaluable, Operation}
-
-import scala.collection.mutable
+import net.ollie.utils.ValueCache
 
 /**
  * Positive integer classes.
@@ -48,7 +48,7 @@ trait Natural
 
     def ^(that: Natural): Natural = Natural.power(this, that)
 
-    def ! : Natural = Natural.factorial(this)
+    def !(implicit cache: FactorialCache): Natural = Natural.factorial(this)(cache)
 
 }
 
@@ -90,19 +90,22 @@ object Natural {
 
     def power(base: Natural, power: Natural): Natural = new NaturalPower(base, power)
 
-    private val factorials: mutable.Map[Natural, Natural] = new mutable.HashMap()
+    def factorial(n: Natural)(implicit cache: FactorialCache): Natural = cache(n)
 
-    def factorial(n: Natural) = n match {
+    def computeFactorial(n: Natural, cache: FactorialCache): Natural = n match {
         case Zero => One
         case One => One
-        case _ => factorials.get(n) match {
-            case Some(m) => m
-            case _ => {
-                val f = new Factorial(n)
-                factorials.put(n, f)
-                f
-            }
-        }
+        case _ => new Factorial(n)(cache)
+    }
+
+    trait FactorialCache extends Function[Natural, Natural]
+
+    implicit object FactorialCache
+            extends ValueCache[Natural, Natural]
+            with FactorialCache {
+
+        override protected def compute(n: Natural): Natural = computeFactorial(n, FactorialCache.this)
+
     }
 
 }
@@ -148,16 +151,16 @@ class NaturalPower(override val base: Natural, override val power: Natural)
 
 }
 
-class Factorial(val n: Natural)
+private class Factorial(val n: Natural)(implicit cache: FactorialCache)
         extends Natural {
 
-    private lazy val evaluated = n.evaluate * (n.decr !).evaluate
+    private lazy val evaluated = n.evaluate * (n.decr ! (cache)).evaluate
 
     def evaluate = evaluated
 
     override def isEven = n > 1
 
-    override def toString = n.toString + "!"
+    override def toString = s"$n!"
 
 }
 
