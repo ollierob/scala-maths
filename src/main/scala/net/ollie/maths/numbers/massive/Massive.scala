@@ -22,7 +22,7 @@ trait Massive
 
     override final def toReal: Option[Real] = Some(closestReal)
 
-    def closestReal: Real = Infinity
+    def closestReal: Real
 
     override def inverse: Constant = this.toReal match {
         case Some(re) => re.inverse

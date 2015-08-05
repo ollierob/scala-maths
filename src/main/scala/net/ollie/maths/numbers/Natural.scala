@@ -1,7 +1,7 @@
 package net.ollie.maths.numbers
 
-import net.ollie.maths.Operation
 import net.ollie.maths.numbers.constants.{One, Three, Two, Zero}
+import net.ollie.maths.{Arithmetic, NotEvaluable, Operation}
 
 import scala.collection.mutable
 
@@ -158,5 +158,22 @@ class Factorial(val n: Natural)
     override def isEven = n > 1
 
     override def toString = n.toString + "!"
+
+}
+
+object NaturalInfinity
+        extends Natural
+        with RealInfinity
+        with NotEvaluable {
+
+    override def abs = this
+
+    override def isEmpty = false
+
+    override def evaluate(precision: Precision) = Arithmetic.exception("Cannot evaluate")
+
+    override def evaluate = Arithmetic.exception("Cannot evaluate")
+
+    override def inverse = Zero
 
 }

@@ -1,9 +1,9 @@
 package net.ollie.maths
 
-import scala.math.BigDecimal.RoundingMode._
-
 import net.ollie.maths.numbers.Precision
 import net.ollie.utils.OptionalBigDecimal
+
+import scala.math.BigDecimal.RoundingMode._
 
 /**
  * Something that can be represented as a BigDecimal.
@@ -38,7 +38,7 @@ trait MaybeEvaluable {
 trait NotEvaluable
         extends MaybeEvaluable {
 
-    def evaluate(precision: Precision): BigDecimal = ???
+    def evaluate(precision: Precision): BigDecimal = Arithmetic.exception("Cannot evaluate")
 
     override def tryEvaluate(precision: Precision): OptionalBigDecimal = OptionalBigDecimal.none
 

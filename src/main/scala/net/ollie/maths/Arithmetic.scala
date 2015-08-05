@@ -1,11 +1,17 @@
 package net.ollie.maths
 
-import net.ollie.maths.numbers.constants.{Unity, One, Zero}
+import net.ollie.maths.numbers.constants.Unity
 
 /**
  * Elementary arithmetic operators.
  * Created by Ollie on 01/01/14.
  */
+object Arithmetic {
+
+    def exception(reason: String): Nothing = throw new ArithmeticException(reason)
+
+}
+
 trait AdditionArithmetic[-Left, -Right, +Result] {
 
     def zero: Result with Empty
