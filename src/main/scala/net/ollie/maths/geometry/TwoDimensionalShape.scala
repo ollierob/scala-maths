@@ -5,7 +5,7 @@ import net.ollie.maths.numbers.PositiveReal
 /**
  * Created by Ollie on 09/02/14.
  */
-trait Shape {
+trait TwoDimensionalShape {
 
     def area: PositiveReal
 

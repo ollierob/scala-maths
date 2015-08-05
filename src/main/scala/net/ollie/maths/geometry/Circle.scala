@@ -1,8 +1,8 @@
 package net.ollie.maths.geometry
 
+import net.ollie.maths.functions.numeric.PositiveSquareRoot
 import net.ollie.maths.numbers.PositiveReal
 import net.ollie.maths.numbers.constants.Pi
-import net.ollie.maths.functions.numeric.PositiveSquareRoot
 
 /**
  * Created by Ollie on 09/02/14.
@@ -16,7 +16,7 @@ object Circle {
 }
 
 class Circle(val radius: PositiveReal)
-        extends Shape {
+        extends TwoDimensionalShape {
 
     def diameter: PositiveReal = 2 * radius
 
