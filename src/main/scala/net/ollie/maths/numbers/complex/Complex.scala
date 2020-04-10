@@ -11,7 +11,7 @@ import net.ollie.maths.numbers.constants.{MinusOne, Unity, Zero}
  * Created by Ollie on 04/01/14.
  */
 trait Complex
-        extends ComplexLike
+    extends ComplexLike
         with MaybeComplex {
 
     type System = Complex
@@ -32,6 +32,8 @@ trait Complex
 
     override def toReal = super[MaybeComplex].toReal
 
+    def isGaussian = re.isInteger && im.isInteger
+
     override def ^(that: Expression) = Complex(that.toConstant) match {
         case Some(z) => this ^ z
         case _ => super.^(that)
@@ -44,20 +46,18 @@ trait Complex
     def ^(that: Complex): ComplexPower = Complex.pow(this, that)
 
     def ?+(that: Constant) = that match {
-        case z: Complex => Some(this + z)
         case r: Real => Some(this + r)
-        case m: MaybeReal => m.toReal.map(r => this + r)
-        case _ => None
+        case z: Complex => Some(this + z)
+        case _ => Complex(that).map(z => this + z)
     }
 
     override def ?*(that: Constant)(leftToRight: Boolean) = that match {
-        case z: Complex => Some(this * z)
         case r: Real => Some(this * Complex(r))
-        case m: MaybeReal => m.toReal.map(r => this * r)
-        case _ => None
+        case z: Complex => Some(this * z)
+        case _ => Complex(that).map(z => this * z)
     }
 
-    def ?^(that: Constant) = None
+    def ?^(that: Constant) = ???
 
     override def equals(z: ComplexLike): Boolean = z match {
         case z: Complex => this equals z
@@ -68,7 +68,7 @@ trait Complex
         this.re == that.re && this.im == that.im
     }
 
-    override def hashCode = re.hashCode * im.hashCode
+    override def hashCode = re.hashCode + im.hashCode
 
 }
 
@@ -85,7 +85,7 @@ object Complex
         case re: Real => Some(Complex(re))
         case z: Complex => Some(z)
         case m: MaybeComplex => m.toComplex
-        case x: ComplexLike => x.toReal match {
+        case m: MaybeReal => m.toReal match {
             case Some(re) => Some(re)
             case _ => None
         }
@@ -104,6 +104,8 @@ object Complex
         if (re.isEmpty) zero
         else Complex(re, Zero)
     }
+
+    def isGaussian(c: Constant): Boolean = Complex(c) exists (z => z.isGaussian)
 
     def pow(base: Complex, power: Integer): Complex = ComplexPower(base, power)
 

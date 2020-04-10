@@ -8,7 +8,7 @@ import net.ollie.maths.numbers.constants.{One, Unity, Zero}
  * Created by Ollie on 01/01/14.
  */
 trait Real
-        extends Constant
+    extends Constant
         with Ordered[Real]
         with MaybeReal
         with Evaluable {
@@ -28,6 +28,8 @@ trait Real
     def isNegative = this < 0;
 
     def isPositive = this > 0;
+
+    def isInteger = this.isInstanceOf[Integer]
 
     override def ?+(that: Expression)(leftToRight: Boolean) = Real(that.toConstant) match {
         case Some(r) => Some(this + r) //Order is irrelevant
@@ -85,6 +87,7 @@ trait Real
 
     /**
      * Shortcut for this ?* that and that ?* this. Note that real multiplication is commutative.
+     *
      * @param that
      * @return
      */
@@ -165,7 +168,7 @@ trait Real
 }
 
 object Real
-        extends NumberIdentityArithmetic[Real] {
+    extends NumberIdentityArithmetic[Real] {
 
     private val BD_ZERO = BigDecimal(0)
 
@@ -198,7 +201,7 @@ object Real
     def pow(base: Real, power: Integer): Real = RealExponent(base, power)
 
     implicit object RealArithmetic
-            extends AdditionArithmetic[Real, Real, Real]
+        extends AdditionArithmetic[Real, Real, Real]
             with MultiplicationArithmetic[Real, Real, Real]
             with ExponentiationArithmetic[Real, Real, RealExponent]
             with NumberConversionArithmetic[Real, Real]
@@ -254,20 +257,20 @@ trait MaybeReal {
 }
 
 class ExactDouble(val of: Double)
-        extends AnyRef
-        with Real {
+    extends Real {
 
-    def isEmpty = of == 0d
+    override def isEmpty = of == 0d
 
-    def evaluate(precision: Precision) = precision(of)
+    override def evaluate(precision: Precision) = precision(of)
+
+    override def isInteger = of == Math.round(of)
 
     override def toString = of.toString
 
 }
 
 class ExactBigDecimal(val of: BigDecimal)
-        extends AnyRef
-        with Real {
+    extends Real {
 
     override def ?+(that: Real) = that match {
         case re: ExactBigDecimal => Some(Real(this.of + re.of))
@@ -279,16 +282,16 @@ class ExactBigDecimal(val of: BigDecimal)
         case _ => super.?*(that)
     }
 
-    def isEmpty = of == 0
+    override def isEmpty = of == 0
 
-    def evaluate(precision: Precision) = precision(of)
+    override def evaluate(precision: Precision) = precision(of)
 
     override def toString = of.toString
 
 }
 
 class NegatedReal(val of: Real)
-        extends Real {
+    extends Real {
 
     def evaluate(precision: Precision) = -(of.evaluate(precision))
 
@@ -298,7 +301,13 @@ class NegatedReal(val of: Real)
 
     override def toConstant = Some(this)
 
-    def isEmpty = of.isEmpty
+    override def isEmpty = of isEmpty
+
+    override def isNegative = of isPositive
+
+    override def isPositive = of isNegative
+
+    override def isInteger = of isInteger
 
     override def toString = s"-($of)"
 
@@ -307,8 +316,7 @@ class NegatedReal(val of: Real)
 }
 
 class InverseReal(val of: Real)
-        extends Real
-        with ApproximatelyEvaluated {
+    extends Real with ApproximatelyEvaluated {
 
     require(!of.isEmpty)
 
@@ -328,8 +336,7 @@ class InverseReal(val of: Real)
 }
 
 class AbsReal(val of: Real)
-        extends PositiveReal
-        with CachedEvaluated {
+    extends PositiveReal with CachedEvaluated {
 
     def isEmpty = of.isEmpty
 
