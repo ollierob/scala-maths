@@ -6,6 +6,8 @@ import net.ollie.maths.{Constant, Empty}
 
 /**
  * Created by Ollie on 04/02/14.
+ *
+ * @see <a href="https://en.wikipedia.org/wiki/Split-complex_number">Wikipedia</a>
  */
 trait SplitComplex
     extends ComplexLike {

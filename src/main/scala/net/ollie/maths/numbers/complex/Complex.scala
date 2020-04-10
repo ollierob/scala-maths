@@ -44,14 +44,16 @@ trait Complex
     def ^(that: Complex): ComplexPower = Complex.pow(this, that)
 
     def ?+(that: Constant) = that match {
-        case re: Real => Some(this + Complex(re))
         case z: Complex => Some(this + z)
+        case r: Real => Some(this + r)
+        case m: MaybeReal => m.toReal.map(r => this + r)
         case _ => None
     }
 
     override def ?*(that: Constant)(leftToRight: Boolean) = that match {
-        case re: Real => Some(this * Complex(re))
         case z: Complex => Some(this * z)
+        case r: Real => Some(this * Complex(r))
+        case m: MaybeReal => m.toReal.map(r => this * r)
         case _ => None
     }
 
@@ -71,7 +73,7 @@ trait Complex
 }
 
 object Complex
-        extends ComplexLikeBuilder[Complex] {
+    extends ComplexLikeBuilder[Complex] {
 
     override def unitSquared = MinusOne
 
@@ -110,7 +112,7 @@ object Complex
     def polar(r: Real, theta: Angle): PolarComplex = PolarComplex(r, theta)
 
     implicit object RealComplexArithmetic
-            extends NumberConversionArithmetic[Real, Complex]
+        extends NumberConversionArithmetic[Real, Complex]
             with AdditionArithmetic[Real, Complex, Complex]
             with MultiplicationArithmetic[Real, Complex, Complex]
             with ExponentiationArithmetic[Real, Complex, ComplexPower] {
@@ -130,7 +132,7 @@ object Complex
     }
 
     implicit object ComplexRealArithmetic
-            extends AdditionArithmetic[Complex, Real, Complex]
+        extends AdditionArithmetic[Complex, Real, Complex]
             with MultiplicationArithmetic[Complex, Real, Complex]
             with ExponentiationArithmetic[Complex, Real, ComplexPower] {
 
@@ -149,7 +151,7 @@ object Complex
 }
 
 trait MaybeComplex
-        extends MaybeReal {
+    extends MaybeReal {
 
     def toReal = this toComplex match {
         case Some(z) => if (z.im.isEmpty) Some(z.re) else None
@@ -161,7 +163,7 @@ trait MaybeComplex
 }
 
 object ComplexZero
-        extends Complex
+    extends Complex
         with EmptyConstant {
 
     def re = Zero
@@ -181,7 +183,7 @@ object ComplexZero
 }
 
 private object ComplexOne
-        extends CartesianComplex(re = 1, im = 0)
+    extends CartesianComplex(re = 1, im = 0)
         with Unity {
 
     override def abs = super[Unity].abs
