@@ -21,6 +21,6 @@ class UndefinedOperationException extends Exception
 
 class IndeterminateOperationException extends Exception
 
-class ArithmeticOverflowException extends ArithmeticException
+class ArithmeticOverflowException(message: String) extends ArithmeticException(message)
 
 class IllegalOperationException(message: String) extends Exception(message)

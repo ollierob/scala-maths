@@ -12,6 +12,8 @@ trait HomogeneousTuple[+T]
 
     def size: Int
 
+    override def canEqual(that: Any) = that.isInstanceOf[HomogeneousTuple[T]]
+
 }
 
 object Homogeneous1Tuple {
@@ -20,8 +22,9 @@ object Homogeneous1Tuple {
 
 }
 
-class Homogeneous1Tuple[T](a: T)
-        extends Tuple1(a)
+class Homogeneous1Tuple[T](override val _1: T)
+        //extends Tuple1(a)
+        extends Product1[T]
         with HomogeneousTuple[T] {
 
     final def size = 1
@@ -35,7 +38,7 @@ class Homogeneous1Tuple[T](a: T)
         def next(): T = {
             if (n) throw new NoSuchElementException
             n = true
-            a
+            _1
         }
 
         override def size = Homogeneous1Tuple.this.size
@@ -50,8 +53,8 @@ object Homogeneous2Tuple {
 
 }
 
-class Homogeneous2Tuple[+T](a: T, b: T)
-        extends Tuple2(a, b)
+class Homogeneous2Tuple[+T](override val _1: T, override val _2: T)
+        extends Product2[T, T]
         with HomogeneousTuple[T] {
 
     final def size = 2
@@ -65,8 +68,8 @@ class Homogeneous2Tuple[+T](a: T, b: T)
         override def next(): T = {
             index += 1
             index match {
-                case 1 => a
-                case 2 => b
+                case 1 => _1
+                case 2 => _2
                 case _ => throw new NoSuchElementException
             }
         }
@@ -83,8 +86,8 @@ object Homogeneous3Tuple {
 
 }
 
-class Homogeneous3Tuple[T](a: T, b: T, c: T)
-        extends Tuple3(a, b, c)
+class Homogeneous3Tuple[T](override val _1: T, override val _2: T, override val _3: T)
+        extends Product3[T, T, T]
         with HomogeneousTuple[T] {
 
     final def size = 3
@@ -98,9 +101,9 @@ class Homogeneous3Tuple[T](a: T, b: T, c: T)
         override def next(): T = {
             index += 1
             index match {
-                case 1 => a
-                case 2 => b
-                case 3 => c
+                case 1 => _1
+                case 2 => _2
+                case 3 => _3
                 case _ => throw new NoSuchElementException
             }
         }
@@ -117,8 +120,8 @@ object Homogeneous4Tuple {
 
 }
 
-class Homogeneous4Tuple[T](a: T, b: T, c: T, d: T)
-        extends Tuple4(a, b, c, d)
+class Homogeneous4Tuple[T](override val _1: T, override val _2: T, override val _3: T, override val _4: T)
+        extends Product4[T, T, T, T]
         with HomogeneousTuple[T] {
 
     final def size = 4
@@ -132,10 +135,10 @@ class Homogeneous4Tuple[T](a: T, b: T, c: T, d: T)
         override def next(): T = {
             index += 1
             index match {
-                case 1 => a
-                case 2 => b
-                case 3 => c
-                case 4 => d
+                case 1 => _1
+                case 2 => _2
+                case 3 => _3
+                case 4 => _4
                 case _ => throw new NoSuchElementException
             }
         }

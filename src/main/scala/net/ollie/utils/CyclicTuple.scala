@@ -21,7 +21,7 @@ object CyclicTuple {
 }
 
 class CyclicTuple3[+T1, +T2, +T3](override val _1: T1, override val _2: T2, override val _3: T3)
-        extends Tuple3(_1, _2, _3)
+        extends Product3[T1, T2, T3]
         with CyclicTuple {
 
     def cycleLeft: CyclicTuple3[T2, T3, T1] = new CyclicTuple3(_2, _3, _1)
@@ -34,5 +34,7 @@ class CyclicTuple3[+T1, +T2, +T3](override val _1: T1, override val _2: T2, over
         case t: Tuple3[_, _, _] => _1 == t._1 && _2 == t._2 && _3 == t._3
         case _ => false
     }
+
+    override def canEqual(that: Any): Boolean = ???
 
 }

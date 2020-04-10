@@ -37,7 +37,7 @@ sealed trait Round
 
     def apply(re: Real): Integer = {
         val bd = re.evaluate(Round.ONE_DP)
-        Integer(bd.setScale(0, roundingMode).toBigInt())
+        Integer(bd.setScale(0, roundingMode).toBigInt)
     }
 
     def apply(p: PositiveReal): Natural = apply(p.asInstanceOf[Real]).abs

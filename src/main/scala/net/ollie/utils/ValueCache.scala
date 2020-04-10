@@ -2,7 +2,7 @@ package net.ollie.utils
 
 import java.util.concurrent.ConcurrentHashMap
 
-import scala.collection.JavaConversions._
+import scala.jdk.CollectionConverters._;
 
 /**
  * Created by Ollie on 05/08/2015.
@@ -10,7 +10,7 @@ import scala.collection.JavaConversions._
 abstract class ValueCache[K, V]
         extends (K => V) {
 
-    private val cache: scala.collection.concurrent.Map[K, V] = new ConcurrentHashMap[K, V]
+    private val cache: scala.collection.concurrent.Map[K, V] = ??? //new ConcurrentHashMap[K, V] //FIXME
 
     def apply(key: K) = cache.getOrElseUpdate(key, compute(key))
 

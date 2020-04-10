@@ -49,7 +49,7 @@ class LargeFibonacciNumber(val n: Natural)
 
     private lazy val f = ((GoldenRatio ^ n) - ((-GoldenRatio) ^ n)) / PositiveSquareRoot(5)
 
-    def evaluate: BigInt = f.evaluate(IntegerPrecision).toBigInt()
+    def evaluate: BigInt = f.evaluate(IntegerPrecision).toBigInt
 
     override def toString = s"Fibonacci($n)"
 
