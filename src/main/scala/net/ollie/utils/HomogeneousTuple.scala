@@ -4,7 +4,7 @@ package net.ollie.utils
  * Created by Ollie on 06/02/14.
  */
 trait HomogeneousTuple[+T]
-        extends Product {
+    extends Product {
 
     override def productIterator: Iterator[T] = iterator
 
@@ -23,11 +23,11 @@ object Homogeneous1Tuple {
 }
 
 class Homogeneous1Tuple[T](override val _1: T)
-        //extends Tuple1(a)
-        extends Product1[T]
-        with HomogeneousTuple[T] {
+    extends Product1[T] with HomogeneousTuple[T] {
 
     final def size = 1
+
+    override def toString = s"[$_1]"
 
     def iterator = new Iterator[T] {
 
@@ -54,10 +54,12 @@ object Homogeneous2Tuple {
 }
 
 class Homogeneous2Tuple[+T](override val _1: T, override val _2: T)
-        extends Product2[T, T]
+    extends Product2[T, T]
         with HomogeneousTuple[T] {
 
     final def size = 2
+
+    override def toString = s"[$_1,$_2]"
 
     def iterator = new Iterator[T] {
 
@@ -87,10 +89,12 @@ object Homogeneous3Tuple {
 }
 
 class Homogeneous3Tuple[T](override val _1: T, override val _2: T, override val _3: T)
-        extends Product3[T, T, T]
+    extends Product3[T, T, T]
         with HomogeneousTuple[T] {
 
     final def size = 3
+
+    override def toString = s"[$_1,$_2,$_3]"
 
     def iterator = new Iterator[T] {
 
@@ -121,10 +125,12 @@ object Homogeneous4Tuple {
 }
 
 class Homogeneous4Tuple[T](override val _1: T, override val _2: T, override val _3: T, override val _4: T)
-        extends Product4[T, T, T, T]
+    extends Product4[T, T, T, T]
         with HomogeneousTuple[T] {
 
     final def size = 4
+
+    override def toString = s"[$_1,$_2,$_3,$_4]"
 
     def iterator = new Iterator[T] {
 

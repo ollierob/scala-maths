@@ -49,4 +49,10 @@ class IntegerTest extends FlatSpec with Matchers {
         Integer(-2).isEven shouldBe true
     }
 
+    behavior of "-3"
+
+    it should "not be even" in {
+        Integer(-3).isEven shouldBe false
+    }
+
 }

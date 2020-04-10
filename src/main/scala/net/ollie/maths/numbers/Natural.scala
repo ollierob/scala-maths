@@ -6,12 +6,11 @@ import net.ollie.maths.{NotEvaluable, Operation}
 import net.ollie.utils.ValueCache
 
 /**
- * Positive integer classes.
+ * Positive integer classes, including zero.
  * Created by Ollie on 02/01/14.
  */
 trait Natural
-        extends Integer
-        with PositiveReal {
+    extends Integer with PositiveReal {
 
     override def abs: Natural = this
 
@@ -105,7 +104,7 @@ object Natural {
     trait FactorialCache extends Function[Natural, Natural]
 
     implicit object FactorialCache
-            extends ValueCache[Natural, Natural]
+        extends ValueCache[Natural, Natural]
             with FactorialCache {
 
         override protected def compute(n: Natural): Natural = computeFactorial(n, FactorialCache.this)
@@ -115,7 +114,7 @@ object Natural {
 }
 
 class ExactNatural(override val int: Int)
-        extends ExactInteger(int)
+    extends ExactInteger(int)
         with Natural {
 
     require(int >= 0, "Int [" + int + "] is not positive!")
@@ -123,7 +122,7 @@ class ExactNatural(override val int: Int)
 }
 
 class ExactBigNatural(override val evaluate: BigInt)
-        extends ExactBigInteger(evaluate)
+    extends ExactBigInteger(evaluate)
         with Natural {
 
     require(evaluate >= 0, "BigInt [" + evaluate + "] is not positive!")
@@ -131,7 +130,7 @@ class ExactBigNatural(override val evaluate: BigInt)
 }
 
 class NaturalFraction(override val numerator: Natural, override val denominator: Natural)
-        extends IntegerFraction(numerator, denominator)
+    extends IntegerFraction(numerator, denominator)
         with PositiveReal {
 
     override def abs = this
@@ -141,8 +140,7 @@ class NaturalFraction(override val numerator: Natural, override val denominator:
 }
 
 class NaturalPower(override val base: Natural, override val power: Natural)
-        extends PrincipalRealToIntegerPower(base, power)
-        with Natural {
+    extends PrincipalRealToIntegerPower(base, power) with Natural {
 
     override def isEven = base.isEven || power.isEven
 
@@ -156,7 +154,7 @@ class NaturalPower(override val base: Natural, override val power: Natural)
 }
 
 private class Factorial(val n: Natural)(implicit cache: FactorialCache)
-        extends Natural {
+    extends Natural {
 
     private lazy val evaluated = n.evaluate * (n.decr ! (cache)).evaluate
 
@@ -169,7 +167,7 @@ private class Factorial(val n: Natural)(implicit cache: FactorialCache)
 }
 
 object NaturalInfinity
-        extends Natural
+    extends Natural
         with RealInfinity
         with NotEvaluable {
 
