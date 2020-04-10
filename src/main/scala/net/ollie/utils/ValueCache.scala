@@ -2,6 +2,7 @@ package net.ollie.utils
 
 import java.util.concurrent.ConcurrentHashMap
 
+import scala.collection.mutable
 import scala.jdk.CollectionConverters._;
 
 /**
@@ -10,7 +11,7 @@ import scala.jdk.CollectionConverters._;
 abstract class ValueCache[K, V]
         extends (K => V) {
 
-    private val cache: scala.collection.concurrent.Map[K, V] = ??? //new ConcurrentHashMap[K, V] //FIXME
+    private val cache: mutable.Map[K, V] = new ConcurrentHashMap[K, V].asScala
 
     def apply(key: K) = cache.getOrElseUpdate(key, compute(key))
 
