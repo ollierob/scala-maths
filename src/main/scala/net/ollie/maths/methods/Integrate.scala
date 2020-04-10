@@ -74,27 +74,7 @@ trait DefiniteIntegral
 
 }
 
-class InfiniteIntegral(val integrand: Univariate, val from: Real)
-        (implicit method: NumericalIntegrationMethod)
-        extends DefiniteIntegral
-        with Real
-        with IterativelyEvaluated {
 
-    def variable = integrand.variable
-
-    override def variables = super[Real].variables
-
-    final def to = Infinity
-
-    protected[this] def upperLimit(n: Natural): Real = 10 * (n.succ)
-
-    def evaluationIterator(startPrecision: Precision) = new EvaluationIterator() {
-
-        def next(nth: Natural, precision: Precision) = Integrate(integrand, from, upperLimit(nth))(method).evaluate(precision)
-
-    }
-
-}
 
 private class DefiniteIntegralOf(val integrand: Expression, val variable: Variable, val from: Expression, val to: Expression)
         extends DefiniteIntegral {

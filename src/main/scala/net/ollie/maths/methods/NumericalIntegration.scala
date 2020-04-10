@@ -21,9 +21,7 @@ trait NumericalIntegrationMethod {
 
     def finite(of: Univariate, from: Real, to: Real): DefiniteIntegral with Real
 
-    def toInfinity(of: Univariate, from: Real): DefiniteIntegral with Real = {
-        ??? //new InfiniteIntegral(of, degree)(this)
-    }
+    def toInfinity(of: Univariate, from: Real): DefiniteIntegral with Real = new InfiniteIntegral(of, from)(this)
 
     def betweenInfinities(of: Univariate): DefiniteIntegral = ???
 

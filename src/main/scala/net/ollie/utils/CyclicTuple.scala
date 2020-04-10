@@ -35,6 +35,8 @@ class CyclicTuple3[+T1, +T2, +T3](override val _1: T1, override val _2: T2, over
         case _ => false
     }
 
-    override def canEqual(that: Any): Boolean = ???
+    override def canEqual(that: Any) = that.isInstanceOf[CyclicTuple3[_, _, _]]
+
+    override def toString = "[" + _1 + "," + _2 + "," + _3 + "]"
 
 }
