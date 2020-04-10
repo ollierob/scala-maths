@@ -1,15 +1,12 @@
 package net.ollie.maths.numbers.complex
 
-import org.junit.runner.RunWith
-import org.scalatest.{FlatSpec, Matchers}
-import org.scalatest.junit.JUnitRunner
-import net.ollie.maths.numbers.constants.{Zero, One}
 import net.ollie.maths.numbers.Precision._
+import net.ollie.maths.numbers.constants.{One, Zero}
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
  * Created by Ollie on 12/01/14.
  */
-@RunWith(classOf[JUnitRunner])
 class ImaginaryTest extends FlatSpec with Matchers {
 
     behavior of "i"

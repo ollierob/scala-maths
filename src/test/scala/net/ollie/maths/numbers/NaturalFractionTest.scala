@@ -1,14 +1,11 @@
 package net.ollie.maths.numbers
 
-import org.scalatest.{Matchers, FlatSpec}
-import Precision._
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
+import net.ollie.maths.numbers.Precision._
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
  * Created by Ollie on 16/02/14.
  */
-@RunWith(classOf[JUnitRunner])
 class NaturalFractionTest extends FlatSpec with Matchers {
 
     "1/10!" should "evaluate" in {

@@ -1,17 +1,14 @@
 package net.ollie.maths.functions.angular
 
-import org.scalatest.{FlatSpec, Matchers}
 import net.ollie.maths.Variable
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
-import net.ollie.maths.numbers.constants.{Pi, Zero}
-import Angle._
+import net.ollie.maths.functions.angular.Angle._
 import net.ollie.maths.numbers.Precision._
+import net.ollie.maths.numbers.constants.{Pi, Zero}
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
  * Created by Ollie on 03/01/14.
  */
-@RunWith(classOf[JUnitRunner])
 class SinTest extends FlatSpec with Matchers {
 
     val x = Variable("x")

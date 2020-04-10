@@ -1,15 +1,12 @@
 package net.ollie.maths.functions.angular
 
-import org.scalatest.{Matchers, FlatSpec}
-import net.ollie.maths.numbers.Precision._
 import net.ollie.maths.numbers.Integer
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
+import net.ollie.maths.numbers.Precision._
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
  * Created by Ollie on 26/01/14.
  */
-@RunWith(classOf[JUnitRunner])
 class Wigner3jTest extends FlatSpec with Matchers {
 
     "Wigner3j((1, 0), (2, 0), (3, 0)" should "evaluate" in {

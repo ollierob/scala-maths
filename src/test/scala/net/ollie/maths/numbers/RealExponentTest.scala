@@ -3,17 +3,15 @@ package net.ollie.maths.numbers
 import net.ollie.maths.numbers.Precision._
 import net.ollie.maths.numbers.complex.Complex
 import net.ollie.maths.numbers.constants.One
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
 import scala.collection.mutable.ArrayBuffer
 
 /**
  * Created by Ollie on 14/01/14.
  */
-@RunWith(classOf[JUnitRunner])
-class RealExponentTest extends FlatSpec with Matchers {
+class RealExponentTest extends AnyFlatSpec with Matchers {
 
     behavior of "1^3"
 
@@ -50,7 +48,7 @@ class RealExponentTest extends FlatSpec with Matchers {
         }
 
         it should "have complex conjugate non-principals" in {
-            val complexValues: Seq[Complex] = new ArrayBuffer[Complex](3) ++ power.values -= power.principal
+            val complexValues: Seq[Complex] = (new ArrayBuffer[Complex](3) ++ power.values -= power.principal).toList
             val z1 = complexValues(0);
             val z2 = complexValues(1);
             z1.conjugate shouldBe z2;

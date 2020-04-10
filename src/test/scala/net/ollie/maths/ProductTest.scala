@@ -1,17 +1,14 @@
 package net.ollie.maths
 
 import net.ollie.maths.methods.Product
-import net.ollie.maths.numbers.{Integer, Natural, Real}
-import org.junit.runner.RunWith
-import org.scalatest.{FlatSpec, Matchers}
-import org.scalatest.junit.JUnitRunner
 import net.ollie.maths.numbers.complex.Complex
 import net.ollie.maths.numbers.constants.One
+import net.ollie.maths.numbers.{Integer, Natural, Real}
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
  * Created by Ollie on 11/01/14.
  */
-@RunWith(classOf[JUnitRunner])
 class ProductTest extends FlatSpec with Matchers {
 
     behavior of "Numeric product"

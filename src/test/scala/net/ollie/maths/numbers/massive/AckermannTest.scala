@@ -1,14 +1,11 @@
 package net.ollie.maths.numbers.massive
 
 import net.ollie.maths.numbers.Natural
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
 import org.scalatest.{FlatSpec, Matchers}
 
 /**
  * Created by Ollie on 05/08/2015.
  */
-@RunWith(classOf[JUnitRunner])
 class AckermannTest extends FlatSpec with Matchers {
 
     "A(0,n)" should "equal n+1" in {

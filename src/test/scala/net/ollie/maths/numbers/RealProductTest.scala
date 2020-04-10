@@ -1,16 +1,14 @@
 package net.ollie.maths.numbers
 
-import org.scalatest.{Matchers, FlatSpec}
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
-import Precision._
+import net.ollie.maths.numbers.Precision._
 import net.ollie.maths.numbers.constants.Pi
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
 /**
  * Created by Ollie on 15/01/14.
  */
-@RunWith(classOf[JUnitRunner])
-class RealProductTest extends FlatSpec with Matchers {
+class RealProductTest extends AnyFlatSpec with Matchers {
 
     "small * large" should "evaluate" in {
         val large: Real = Real(999961)

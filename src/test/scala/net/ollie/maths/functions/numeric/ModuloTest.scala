@@ -1,15 +1,11 @@
 package net.ollie.maths.functions.numeric
 
-import org.scalatest.{Matchers, FlatSpec}
 import net.ollie.maths.numbers.Integer
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
-import net.ollie.maths.numbers.constants.{Zero, One}
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
  * Created by Ollie on 16/02/14.
  */
-@RunWith(classOf[JUnitRunner])
 class ModuloTest extends FlatSpec with Matchers {
 
     behavior of "5 mod 2"

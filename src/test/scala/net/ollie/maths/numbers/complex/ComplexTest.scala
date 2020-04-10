@@ -1,17 +1,14 @@
 package net.ollie.maths.numbers.complex
 
-import org.junit.runner.RunWith
-import org.scalatest.{FlatSpec, Matchers}
-import org.scalatest.junit.JUnitRunner
-import net.ollie.maths.numbers.Integer
 import net.ollie.maths.functions.numeric.PositiveSquareRoot
-import net.ollie.maths.numbers.constants.{Half, Zero, One}
+import net.ollie.maths.numbers.Integer
 import net.ollie.maths.numbers.Precision._
+import net.ollie.maths.numbers.constants.{Half, One, Zero}
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
  * Created by Ollie on 14/01/14.
  */
-@RunWith(classOf[JUnitRunner])
 class ComplexTest extends FlatSpec with Matchers {
 
     "1" should "widen" in {

@@ -1,14 +1,11 @@
 package net.ollie.maths.numbers.constants
 
-import org.scalatest.{Matchers, FlatSpec}
 import net.ollie.maths.numbers.Precision._
-import org.scalatest.junit.JUnitRunner
-import org.junit.runner.RunWith
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
  * Created by Ollie on 24/02/14.
  */
-@RunWith(classOf[JUnitRunner])
 class OmegaTest extends FlatSpec with Matchers {
 
     behavior of "Omega"

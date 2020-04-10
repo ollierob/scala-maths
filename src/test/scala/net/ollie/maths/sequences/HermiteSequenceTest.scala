@@ -1,15 +1,12 @@
 package net.ollie.maths.sequences
 
-import org.scalatest.{Matchers, FlatSpec}
-import net.ollie.maths.numbers.constants.{One, Zero}
-import org.scalatest.junit.JUnitRunner
-import org.junit.runner.RunWith
 import net.ollie.maths.numbers.Integer
+import net.ollie.maths.numbers.constants.{One, Zero}
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
  * Created by Ollie on 25/02/14.
  */
-@RunWith(classOf[JUnitRunner])
 class HermiteSequenceTest extends FlatSpec with Matchers {
 
     "H(odd)" should "be zero" in {

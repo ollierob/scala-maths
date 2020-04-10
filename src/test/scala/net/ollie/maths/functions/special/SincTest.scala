@@ -1,15 +1,12 @@
 package net.ollie.maths.functions.special
 
-import org.scalatest.{Matchers, FlatSpec}
 import net.ollie.maths.Variable
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
-import net.ollie.maths.numbers.constants.{Zero, One}
+import net.ollie.maths.numbers.constants.{One, Zero}
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
  * Created by Ollie on 23/01/14.
  */
-@RunWith(classOf[JUnitRunner])
 class SincTest extends FlatSpec with Matchers {
 
     "Sinc(0)" should "equal 0" in {

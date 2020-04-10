@@ -1,15 +1,12 @@
 package net.ollie.maths.functions.numeric
 
-import org.scalatest.{FlatSpec, Matchers}
 import net.ollie.maths.numbers.constants.{Pi, Two}
 import net.ollie.maths.numbers.{Integer, IntegerFraction}
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
  * Created by Ollie on 26/02/14.
  */
-@RunWith(classOf[JUnitRunner])
 class IntegerPartTest extends FlatSpec with Matchers {
 
     "Integer part of 5" should "be 5" in {

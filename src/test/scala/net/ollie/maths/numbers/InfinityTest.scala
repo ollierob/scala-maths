@@ -1,14 +1,11 @@
 package net.ollie.maths.numbers
 
-import org.scalatest.{Matchers, FlatSpec}
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
 import net.ollie.maths.numbers.constants.Zero
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
  * Created by Ollie on 08/01/14.
  */
-@RunWith(classOf[JUnitRunner])
 class InfinityTest extends FlatSpec with Matchers {
 
     behavior of "Infinity"

@@ -1,15 +1,12 @@
 package net.ollie.maths.functions.angular
 
-import org.scalatest.{Matchers, FlatSpec}
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
-import net.ollie.maths.numbers.constants.{Pi, One}
 import net.ollie.maths.numbers.Precision._
+import net.ollie.maths.numbers.constants.{One, Pi}
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
  * Created by Ollie on 12/01/14.
  */
-@RunWith(classOf[JUnitRunner])
 class CosTest extends FlatSpec with Matchers {
 
     //

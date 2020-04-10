@@ -1,17 +1,14 @@
 package net.ollie.maths.functions.numeric
 
-import org.scalatest.{Matchers, FlatSpec}
-import net.ollie.maths.numbers.constants.{MinusOne, Pi}
 import net.ollie.maths.numbers.Precision._
-import org.scalatest.junit.JUnitRunner
-import org.junit.runner.RunWith
 import net.ollie.maths.numbers.complex.ImaginaryUnit
+import net.ollie.maths.numbers.constants.{MinusOne, Pi}
 import net.ollie.maths.numbers.{Integer, Real}
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
  * Created by Ollie on 13/02/14.
  */
-@RunWith(classOf[JUnitRunner])
 class PrincipalRootTest extends FlatSpec with Matchers {
 
     "Principal 3rd root of Pi" should "evaluate" in {

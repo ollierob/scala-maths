@@ -1,14 +1,11 @@
 package net.ollie.maths.numbers.constants
 
-import org.scalatest.{Matchers, FlatSpec}
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
 import net.ollie.maths.numbers.Natural
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
  * Created by Ollie on 12/01/14.
  */
-@RunWith(classOf[JUnitRunner])
 class ZeroTest extends FlatSpec with Matchers {
 
     behavior of "Zero"

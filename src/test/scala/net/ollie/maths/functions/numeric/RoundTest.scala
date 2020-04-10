@@ -1,14 +1,11 @@
 package net.ollie.maths.functions.numeric
 
-import org.scalatest.{Matchers, FlatSpec}
-import net.ollie.maths.numbers.{IntegerFraction, Integer}
-import org.scalatest.junit.JUnitRunner
-import org.junit.runner.RunWith
+import net.ollie.maths.numbers.Integer
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
  * Created by Ollie on 22/02/14.
  */
-@RunWith(classOf[JUnitRunner])
 class RoundTest extends FlatSpec with Matchers {
 
     "Floor(3 / 2)" should "be 1" in {

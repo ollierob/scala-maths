@@ -1,14 +1,11 @@
 package net.ollie.maths.functions.numeric
 
-import org.scalatest.{Matchers, FlatSpec}
 import net.ollie.maths.numbers.constants.One
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
  * Created by Ollie on 22/02/14.
  */
-@RunWith(classOf[JUnitRunner])
 class SignumTest extends FlatSpec with Matchers {
 
     "Signum(+n)" should "be 1" in {

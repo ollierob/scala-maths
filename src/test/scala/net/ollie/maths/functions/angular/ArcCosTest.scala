@@ -1,16 +1,13 @@
 package net.ollie.maths.functions.angular
 
-import net.ollie.maths.numbers.{SinglePrecision, IntegerFraction, Real}
-import org.junit.runner.RunWith
-import org.scalatest.{FlatSpec, Matchers}
-import org.scalatest.junit.JUnitRunner
 import net.ollie.maths.numbers.Precision._
 import net.ollie.maths.numbers.constants.Pi
+import net.ollie.maths.numbers.{IntegerFraction, Real, SinglePrecision}
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
  * Created by Ollie on 24/01/14.
  */
-@RunWith(classOf[JUnitRunner])
 class ArcCosTest extends FlatSpec with Matchers {
 
     behavior of "ArcCos(x)"

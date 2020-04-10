@@ -2,17 +2,13 @@ package net.ollie.maths.functions.numeric
 
 import net.ollie.maths.Variable
 import net.ollie.maths.numbers._
-import org.junit.runner.RunWith
-import org.scalatest.{FlatSpec, Matchers}
-import org.scalatest.junit.JUnitRunner
-import net.ollie.maths.numbers.constants.{Pi, Zero, One, EulersNumber}
 import net.ollie.maths.numbers.complex.{Complex, ImaginaryUnit}
-import scala.Some
+import net.ollie.maths.numbers.constants.{EulersNumber, One, Pi, Zero}
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
  * Created by Ollie on 16/01/14.
  */
-@RunWith(classOf[JUnitRunner])
 class LnTest extends FlatSpec with Matchers {
 
     import net.ollie.maths.numbers.Precision._

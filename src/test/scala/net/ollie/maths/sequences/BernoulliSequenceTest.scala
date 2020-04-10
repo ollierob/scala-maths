@@ -1,15 +1,12 @@
 package net.ollie.maths.sequences
 
-import org.scalatest.{Matchers, FlatSpec}
 import net.ollie.maths.numbers.Precision._
 import net.ollie.maths.numbers.{Integer, IntegerFraction}
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
  * Created by Ollie on 19/02/14.
  */
-@RunWith(classOf[JUnitRunner])
 class BernoulliSequenceTest extends FlatSpec with Matchers {
 
     "Bernoulli(6)" should "be 1/42" in {

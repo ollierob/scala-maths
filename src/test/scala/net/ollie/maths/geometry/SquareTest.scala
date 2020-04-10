@@ -1,14 +1,11 @@
 package net.ollie.maths.geometry
 
-import org.scalatest.{Matchers, FlatSpec}
-import net.ollie.maths.numbers.{IntegerFraction, Integer}
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
+import net.ollie.maths.numbers.{Integer, IntegerFraction}
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
  * Created by Ollie on 09/02/14.
  */
-@RunWith(classOf[JUnitRunner])
 class SquareTest extends FlatSpec with Matchers {
 
     behavior of "Square(5)"

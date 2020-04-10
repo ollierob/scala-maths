@@ -1,15 +1,12 @@
 package net.ollie.maths.functions.polynomial
 
-import org.scalatest.{Matchers, FlatSpec}
 import net.ollie.maths.Variable
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
-import net.ollie.maths.numbers.constants.{Zero, One, Pi}
+import net.ollie.maths.numbers.constants.{One, Pi, Zero}
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
  * Created by Ollie on 09/01/14.
  */
-@RunWith(classOf[JUnitRunner])
 class LegendrePolynomialTest extends FlatSpec with Matchers {
 
     val x = Variable("x")

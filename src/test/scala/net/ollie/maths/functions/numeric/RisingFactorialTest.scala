@@ -1,15 +1,12 @@
 package net.ollie.maths.functions.numeric
 
-import org.scalatest.{Matchers, FlatSpec}
-import net.ollie.maths.numbers.constants.{Zero, Two, One}
-import org.scalatest.junit.JUnitRunner
-import org.junit.runner.RunWith
 import net.ollie.maths.Variable
+import net.ollie.maths.numbers.constants.{One, Two, Zero}
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
  * Created by Ollie on 02/03/14.
  */
-@RunWith(classOf[JUnitRunner])
 class RisingFactorialTest extends FlatSpec with Matchers {
 
     val x = Variable("x")

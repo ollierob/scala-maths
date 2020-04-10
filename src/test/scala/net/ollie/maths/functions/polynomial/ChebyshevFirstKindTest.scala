@@ -2,15 +2,12 @@ package net.ollie.maths.functions.polynomial
 
 import net.ollie.maths.Variable
 import net.ollie.maths.numbers.Integer
-import org.junit.runner.RunWith
+import net.ollie.maths.numbers.constants.{One, Zero}
 import org.scalatest.{FlatSpec, Matchers}
-import org.scalatest.junit.JUnitRunner
-import net.ollie.maths.numbers.constants.{Zero, One}
 
 /**
  * Created by Ollie on 18/01/14.
  */
-@RunWith(classOf[JUnitRunner])
 class ChebyshevFirstKindTest extends FlatSpec with Matchers {
 
     val x = Variable("x")

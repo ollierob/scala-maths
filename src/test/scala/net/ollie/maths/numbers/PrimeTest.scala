@@ -1,13 +1,10 @@
 package net.ollie.maths.numbers
 
-import org.scalatest.{Matchers, FlatSpec}
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
  * Created by Ollie on 18/01/14.
  */
-@RunWith(classOf[JUnitRunner])
 class PrimeTest extends FlatSpec with Matchers {
 
     "Pi(100)" should "be 25" in {

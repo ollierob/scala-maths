@@ -1,15 +1,12 @@
 package net.ollie.maths.functions.numeric
 
-import org.scalatest.{Matchers, FlatSpec}
-import net.ollie.maths.numbers.constants.{One, Zero}
 import net.ollie.maths.numbers.Precision._
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
+import net.ollie.maths.numbers.constants.{One, Zero}
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
  * Created by Ollie on 03/03/14.
  */
-@RunWith(classOf[JUnitRunner])
 class LimitTest extends FlatSpec with Matchers {
 
     "Lim(x as x->0+)" should "be 0" in {

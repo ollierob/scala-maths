@@ -1,15 +1,12 @@
 package net.ollie.maths.sequences
 
-import org.scalatest.{Matchers, FlatSpec}
-import net.ollie.maths.numbers.constants.{One, Zero}
 import net.ollie.maths.numbers.Natural
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
+import net.ollie.maths.numbers.constants.{One, Zero}
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
  * Created by Ollie on 19/02/14.
  */
-@RunWith(classOf[JUnitRunner])
 class FibonacciSequenceTest extends FlatSpec with Matchers {
 
     "Fib(0)" should "be 0" in {

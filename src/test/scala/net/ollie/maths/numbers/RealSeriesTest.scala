@@ -1,15 +1,12 @@
 package net.ollie.maths.numbers
 
-import org.scalatest.{FlatSpec, Matchers}
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
+import net.ollie.maths.numbers.Precision._
 import net.ollie.maths.numbers.constants.Pi
-import Precision._
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
  * Created by Ollie on 14/01/14.
  */
-@RunWith(classOf[JUnitRunner])
 class RealSeriesTest extends FlatSpec with Matchers {
 
     behavior of "1 + Pi"

@@ -1,15 +1,12 @@
 package net.ollie.maths.functions.angular
 
-import org.scalatest.{Matchers, FlatSpec}
 import net.ollie.maths.numbers.Precision._
 import net.ollie.maths.numbers.constants.Zero
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
  * Created by Ollie on 09/02/14.
  */
-@RunWith(classOf[JUnitRunner])
 class HyperbolicSinTest extends FlatSpec with Matchers {
 
     "Sinh(0)" should "be empty" in {

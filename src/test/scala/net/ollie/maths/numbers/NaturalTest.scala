@@ -1,14 +1,11 @@
 package net.ollie.maths.numbers
 
-import Precision._
+import net.ollie.maths.numbers.Precision._
 import org.scalatest.{FlatSpec, Matchers}
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
 
 /**
  * Created by Ollie on 12/01/14.
  */
-@RunWith(classOf[JUnitRunner])
 class NaturalTest extends FlatSpec with Matchers {
 
     behavior of "11!"

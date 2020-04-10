@@ -1,15 +1,12 @@
 package net.ollie.maths.functions.polylogarithmic
 
-import org.scalatest.{Matchers, FlatSpec}
-import net.ollie.maths.numbers.constants.{Zero, Half}
-import org.scalatest.junit.JUnitRunner
-import org.junit.runner.RunWith
 import net.ollie.maths.numbers.Precision._
+import net.ollie.maths.numbers.constants.{Half, Zero}
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
  * Created by Ollie on 19/02/14.
  */
-@RunWith(classOf[JUnitRunner])
 class RiemannZetaTest extends FlatSpec with Matchers {
 
     "Zeta(0)" should "be -1/2" in {

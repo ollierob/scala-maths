@@ -1,14 +1,11 @@
 package net.ollie.maths.numbers.massive
 
 import net.ollie.maths.numbers.Natural
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
 import org.scalatest.{FlatSpec, Matchers}
 
 /**
  * Created by Ollie on 04/08/2015.
  */
-@RunWith(classOf[JUnitRunner])
 class NaturalTetrationTest extends FlatSpec with Matchers {
 
     val one = Natural(1)

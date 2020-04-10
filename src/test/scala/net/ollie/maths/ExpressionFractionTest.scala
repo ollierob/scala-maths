@@ -1,14 +1,11 @@
 package net.ollie.maths
 
-import org.scalatest.{Matchers, FlatSpec}
 import net.ollie.maths.numbers.IntegerFraction
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
  * Created by Ollie on 17/01/14.
  */
-@RunWith(classOf[JUnitRunner])
 class ExpressionFractionTest extends FlatSpec with Matchers {
 
     val x = Variable("x")
