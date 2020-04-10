@@ -7,7 +7,7 @@ import net.ollie.maths.{NumberIdentityArithmetic, Constant}
  * Created by Ollie on 01/02/14.
  */
 trait ComplexLike
-        extends Constant
+    extends Constant
         with MaybeReal {
 
     self =>
@@ -16,8 +16,14 @@ trait ComplexLike
 
     implicit protected[this] def builder: ComplexLikeBuilder[System]
 
+    /**
+     * @return real multiplier
+     */
     def re: Real
 
+    /**
+     * @return unreal multiplier
+     */
     def unre: Real
 
     override def isEmpty: Boolean = re.isEmpty && unre.isEmpty
@@ -73,7 +79,7 @@ trait ComplexLike
 }
 
 trait ComplexLikeBuilder[System]
-        extends NumberIdentityArithmetic[System] {
+    extends NumberIdentityArithmetic[System] {
 
     def unitSquared: Real
 

@@ -27,7 +27,7 @@ class Homogeneous1Tuple[T](override val _1: T)
 
     final def size = 1
 
-    override def toString = s"[$_1]"
+    override def toString = "[" + _1 + "]"
 
     def iterator = new Iterator[T] {
 
@@ -59,7 +59,7 @@ class Homogeneous2Tuple[+T](override val _1: T, override val _2: T)
 
     final def size = 2
 
-    override def toString = s"[$_1,$_2]"
+    override def toString = "[" + _1 + "," + _2 + "]"
 
     def iterator = new Iterator[T] {
 
@@ -94,7 +94,7 @@ class Homogeneous3Tuple[T](override val _1: T, override val _2: T, override val 
 
     final def size = 3
 
-    override def toString = s"[$_1,$_2,$_3]"
+    override def toString = "[" + _1 + "," + _2 + "," + _3 + "]"
 
     def iterator = new Iterator[T] {
 
@@ -130,7 +130,7 @@ class Homogeneous4Tuple[T](override val _1: T, override val _2: T, override val 
 
     final def size = 4
 
-    override def toString = s"[$_1,$_2,$_3,$_4]"
+    override def toString = "[" + _1 + "," + _2 + "," + _3 + "," + _4 + "]"
 
     def iterator = new Iterator[T] {
 

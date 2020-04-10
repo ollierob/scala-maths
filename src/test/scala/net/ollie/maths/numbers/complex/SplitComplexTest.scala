@@ -28,6 +28,12 @@ class SplitComplexTest extends FlatSpec with Matchers {
             s2 * s shouldBe Zero
         }
 
+        it should "add reals" in {
+            s + 0 shouldBe s
+            s + 1 shouldBe SplitComplex(2, 1)
+            s + 2 shouldBe SplitComplex(3, 1)
+        }
+
     }
 
 }

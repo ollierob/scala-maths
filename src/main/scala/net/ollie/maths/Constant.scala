@@ -8,7 +8,7 @@ import scala.collection.mutable
  * Created by Ollie on 02/01/14.
  */
 trait Constant
-        extends Nonvariate
+    extends Nonvariate
         with Invertible
         with Integrable {
 
@@ -28,12 +28,12 @@ trait Constant
     def ?+(that: Constant): Option[Constant]
 
     def +[R <: Constant, Combined <: Constant](that: R)
-            (implicit addition: AdditionArithmetic[System, R#System, Combined]): Combined = {
+                                              (implicit addition: AdditionArithmetic[System, R#System, Combined]): Combined = {
         addition.add(this, that.narrow)
     }
 
     def -[R <: Constant, Combined <: Constant](that: R)
-            (implicit addition: AdditionArithmetic[System, R#System, Combined]): Combined = {
+                                              (implicit addition: AdditionArithmetic[System, R#System, Combined]): Combined = {
         addition.add(this, -that)
     }
 
@@ -53,20 +53,21 @@ trait Constant
     def ?*(that: Constant)(leftToRight: Boolean): Option[Constant]
 
     def *[R <: Constant, Combined <: Constant](that: R)
-            (implicit multiplication: MultiplicationArithmetic[System, R#System, Combined]): Combined = {
+                                              (implicit multiplication: MultiplicationArithmetic[System, R#System, Combined]): Combined = {
         multiplication.multiply(this, that.narrow)
     }
 
     /**
      * Exponentiation.
+     *
      * @param power
      * @param exponentiation
-     * @tparam R power type
+     * @tparam R        power type
      * @tparam Combined result type
      * @return a number
      */
     def ^[R <: Constant, Combined <: Constant](power: R)
-            (implicit exponentiation: ExponentiationArithmetic[System, R#System, Combined]): Combined = {
+                                              (implicit exponentiation: ExponentiationArithmetic[System, R#System, Combined]): Combined = {
         exponentiation.exponentiate(this, power.narrow)
     }
 
@@ -74,6 +75,7 @@ trait Constant
 
     /**
      * Tetration.
+     *
      * @param tower
      * @param tetration
      * @tparam R
@@ -82,7 +84,7 @@ trait Constant
      * @see http://mathworld.wolfram.com/Tetration.html
      */
     def ^^[R <: Constant, Combined <: Constant](tower: R)
-            (implicit tetration: TetrationArithmetic[System, R#System, Combined]): Combined = {
+                                               (implicit tetration: TetrationArithmetic[System, R#System, Combined]): Combined = {
         tetration.tetrate(this, tower.narrow)
     }
 
@@ -104,7 +106,7 @@ trait Constant
 object Constant {
 
     implicit object ConstantArithmetic
-            extends MultiplicationArithmetic[Constant#System, Constant#System, Constant] {
+        extends MultiplicationArithmetic[Constant#System, Constant#System, Constant] {
 
         def one: Constant with Unity = One
 
@@ -118,7 +120,7 @@ object Constant {
     }
 
     private class NegatedConstant(val of: Constant)
-            extends Constant {
+        extends Constant {
 
         type System = Constant
 
@@ -139,7 +141,7 @@ object Constant {
     }
 
     private class MultipliedConstant(val left: Constant, val right: Constant)
-            extends Constant
+        extends Constant
             with Multiplied {
 
         type System = Constant
@@ -162,7 +164,7 @@ object Constant {
     }
 
     private class InvertedConstant(val inverse: Constant)
-            extends Constant {
+        extends Constant {
 
         type System = Constant
 
@@ -181,9 +183,9 @@ object Constant {
 }
 
 abstract class ConstantSeries[N <: Constant](val terms: Seq[N])
-        extends Constant {
+    extends Constant {
 
-    require(!terms.isEmpty)
+    require(terms.nonEmpty)
 
     protected[this] def simplify(terms: Seq[N]): Seq[N] = {
         var simplified = false
@@ -209,11 +211,11 @@ abstract class ConstantSeries[N <: Constant](val terms: Seq[N])
 }
 
 abstract class ConstantProduct[N <: Constant](val terms: Seq[N])
-        (implicit identity: NumberIdentityArithmetic[N])
-        extends Constant
+                                             (implicit identity: NumberIdentityArithmetic[N])
+    extends Constant
         with Multiplied {
 
-    require(!terms.isEmpty)
+    require(terms.nonEmpty)
 
     def left: N = terms.head
 
@@ -228,11 +230,10 @@ abstract class ConstantProduct[N <: Constant](val terms: Seq[N])
         var simplified = false
         var current = terms.head
         val series = terms.tail.foldLeft(new mutable.ListBuffer[N]())((seq, next) => tryMultiply(next, current) match {
-            case Some(m) => {
+            case Some(m) =>
                 simplified = true
                 current = m
                 seq += current
-            }
             case _ => seq :+ next
         })
         if (!simplified) series += current;
