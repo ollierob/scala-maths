@@ -4,6 +4,7 @@ import net.ollie.maths.numbers.constants.Zero
 import net.ollie.maths.{Constant, Empty, Evaluable, Expression}
 
 /**
+ * Representation of zero in various number systems.
  * Created by Ollie on 02/03/14.
  */
 trait EmptyConstant

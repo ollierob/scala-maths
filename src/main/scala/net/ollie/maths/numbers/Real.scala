@@ -25,6 +25,10 @@ trait Real
 
     def abs: PositiveReal = Real.abs(this)
 
+    def isNegative = this < 0;
+
+    def isPositive = this > 0;
+
     override def ?+(that: Expression)(leftToRight: Boolean) = Real(that.toConstant) match {
         case Some(r) => Some(this + r) //Order is irrelevant
         case _ => super.?+(that)(leftToRight)

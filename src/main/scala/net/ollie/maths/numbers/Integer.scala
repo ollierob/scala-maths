@@ -8,7 +8,7 @@ import net.ollie.maths.numbers.constants.{MinusOne, One}
  * Created by Ollie on 01/01/14.
  */
 trait Integer
-        extends Rational {
+    extends Rational {
 
     final def numerator = this
 
@@ -64,6 +64,11 @@ trait Integer
 
     def equals(that: Integer): Boolean = this.eq(that) || this.evaluate == that.evaluate
 
+    override def compare(that: Real) = that match {
+        case i: Integer => evaluate compareTo i.evaluate
+        case _ => super.compare(that)
+    }
+
     override def toString = evaluate.toString
 
     override def hashCode = evaluate.hashCode
@@ -92,7 +97,7 @@ object Integer {
     def abs(i: Integer): Natural = Natural(i.evaluate.abs)
 
     implicit object IntegerArithmetic
-            extends Numeric[Integer] {
+        extends Numeric[Integer] {
 
         def plus(x: Integer, y: Integer) = x + y
 
@@ -121,8 +126,7 @@ object Integer {
 }
 
 class ExactInteger(val int: Int)
-        extends AnyRef
-        with Integer {
+    extends Integer {
 
     val evaluate = BigInt(int)
 
@@ -133,6 +137,12 @@ class ExactInteger(val int: Int)
 
     override def unary_-(): Integer = Integer(-int)
 
+    override def isEven = int % 2 == 0
+
+    override def isNegative = int < 0
+
+    override def isPositive = int > 0;
+
     override def evaluate(precision: Precision) = precision(int)
 
     override def toString = int.toString
@@ -140,8 +150,7 @@ class ExactInteger(val int: Int)
 }
 
 class ExactBigInteger(val evaluate: BigInt)
-        extends AnyRef
-        with Integer
+    extends Integer
 
 object NegatedInteger {
 
@@ -153,7 +162,7 @@ object NegatedInteger {
 }
 
 class NegatedInteger(val i: Integer)
-        extends NegatedReal(i)
+    extends NegatedReal(i)
         with Integer {
 
     override def unary_-() = i
