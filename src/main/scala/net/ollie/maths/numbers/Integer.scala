@@ -114,6 +114,8 @@ object Integer {
 
         def compare(x: Integer, y: Integer) = x compare y
 
+        override def parseString(str: String): Option[Integer] = Option.apply(str.toInt)
+
     }
 
 }

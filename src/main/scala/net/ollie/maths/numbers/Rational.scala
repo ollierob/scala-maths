@@ -88,6 +88,8 @@ object Rational {
 
         def plus(x: Rational, y: Rational) = x + y
 
+        override def parseString(str: String) = ??? //TODO
+
     }
 
 }

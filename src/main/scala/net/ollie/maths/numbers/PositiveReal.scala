@@ -84,6 +84,8 @@ object PositiveReal {
 
         def plus(x: PositiveReal, y: PositiveReal) = x + y
 
+        override def parseString(str: String): Option[PositiveReal] = ???
+
     }
 
 }

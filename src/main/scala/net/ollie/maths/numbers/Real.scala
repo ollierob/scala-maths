@@ -232,6 +232,8 @@ object Real
 
         def apply(from: Real) = from
 
+        override def parseString(str: String): Option[Real] = ???
+
     }
 
 }
