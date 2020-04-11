@@ -37,7 +37,7 @@ object Product {
 }
 
 class Product[+T <: Expression](val terms: Seq[T])
-        extends Aggregate
+    extends Aggregate
         with Multiplied {
 
     require(!terms.isEmpty)
@@ -53,6 +53,7 @@ class Product[+T <: Expression](val terms: Seq[T])
 
     /**
      * Tail * that
+     *
      * @param that
      * @return
      */
@@ -66,6 +67,7 @@ class Product[+T <: Expression](val terms: Seq[T])
 
     /**
      * That * head
+     *
      * @param that
      * @return
      */
@@ -110,10 +112,10 @@ class Product[+T <: Expression](val terms: Seq[T])
 
     override def isEmpty = terms.exists(_.isEmpty)
 
+    private val one: Option[Constant] = Some(One)
+
     def toConstant: Option[Constant] = {
-        val constants = terms.map(_.toConstant)
-        val one: Option[Constant] = Some(One)
-        constants.foldLeft(one)(multiply)
+        terms.map(_.toConstant).foldLeft(one)(multiply)
     }
 
     private def multiply(result: Option[Constant], current: Option[Constant]): Option[Constant] = {
@@ -135,7 +137,7 @@ class Product[+T <: Expression](val terms: Seq[T])
 }
 
 class InfiniteRealProduct(f: (Natural) => Real, start: Natural)
-        extends Real
+    extends Real
         with IterativelyEvaluated {
 
     def evaluationIterator(startPrecision: Precision) = new EvaluationIterator() {

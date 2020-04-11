@@ -278,8 +278,7 @@ object Univariate {
     }
 
     private class UnivariateWrapper(val expression: Expression)
-        extends AnyRef
-            with Univariate {
+        extends Univariate {
 
         require(expression.variables.size == 1, "Require 1 variable but " + expression + " had " + expression.variables)
 
@@ -319,8 +318,7 @@ trait Univariate //TODO make variable optional
     def variables = Set(variable)
 
     def apply[R <: Constant](n: Constant)(implicit conversion: NumberIdentityArithmetic[R]): R = {
-        val out: Constant = replace(variable, n).toConstant.get
-        conversion(out).get
+        replace(variable, n).toConstant.flatMap(c => conversion(c)).get
     }
 
     def apply(u: Univariate): Univariate = replace(variable, u)

@@ -10,7 +10,7 @@ import net.ollie.maths.numbers.Precision._
 class GammaTest extends FlatSpec with Matchers {
 
     "Gamma(4.5)" should "evaluate" in {
-        val g = Gamma(Real(4.5))
+        val g = Gamma(4.5)
         g.evaluate(1 dp) shouldBe BigDecimal("11.6") //FIXME
     }
 

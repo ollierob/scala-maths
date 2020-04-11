@@ -116,8 +116,7 @@ trait Real
 
     def ?^(that: Constant): Option[Constant] = that match {
         case int: Integer => Some(this ^ int)
-        case re: Real if this.isStrictlyPositive => ??? // Some(this.abs ^ re) //TODO multivalued
-        case _ => None
+        case _ => Real(that).map(t => RealExponent(this, t))
     }
 
     def squared: PositiveReal = (this ^ 2).abs
@@ -259,6 +258,12 @@ trait MaybeReal {
 
 class ExactDouble(val of: Double)
     extends Real {
+
+    override def ?+(that: Real) = that match {
+        case Zero => Some(this)
+        case i: Integer if i.isValidInt => Some(new ExactDouble(of + i.requireInt))
+        case _ => super.?+(that)
+    }
 
     override def isEmpty = of == 0d
 

@@ -34,6 +34,8 @@ trait Integer
 
     def requireInt: Int = toInt.get
 
+    def isValidInt: Boolean = evaluate.isValidInt
+
     def +(that: Integer): Integer = Integer(this.evaluate + that.evaluate)
 
     override def ?+(that: Real) = that match {
