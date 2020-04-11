@@ -7,13 +7,13 @@ import org.scalatest.{FlatSpec, Matchers}
 /**
  * Created by Ollie on 15/02/14.
  */
-class RootsTest extends FlatSpec with Matchers {
+class NumericRootsTest extends FlatSpec with Matchers {
 
     behavior of "Cube roots of 2"
 
     {
 
-        val cubeRoots = Roots(2, 3)
+        val cubeRoots = NumericRoots(2, 3)
 
         it should "have two complex and one real root" in {
             cubeRoots.values.size shouldBe 3
@@ -32,7 +32,7 @@ class RootsTest extends FlatSpec with Matchers {
 
     {
 
-        val cubeRoots = Roots(8, 3)
+        val cubeRoots = NumericRoots(8, 3)
 
         it should "have two complex and one real root" in {
             cubeRoots.values.size shouldBe 3

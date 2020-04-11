@@ -74,10 +74,10 @@ abstract class ConstantPolynomial[N <: Constant](val representation: N)
     extends Polynomial
 
 trait PolynomialRoots[+F <: Constant, C <: Constant]
-    extends Roots[F, C] {
+    extends Roots[C] {
 
-    def polynomial: Polynomial
+    override def of: Polynomial
 
-    override def degree = polynomial.degree
+    override def degree = of.degree
 
 }

@@ -49,6 +49,13 @@ object One
 
     override def ?^(that: Constant) = Some(this)
 
+    def isExactly(c: Constant): Boolean = c match {
+        case One => true
+        case _ => false //TODO
+    }
+
+    val BIG_DECIMAL = BigDecimal.valueOf(1)
+
 }
 
 object MinusOne

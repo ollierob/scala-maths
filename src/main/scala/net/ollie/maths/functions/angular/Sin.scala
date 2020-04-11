@@ -1,11 +1,9 @@
 package net.ollie.maths.functions.angular
 
-import scala.Some
-
-import Angle._
 import net.ollie.maths._
-import net.ollie.maths.functions.{OddBuiltFunction, RealFunctionBuilder, FunctionBuilder, UnivariateFunction}
+import net.ollie.maths.functions.angular.Angle._
 import net.ollie.maths.functions.special.Sinc
+import net.ollie.maths.functions.{FunctionBuilder, OddBuiltFunction, RealFunctionBuilder, UnivariateFunction}
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.constants.{Pi, Zero}
 import org.nevec.rjm.BigDecimalMath
@@ -14,10 +12,11 @@ import org.nevec.rjm.BigDecimalMath
  * Created by Ollie on 02/01/14.
  */
 object Sin
-        extends RealFunctionBuilder
+    extends RealFunctionBuilder
         with UnivariateFunction[Angle, Real] {
 
     def apply(re: Real): Real with Sin = re match {
+        case Pi => SinPi //TODO other even & odd multiples
         case angle: Angle => apply(angle)
         case _ => apply(re radians)
     }
@@ -36,7 +35,7 @@ object Sin
 }
 
 trait Sin
-        extends Expression {
+    extends Expression {
 
     val of: Expression
 
@@ -45,7 +44,7 @@ trait Sin
 }
 
 private class SinOf(val of: Expression)
-        extends OddBuiltFunction
+    extends OddBuiltFunction
         with Sin
         with Invertible {
 
@@ -66,19 +65,29 @@ private class SinOf(val of: Expression)
 
 }
 
+private object SinPi
+    extends PositiveReal with Sin with EmptyConstant {
+
+    override val of = Pi
+
+    override def abs = this
+
+}
+
 /**
  * TODO periodicity
+ *
  * @param of
  */
 class RealSin(val of: Angle)
-        extends Real
+    extends Real
         with Sin
         with CachedEvaluated {
 
     private lazy val reduced: Angle = of.reduce
 
-    protected[this] def doEvaluate(precision: Precision) = {
-        BigDecimalMath.sin(reduced.evaluate(precision).underlying())
+    protected[this] def doEvaluate(precision: Precision) = of match {
+        case _ => BigDecimalMath.sin(reduced.evaluate(precision).underlying())
     }
 
     override def variables = super[Real].variables
@@ -99,7 +108,7 @@ class RealSin(val of: Angle)
 }
 
 private object SinZero
-        extends Real
+    extends Real
         with Sin
         with EmptyConstant {
 
@@ -110,7 +119,7 @@ private object SinZero
 }
 
 object Cosec
-        extends FunctionBuilder {
+    extends FunctionBuilder {
 
     def apply(n: Constant) = Sin(n).inverse
 

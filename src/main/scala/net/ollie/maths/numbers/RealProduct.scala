@@ -1,7 +1,7 @@
 package net.ollie.maths.numbers
 
 import net.ollie.maths.methods.ApproximatelyEvaluated
-import net.ollie.maths.numbers.constants.Zero
+import net.ollie.maths.numbers.constants.{One, Zero}
 import net.ollie.maths.{ConstantProduct, NotEvaluable}
 import net.ollie.utils.OptionalBigDecimal
 
@@ -11,13 +11,17 @@ import net.ollie.utils.OptionalBigDecimal
 object RealProduct {
 
     def apply(left: Real, right: Real): Real = {
-        if (left.isEmpty || right.isEmpty) Zero
+        if (left.isZero || right.isZero) Zero
+        else if (One.isExactly(left)) right;
+        else if (One.isExactly(right)) left;
         else new RealProduct(Seq(left, right))
     }
 
     def apply(terms: Seq[Real]): Real = terms match {
         case Nil => Zero
         case item :: Nil => item
+        case One :: c :: Nil => c
+        case c :: One :: Nil => c
         case _ if terms.contains(Zero) => Zero
         case _ => new RealProduct(terms)
     }
@@ -25,7 +29,7 @@ object RealProduct {
 }
 
 private class RealProduct(override val terms: Seq[Real])
-        extends ConstantProduct(terms)(Real)
+    extends ConstantProduct(terms)(Real)
         with Real
         with ApproximatelyEvaluated {
 
@@ -54,6 +58,7 @@ private class RealProduct(override val terms: Seq[Real])
 
     /**
      * Count the number of zero digits in the given decimal.
+     *
      * @param bd
      * @return
      */

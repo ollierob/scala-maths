@@ -1,6 +1,6 @@
 package net.ollie.maths.numbers
 
-import net.ollie.maths.functions.numeric.Roots
+import net.ollie.maths.functions.numeric.NumericRoots
 import net.ollie.maths.numbers.complex.Complex
 import net.ollie.maths.numbers.constants.{One, Zero}
 import net.ollie.maths.{CachedEvaluated, Exponentiated, Variable}
@@ -87,7 +87,7 @@ private class RealToRationalExponent(val base: Real, val power: Rational)
 
     private val primary = base ^ (power.numerator)
 
-    private lazy val roots: Roots[Real, Complex] = Roots(primary, power.denominator)
+    private lazy val roots: NumericRoots[Real, Complex] = NumericRoots(primary, power.denominator)
 
     def principal: Complex = roots.principal
 

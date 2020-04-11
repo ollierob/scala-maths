@@ -16,18 +16,18 @@ object SquareRoot {
 
     def apply(x: Expression): Expression = x ^ Half
 
-    def apply(re: Real): Roots[Real, Complex] = Roots(re, 2)
+    def apply(re: Real): NumericRoots[Real, Complex] = NumericRoots(re, 2)
 
-    def apply(re: PositiveReal): Roots[PositiveReal, Real] = new RealSquareRoots(re)
+    def apply(re: PositiveReal): NumericRoots[PositiveReal, Real] = new RealSquareRoots(re)
 
 }
 
 class RealSquareRoots(val of: PositiveReal)
-        extends Roots[PositiveReal, Real] {
+        extends NumericRoots[PositiveReal, Real] {
 
     final def degree = 2
 
-    def inverse = Roots(of.inverse, degree)
+    override def inverse = NumericRoots(of.inverse, degree)
 
     private lazy val root: PositiveReal = PositiveSquareRoot(of)
 
