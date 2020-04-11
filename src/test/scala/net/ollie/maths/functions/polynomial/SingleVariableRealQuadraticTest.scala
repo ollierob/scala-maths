@@ -1,6 +1,7 @@
 package net.ollie.maths.functions.polynomial
 
 import net.ollie.maths.Variable
+import net.ollie.maths.numbers.complex.{CartesianComplex, Complex}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
@@ -21,7 +22,10 @@ class SingleVariableRealQuadraticTest extends AnyFlatSpec with Matchers {
         it should "roots" in {
 
             val roots = poly.roots
-            roots.principal shouldBe 5
+
+            roots.principal shouldBe new CartesianComplex(-0.2, 0)
+            roots.secondary shouldBe new CartesianComplex(-1, 0)
+
 
         }
 

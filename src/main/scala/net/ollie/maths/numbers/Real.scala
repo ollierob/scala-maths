@@ -184,9 +184,9 @@ object Real
 
     implicit def apply(int: Int): Real = Integer(int)
 
-    def apply(d: Double): Real = if (d == 0d) Zero else new ExactDouble(d)
+    implicit def apply(d: Double): Real = if (d == 0d) Zero else new ExactDouble(d)
 
-    def apply(bd: BigDecimal): Real = if (bd == BD_ZERO) Zero else new ExactBigDecimal(bd)
+    implicit def apply(bd: BigDecimal): Real = if (bd == BD_ZERO) Zero else new ExactBigDecimal(bd)
 
     def negate(re: Real) = if (re.isEmpty) Zero else new NegatedReal(re)
 

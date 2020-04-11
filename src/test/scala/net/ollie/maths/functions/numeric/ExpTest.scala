@@ -2,14 +2,16 @@ package net.ollie.maths.functions.numeric
 
 import net.ollie.maths.Variable
 import net.ollie.maths.numbers.Precision._
-import net.ollie.maths.numbers.constants.{One, Zero}
+import net.ollie.maths.numbers.complex.ImaginaryUnit
+import net.ollie.maths.numbers.constants.{One, Pi, Zero}
 import net.ollie.maths.numbers.{Infinity, Integer, Precision}
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
 /**
  * Created by Ollie on 18/01/14.
  */
-class ExpTest extends FlatSpec with Matchers {
+class ExpTest extends AnyFlatSpec with Matchers {
 
     val x = Variable("x")
 
@@ -61,6 +63,12 @@ class ExpTest extends FlatSpec with Matchers {
         val exp = Exp(y)
         val replaced = exp.replace(y, Ln(x))
         replaced shouldBe (x)
+    }
+
+    "Exp(Pi i)" should "be -1" in {
+        val z = Exp(Pi * ImaginaryUnit)
+        z.isReal shouldBe true
+        z.re.evaluate(8 dp) shouldBe -1
     }
 
 }

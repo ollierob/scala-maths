@@ -117,13 +117,13 @@ class RootsOfUnity(val degree: Natural)
 
     def principal = One
 
-    val values: Set[Complex] = {
+    lazy val values: Set[Complex] = {
         val n = degree.toInt.get
         val roots = new ArrayBuffer[Complex](n)
-        for (k <- 1 to n) {
-            roots += Exp((2 * k) * i * Pi / degree)
-        }
         roots += principal
+        for (k <- 1 until n) {
+            roots += Exp((2 * k * Pi * i) / degree)
+        }
         roots.toSet
     }
 

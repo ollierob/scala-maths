@@ -16,6 +16,7 @@ object Sin
         with UnivariateFunction[Angle, Real] {
 
     def apply(re: Real): Real with Sin = re match {
+        case Zero => SinPi
         case Pi => SinPi //TODO other even & odd multiples
         case angle: Angle => apply(angle)
         case _ => apply(re radians)
@@ -66,11 +67,11 @@ private class SinOf(val of: Expression)
 }
 
 private object SinPi
-    extends PositiveReal with Sin with EmptyConstant {
+    extends Real with Sin with EmptyConstant {
 
     override val of = Pi
 
-    override def abs = this
+    override def abs = Zero
 
 }
 

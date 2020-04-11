@@ -21,7 +21,7 @@ object ArcSin
         case _ => ???
     }
 
-    def apply(d: BigDecimal): Angle = apply(Real(d))
+    //def apply(d: BigDecimal): Angle = apply(Real(d))
 
     def apply(re: Real): Angle = re match {
         case _ if re.abs < One => new RealArcSin(re) radians

@@ -4,7 +4,7 @@ import scala.Some
 import net.ollie.maths._
 import net.ollie.maths.functions.{BuiltFunction, FunctionBuilder, RealFunctionBuilder}
 import net.ollie.maths.numbers.{EmptyConstant, Integer, PositiveReal, Precision, Real}
-import net.ollie.maths.numbers.constants.{MinusOne, One, Pi, Unity}
+import net.ollie.maths.numbers.constants.{MinusOne, One, Pi, Unity, Zero}
 import org.nevec.rjm.BigDecimalMath
 
 /**
@@ -16,6 +16,7 @@ object Cos
     import Angle._
 
     def apply(re: Real): Real with Cos = re match {
+        case Zero => CosZero
         case Pi => new CosPi(1) //TODO other multiples of Pi
         case a: Angle => apply(a)
         case _ => apply(re radians)
@@ -75,13 +76,18 @@ private class CosPi(val n: Integer)
     override def abs = One
 
     override def evaluate(precision: Precision) = {
-        if (n.isEven) MinusOne.BIG_DECIMAL to precision
-        else One.BIG_DECIMAL to precision
+        if (n.isEven) One.BIG_DECIMAL to precision
+        else MinusOne.BIG_DECIMAL to precision
     }
+
+    override def toString = s"$n * $Pi"
 
 }
 
-class RealCos(override val of: Angle)
+private object CosZero
+    extends CosPi(0)
+
+private class RealCos(override val of: Angle)
     extends Real
         with Cos
         with CachedEvaluated {

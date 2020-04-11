@@ -54,9 +54,9 @@ class QuadraticRoots(val of: SingleVariableRealQuadratic)
     extends PolynomialRoots[Real, Complex] {
 
     lazy val bSquared: Real = of.b ^ 2
-    lazy val roots: Array[Complex] = SquareRoot(bSquared - 4 * of.a * of.c).values.toArray
-    lazy val principal = -of.b + roots.apply(0) / (2 * of.a)
-    lazy val secondary = -of.b + roots.apply(1) / (2 * of.a)
+    lazy val roots: Array[Complex] = SquareRoot(bSquared - (4 * of.a * of.c)).values.toArray
+    lazy val principal = (-of.b + roots.apply(0)) / (2 * of.a)
+    lazy val secondary = (-of.b + roots.apply(1)) / (2 * of.a)
 
     override def isEmpty = roots.isEmpty
 
