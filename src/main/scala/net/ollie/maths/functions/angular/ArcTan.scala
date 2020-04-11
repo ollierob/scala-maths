@@ -1,22 +1,26 @@
 package net.ollie.maths.functions.angular
 
-import net.ollie.maths.functions.{BuiltFunction, UnivariateFunction, RealFunctionBuilder}
 import net.ollie.maths.Expression
-import net.ollie.maths.numbers.{Precision, Natural, Real}
-import net.ollie.maths.methods.Series
-import net.ollie.maths.numbers.constants.MinusOne
+import net.ollie.maths.functions.{BuiltFunction, RealFunctionBuilder, UnivariateFunction}
+import net.ollie.maths.numbers.constants.Zero
+import net.ollie.maths.numbers.{EmptyConstant, Precision, Real}
 import org.nevec.rjm.BigDecimalMath
 
 /**
  *
  * Created by Ollie on 09/02/14.
+ *
  * @see http://mathworld.wolfram.com/InverseTangent.html
  */
 object ArcTan
-        extends RealFunctionBuilder
+    extends RealFunctionBuilder
         with UnivariateFunction[Real, Angle] {
 
-    def apply(re: Real): Angle with ArcTan = new RealArcTan(re)
+    def apply(re: Real): Angle with ArcTan = {
+        if (re.isZero) ZeroArcTan
+        //TODO arctan(1) = pi/4 rad
+        else new RealArcTan(re)
+    }
 
     protected[this] def create(expr: Expression) = new ExpressionArcTan(expr)
 
@@ -25,7 +29,7 @@ object ArcTan
 }
 
 trait ArcTan
-        extends Expression {
+    extends Expression {
 
     val of: Expression
 
@@ -34,8 +38,7 @@ trait ArcTan
 }
 
 class ExpressionArcTan(val of: Expression)
-        extends BuiltFunction
-        with ArcTan {
+    extends ArcTan with BuiltFunction {
 
     protected[this] def builder = ArcTan
 
@@ -45,16 +48,24 @@ class ExpressionArcTan(val of: Expression)
 
 }
 
-class RealArcTan(val of: Real)
-        extends Radians
-        with ArcTan {
+private object ZeroArcTan
+    extends ArcTan with Radians with EmptyConstant {
+
+    override val of = Zero
+
+    override val value = Zero
+
+}
+
+private class RealArcTan(val of: Real)
+    extends ArcTan with Radians {
 
     val value: Real = new ArcTanEvaluator
 
-    override def isEmpty = of.isEmpty
+    override def isEmpty = of.isEmpty //Only zero at x=0
 
     private class ArcTanEvaluator
-            extends Real {
+        extends Real {
 
         def isEmpty = RealArcTan.this.isEmpty
 
