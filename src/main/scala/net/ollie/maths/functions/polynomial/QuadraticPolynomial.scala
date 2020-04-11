@@ -1,9 +1,9 @@
 package net.ollie.maths.functions.polynomial
 
-import net.ollie.maths.functions.numeric.SquareRoots
-import net.ollie.maths.numbers.complex.Complex
 import net.ollie.maths.Variable
 import net.ollie.maths.expressions.Expression
+import net.ollie.maths.functions.numeric.SquareRoots
+import net.ollie.maths.numbers.complex.Complex
 
 /**
  * @see [[NthDegreePolynomial]]
@@ -12,6 +12,8 @@ trait QuadraticPolynomial
     extends Polynomial {
 
     override val degree = 2
+
+    def df: LinearPolynomial
 
 }
 
@@ -49,11 +51,13 @@ class UnivariateQuadraticPolynomial(val x: Variable, val a: Complex, val b: Comp
 
     override def isEmpty = false
 
+    override def df = new UnivariateLinearPolynomial(x, 2 * a, b)
+
     override def roots = new QuadraticRoots(this)
 
     override def toString = s"$a.x^2 + $b.x + $c"
 
-    private class QuadraticRoots(val of: UnivariateQuadraticPolynomial)
+    class QuadraticRoots(val of: UnivariateQuadraticPolynomial)
         extends PolynomialRoots[Complex, Complex] {
 
         lazy val bSquared: Complex = of.b ^ 2

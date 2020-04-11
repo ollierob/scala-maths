@@ -58,12 +58,12 @@ object Linear {
     }
 
     def multiply(variable: Variable, constant: Constant)(implicit leftToRight: Boolean): Univariate = {
-        if (leftToRight) expressions.Linear(constant, variable, One)
-        else expressions.Linear(One, variable, constant)
+        if (leftToRight) Linear(constant, variable, One)
+        else Linear(One, variable, constant)
     }
 
     def divide(variable: Variable, denominator: Constant): Univariate = {
-        expressions.Linear(One, variable, denominator.inverse)
+        Linear(One, variable, denominator.inverse)
     }
 
     def negate(linear: Linear): Linear = {

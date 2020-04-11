@@ -5,7 +5,7 @@ import net.ollie.maths.numbers.complex.{CartesianComplex, Complex}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
-class SingleVariableQuadraticPolynomialTest extends AnyFlatSpec with Matchers {
+class UnivariateQuadraticPolynomialTest extends AnyFlatSpec with Matchers {
 
     val x = Variable("x")
 
@@ -13,7 +13,7 @@ class SingleVariableQuadraticPolynomialTest extends AnyFlatSpec with Matchers {
 
     {
 
-        val poly = QuadraticPolynomial(x, 5, 6, 1)
+        val poly = new UnivariateQuadraticPolynomial(x, 5, 6, 1)
 
         it should "string" in {
             poly.toString shouldBe "5.x^2 + 6.x + 1"

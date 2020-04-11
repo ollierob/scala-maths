@@ -51,4 +51,6 @@ object Zero
 
     override def toString = super[EmptyConstant].toString
 
+    val BIG_DECIMAL = BigDecimal.valueOf(0)
+
 }

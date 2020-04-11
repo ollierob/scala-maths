@@ -33,6 +33,8 @@ class UnivariateLinearPolynomial(val x: Variable, val a: Complex, val b: Complex
 
     override def isEmpty = false
 
+    override def df = ???
+
     override def toString = s"$a.x + $b"
 
 }

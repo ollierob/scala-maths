@@ -38,15 +38,13 @@ object Precision {
 
     implicit final val DEFAULT_PRECISION: Precision = DoublePrecision
 
-    implicit class PrecisionApplier(val bd: BigDecimal)
-            extends AnyRef {
+    implicit class PrecisionApplier(val bd: BigDecimal) {
 
         def to(precision: Precision): BigDecimal = precision(bd)
 
     }
 
-    implicit class PrecisionConverter(val value: Int)
-            extends AnyRef {
+    implicit class PrecisionConverter(val value: Int) {
 
         def dp: DecimalPlaces = new DecimalPlaces(value)
 
@@ -72,8 +70,7 @@ object Precision {
 }
 
 class DecimalPlaces(val digits: Natural)
-        extends AnyRef
-        with Precision {
+    extends Precision {
 
     def apply(bd: BigDecimal)(implicit mode: RoundingMode = Precision.DEFAULT_ROUNDING) = {
         bd.setScale(digits.toInt.get, mode)
@@ -101,14 +98,15 @@ class DecimalPlaces(val digits: Natural)
  * Accurate to zero decimal places.
  */
 object IntegerPrecision
-        extends DecimalPlaces(0)
+    extends DecimalPlaces(0)
 
 /**
  * Accurate to N significant figures.
+ *
  * @param digits
  */
 class SignificantFigures(val digits: Natural)
-        extends AnyRef
+    extends AnyRef
         with Precision {
 
     require(digits.isStrictlyPositive)

@@ -58,4 +58,6 @@ private class UnivariateNthDegreePolynomial(val x: Variable, val coefficients: A
 
     }
 
+    override def df = ??? //TODO
+
 }

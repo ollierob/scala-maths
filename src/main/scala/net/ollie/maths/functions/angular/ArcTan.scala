@@ -55,6 +55,12 @@ private object ZeroArcTan
 
     override val value = Zero
 
+    override def unary_-() = this
+
+    override def abs = Zero
+
+    override def evaluate(precision: Precision) = Zero.BIG_DECIMAL
+
 }
 
 private class RealArcTan(val of: Real)

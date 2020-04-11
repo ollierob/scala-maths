@@ -32,13 +32,13 @@ object Polynomial {
 
     def negate[P <: Polynomial](p: P): NegatedPolynomial[P] = new NegatedPolynomial[P](p)
 
-    def apply(x: Variable) = apply(x, 0)
+    def apply(x: Variable): UnivariatePolynomial = apply(x, 0)
 
     def apply(x: Variable, z: Complex): UnivariatePolynomial = new ConstantUnivariatePolynomial(x, z)
 
-    def apply(x: Variable, xCoeff: Complex, c: Complex) = LinearPolynomial.apply(x, xCoeff, c)
+    def apply(x: Variable, xCoeff: Complex, c: Complex): UnivariatePolynomial = LinearPolynomial.apply(x, xCoeff, c)
 
-    def apply(x: Variable, xSquaredCoeff: Complex, xCoeff: Complex, c: Complex) = QuadraticPolynomial.apply(x, xSquaredCoeff, xCoeff, c)
+    def apply(x: Variable, xSquaredCoeff: Complex, xCoeff: Complex, c: Complex): UnivariatePolynomial = QuadraticPolynomial.apply(x, xSquaredCoeff, xCoeff, c)
 
 }
 
@@ -60,7 +60,7 @@ class NegatedPolynomial[P <: Polynomial](override val of: P)
 
     override def isEmpty = super[Polynomial].isEmpty
 
-    override def df(x: Variable) = super[NegatedExpression].df(x)
+    override def df(x: Variable): Expression = super[NegatedExpression].df(x)
 
 }
 
@@ -102,5 +102,7 @@ class ConstantUnivariatePolynomial(val of: Variable, val c: Constant)
     override def representation = c
 
     override def roots = ???
+
+    override def df = Polynomial(of)
 
 }
