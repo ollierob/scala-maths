@@ -2,19 +2,23 @@ package net.ollie.maths.functions.polynomial
 
 import net.ollie.maths._
 import net.ollie.maths.functions.Represented
-import net.ollie.maths.numbers.constants.Zero
+import net.ollie.maths.functions.numeric.Roots
 import net.ollie.maths.numbers.Natural
+import net.ollie.maths.numbers.constants.Zero
 
 /**
  * Created by Ollie on 08/01/14.
+ *
  * @see http://mathworld.wolfram.com/Polynomial.html
  */
 trait Polynomial
-        extends Represented {
+    extends Represented {
 
     def degree: Natural
 
     def of: Expression
+
+    override def representation: Expression
 
     override def unary_-(): Polynomial = Polynomial.negate(this)
 
@@ -27,12 +31,12 @@ object Polynomial {
 }
 
 class NegatedPolynomial[P <: Polynomial](override val of: P)
-        extends NegatedExpression(of)
+    extends NegatedExpression(of)
         with Polynomial {
 
-    def representation = -(of.representation)
+    override def representation = -(of.representation)
 
-    def degree = of.degree
+    override def degree = of.degree
 
     override def unary_-(): P = of
 
@@ -49,7 +53,7 @@ class NegatedPolynomial[P <: Polynomial](override val of: P)
 }
 
 trait EmptyPolynomial
-        extends Polynomial
+    extends Polynomial
         with Empty {
 
     def representation: Expression with Empty = Zero
@@ -67,4 +71,13 @@ trait EmptyPolynomial
 }
 
 abstract class ConstantPolynomial[N <: Constant](val representation: N)
-        extends Polynomial
+    extends Polynomial
+
+trait PolynomialRoots[+F <: Constant, C <: Constant]
+    extends Roots[F, C] {
+
+    def polynomial: Polynomial
+
+    override def degree = polynomial.degree
+
+}

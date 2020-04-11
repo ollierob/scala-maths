@@ -35,7 +35,7 @@ object One
 
     override def ?*(that: Expression)(leftToRight: Boolean) = Some(that)
 
-    override def ?*(that: Constant)(leftToRight: Boolean): Option[Constant] = Some(that)
+    override def ?*(that: Constant)(leftToRight: Boolean) = Some(that)
 
     override def ?*(that: Real) = Some(that)
 

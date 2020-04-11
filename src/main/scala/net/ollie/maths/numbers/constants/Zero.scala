@@ -20,6 +20,8 @@ object Zero
 
     override def isEmpty = super[EmptyConstant].isEmpty
 
+    override def isZero = true
+
     override def isEven = true
 
     override def inverse: PositiveReal with Rational = Operation.undefined //UnsignedInfinity //TODO

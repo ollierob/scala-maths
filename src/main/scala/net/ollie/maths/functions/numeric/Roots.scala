@@ -14,6 +14,7 @@ object Roots {
 
     /**
      * The positive root of a real number has complex values.
+     *
      * @param of
      * @param degree
      * @return
@@ -34,7 +35,7 @@ object Roots {
  * @tparam C type of the roots.
  */
 trait Roots[+F <: Constant, C <: Constant]
-        extends Multivalued {
+    extends Multivalued {
 
     type Contents = C
 
@@ -44,7 +45,7 @@ trait Roots[+F <: Constant, C <: Constant]
 
     def values: Set[C]
 
-    def isEmpty = values.forall(_.isEmpty)
+    def isEmpty = values.isEmpty || values.forall(_.isEmpty)
 
     def degree: Natural
 
@@ -54,7 +55,7 @@ trait Roots[+F <: Constant, C <: Constant]
 
 class EmptyRoots[+F <: EmptyConstant, C <: Constant](val of: F, val degree: Natural)
                                                     (implicit conversion: NumberConversionArithmetic[F, C])
-        extends Roots[F, C] {
+    extends Roots[F, C] {
 
     def inverse = ??? //TODO
 
@@ -65,7 +66,7 @@ class EmptyRoots[+F <: EmptyConstant, C <: Constant](val of: F, val degree: Natu
 }
 
 abstract class FirstRoot[F <: Constant](val principal: F)
-        extends Roots[F, F] {
+    extends Roots[F, F] {
 
     def degree = One
 
@@ -74,7 +75,7 @@ abstract class FirstRoot[F <: Constant](val principal: F)
 }
 
 class NonEmptyRoots(val of: Real, val degree: Natural)
-        extends Roots[Real, Complex] {
+    extends Roots[Real, Complex] {
 
     def inverse = Roots(of.inverse, degree)
 
@@ -94,7 +95,7 @@ class NonEmptyRoots(val of: Real, val degree: Natural)
  * @see http://mathworld.wolfram.com/RootofUnity.html
  */
 class RootsOfUnity(val degree: Natural)
-        extends Roots[One.type, Complex] {
+    extends Roots[One.type, Complex] {
 
     import net.ollie.maths.numbers.complex.{ImaginaryUnit => i}
 

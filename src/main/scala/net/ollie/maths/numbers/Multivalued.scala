@@ -14,13 +14,13 @@ trait Multivalued
 
     def principal: Contents
 
-    def unary_-(): Multivalued = Multivalued.negate(this)
+    override def unary_-(): Multivalued = Multivalued.negate(this)
 
-    def ?^(that: Constant) = None
+    override def ?^(that: Constant) = None
 
-    def ?*(that: Constant)(leftToRight: Boolean) = None
+    override def ?*(that: Constant)(leftToRight: Boolean) = None
 
-    def ?+(that: Constant) = None
+    override def ?+(that: Constant) = None
 
 }
 

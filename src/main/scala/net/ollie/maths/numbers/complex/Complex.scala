@@ -22,6 +22,8 @@ trait Complex
 
     def unre = im
 
+    def isReal = im.isZero
+
     override def df(x: Variable) = ComplexZero
 
     def abs: PositiveReal = PositiveSquareRoot(re.squared + im.squared)

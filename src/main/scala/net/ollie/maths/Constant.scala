@@ -20,6 +20,8 @@ trait Constant
 
     def inverse: Constant
 
+    def isZero = isEmpty
+
     override def ?+(that: Expression)(leftToRight: Boolean): Option[Expression] = that.toConstant match {
         case Some(n) => this ?+ n
         case _ => super.?+(that)(leftToRight)

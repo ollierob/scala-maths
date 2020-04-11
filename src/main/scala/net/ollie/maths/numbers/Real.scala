@@ -104,9 +104,9 @@ trait Real
      * @param that
      * @return
      */
-    def ?*(that: Constant)(leftToRight: Boolean) = that match {
+    def ?*(that: Constant)(leftToRight: Boolean): Option[Constant] = that match {
         case re: Real => Some(this * re)
-        case _ => None
+        case _: Constant => Real(that).map(re => this * re)
     }
 
     def /(that: Real): Real = this * that.inverse
