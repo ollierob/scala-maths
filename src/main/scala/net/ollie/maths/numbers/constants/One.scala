@@ -70,6 +70,8 @@ object MinusOne
 
     override def equals(re: Real) = (this eq re) || super.equals(re)
 
+    val BIG_DECIMAL = BigDecimal.valueOf(-1)
+
 }
 
 object Two

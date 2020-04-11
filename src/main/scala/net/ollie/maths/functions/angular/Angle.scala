@@ -2,9 +2,9 @@ package net.ollie.maths.functions.angular
 
 import net.ollie.maths.Empty
 import net.ollie.maths.functions.angular.Angle.AngleBuilder
-import net.ollie.maths.numbers.{Precision, Real}
-import net.ollie.maths.numbers.constants.{Zero, Pi}
 import net.ollie.maths.functions.numeric.Modulo
+import net.ollie.maths.numbers.constants.Pi
+import net.ollie.maths.numbers.{Precision, Real}
 
 trait Angle
         extends Real {
@@ -109,7 +109,7 @@ object Classification extends Enumeration {
  * 2 pi radians, or 360 degrees.
  */
 object FullAngle
-        extends KnownRadians(2 * Pi) {
+        extends PiRadians(2) {
 
     override def classify = Classification.Full
 
@@ -119,7 +119,7 @@ object FullAngle
  * pi radians, or 180 degrees.
  */
 object HalfAngle
-        extends KnownRadians(Pi) {
+        extends PiRadians(1) {
 
     override def classify = Classification.Straight
 
@@ -153,49 +153,7 @@ object EmptyAngle
 
 }
 
-trait Radians
-        extends AnyRef
-        with Angle {
 
-    type Type = Radians
-
-    def value: Real
-
-    def toRadians = value
-
-    def reduce = Radians(Modulo(value, 2 * Pi).remainder)
-
-    def +(that: Radians): Radians = Radians(this.value + that.value)
-
-    def -(that: Radians): Radians = Radians(this.value - that.value)
-
-    override def unary_-(): Radians = Radians(-value)
-
-    override def toString = value.toString
-
-    implicit def builder = Radians.Builder
-
-}
-
-class KnownRadians protected[angular](val value: Real)
-        extends Radians
-
-object Radians {
-
-    implicit def apply(re: Real): Radians = re match {
-        case Zero => EmptyAngle
-        case rad: Radians => rad
-        case angle: Angle => new KnownRadians(angle.toRadians)
-        case _ => new KnownRadians(re)
-    }
-
-    implicit object Builder extends AngleBuilder[Radians] {
-
-        def create(radians: Real) = Radians(radians)
-
-    }
-
-}
 
 class Degrees(val value: Real)
         extends AnyRef
