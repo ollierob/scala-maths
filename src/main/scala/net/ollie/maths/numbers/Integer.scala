@@ -33,6 +33,8 @@ trait Integer
         case _ => None
     }
 
+    def requireInt: Int = toInt.get
+
     def +(that: Integer): Integer = Integer(this.evaluate + that.evaluate)
 
     override def ?+(that: Real) = that match {

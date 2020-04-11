@@ -4,7 +4,7 @@ import net.ollie.maths.functions.{BuiltFunction, UnivariateFunction, FunctionBui
 import net.ollie.maths.numbers.{Precision, Real}
 import net.ollie.maths.{CachedEvaluated, Invertible, Expression, Constant}
 import net.ollie.maths.numbers.constants.{One, Pi}
-import net.ollie.maths.functions.numeric.SquareRoot
+import net.ollie.maths.functions.numeric.SquareRoots
 import org.nevec.rjm.BigDecimalMath
 
 /**
@@ -49,7 +49,7 @@ class ArcCosOf(val of: Expression)
 
     protected[this] def builder = ArcCos
 
-    protected[this] def derivative(x: Expression) = -1 / SquareRoot(1 - (x ^ 2))
+    protected[this] def derivative(x: Expression) = -1 / SquareRoots(1 - (x ^ 2))
 
     def inverse = Cos(of)
 

@@ -1,7 +1,7 @@
 package net.ollie.maths
 
 import org.scalatest.{Matchers, FlatSpec}
-import net.ollie.maths.functions.numeric.SquareRoot
+import net.ollie.maths.functions.numeric.SquareRoots
 import net.ollie.maths.numbers.constants.One
 
 /**
@@ -14,7 +14,7 @@ class ExpressionPowerTest extends FlatSpec with Matchers {
     behavior of "1 / Sqrt(x)"
 
     it should "differentiate" in {
-        val f = 1 / SquareRoot(x)
+        val f = 1 / SquareRoots(x)
         val df = f.df(x)
         df.isEmpty shouldBe false
         df.replace(x, One).toConstant shouldBe Some(-One / 2)

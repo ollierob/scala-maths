@@ -1,7 +1,7 @@
 package net.ollie.maths.functions.polynomial
 
 import net.ollie.maths.Variable
-import net.ollie.maths.functions.numeric.SquareRoot
+import net.ollie.maths.functions.numeric.SquareRoots
 import net.ollie.maths.numbers.complex.Complex
 import net.ollie.maths.numbers.constants.One
 import net.ollie.maths.numbers.{Natural, Real}
@@ -27,7 +27,7 @@ object QuadraticPolynomial {
  * @param b multiplier of variable
  * @param c constant
  */
-class SingleVariableRealQuadratic(val x: Variable, val a: Real, val b: Real, val c: Real)
+class SingleVariableRealQuadratic(val x: Variable, val a: Complex, val b: Complex, val c: Complex)
     extends QuadraticPolynomial with SingleVariablePolynomial {
 
     require(a != 0)
@@ -51,10 +51,10 @@ class SingleVariableRealQuadratic(val x: Variable, val a: Real, val b: Real, val
 }
 
 class QuadraticRoots(val of: SingleVariableRealQuadratic)
-    extends PolynomialRoots[Real, Complex] {
+    extends PolynomialRoots[Complex, Complex] {
 
-    lazy val bSquared: Real = of.b ^ 2
-    lazy val roots: Array[Complex] = SquareRoot(bSquared - (4 * of.a * of.c)).values.toArray
+    lazy val bSquared: Complex = of.b ^ 2
+    lazy val roots: Array[Complex] = SquareRoots(bSquared - (4 * of.a * of.c)).values.toArray
     lazy val principal = (-of.b + roots.apply(0)) / (2 * of.a)
     lazy val secondary = (-of.b + roots.apply(1)) / (2 * of.a)
 

@@ -5,14 +5,14 @@ import org.scalatest.matchers.should.Matchers
 import net.ollie.maths.numbers.Precision._
 import net.ollie.maths.numbers.Real
 
-class SquareRootTest extends AnyFlatSpec with Matchers {
+class SquareRootsTest extends AnyFlatSpec with Matchers {
 
     behavior of "Sqrt(16)"
 
     {
 
         it should "values of positive real" in {
-            val sqrt = SquareRoot(16)
+            val sqrt = SquareRoots(16)
             val values = sqrt.values.toList
             values.size shouldBe 2
             values.apply(0).evaluate(8 dp) shouldBe 4
@@ -21,7 +21,7 @@ class SquareRootTest extends AnyFlatSpec with Matchers {
 
         it should "values of real" in {
             val re: Real = 16
-            val sqrt = SquareRoot(re)
+            val sqrt = SquareRoots(re)
             val values = sqrt.values.toList
             values.size shouldBe 2
 

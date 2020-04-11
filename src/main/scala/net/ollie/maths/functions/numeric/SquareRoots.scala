@@ -1,31 +1,41 @@
 package net.ollie.maths.functions.numeric
 
-import scala.Some
-
-import net.ollie.maths.{CachedEvaluated, Expression}
 import net.ollie.maths.functions.UnivariateFunction
 import net.ollie.maths.numbers._
-import net.ollie.maths.numbers.constants.{One, Half, Zero}
-import org.nevec.rjm.BigDecimalMath
 import net.ollie.maths.numbers.complex.Complex
+import net.ollie.maths.numbers.constants.{Half, One, Two, Zero}
+import net.ollie.maths.{CachedEvaluated, Constant, Expression}
+import org.nevec.rjm.BigDecimalMath
 
 /**
  * Created by Ollie on 08/01/14.
  */
-object SquareRoot {
+trait SquareRoots[C <: Constant, T <: Constant]
+    extends NumericRoots[C, T] {
+
+    override def degree = 2
+
+    override def toString = s"SquareRoots($of)"
+
+}
+
+object SquareRoots {
 
     def apply(x: Expression): Expression = x ^ Half
 
     def apply(re: Real): NumericRoots[Real, Complex] = NumericRoots(re, 2)
 
-    def apply(re: PositiveReal): NumericRoots[PositiveReal, Real] = new RealSquareRoots(re)
+    def apply(re: PositiveReal) = new RealSquareRoots(re)
+
+    def apply(z: Complex): NumericRoots[_, Complex] = {
+        if (z.isReal) apply(z.re)
+        else new ComplexSquareRoots(z)
+    }
 
 }
 
 class RealSquareRoots(val of: PositiveReal)
-        extends NumericRoots[PositiveReal, Real] {
-
-    final def degree = 2
+    extends SquareRoots[PositiveReal, Real] {
 
     override def inverse = NumericRoots(of.inverse, degree)
 
@@ -35,12 +45,10 @@ class RealSquareRoots(val of: PositiveReal)
 
     def values = Set(root, -root)
 
-    override def toString = s"±SquareRoot($of)"
-
 }
 
 object PositiveSquareRoot
-        extends UnivariateFunction[PositiveReal, PositiveReal] {
+    extends UnivariateFunction[PositiveReal, PositiveReal] {
 
     def apply(i: Int): PositiveReal = i match {
         case 0 => Zero
@@ -65,9 +73,7 @@ object PositiveSquareRoot
 }
 
 class PositiveSquareRoot(val of: PositiveReal)
-        extends AnyRef
-        with PositiveReal
-        with CachedEvaluated {
+    extends PositiveReal with CachedEvaluated {
 
     override def doEvaluate(precision: Precision) = {
         if (precision.digits < 16) Math.sqrt(of.evaluate(precision).toDouble)
@@ -88,5 +94,13 @@ class PositiveSquareRoot(val of: PositiveReal)
 }
 
 object PositiveSquareRootTwo
-        extends PositiveSquareRoot(2)
+    extends PositiveSquareRoot(2)
 
+class ComplexSquareRoots(override val of: Complex)
+    extends SquareRoots[Complex, Complex] {
+
+    lazy val values = ComplexNthRoots(of, 2)
+
+    override def principal = values.head
+
+}

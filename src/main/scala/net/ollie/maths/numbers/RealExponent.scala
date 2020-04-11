@@ -10,7 +10,7 @@ import org.nevec.rjm.BigDecimalMath
  * Created by Ollie on 12/01/14.
  */
 trait RealExponent
-        extends Multivalued {
+    extends Multivalued {
 
     type Contents = Complex
 
@@ -21,6 +21,8 @@ trait RealExponent
     def isEmpty = base.isEmpty
 
     def values: Set[Complex]
+
+    def principal: Complex = values.head
 
     def inverse = RealExponent(base, -power)
 
@@ -62,14 +64,14 @@ object RealExponent {
     }
 
     object ZeroToPowerZeroIsUndefined
-            extends ZeroToPowerZeroConvention {
+        extends ZeroToPowerZeroConvention {
 
         def value = ???
 
     }
 
     object ZeroToPowerZeroIsOne
-            extends ZeroToPowerZeroConvention {
+        extends ZeroToPowerZeroConvention {
 
         def value = One
 
@@ -79,24 +81,25 @@ object RealExponent {
 
 /**
  * x^(a/b) is equal to the bth root of x^a
+ *
  * @param base
  * @param power
  */
 private class RealToRationalExponent(val base: Real, val power: Rational)
-        extends RealExponent {
+    extends RealExponent {
 
     private val primary = base ^ (power.numerator)
 
     private lazy val roots: NumericRoots[Real, Complex] = NumericRoots(primary, power.denominator)
 
-    def principal: Complex = roots.principal
+    override def principal: Complex = roots.principal
 
     def values: Set[Complex] = roots.values
 
 }
 
 class PrincipalRealToIntegerPower(val base: Real, val power: Integer)
-        extends Real
+    extends Real
         with Exponentiated
         with CachedEvaluated {
 

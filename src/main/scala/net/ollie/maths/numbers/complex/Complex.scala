@@ -79,7 +79,7 @@ object Complex
 
     override def unitSquared = MinusOne
 
-    def zero: Complex with EmptyConstant = ComplexZero
+    val zero: Complex with EmptyConstant = ComplexZero
 
     def one: Complex with Unity = ComplexOne
 
@@ -167,8 +167,7 @@ trait MaybeComplex
 }
 
 object ComplexZero
-    extends Complex
-        with EmptyConstant {
+    extends Complex with EmptyConstant {
 
     def re = Zero
 

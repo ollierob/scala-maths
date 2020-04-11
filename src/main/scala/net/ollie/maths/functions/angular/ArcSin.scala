@@ -3,7 +3,7 @@ package net.ollie.maths.functions.angular
 import net.ollie.maths.functions.{OddBuiltFunction, UnivariateFunction, FunctionBuilder}
 import net.ollie.maths.numbers.{Precision, Real}
 import net.ollie.maths.{CachedEvaluated, Expression, Operation, Constant}
-import net.ollie.maths.functions.numeric.{SquareRoot, Signum}
+import net.ollie.maths.functions.numeric.{SquareRoots, Signum}
 import net.ollie.maths.numbers.constants.{One, Zero}
 import org.nevec.rjm.BigDecimalMath
 
@@ -52,7 +52,7 @@ class ArcSinOf(val of: Expression)
 
     protected[this] def builder = ArcSin
 
-    protected[this] def derivative(x: Expression) = 1 / SquareRoot(1 - (x ^ 2))
+    protected[this] def derivative(x: Expression) = 1 / SquareRoots(1 - (x ^ 2))
 
 }
 
