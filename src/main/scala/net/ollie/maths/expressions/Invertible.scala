@@ -1,4 +1,4 @@
-package net.ollie.maths
+package net.ollie.maths.expressions
 
 /**
  * Created by Ollie on 04/01/14.

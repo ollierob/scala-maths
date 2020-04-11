@@ -1,6 +1,7 @@
 package net.ollie.maths.numbers
 
 import net.ollie.maths._
+import net.ollie.maths.expressions.Exponentiated
 import net.ollie.maths.numbers.RealExponent.{ZeroToPowerZeroConvention, ZeroToPowerZeroIsOne}
 import net.ollie.maths.numbers.constants.{One, Zero}
 import org.nevec.rjm.BigDecimalMath

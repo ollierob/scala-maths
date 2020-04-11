@@ -1,6 +1,7 @@
 package net.ollie.maths.functions.hypergeometric
 
 import net.ollie.maths._
+import net.ollie.maths.expressions.{Expression, Univariate}
 import net.ollie.maths.functions.{BuiltFunction, RealFunctionBuilder, UnivariateFunction}
 import net.ollie.maths.functions.numeric.Exp
 import net.ollie.maths.methods.{Integrate, SimpsonsIntegrationMethod}

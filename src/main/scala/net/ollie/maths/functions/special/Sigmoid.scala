@@ -1,7 +1,7 @@
 package net.ollie.maths.functions.special
 
-import net.ollie.maths.Expression
-import net.ollie.maths.functions.{Represented, RealFunctionBuilder, UnivariateFunction}
+import net.ollie.maths.expressions.Expression
+import net.ollie.maths.functions.{RealFunctionBuilder, Represented, UnivariateFunction}
 import net.ollie.maths.functions.numeric.Exp
 import net.ollie.maths.numbers.Real
 import net.ollie.maths.numbers.constants.Half

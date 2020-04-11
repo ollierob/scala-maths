@@ -1,4 +1,6 @@
-package net.ollie.maths
+package net.ollie.maths.expressions
+
+import net.ollie.maths.Variable
 
 /**
  * Created by Ollie on 11/01/14.

@@ -1,6 +1,7 @@
 package net.ollie.maths.functions
 
-import net.ollie.maths.{Expression, Variable}
+import net.ollie.maths.Variable
+import net.ollie.maths.expressions.Expression
 
 /**
  * Inherited by any class that is a wrapper for a more complicated representation.

@@ -3,8 +3,8 @@ package net.ollie.maths.methods
 import scala.Some
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
-
 import net.ollie.maths._
+import net.ollie.maths.expressions.{Aggregate, Expression}
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.constants.Zero
 

@@ -1,10 +1,10 @@
 package net.ollie.maths.functions.numeric
 
-import net.ollie.maths.numbers.{Precision, Natural, Real}
-import net.ollie.maths.functions.{Represented, BivariateFunction}
+import net.ollie.maths.expressions.Expression
+import net.ollie.maths.numbers.{Natural, Precision, Real}
+import net.ollie.maths.functions.{BivariateFunction, Represented}
 import net.ollie.maths.numbers.combinatorial.BinomialCoefficient._
 import net.ollie.maths.functions.hypergeometric.Gamma
-import net.ollie.maths.Expression
 import net.ollie.maths.numbers.constants.One
 
 /**

@@ -1,8 +1,9 @@
 package net.ollie.maths.numbers.constants
 
+import net.ollie.maths.expressions.Expression
 import net.ollie.maths.numbers.Natural.FactorialCache
 import net.ollie.maths.numbers._
-import net.ollie.maths.{Expression, Operation, Variable}
+import net.ollie.maths.{Operation, Variable}
 
 /**
  * Empty real number.

@@ -1,9 +1,10 @@
 package net.ollie.maths.functions.special
 
-import net.ollie.maths.functions.{UnivariateFunction, ComplexFunctionBuilder, BuiltFunction}
-import net.ollie.maths.{CachedEvaluated, Constant, Expression}
+import net.ollie.maths.expressions.Expression
+import net.ollie.maths.functions.{BuiltFunction, ComplexFunctionBuilder, UnivariateFunction}
+import net.ollie.maths.{CachedEvaluated, Constant}
 import net.ollie.maths.numbers._
-import net.ollie.maths.numbers.constants.{Omega, Zero, One}
+import net.ollie.maths.numbers.constants.{Omega, One, Zero}
 import net.ollie.maths.methods.Series
 import net.ollie.maths.numbers.complex.Complex
 

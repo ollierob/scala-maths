@@ -1,10 +1,11 @@
 package net.ollie.maths.functions.numeric
 
+import net.ollie.maths.expressions.Expression
 import net.ollie.maths.functions.UnivariateFunction
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.complex.Complex
 import net.ollie.maths.numbers.constants.{Half, One, Two, Zero}
-import net.ollie.maths.{CachedEvaluated, Constant, Expression}
+import net.ollie.maths.{CachedEvaluated, Constant}
 import org.nevec.rjm.BigDecimalMath
 
 /**

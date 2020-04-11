@@ -1,6 +1,6 @@
 package net.ollie.maths.methods
 
-import net.ollie.maths.Univariate
+import net.ollie.maths.expressions.Univariate
 import net.ollie.maths.numbers.{Infinity, Natural, Precision, Real}
 
 class InfiniteIntegral(val integrand: Univariate, val from: Real)

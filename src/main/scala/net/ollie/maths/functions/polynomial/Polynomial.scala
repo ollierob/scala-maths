@@ -1,6 +1,7 @@
 package net.ollie.maths.functions.polynomial
 
 import net.ollie.maths._
+import net.ollie.maths.expressions.{Empty, Expression, NegatedExpression}
 import net.ollie.maths.functions.Represented
 import net.ollie.maths.functions.numeric.Roots
 import net.ollie.maths.numbers.Natural
@@ -23,13 +24,21 @@ trait Polynomial
 
     override def unary_-(): Polynomial = Polynomial.negate(this)
 
+    override def toString = representation.toString
+
 }
 
 object Polynomial {
 
     def negate[P <: Polynomial](p: P): NegatedPolynomial[P] = new NegatedPolynomial[P](p)
 
+    def apply(x: Variable) = apply(x, 0)
+
     def apply(x: Variable, z: Complex): SingleVariablePolynomial = new ConstantSingleVariablePolynomial(x, z)
+
+    def apply(x: Variable, xCoeff: Complex, c: Complex) = LinearPolynomial.apply(x, xCoeff, c)
+
+    def apply(x: Variable, xSquaredCoeff: Complex, xCoeff: Complex, c: Complex) = QuadraticPolynomial.apply(x, xSquaredCoeff, xCoeff, c)
 
 }
 

@@ -1,10 +1,13 @@
 package net.ollie.maths.functions.polynomial
 
-import net.ollie.maths.Variable
 import net.ollie.maths.functions.numeric.SquareRoots
-import net.ollie.maths.numbers.Real
 import net.ollie.maths.numbers.complex.Complex
+import net.ollie.maths.Variable
+import net.ollie.maths.expressions.Expression
 
+/**
+ * @see [[NthDegreePolynomial]]
+ */
 trait QuadraticPolynomial
     extends Polynomial {
 
@@ -39,6 +42,10 @@ class SingleVariableQuadraticPolynomial(val x: Variable, val a: Complex, val b: 
     override def of = x;
 
     override def representation = (a * x ^ 2) + (b * x) + c
+
+    override def replace(variables: Map[Variable, Expression]) = {
+        variables.get(x).map(e => (a * (e ^ 2)) + (b * e) + c).getOrElse(this)
+    }
 
     override def isEmpty = false
 

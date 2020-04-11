@@ -1,6 +1,6 @@
 package net.ollie.maths.tensors.vectors
 
-import net.ollie.maths.Expression
+import net.ollie.maths.expressions.Expression
 import net.ollie.maths.functions.FunctionBuilder
 import net.ollie.maths.numbers.constants.{One, Zero}
 import net.ollie.maths.tensors.{ContravariantTensor, Tensor}

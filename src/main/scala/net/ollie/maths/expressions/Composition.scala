@@ -1,9 +1,12 @@
-package net.ollie.maths
+package net.ollie.maths.expressions
+
+import net.ollie.maths.{Constant, Variable}
 
 /**
  * A function of a function.
  *
  * Created by Ollie on 05/01/14.
+ *
  * @see http://mathworld.wolfram.com/Composition.html
  */
 trait Composition

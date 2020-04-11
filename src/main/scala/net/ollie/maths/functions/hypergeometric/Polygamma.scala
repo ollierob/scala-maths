@@ -1,7 +1,8 @@
 package net.ollie.maths.functions.hypergeometric
 
 import net.ollie.maths._
-import net.ollie.maths.numbers.{Infinity, Precision, Real, Natural}
+import net.ollie.maths.expressions.{Composition, Expression}
+import net.ollie.maths.numbers.{Infinity, Natural, Precision, Real}
 import net.ollie.maths.numbers.complex.ComplexInfinity
 import net.ollie.maths.numbers.constants.Zero
 import net.ollie.maths.methods.Integrate

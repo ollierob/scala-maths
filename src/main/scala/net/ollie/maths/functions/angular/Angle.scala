@@ -1,6 +1,6 @@
 package net.ollie.maths.functions.angular
 
-import net.ollie.maths.Empty
+import net.ollie.maths.expressions.Empty
 import net.ollie.maths.functions.angular.Angle.AngleBuilder
 import net.ollie.maths.functions.numeric.Modulo
 import net.ollie.maths.numbers.constants.Pi

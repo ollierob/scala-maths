@@ -2,7 +2,8 @@ package net.ollie.maths.numbers.complex
 
 import net.ollie.maths.numbers.constants.{One, Unity, Zero}
 import net.ollie.maths.numbers.{EmptyConstant, MaybeReal, Real}
-import net.ollie.maths.{Constant, Empty}
+import net.ollie.maths.Constant
+import net.ollie.maths.expressions.Empty
 
 /**
  * Created by Ollie on 04/02/14.

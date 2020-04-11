@@ -1,6 +1,7 @@
-package net.ollie.maths
+package net.ollie.maths.expressions
 
 import net.ollie.maths.numbers.constants.{One, Zero}
+import net.ollie.maths.{Constant, Variable, expressions}
 
 /**
  * Created by Ollie on 09/03/14.
@@ -28,12 +29,12 @@ trait Linear
     }
 
     def *(that: Constant)(leftToRight: Boolean): Univariate = {
-        if (leftToRight) Linear(that * left, variable, right)
-        else Linear(left, variable, right * that)
+        if (leftToRight) expressions.Linear(that * left, variable, right)
+        else expressions.Linear(left, variable, right * that)
     }
 
     def /(that: Constant): Univariate = {
-        Linear(left, variable, right * that.inverse)
+        expressions.Linear(left, variable, right * that.inverse)
     }
 
     def df(x: Variable): Univariate = {
@@ -57,12 +58,12 @@ object Linear {
     }
 
     def multiply(variable: Variable, constant: Constant)(implicit leftToRight: Boolean): Univariate = {
-        if (leftToRight) Linear(constant, variable, One)
-        else Linear(One, variable, constant)
+        if (leftToRight) expressions.Linear(constant, variable, One)
+        else expressions.Linear(One, variable, constant)
     }
 
     def divide(variable: Variable, denominator: Constant): Univariate = {
-        Linear(One, variable, denominator.inverse)
+        expressions.Linear(One, variable, denominator.inverse)
     }
 
     def negate(linear: Linear): Linear = {

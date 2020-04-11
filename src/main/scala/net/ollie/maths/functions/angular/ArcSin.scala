@@ -1,9 +1,10 @@
 package net.ollie.maths.functions.angular
 
-import net.ollie.maths.functions.{OddBuiltFunction, UnivariateFunction, FunctionBuilder}
+import net.ollie.maths.expressions.Expression
+import net.ollie.maths.functions.{FunctionBuilder, OddBuiltFunction, UnivariateFunction}
 import net.ollie.maths.numbers.{Precision, Real}
-import net.ollie.maths.{CachedEvaluated, Expression, Operation, Constant}
-import net.ollie.maths.functions.numeric.{SquareRoots, Signum}
+import net.ollie.maths.{CachedEvaluated, Constant, Operation}
+import net.ollie.maths.functions.numeric.{Signum, SquareRoots}
 import net.ollie.maths.numbers.constants.{One, Zero}
 import org.nevec.rjm.BigDecimalMath
 

@@ -1,8 +1,8 @@
 package net.ollie.maths.functions.polynomial
 
+import net.ollie.maths.expressions.Expression
 import net.ollie.maths.numbers.{Integer, Natural}
-import net.ollie.maths.Expression
-import net.ollie.maths.numbers.constants.{One, Zero, MinusOne}
+import net.ollie.maths.numbers.constants.{MinusOne, One, Zero}
 import net.ollie.maths.functions.numeric.Exp
 import net.ollie.maths.methods.Differentiate
 import net.ollie.maths.sequences.HermiteSequence

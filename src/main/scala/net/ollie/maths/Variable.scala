@@ -2,6 +2,7 @@ package net.ollie.maths
 
 import java.util.UUID
 
+import net.ollie.maths.expressions.{Expression, Integrable, Linear, Univariate}
 import net.ollie.maths.numbers.Real
 import net.ollie.maths.numbers.constants.{One, Zero}
 

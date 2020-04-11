@@ -1,6 +1,7 @@
 package net.ollie.maths.functions.numeric
 
-import net.ollie.maths.{Univariate, Variable}
+import net.ollie.maths.Variable
+import net.ollie.maths.expressions.Univariate
 import net.ollie.maths.numbers.{Natural, Precision, Real}
 import net.ollie.maths.methods.{EvaluationIterator, IterativelyEvaluated}
 

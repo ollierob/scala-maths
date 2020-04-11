@@ -1,6 +1,6 @@
 package net.ollie.maths.functions.polynomial
 
-import net.ollie.maths.{Expression, Variable}
+import net.ollie.maths.Variable
 import net.ollie.maths.numbers.{Natural, Real}
 import net.ollie.maths.numbers.complex.Complex
 

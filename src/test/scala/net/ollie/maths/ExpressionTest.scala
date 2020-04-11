@@ -1,5 +1,6 @@
 package net.ollie.maths
 
+import net.ollie.maths.expressions.Expression
 import net.ollie.maths.numbers.constants.{One, Zero}
 import net.ollie.maths.numbers.{Integer, Natural}
 import org.scalatest.{FlatSpec, Matchers}

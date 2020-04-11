@@ -1,11 +1,12 @@
 package net.ollie.maths.numbers.complex
 
-import net.ollie.maths.numbers.{Integer, Real, Multivalued}
-import net.ollie.maths.{Variable, Exponentiated}
-import net.ollie.maths.functions.numeric.{Exp, ComplexLogarithms, Ln}
+import net.ollie.maths.numbers.{Integer, Multivalued, Real}
+import net.ollie.maths.Variable
+import net.ollie.maths.functions.numeric.{ComplexLogarithms, Exp, Ln}
 import net.ollie.maths.functions.angular.Angle
 import Angle._
-import net.ollie.maths.numbers.constants.{Zero, One}
+import net.ollie.maths.expressions.Exponentiated
+import net.ollie.maths.numbers.constants.{One, Zero}
 
 /**
  * Created by Ollie on 25/02/14.

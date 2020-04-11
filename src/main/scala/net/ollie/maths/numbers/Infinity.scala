@@ -1,6 +1,7 @@
 package net.ollie.maths.numbers
 
-import net.ollie.maths.{NotEvaluable, Constant, Empty}
+import net.ollie.maths.expressions.Empty
+import net.ollie.maths.{Constant, NotEvaluable}
 import net.ollie.maths.numbers.constants.Zero
 
 /**

@@ -1,6 +1,7 @@
 package net.ollie.maths.functions.angular
 
 import net.ollie.maths._
+import net.ollie.maths.expressions.{Empty, Expression}
 import net.ollie.maths.functions.numeric.{Exp, PositiveSquareRoot}
 import net.ollie.maths.functions.polynomial.AssociatedLegendrePolynomial
 import net.ollie.maths.functions.{Modal, Represented}

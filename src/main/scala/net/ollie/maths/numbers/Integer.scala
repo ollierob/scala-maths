@@ -1,6 +1,5 @@
 package net.ollie.maths.numbers
 
-import scala.Some
 import net.ollie.maths.numbers.constants.{MinusOne, One}
 
 /**
@@ -82,8 +81,8 @@ object Integer {
     private val MINUS_ONE = BigInt(-1)
 
     implicit def apply(int: Int): Integer = int match {
-        case _ if int > 0 => Natural(int)
         case -1 => MinusOne
+        case _ if int >= 0 => Natural(int)
         case _ => new ExactInteger(int)
     }
 

@@ -1,7 +1,8 @@
 package net.ollie.maths.functions.angular
 
-import net.ollie.maths.{Expression, Constant}
-import net.ollie.maths.functions.{OddBuiltFunction, RealFunctionBuilder, FunctionBuilder, UnivariateFunction}
+import net.ollie.maths.Constant
+import net.ollie.maths.expressions.Expression
+import net.ollie.maths.functions.{FunctionBuilder, OddBuiltFunction, RealFunctionBuilder, UnivariateFunction}
 import net.ollie.maths.numbers.{Precision, Real}
 import net.ollie.maths.numbers.constants.Zero
 import net.ollie.maths.methods.ApproximatelyEvaluated

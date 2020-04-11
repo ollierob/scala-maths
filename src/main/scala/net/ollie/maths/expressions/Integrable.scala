@@ -1,8 +1,10 @@
-package net.ollie.maths
+package net.ollie.maths.expressions
 
 import java.util.concurrent.atomic.AtomicLong
+
 import net.ollie.maths.numbers.Multivalued
 import net.ollie.maths.numbers.constants.Zero
+import net.ollie.maths.{Constant, Variable}
 
 /**
  * Created by Ollie on 01/03/14.

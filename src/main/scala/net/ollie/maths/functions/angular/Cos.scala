@@ -2,6 +2,7 @@ package net.ollie.maths.functions.angular
 
 import scala.Some
 import net.ollie.maths._
+import net.ollie.maths.expressions.{Expression, Invertible}
 import net.ollie.maths.functions.{BuiltFunction, FunctionBuilder, RealFunctionBuilder}
 import net.ollie.maths.numbers.{EmptyConstant, Integer, PositiveReal, Precision, Real}
 import net.ollie.maths.numbers.constants.{MinusOne, One, Pi, Unity, Zero}

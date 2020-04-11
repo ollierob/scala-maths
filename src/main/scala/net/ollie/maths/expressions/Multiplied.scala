@@ -1,4 +1,6 @@
-package net.ollie.maths
+package net.ollie.maths.expressions
+
+import net.ollie.maths.Variable
 
 /**
  * Multiplication of two expressions. If either expression is empty then so is their multiplication.

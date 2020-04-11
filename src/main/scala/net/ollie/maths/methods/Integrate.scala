@@ -1,6 +1,7 @@
 package net.ollie.maths.methods
 
-import net.ollie.maths.{Integrable, Expression, Univariate, Variable}
+import net.ollie.maths.expressions.{Expression, Integrable, Univariate}
+import net.ollie.maths.Variable
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.constants.Zero
 

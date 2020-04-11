@@ -1,7 +1,8 @@
 package net.ollie.maths.sequences
 
-import net.ollie.maths.Expression
+import net.ollie.maths.expressions.Expression
 import net.ollie.maths.numbers.Natural
+
 import scala.collection.mutable
 
 /**

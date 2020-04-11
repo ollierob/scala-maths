@@ -1,6 +1,7 @@
 package net.ollie.maths.functions.angular
 
 import net.ollie.maths._
+import net.ollie.maths.expressions.{Expression, Invertible}
 import net.ollie.maths.functions.angular.Angle._
 import net.ollie.maths.functions.special.Sinc
 import net.ollie.maths.functions.{FunctionBuilder, OddBuiltFunction, RealFunctionBuilder, UnivariateFunction}

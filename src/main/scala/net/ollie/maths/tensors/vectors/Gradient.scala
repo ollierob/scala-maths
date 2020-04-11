@@ -1,9 +1,10 @@
 package net.ollie.maths.tensors.vectors
 
-import net.ollie.maths.Expression
+import net.ollie.maths.expressions.Expression
 
 /**
  * Created by Ollie on 08/03/14.
+ *
  * @see [[Divergence]]
  * @see [[Curl]]
  */

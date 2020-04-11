@@ -1,7 +1,8 @@
 package net.ollie.maths.methods
 
-import net.ollie.maths.{Variable, Univariate}
-import net.ollie.maths.numbers.{Natural, Precision, Infinity, Real}
+import net.ollie.maths.Variable
+import net.ollie.maths.expressions.Univariate
+import net.ollie.maths.numbers.{Infinity, Natural, Precision, Real}
 import net.ollie.maths.numbers.constants.Zero
 
 /**

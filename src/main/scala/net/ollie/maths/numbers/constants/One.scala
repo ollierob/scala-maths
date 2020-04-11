@@ -2,7 +2,8 @@ package net.ollie.maths.numbers.constants
 
 import net.ollie.maths.numbers.Natural.FactorialCache
 import net.ollie.maths.numbers._
-import net.ollie.maths.{Constant, Expression}
+import net.ollie.maths.Constant
+import net.ollie.maths.expressions.Expression
 
 /**
  * Created by Ollie on 09/02/14.

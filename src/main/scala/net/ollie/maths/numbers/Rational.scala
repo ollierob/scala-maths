@@ -1,8 +1,8 @@
 package net.ollie.maths.numbers
 
-import net.ollie.maths.ExpressionFraction
+import net.ollie.maths.expressions.ExpressionFraction
 import net.ollie.maths.functions.numeric.GreatestCommonDivisor
-import net.ollie.maths.numbers.constants.{MinusOne, Zero, One}
+import net.ollie.maths.numbers.constants.{MinusOne, One, Zero}
 import net.ollie.maths.methods.ApproximatelyEvaluated
 
 /**

@@ -1,5 +1,6 @@
 package net.ollie.maths
 
+import net.ollie.maths.expressions.{Empty, Expression, Integrable, Invertible, Multiplied, Nonvariate}
 import net.ollie.maths.numbers.constants.{One, Unity, Zero}
 
 import scala.collection.mutable

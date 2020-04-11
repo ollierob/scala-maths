@@ -1,8 +1,9 @@
 package net.ollie.maths.functions.polynomial
 
 import net.ollie.maths._
+import net.ollie.maths.expressions.Expression
 import net.ollie.maths.numbers._
-import net.ollie.maths.numbers.constants.{Zero, One}
+import net.ollie.maths.numbers.constants.{One, Zero}
 
 /**
  * Created by Ollie on 08/01/14.

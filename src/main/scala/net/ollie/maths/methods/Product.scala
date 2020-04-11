@@ -2,10 +2,10 @@ package net.ollie.maths.methods
 
 import scala.Some
 import scala.collection.mutable.{ArrayBuffer, ListBuffer}
-
 import net.ollie.maths._
+import net.ollie.maths.expressions.{Aggregate, Expression, Multiplied}
 import net.ollie.maths.numbers._
-import net.ollie.maths.numbers.constants.{Zero, One}
+import net.ollie.maths.numbers.constants.{One, Zero}
 
 /**
  * Created by Ollie on 19/01/14.

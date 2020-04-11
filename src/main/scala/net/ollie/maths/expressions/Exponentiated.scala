@@ -1,5 +1,6 @@
-package net.ollie.maths
+package net.ollie.maths.expressions
 
+import net.ollie.maths.Variable
 import net.ollie.maths.functions.numeric.Ln
 
 /**

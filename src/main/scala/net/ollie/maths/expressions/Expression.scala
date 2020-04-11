@@ -1,5 +1,6 @@
-package net.ollie.maths
+package net.ollie.maths.expressions
 
+import net.ollie.maths._
 import net.ollie.maths.methods.{Product, Series}
 import net.ollie.maths.numbers.Integer
 import net.ollie.maths.numbers.constants.{One, Zero}

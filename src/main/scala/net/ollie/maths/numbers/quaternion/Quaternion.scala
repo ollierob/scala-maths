@@ -1,6 +1,7 @@
 package net.ollie.maths.numbers.quaternion
 
 import net.ollie.maths._
+import net.ollie.maths.expressions.Empty
 import net.ollie.maths.functions.numeric.PositiveSquareRoot
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.complex.{Complex, MaybeComplex}

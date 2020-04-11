@@ -1,6 +1,7 @@
 package net.ollie.maths.functions
 
 import net.ollie.maths._
+import net.ollie.maths.expressions.{Composition, Expression}
 import net.ollie.maths.numbers.Real
 import net.ollie.maths.numbers.complex.Complex
 

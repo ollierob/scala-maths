@@ -2,6 +2,7 @@ package net.ollie.maths.numbers.complex
 
 import net.ollie.maths.Operation.indeterminate
 import net.ollie.maths._
+import net.ollie.maths.expressions.Expression
 import net.ollie.maths.functions.angular.{Angle, ArcTan}
 import net.ollie.maths.functions.numeric.PositiveSquareRoot
 import net.ollie.maths.numbers._
@@ -101,6 +102,8 @@ object Complex
     }
 
     def apply(re: Real, im: Real): Complex = Complex((re, im))
+
+    implicit def apply(i: Int): Complex = apply(Real(i))
 
     implicit def apply(re: Real): Complex = {
         if (re.isEmpty) zero

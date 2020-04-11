@@ -1,10 +1,11 @@
 package net.ollie.maths.methods
 
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.{FlatSpec, Matchers}
 import net.ollie.maths.numbers.{Precision, Real}
 import Precision._
-import net.ollie.maths.numbers.constants.{Zero, One}
-import net.ollie.maths.{Univariate, Variable}
+import net.ollie.maths.numbers.constants.{One, Zero}
+import net.ollie.maths.Variable
+import net.ollie.maths.expressions.Univariate
 
 /**
  * Created by Ollie on 19/01/14.

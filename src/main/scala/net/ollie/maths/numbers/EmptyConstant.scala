@@ -1,7 +1,8 @@
 package net.ollie.maths.numbers
 
+import net.ollie.maths.expressions.{Empty, Expression}
 import net.ollie.maths.numbers.constants.Zero
-import net.ollie.maths.{Constant, Empty, Evaluable, Expression}
+import net.ollie.maths.{Constant, Evaluable}
 
 /**
  * Representation of zero in various number systems.

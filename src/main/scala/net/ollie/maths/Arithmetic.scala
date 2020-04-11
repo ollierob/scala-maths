@@ -1,5 +1,6 @@
 package net.ollie.maths
 
+import net.ollie.maths.expressions.Empty
 import net.ollie.maths.numbers.constants.Unity
 
 /**

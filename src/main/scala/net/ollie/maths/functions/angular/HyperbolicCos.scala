@@ -1,8 +1,9 @@
 package net.ollie.maths.functions.angular
 
-import net.ollie.maths.functions.{RealFunctionBuilder, BuiltFunction, UnivariateFunction}
+import net.ollie.maths.expressions.Expression
+import net.ollie.maths.functions.{BuiltFunction, RealFunctionBuilder, UnivariateFunction}
 import net.ollie.maths.numbers.complex.Complex
-import net.ollie.maths.{CachedEvaluated, Constant, Expression}
+import net.ollie.maths.{CachedEvaluated, Constant}
 import net.ollie.maths.numbers.{Precision, Real}
 import net.ollie.maths.functions.numeric.Exp
 import net.ollie.maths.numbers.constants.One

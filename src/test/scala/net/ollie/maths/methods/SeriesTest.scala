@@ -1,7 +1,8 @@
 package net.ollie.maths.methods
 
-import net.ollie.maths.{Expression, Variable}
-import net.ollie.maths.numbers.{Real, Integer, Natural}
+import net.ollie.maths.Variable
+import net.ollie.maths.expressions.Expression
+import net.ollie.maths.numbers.{Integer, Natural, Real}
 import org.scalatest.{FlatSpec, Matchers}
 import net.ollie.maths.numbers.complex.Complex
 

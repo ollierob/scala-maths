@@ -1,7 +1,8 @@
 package net.ollie.maths.functions.hypergeometric
 
-import net.ollie.maths.{Univariate, Variable, Expression}
-import net.ollie.maths.numbers.{Precision, Real, Infinity}
+import net.ollie.maths.Variable
+import net.ollie.maths.expressions.{Expression, Univariate}
+import net.ollie.maths.numbers.{Infinity, Precision, Real}
 import net.ollie.maths.functions.{HomogeneousBivariateFunction, Represented}
 import net.ollie.maths.methods.Integrate
 import net.ollie.maths.functions.numeric.Exp

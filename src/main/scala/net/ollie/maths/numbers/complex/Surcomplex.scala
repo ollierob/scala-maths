@@ -1,7 +1,7 @@
 package net.ollie.maths.numbers.complex
 
+import net.ollie.maths.expressions.Empty
 import net.ollie.maths.numbers.surreal.{EmptyForm, Surreal}
-import net.ollie.maths.Empty
 import net.ollie.maths.numbers.Real
 import net.ollie.maths.numbers.constants.Zero
 

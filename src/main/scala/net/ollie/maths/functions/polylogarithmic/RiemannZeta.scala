@@ -1,7 +1,8 @@
 package net.ollie.maths.functions.polylogarithmic
 
-import net.ollie.maths.{CachedEvaluated, Expression}
-import net.ollie.maths.functions.{RealFunctionBuilder, BuiltFunction}
+import net.ollie.maths.CachedEvaluated
+import net.ollie.maths.expressions.Expression
+import net.ollie.maths.functions.{BuiltFunction, RealFunctionBuilder}
 import net.ollie.maths.numbers._
 import net.ollie.maths.methods.Series
 import net.ollie.maths.numbers.constants._

@@ -1,9 +1,10 @@
 package net.ollie.maths.functions.numeric
 
+import net.ollie.maths.expressions.Expression
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.complex.Complex
 import net.ollie.maths.numbers.constants.{One, Pi, Unity, Zero}
-import net.ollie.maths.{Constant, Expression, NumberConversionArithmetic}
+import net.ollie.maths.{Constant, NumberConversionArithmetic}
 
 import scala.collection.mutable.ArrayBuffer
 

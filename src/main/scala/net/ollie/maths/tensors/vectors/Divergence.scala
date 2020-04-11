@@ -1,6 +1,6 @@
 package net.ollie.maths.tensors.vectors
 
-import net.ollie.maths.Expression
+import net.ollie.maths.expressions.Expression
 import net.ollie.maths.tensors.vectors
 
 /**

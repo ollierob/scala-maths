@@ -1,7 +1,8 @@
 package net.ollie.maths.tensors
 
 import net.ollie.maths.numbers.constants.Zero
-import net.ollie.maths.{Constant, Expression}
+import net.ollie.maths.Constant
+import net.ollie.maths.expressions.Expression
 
 /**
  * Created by Ollie on 09/03/14.

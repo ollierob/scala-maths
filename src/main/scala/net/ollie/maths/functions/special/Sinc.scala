@@ -1,11 +1,12 @@
 package net.ollie.maths.functions.special
 
-import net.ollie.maths.{Expression, Constant, Variable}
+import net.ollie.maths.expressions.Expression
+import net.ollie.maths.{Constant, Variable}
 import net.ollie.maths.functions.{FunctionBuilder, Represented, UnivariateFunction}
 import net.ollie.maths.functions.angular.Sin
 import net.ollie.maths.methods.ApproximatelyEvaluated
 import net.ollie.maths.numbers.{Precision, Real}
-import net.ollie.maths.numbers.constants.{Zero, One, Pi}
+import net.ollie.maths.numbers.constants.{One, Pi, Zero}
 
 /**
  * Created by Ollie on 23/01/14.

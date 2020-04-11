@@ -1,6 +1,6 @@
 package net.ollie.maths.functions.angular
 
-import net.ollie.maths.Expression
+import net.ollie.maths.expressions.Expression
 import net.ollie.maths.functions.{BuiltFunction, RealFunctionBuilder, UnivariateFunction}
 import net.ollie.maths.numbers.constants.Zero
 import net.ollie.maths.numbers.{EmptyConstant, Precision, Real}

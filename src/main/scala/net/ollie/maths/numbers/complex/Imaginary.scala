@@ -1,10 +1,10 @@
 package net.ollie.maths.numbers.complex
 
-import net.ollie.maths.Empty
+import net.ollie.maths.expressions.Empty
 import net.ollie.maths.functions.angular.RightAngle
 import net.ollie.maths.functions.numeric.{Modulo, Signum}
 import net.ollie.maths.numbers.{EmptyConstant, Integer, Real}
-import net.ollie.maths.numbers.constants.{Unity, Zero, One}
+import net.ollie.maths.numbers.constants.{One, Unity, Zero}
 
 /**
  * Created by Ollie on 12/01/14.

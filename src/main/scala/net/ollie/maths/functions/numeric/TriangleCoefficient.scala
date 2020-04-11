@@ -1,7 +1,8 @@
 package net.ollie.maths.functions.numeric
 
-import net.ollie.maths.{CachedEvaluated, Expression}
-import net.ollie.maths.functions.{SymmetricTrivariateFunction, Represented}
+import net.ollie.maths.CachedEvaluated
+import net.ollie.maths.expressions.Expression
+import net.ollie.maths.functions.{Represented, SymmetricTrivariateFunction}
 import net.ollie.maths.functions.hypergeometric.Gamma
 import net.ollie.maths.numbers.{Natural, PositiveReal, Precision}
 

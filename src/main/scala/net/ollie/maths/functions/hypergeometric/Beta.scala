@@ -1,12 +1,14 @@
 package net.ollie.maths.functions.hypergeometric
 
-import net.ollie.maths.{CachedEvaluated, Expression}
+import net.ollie.maths.CachedEvaluated
 import net.ollie.maths.functions.{Represented, SymmetricBivariateFunction}
 import net.ollie.maths.methods.Product
 import net.ollie.maths.numbers._
-import net.ollie.maths.numbers.complex.{ComplexInfinity, Complex}
-import net.ollie.maths.numbers.constants.{Zero, One}
+import net.ollie.maths.numbers.complex.{Complex, ComplexInfinity}
+import net.ollie.maths.numbers.constants.{One, Zero}
 import java.util.Objects
+
+import net.ollie.maths.expressions.Expression
 
 /**
  * Created by Ollie on 22/01/14.

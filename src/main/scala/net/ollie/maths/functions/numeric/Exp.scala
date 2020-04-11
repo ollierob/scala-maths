@@ -1,10 +1,11 @@
 package net.ollie.maths.functions.numeric
 
 import net.ollie.maths._
-import net.ollie.maths.functions.{UnivariateFunction, ComplexFunctionBuilder}
+import net.ollie.maths.expressions.{Composition, Expression, Invertible}
+import net.ollie.maths.functions.{ComplexFunctionBuilder, UnivariateFunction}
 import net.ollie.maths.numbers._
-import net.ollie.maths.numbers.constants.{Zero, One, EulersNumber}
-import net.ollie.maths.numbers.complex.{PolarComplex, Complex}
+import net.ollie.maths.numbers.constants.{EulersNumber, One, Zero}
+import net.ollie.maths.numbers.complex.{Complex, PolarComplex}
 import net.ollie.maths.functions.angular.Angle
 import net.ollie.maths.methods.MaclaurinSeries
 

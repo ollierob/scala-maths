@@ -1,6 +1,7 @@
 package net.ollie.maths.numbers
 
 import net.ollie.maths._
+import net.ollie.maths.expressions.{Empty, Expression}
 import net.ollie.maths.methods.ApproximatelyEvaluated
 import net.ollie.maths.numbers.constants.{One, Unity, Zero}
 

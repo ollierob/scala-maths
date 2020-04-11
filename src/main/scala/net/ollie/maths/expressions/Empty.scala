@@ -1,6 +1,7 @@
-package net.ollie.maths
+package net.ollie.maths.expressions
 
 import net.ollie.maths.numbers.constants.Zero
+import net.ollie.maths.{Constant, Variable}
 
 /**
  * An empty expression.

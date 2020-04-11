@@ -1,9 +1,9 @@
 package net.ollie.maths.functions.numeric
 
-import net.ollie.maths.functions.{FunctionBuilder, BuiltFunction, UnivariateFunction, ComplexFunctionBuilder}
+import net.ollie.maths.expressions.Expression
+import net.ollie.maths.functions.{BuiltFunction, ComplexFunctionBuilder, FunctionBuilder, UnivariateFunction}
 import net.ollie.maths.numbers.complex.Complex
 import net.ollie.maths.numbers.Real
-import net.ollie.maths.Expression
 import net.ollie.maths.numbers.constants.Zero
 
 /**

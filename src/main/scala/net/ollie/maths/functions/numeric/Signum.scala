@@ -1,10 +1,10 @@
 package net.ollie.maths.functions.numeric
 
-import net.ollie.maths.functions.{ComplexFunctionBuilder, BuiltFunction, UnivariateFunction}
+import net.ollie.maths.expressions.Expression
+import net.ollie.maths.functions.{BuiltFunction, ComplexFunctionBuilder, UnivariateFunction}
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.complex.Complex
-import net.ollie.maths.numbers.constants.{MinusOne, Zero, One}
-import net.ollie.maths.Expression
+import net.ollie.maths.numbers.constants.{MinusOne, One, Zero}
 
 /**
  * Created by Ollie on 05/01/14.

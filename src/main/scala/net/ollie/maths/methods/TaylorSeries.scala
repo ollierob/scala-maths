@@ -1,6 +1,7 @@
 package net.ollie.maths.methods
 
 import net.ollie.maths._
+import net.ollie.maths.expressions.Univariate
 import net.ollie.maths.functions.FunctionBuilder
 import net.ollie.maths.numbers.{Natural, Precision, Real}
 import net.ollie.maths.numbers.constants.Zero

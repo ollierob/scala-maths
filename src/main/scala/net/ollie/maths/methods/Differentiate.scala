@@ -1,7 +1,8 @@
 package net.ollie.maths.methods
 
 import net.ollie.maths._
-import net.ollie.maths.numbers.{Real, Natural}
+import net.ollie.maths.expressions.{Expression, Univariate}
+import net.ollie.maths.numbers.{Natural, Real}
 import net.ollie.maths.numbers.constants.{One, Zero}
 import net.ollie.maths.functions.Represented
 import net.ollie.maths.functions.hypergeometric.Gamma
