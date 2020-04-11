@@ -13,15 +13,15 @@ trait LinearPolynomial
 
 object LinearPolynomial {
 
-    def apply(x: Variable, a: Complex, b: Complex): SingleVariablePolynomial = {
+    def apply(x: Variable, a: Complex, b: Complex): UnivariatePolynomial = {
         if (a.isZero) Polynomial(x, b)
-        else new SingleVariableLinearPolynomial(x, a, b)
+        else new UnivariateLinearPolynomial(x, a, b)
     }
 
 }
 
-class SingleVariableLinearPolynomial(val x: Variable, val a: Complex, val b: Complex)
-    extends LinearPolynomial with SingleVariablePolynomial {
+class UnivariateLinearPolynomial(val x: Variable, val a: Complex, val b: Complex)
+    extends LinearPolynomial with UnivariatePolynomial {
 
     require(!a.isZero)
 

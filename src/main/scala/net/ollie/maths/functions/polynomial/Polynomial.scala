@@ -34,7 +34,7 @@ object Polynomial {
 
     def apply(x: Variable) = apply(x, 0)
 
-    def apply(x: Variable, z: Complex): SingleVariablePolynomial = new ConstantSingleVariablePolynomial(x, z)
+    def apply(x: Variable, z: Complex): UnivariatePolynomial = new ConstantUnivariatePolynomial(x, z)
 
     def apply(x: Variable, xCoeff: Complex, c: Complex) = LinearPolynomial.apply(x, xCoeff, c)
 
@@ -94,8 +94,8 @@ trait PolynomialRoots[+F <: Constant, C <: Constant]
 
 }
 
-class ConstantSingleVariablePolynomial(val of: Variable, val c: Constant)
-    extends SingleVariablePolynomial {
+class ConstantUnivariatePolynomial(val of: Variable, val c: Constant)
+    extends UnivariatePolynomial {
 
     override def degree = 0
 

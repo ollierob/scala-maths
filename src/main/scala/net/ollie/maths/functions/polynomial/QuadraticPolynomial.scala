@@ -19,9 +19,9 @@ object QuadraticPolynomial {
 
     def is(poly: Polynomial) = poly.degree == 2
 
-    def apply(x: Variable, a: Complex, b: Complex, c: Complex): SingleVariablePolynomial = {
+    def apply(x: Variable, a: Complex, b: Complex, c: Complex): UnivariatePolynomial = {
         if (a.isZero) LinearPolynomial(x, b, c)
-        new SingleVariableQuadraticPolynomial(x, a, b, c)
+        new UnivariateQuadraticPolynomial(x, a, b, c)
     }
 
 }
@@ -34,8 +34,8 @@ object QuadraticPolynomial {
  * @param b multiplier of variablePolynomial
  * @param c constant
  */
-class SingleVariableQuadraticPolynomial(val x: Variable, val a: Complex, val b: Complex, val c: Complex)
-    extends QuadraticPolynomial with SingleVariablePolynomial {
+class UnivariateQuadraticPolynomial(val x: Variable, val a: Complex, val b: Complex, val c: Complex)
+    extends QuadraticPolynomial with UnivariatePolynomial {
 
     require(!a.isZero)
 
@@ -53,7 +53,7 @@ class SingleVariableQuadraticPolynomial(val x: Variable, val a: Complex, val b: 
 
     override def toString = s"$a.x^2 + $b.x + $c"
 
-    private class QuadraticRoots(val of: SingleVariableQuadraticPolynomial)
+    private class QuadraticRoots(val of: UnivariateQuadraticPolynomial)
         extends PolynomialRoots[Complex, Complex] {
 
         lazy val bSquared: Complex = of.b ^ 2

@@ -9,7 +9,7 @@ import net.ollie.maths.numbers.constants.{One, Zero}
  * Created by Ollie on 01/01/14.
  */
 trait Expression
-        extends Differentiable {
+    extends Differentiable {
 
     def unary_-(): Expression
 
@@ -47,6 +47,7 @@ trait Expression
 
     /**
      * This times that. Will create an expression product if the multiplication cannot be simplified.
+     *
      * @param that
      * @return
      */
@@ -59,6 +60,7 @@ trait Expression
      * This try-times-try that.
      * Attempts to simplify to a single term, where possible, by multiplying this by the right term,
      * then the right term multiplied by this on the left.
+     *
      * @param that
      * @return
      */
@@ -69,6 +71,7 @@ trait Expression
 
     /**
      * This try-times that.
+     *
      * @param that
      * @return
      */
@@ -124,7 +127,7 @@ object Expression {
 }
 
 class NegatedExpression(val of: Expression)
-        extends Expression {
+    extends Expression {
 
     def replace(variables: Map[Variable, Expression]) = -(of.replace(variables))
 
@@ -146,7 +149,7 @@ class NegatedExpression(val of: Expression)
 }
 
 class ExpressionFraction(val numerator: Expression, val denominator: Expression)
-        extends Expression {
+    extends Expression {
 
     override def unary_-() = (-numerator) / denominator
 
@@ -168,6 +171,7 @@ class ExpressionFraction(val numerator: Expression, val denominator: Expression)
 
     /**
      * A fraction times something is a fraction.
+     *
      * @param that
      * @return
      */
@@ -187,7 +191,7 @@ class ExpressionFraction(val numerator: Expression, val denominator: Expression)
 }
 
 class ExpressionPower(val base: Expression, val power: Expression)
-        extends Exponentiated {
+    extends Exponentiated {
 
     def unary_-() = Expression.negate(this)
 
@@ -208,7 +212,7 @@ class ExpressionPower(val base: Expression, val power: Expression)
 }
 
 trait Nonvariate
-        extends Expression
+    extends Expression
         with Integrable {
 
     def df(x: Variable): Empty = Zero
@@ -233,7 +237,7 @@ object Univariate {
     }
 
     private class NonvariateWrapper(val n: Constant)
-            extends AnyRef
+        extends AnyRef
             with Univariate {
 
         def unary_-(): Univariate = -n
@@ -274,7 +278,7 @@ object Univariate {
     }
 
     private class UnivariateWrapper(val expression: Expression)
-            extends AnyRef
+        extends AnyRef
             with Univariate {
 
         require(expression.variables.size == 1, "Require 1 variable but " + expression + " had " + expression.variables)
@@ -306,7 +310,7 @@ object Univariate {
 }
 
 trait Univariate //TODO make variable optional
-extends Expression {
+    extends Expression {
 
     def unary_-(): Univariate
 

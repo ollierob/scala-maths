@@ -15,18 +15,18 @@ trait NthDegreePolynomial
 
 object NthDegreePolynomial {
 
-    def apply(x: Variable, coefficients: Array[Complex]): SingleVariablePolynomial = coefficients.length match {
+    def apply(x: Variable, coefficients: Array[Complex]): UnivariatePolynomial = coefficients.length match {
         case 0 => Polynomial.apply(x)
         case 1 => Polynomial.apply(x, coefficients.apply(0))
         case 2 => Polynomial.apply(x, coefficients.apply(1), coefficients.apply(0))
         case 3 => Polynomial.apply(x, coefficients.apply(2), coefficients.apply(1), coefficients.apply(0))
-        case _ => new SingleVariableNthDegreePolynomial(x, coefficients)
+        case _ => new UnivariateNthDegreePolynomial(x, coefficients)
     }
 
 }
 
-private class SingleVariableNthDegreePolynomial(val x: Variable, val coefficients: Array[Complex])
-    extends NthDegreePolynomial with SingleVariablePolynomial {
+private class UnivariateNthDegreePolynomial(val x: Variable, val coefficients: Array[Complex])
+    extends NthDegreePolynomial with UnivariatePolynomial {
 
     //Should delegate to other types
     require(coefficients.length > 3)
@@ -49,7 +49,7 @@ private class SingleVariableNthDegreePolynomial(val x: Variable, val coefficient
 
     override lazy val roots = new NthDegreeRoots(this)
 
-    class NthDegreeRoots(val of: SingleVariableNthDegreePolynomial)
+    class NthDegreeRoots(val of: UnivariateNthDegreePolynomial)
         extends PolynomialRoots[Complex, Complex] {
 
         override def principal = ???

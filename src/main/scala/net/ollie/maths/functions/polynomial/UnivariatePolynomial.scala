@@ -1,10 +1,10 @@
 package net.ollie.maths.functions.polynomial
 
 import net.ollie.maths.Variable
-import net.ollie.maths.expressions.Expression
+import net.ollie.maths.expressions.{Expression, Univariate}
 
-trait SingleVariablePolynomial
-    extends Polynomial {
+trait UnivariatePolynomial
+    extends Polynomial with Univariate {
 
     override def of: Variable
 
@@ -19,7 +19,7 @@ trait SingleVariablePolynomial
 
 }
 
-object SingleVariablePolynomial {
+object UnivariatePolynomial {
 
     def is(poly: Polynomial) = poly.variables.size == 1
 
