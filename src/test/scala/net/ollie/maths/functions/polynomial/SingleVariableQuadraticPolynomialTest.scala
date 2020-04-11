@@ -5,7 +5,7 @@ import net.ollie.maths.numbers.complex.{CartesianComplex, Complex}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
-class SingleVariableRealQuadraticTest extends AnyFlatSpec with Matchers {
+class SingleVariableQuadraticPolynomialTest extends AnyFlatSpec with Matchers {
 
     val x = Variable("x")
 

@@ -4,6 +4,7 @@ import net.ollie.maths._
 import net.ollie.maths.functions.Represented
 import net.ollie.maths.functions.numeric.Roots
 import net.ollie.maths.numbers.Natural
+import net.ollie.maths.numbers.complex.Complex
 import net.ollie.maths.numbers.constants.Zero
 
 /**
@@ -27,6 +28,8 @@ trait Polynomial
 object Polynomial {
 
     def negate[P <: Polynomial](p: P): NegatedPolynomial[P] = new NegatedPolynomial[P](p)
+
+    def apply(x: Variable, z: Complex): SingleVariablePolynomial = new ConstantSingleVariablePolynomial(x, z)
 
 }
 
@@ -79,5 +82,16 @@ trait PolynomialRoots[+F <: Constant, C <: Constant]
     override def of: Polynomial
 
     override def degree = of.degree
+
+}
+
+class ConstantSingleVariablePolynomial(val of: Variable, val c: Constant)
+    extends SingleVariablePolynomial {
+
+    override def degree = 0
+
+    override def representation = c
+
+    override def roots = ???
 
 }
