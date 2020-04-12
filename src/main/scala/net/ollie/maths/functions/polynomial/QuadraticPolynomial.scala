@@ -45,8 +45,6 @@ class UnivariateQuadraticPolynomial(val x: Variable, val a: Complex, val b: Comp
 
     override def of = x;
 
-    override def representation = (a * x ^ 2) + (b * x) + c
-
     override def replace(variables: Map[Variable, Expression]) = {
         variables.get(x).map(e => (a * (e ^ 2)) + (b * e) + c).getOrElse(this)
     }

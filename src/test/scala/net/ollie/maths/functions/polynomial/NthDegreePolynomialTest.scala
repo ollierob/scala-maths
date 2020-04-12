@@ -16,6 +16,10 @@ class NthDegreePolynomialTest extends AnyFlatSpec with Matchers {
 
         val poly = NthDegreePolynomial(x, Seq(2, 3, 4, 5));
 
+        it should "have degree" in {
+            poly.degree shouldBe Natural(3)
+        }
+
         it should "have coefficients" in {
             poly.coefficient(0) shouldBe Natural(2)
             poly.coefficient(1) shouldBe Natural(3)

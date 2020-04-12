@@ -2,6 +2,7 @@ package net.ollie.maths.functions.polynomial
 
 import net.ollie.maths.expressions.{Expression, Univariate}
 import net.ollie.maths.numbers.Natural
+import net.ollie.maths.numbers.constants.Zero
 import net.ollie.maths.{Constant, Variable}
 
 trait UnivariatePolynomial
@@ -15,6 +16,18 @@ trait UnivariatePolynomial
 
     def coefficient(power: Natural): Constant
 
+    override def representation: Expression = {
+        var expr: Expression = 0
+        for (i <- 0 to degree) {
+            val coeff = coefficient(i)
+            if (!coeff.isZero) {
+                if (i == 0) expr += coeff
+                else expr += coeff * (variable ^ i)
+            }
+        }
+        expr
+    }
+
     override def replace(variables: Map[Variable, Expression]): Expression = {
         if (variables.contains(of)) representation.replace(variables)
         else this
@@ -22,6 +35,15 @@ trait UnivariatePolynomial
 
     def replace(c: Constant): Constant = {
         replace(Map(of -> c)).toConstant.get
+//        var sum: Constant = Zero
+//        for (i <- 0 to degree) {
+//            val coeff = coefficient(i)
+//            if (!coeff.isZero) {
+//                if (i == 0) sum += coeff //FIXME need arithmetic
+//                else sum += coeff * (c ^ i)
+//            }
+//        }
+//        sum
     }
 
     def roots: PolynomialRoots[_, _]
@@ -34,6 +56,19 @@ trait UnivariatePolynomial
     }
 
     def derivative: UnivariatePolynomial
+
+    override def equals(expr: Expression): Boolean = expr match {
+        case u: UnivariatePolynomial => this equals u
+        case _ => super.equals(expr)
+    }
+
+    def equals(that: UnivariatePolynomial): Boolean = {
+        if (this.degree != that.degree) return false;
+        for (i <- 0 until this.degree) {
+            if (this.coefficient(i) != that.coefficient(i)) return false
+        }
+        true
+    }
 
 }
 

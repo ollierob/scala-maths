@@ -102,7 +102,12 @@ class ConstantUnivariatePolynomial(val of: Variable, val c: Constant)
 
     override def degree = 0
 
-    override def representation = c
+    override lazy val representation = c
+
+    override def coefficient(power: Natural) = power match {
+        case Zero => c
+        case _ => Zero
+    }
 
     override def roots = ???
 

@@ -1,7 +1,6 @@
 package net.ollie.maths.functions.polynomial
 
-import net.ollie.maths.{Constant, Variable}
-import net.ollie.maths.expressions.Expression
+import net.ollie.maths.Variable
 import net.ollie.maths.numbers.Natural
 import net.ollie.maths.numbers.complex.Complex
 
@@ -37,22 +36,10 @@ private class UnivariateNthDegreePolynomial(val x: Variable, val coefficients: S
 
     override val degree = NthDegreePolynomial.degree(coefficients)
 
-    override lazy val representation = {
-        var expr: Expression = 0
-        for (i <- coefficients.indices) {
-            val coeff = coefficients.apply(i)
-            if (!coeff.isZero) {
-                if (i == 0) expr += coeff
-                else expr += coeff * (x ^ i)
-            }
-        }
-        expr;
-    }
-
     override lazy val roots = new NthDegreeRoots(this)
 
     override def coefficient(power: Natural): Complex = {
-        if (power < coefficients.length) coefficients.apply(power.requireInt)
+        if (power < coefficients.length) coefficients.apply(power)
         else 0
     }
 
