@@ -29,7 +29,7 @@ class NthDegreePolynomialTest extends AnyFlatSpec with Matchers {
         }
 
         it should "differentiate" in {
-            poly.derivative shouldBe NthDegreePolynomial(x, Seq(3, 8, 15))
+            poly.dx shouldBe NthDegreePolynomial(x, Seq(3, 8, 15))
         }
 
         it should "substitute" in {

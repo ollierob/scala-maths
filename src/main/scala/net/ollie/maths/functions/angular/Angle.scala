@@ -154,8 +154,7 @@ object EmptyAngle
 }
 
 class Degrees(val value: Real)
-    extends AnyVal
-        with Angle {
+    extends Angle {
 
     type Type = Degrees
 

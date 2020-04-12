@@ -1,13 +1,13 @@
 package net.ollie.maths.functions.polynomial
 
-import net.ollie.maths.expressions.Expression
+import net.ollie.maths.expressions.{Expression, Univariate}
 import net.ollie.maths.numbers.Natural
 import net.ollie.maths.numbers.constants.Zero
 import net.ollie.maths.{Constant, Variable}
 import net.ollie.utils.Is
 
 trait UnivariatePolynomial
-    extends Polynomial with MaclaurinSeries {
+    extends Polynomial with MaclaurinSeries with Univariate {
 
     def degree: Natural
 
@@ -45,12 +45,7 @@ trait UnivariatePolynomial
 
     override def unary_-(): UnivariatePolynomial = ??? //TODO
 
-    override def df(x: Variable): UnivariatePolynomial = {
-        if (x == variable) derivative
-        else Polynomial(x)
-    }
-
-    def derivative: UnivariatePolynomial
+    override def dx: UnivariatePolynomial
 
     override def equals(expr: Expression): Boolean = expr match {
         case u: UnivariatePolynomial => this equals u
@@ -87,6 +82,6 @@ class ConstantUnivariatePolynomial(val of: Variable, val c: Constant)
 
     override def roots = ???
 
-    override def derivative = Polynomial(of) //FIXME technically should not have any variable
+    override def dx = Polynomial(of) //FIXME technically should not have any variable
 
 }

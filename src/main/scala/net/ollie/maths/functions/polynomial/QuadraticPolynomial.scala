@@ -51,7 +51,7 @@ class UnivariateQuadraticPolynomial(val x: Variable, val a: Complex, val b: Comp
 
     override def isEmpty = false
 
-    override def derivative = Polynomial(x, 2 * a, b)
+    override def dx = Polynomial(x, 2 * a, b)
 
     override def roots = new QuadraticRoots(this)
 

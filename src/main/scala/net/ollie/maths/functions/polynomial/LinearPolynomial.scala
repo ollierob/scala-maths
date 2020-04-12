@@ -35,7 +35,7 @@ class UnivariateLinearPolynomial(val x: Variable, val a: Complex, val b: Complex
 
     override def isEmpty = false
 
-    override def derivative = Polynomial(x, a)
+    override def dx = Polynomial(x, a)
 
     override def equals(expr: Expression) = expr match {
         case p: UnivariateLinearPolynomial => x == p.x && a == p.a && b == p.b

@@ -2,7 +2,7 @@ package net.ollie.maths
 
 import java.util.UUID
 
-import net.ollie.maths.expressions.{Expression, Integrable, Linear, Univariate}
+import net.ollie.maths.expressions.{Expression, Integrable, Linear}
 import net.ollie.maths.numbers.Real
 import net.ollie.maths.numbers.constants.{One, Zero}
 
@@ -50,10 +50,7 @@ trait Variable
         case _ => this
     }
 
-    override def df(x: Variable): Univariate = {
-        if (this == x) One
-        else Zero
-    }
+    override def dx = One
 
     override protected[this] def integral(x: Variable): Expression = {
         if (this == x) (this ^ 2) / 2

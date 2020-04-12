@@ -1,11 +1,11 @@
 package net.ollie.maths.functions.angular
 
 import net.ollie.maths.expressions.{Expression, Invertible}
-import net.ollie.maths.functions.{BuiltFunction, FunctionBuilder, UnivariateFunction}
+import net.ollie.maths.functions.numeric.SquareRoots
+import net.ollie.maths.functions.{BuiltFunction, FunctionBuilder}
+import net.ollie.maths.numbers.constants.{One, Pi}
 import net.ollie.maths.numbers.{Precision, Real}
 import net.ollie.maths.{CachedEvaluated, Constant}
-import net.ollie.maths.numbers.constants.{One, Pi}
-import net.ollie.maths.functions.numeric.SquareRoots
 import org.nevec.rjm.BigDecimalMath
 
 /**
@@ -16,12 +16,11 @@ import org.nevec.rjm.BigDecimalMath
  * @see http://mathworld.wolfram.com/InverseCosine.html
  */
 object ArcCos
-        extends FunctionBuilder
-        with UnivariateFunction[Real, Angle] {
+    extends FunctionBuilder {
 
     import Angle._
 
-    def apply(n: Constant) = n match {
+    def apply(n: Constant): Angle = n match {
         case re: Real => apply(re)
         case _ => ???
     }
@@ -35,7 +34,7 @@ object ArcCos
 }
 
 trait ArcCos
-        extends Expression {
+    extends Expression {
 
     val of: Expression
 
@@ -44,7 +43,7 @@ trait ArcCos
 }
 
 class ArcCosOf(val of: Expression)
-        extends BuiltFunction
+    extends BuiltFunction
         with Invertible
         with ArcCos {
 
@@ -59,7 +58,7 @@ class ArcCosOf(val of: Expression)
 }
 
 class RealArcCos(override val of: Real)
-        extends Real
+    extends Real
         with ArcCos
         with CachedEvaluated {
 

@@ -52,7 +52,7 @@ private class UnivariateNthDegreePolynomial(val x: Variable, val coefficients: S
 
     }
 
-    override def derivative: UnivariatePolynomial = {
+    override def dx: UnivariatePolynomial = {
         val newCoefficients = coefficients.slice(1, coefficients.length).zipWithIndex.map(t => t._1 * (t._2 + 1))
         Polynomial(x, newCoefficients);
     }

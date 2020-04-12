@@ -37,10 +37,7 @@ trait Linear
         expressions.Linear(left, variable, right * that.inverse)
     }
 
-    def df(x: Variable): Univariate = {
-        if (x == variable) left * right
-        else Zero
-    }
+    override def dx = left * right
 
 }
 

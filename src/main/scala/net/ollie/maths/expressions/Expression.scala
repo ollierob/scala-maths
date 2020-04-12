@@ -252,8 +252,6 @@ object Univariate {
 
         def variable = ??? //TODO
 
-        override def df(x: Variable) = Zero
-
         override def dx = Zero
 
         override def ?+(that: Expression)(leftToRight: Boolean) = n.?+(that)(leftToRight)
@@ -300,7 +298,7 @@ object Univariate {
 
         override def ^(that: Expression) = expression ^ that
 
-        override def df(x: Variable) = expression.df(x)
+        override def dx = expression.dx
 
         override def toString = expression.toString
 
@@ -323,8 +321,11 @@ trait Univariate //TODO make variable optional
 
     def apply(u: Univariate): Univariate = replace(variable, u)
 
-    override def df(x: Variable): Univariate
+    override def df(x: Variable): Univariate = {
+        if (x == variable) dx
+        else Zero
+    }
 
-    def dx: Univariate = df(variable)
+    def dx: Univariate
 
 }

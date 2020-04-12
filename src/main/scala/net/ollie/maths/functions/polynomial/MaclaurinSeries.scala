@@ -17,3 +17,5 @@ trait MaclaurinSeries
 object MaclaurinSeries{
 
 }
+
+private class GeneratedMaclaurinSeries
