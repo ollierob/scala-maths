@@ -7,7 +7,7 @@ import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.constants.{EulersNumber, One, Zero}
 import net.ollie.maths.numbers.complex.{Complex, PolarComplex}
 import net.ollie.maths.functions.angular.Angle
-import net.ollie.maths.methods.MaclaurinSeries
+import net.ollie.maths.methods.RealMaclaurinSeries
 
 /**
  * Created by Ollie on 18/01/14.
@@ -75,7 +75,7 @@ class RealExp(val of: Real)
 
     require(MinusInfinity != of)
 
-    private lazy val series = MaclaurinSeries(Exp, of)
+    private lazy val series = RealMaclaurinSeries(Exp, of)
 
     override protected[this] def doEvaluate(precision: Precision) = series.evaluate(precision)
 

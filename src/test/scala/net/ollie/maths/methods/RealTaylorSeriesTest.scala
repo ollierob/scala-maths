@@ -9,13 +9,13 @@ import org.scalatest.{FlatSpec, Matchers}
 /**
  * Created by Ollie on 12/01/14.
  */
-class TaylorSeriesTest extends FlatSpec with Matchers {
+class RealTaylorSeriesTest extends FlatSpec with Matchers {
 
     behavior of "TaylorSeries(x)"
 
     it should "evaluate" in {
         val x = Variable("x")
-        val series: Real = TaylorSeries(Sin, Zero, Zero)
+        val series: Real = RealTaylorSeries(Sin, Zero, Zero)
         series shouldBe Zero
     }
 

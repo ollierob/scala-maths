@@ -13,3 +13,7 @@ trait MaclaurinSeries
     override def variable = of
 
 }
+
+object MaclaurinSeries{
+
+}
