@@ -7,7 +7,7 @@ import net.ollie.maths.numbers.constants.Pi
 import net.ollie.maths.numbers.{Precision, Real}
 
 trait Angle
-        extends Real {
+    extends Real {
 
     type Type >: this.type <: Angle
 
@@ -67,7 +67,7 @@ object Angle extends Enumeration {
     }
 
     implicit class AngularInt(val int: Int)
-            extends Angular(int)
+        extends Angular(int)
 
     implicit class Angular(val value: Real) {
 
@@ -109,7 +109,7 @@ object Classification extends Enumeration {
  * 2 pi radians, or 360 degrees.
  */
 object FullAngle
-        extends PiRadians(2) {
+    extends PiRadians(2) {
 
     override def classify = Classification.Full
 
@@ -119,7 +119,7 @@ object FullAngle
  * pi radians, or 180 degrees.
  */
 object HalfAngle
-        extends PiRadians(1) {
+    extends PiRadians(1) {
 
     override def classify = Classification.Straight
 
@@ -129,14 +129,14 @@ object HalfAngle
  * pi/2 radians, or 90 degrees.
  */
 object RightAngle
-        extends KnownRadians(Pi / 2) {
+    extends KnownRadians(Pi / 2) {
 
     override def classify = Classification.Right
 
 }
 
 object EmptyAngle
-        extends KnownRadians(0)
+    extends KnownRadians(0)
         with Empty {
 
     override def unary_-() = this
@@ -153,10 +153,8 @@ object EmptyAngle
 
 }
 
-
-
 class Degrees(val value: Real)
-        extends AnyRef
+    extends AnyVal
         with Angle {
 
     type Type = Degrees
@@ -169,11 +167,11 @@ class Degrees(val value: Real)
 
     override def unary_-(): Degrees = Degrees(-value)
 
-    override def toString = value.toString + "°"
-
     implicit def builder = Degrees.Builder
 
     def reduce = Degrees(Modulo(value, 360).remainder)
+
+    override def toString = s"${value}°"
 
 }
 
@@ -185,7 +183,7 @@ object Degrees {
     }
 
     implicit object Builder
-            extends AngleBuilder[Degrees] {
+        extends AngleBuilder[Degrees] {
 
         def create(radians: Real) = apply(radians)
 
@@ -194,7 +192,7 @@ object Degrees {
 }
 
 class Grads(val value: Real)
-        extends AnyRef
+    extends AnyRef
         with Angle {
 
     type Type = Grads
@@ -212,7 +210,7 @@ class Grads(val value: Real)
 }
 
 class Turns(val value: Real)
-        extends AnyRef
+    extends AnyRef
         with Angle {
 
     type Type = Turns

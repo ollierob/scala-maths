@@ -2,12 +2,11 @@ package net.ollie.maths.functions.angular
 
 import net.ollie.maths.functions.angular.Angle.AngleBuilder
 import net.ollie.maths.functions.numeric.Modulo
-import net.ollie.maths.numbers.{Real, Integer}
 import net.ollie.maths.numbers.constants.{Pi, Zero}
+import net.ollie.maths.numbers.{Integer, Real}
 
 trait Radians
-    extends AnyRef
-        with Angle {
+    extends Angle {
 
     type Type = Radians
 
@@ -23,7 +22,7 @@ trait Radians
 
     override def unary_-(): Radians = Radians(-value)
 
-    override def toString = value.toString
+    override def toString = s"rad($value)"
 
     implicit def builder = Radians.Builder
 
