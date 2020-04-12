@@ -45,21 +45,23 @@ object Polynomial {
 
 }
 
-class NegatedPolynomial[P <: Polynomial](override val of: P)
-    extends NegatedExpression(of)
+class NegatedPolynomial[P <: Polynomial](override val expression: P)
+    extends NegatedExpression[P](expression)
         with Polynomial {
 
-    override def representation = -(of.representation)
+    override def of = expression.of
 
-    override def degree = of.degree
+    override def representation = -(expression.representation)
 
-    override def unary_-(): P = of
+    override def degree = expression.degree
+
+    override def unary_-(): P = expression
 
     override def variables = super[Polynomial].variables
 
     override def replace(variables: Map[Variable, Expression]) = super[NegatedExpression].replace(variables)
 
-    override def coefficient(power: Natural) = -of.coefficient(power)
+    override def coefficient(power: Natural) = -expression.coefficient(power)
 
     override def toConstant = super[NegatedExpression].toConstant
 

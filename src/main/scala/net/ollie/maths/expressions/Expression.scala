@@ -126,25 +126,25 @@ object Expression {
 
 }
 
-class NegatedExpression(val of: Expression)
+class NegatedExpression[E <: Expression](val expression: E)
     extends Expression {
 
-    def replace(variables: Map[Variable, Expression]) = -(of.replace(variables))
+    def replace(variables: Map[Variable, Expression]) = -(expression.replace(variables))
 
-    def isEmpty = of.isEmpty
+    def isEmpty = expression.isEmpty
 
-    def unary_-() = of
+    def unary_-(): E = expression
 
-    override def toConstant: Option[Constant] = of.toConstant match {
+    override def toConstant: Option[Constant] = expression.toConstant match {
         case Some(n) => Some(-n)
         case _ => None
     }
 
-    def variables = of.variables
+    def variables = expression.variables
 
-    def df(x: Variable) = -(of.df(x))
+    def df(x: Variable) = -(expression.df(x))
 
-    override def toString = s"-($of)"
+    override def toString = s"-($expression)"
 
 }
 
