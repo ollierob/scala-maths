@@ -28,7 +28,7 @@ object RealProduct {
 
 }
 
-case class RealProduct protected(override val terms: Seq[Real])
+class RealProduct protected(override val terms: Seq[Real])
     extends ConstantProduct(terms)(Real)
         with Real
         with ApproximatelyEvaluated {
@@ -36,7 +36,7 @@ case class RealProduct protected(override val terms: Seq[Real])
     override protected[this] def apply(terms: Seq[Real]) = RealProduct(terms)
 
     override def ?*(that: Real) = that match {
-        case RealProduct(seq) => Some(RealProduct(simplify(terms ++ seq)))
+        case p: RealProduct => Some(RealProduct(simplify(terms ++ p.terms)))
         case _ => Some(RealProduct(simplify(terms :+ that)))
     }
 

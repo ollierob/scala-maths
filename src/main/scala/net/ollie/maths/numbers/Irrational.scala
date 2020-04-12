@@ -26,13 +26,13 @@ object IrrationalProduct {
 
 }
 
-case class IrrationalProduct private(override val terms: Seq[Real])
+class IrrationalProduct private(override val terms: Seq[Real])
     extends RealProduct(terms) with Irrational {
 
     override def *(r: Rational) = r match {
         case Zero => Zero
         case One => this
-        case IrrationalProduct(seq) => new IrrationalProduct(simplify(terms :+ seq))
+        case p: IrrationalProduct => new IrrationalProduct(simplify(terms ++ p.terms))
         case _ => new IrrationalProduct(simplify(terms ++ r))
     }
 
