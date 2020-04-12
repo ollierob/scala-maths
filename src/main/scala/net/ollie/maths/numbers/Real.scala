@@ -76,6 +76,8 @@ trait Real
         }
     }
 
+    def *(that: Int): Real = this * Integer(that)
+
     def ?*(that: Real): Option[Real] = that match {
         case Zero => Some(Zero)
         case One => Some(this)

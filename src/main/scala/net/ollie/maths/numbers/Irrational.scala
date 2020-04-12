@@ -31,6 +31,8 @@ object IrrationalProduct {
         case _ => new IrrationalProduct(Seq(i, r))
     }
 
+    def unapply(p: IrrationalProduct): Option[Seq[Real]] = Some(p.terms)
+
 }
 
 class IrrationalProduct private(override val terms: Seq[Real])
@@ -39,7 +41,7 @@ class IrrationalProduct private(override val terms: Seq[Real])
     override def *(r: Rational) = r match {
         case Zero => Zero
         case One => this
-        case p: IrrationalProduct => new IrrationalProduct(simplify(terms ++ p.terms))
+        case IrrationalProduct(seq) => new IrrationalProduct(simplify(terms ++ seq))
         case _ => new IrrationalProduct(simplify(terms ++ r))
     }
 
