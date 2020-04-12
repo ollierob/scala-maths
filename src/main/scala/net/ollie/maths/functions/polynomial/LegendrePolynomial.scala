@@ -13,6 +13,8 @@ trait LegendrePolynomial
 
     override def order = Zero
 
+    override def coefficient(power: Natural): Constant = ??? //TODO
+
     override def isEmpty = false
 
     override def toString = s"LegendreP($degree)($of)"
@@ -50,6 +52,8 @@ class OneLegendrePolynomial(val of: Expression)
     extends LegendrePolynomial {
 
     override def degree = One
+
+    override def coefficient(power: Natural) = Zero
 
     def representation = of
 

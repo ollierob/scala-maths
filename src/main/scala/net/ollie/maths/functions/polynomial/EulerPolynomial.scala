@@ -11,6 +11,8 @@ import net.ollie.maths.functions.{BivariateFunction, Represented}
 trait EulerPolynomial
         extends Polynomial {
 
+    override def coefficient(power: Natural) = ??? //TODO
+
     override def toString = s"EulerPolynomial($degree)($of)"
 
 }

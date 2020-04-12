@@ -1,9 +1,9 @@
 package net.ollie.maths.sequences
 
-import net.ollie.maths.numbers.{Precision, Integer, Rational, Natural}
-import net.ollie.maths.numbers.constants.{Zero, Half, One}
-import org.nevec.rjm.Bernoulli
 import net.ollie.maths.methods.ApproximatelyEvaluated
+import net.ollie.maths.numbers.constants.{Half, One, Zero}
+import net.ollie.maths.numbers.{Integer, Natural, Precision, Rational}
+import org.nevec.rjm.Bernoulli
 
 /**
  * Created by Ollie on 19/02/14.

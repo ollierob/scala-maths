@@ -8,8 +8,8 @@ trait MaclaurinSeries
 
     override def of: Variable
 
-    override def variable = of
+    override def variables = super[Univariate].variables
 
-    override def variables = Set(of)
+    override def variable = of
 
 }

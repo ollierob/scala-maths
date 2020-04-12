@@ -59,6 +59,8 @@ class NegatedPolynomial[P <: Polynomial](override val of: P)
 
     override def replace(variables: Map[Variable, Expression]) = super[NegatedExpression].replace(variables)
 
+    override def coefficient(power: Natural) = -of.coefficient(power)
+
     override def toConstant = super[NegatedExpression].toConstant
 
     override def isEmpty = super[Polynomial].isEmpty
@@ -76,6 +78,8 @@ trait EmptyPolynomial
     override def unary_-(): Polynomial with Empty = this
 
     override def toConstant = super[Empty].toConstant
+
+    override def coefficient(power: Natural) = Zero
 
     override def df(x: Variable) = this
 

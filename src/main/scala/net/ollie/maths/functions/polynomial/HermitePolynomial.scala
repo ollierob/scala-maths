@@ -13,6 +13,8 @@ import net.ollie.maths.sequences.HermiteSequence
 trait HermitePolynomial
     extends Polynomial {
 
+    override def coefficient(power: Natural) = ??? //TODO
+
     override def toString = s"HermiteP($degree)($of)"
 
 }

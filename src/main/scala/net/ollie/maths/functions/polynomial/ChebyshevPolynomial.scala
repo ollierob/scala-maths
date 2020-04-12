@@ -4,15 +4,19 @@ import net.ollie.maths.Variable
 import net.ollie.maths.expressions.Expression
 import net.ollie.maths.functions.numeric.Floor
 import net.ollie.maths.methods.Series
-import net.ollie.maths.numbers.{Integer, Natural}
 import net.ollie.maths.numbers.combinatorial.BinomialCoefficient
 import net.ollie.maths.numbers.constants.{One, Zero}
+import net.ollie.maths.numbers.{Integer, Natural}
 
 /**
  * Created by Ollie on 18/01/14.
  */
 sealed trait ChebyshevPolynomial
-        extends Polynomial
+        extends Polynomial {
+
+    override def coefficient(power: Natural) = ??? //TODO
+
+}
 
 
 /**

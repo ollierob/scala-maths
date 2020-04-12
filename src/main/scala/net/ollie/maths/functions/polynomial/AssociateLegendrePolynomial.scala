@@ -52,4 +52,6 @@ private class RegularAssociatedLegendrePolynomial(val degree: Natural, val order
         ((((2 * l) - 1) * Plm(degree - 1, order)(of)) - ((degree + order) * Plm(degree - 2, order)(of))) / (degree - order + 1)
     }
 
+    override def coefficient(power: Natural) = ???
+
 }
