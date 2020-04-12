@@ -9,8 +9,7 @@ import net.ollie.maths.numbers.constants.{One, Zero}
  * Created by Ollie on 08/01/14.
  */
 trait LegendrePolynomial
-        extends AssociatedLegendrePolynomial
-        with Polynomial {
+    extends AssociatedLegendrePolynomial {
 
     override def order = Zero
 
@@ -38,26 +37,26 @@ object LegendrePolynomial {
 }
 
 class ZeroLegendrePolynomial(val of: Expression)
-        extends ConstantPolynomial(One)
+    extends ConstantPolynomial(One)
         with LegendrePolynomial {
 
     //could mixin Natural, but this makes negation ugly.
 
-    def degree = Zero
+    override def degree = Zero
 
 }
 
 class OneLegendrePolynomial(val of: Expression)
-        extends LegendrePolynomial {
+    extends LegendrePolynomial {
 
-    def degree = One
+    override def degree = One
 
     def representation = of
 
 }
 
-class SomeLegendrePolynomial(val degree: Natural)(val of: Expression)
-        extends LegendrePolynomial {
+class SomeLegendrePolynomial(override val degree: Natural)(val of: Expression)
+    extends LegendrePolynomial {
 
     require(degree > One)
 

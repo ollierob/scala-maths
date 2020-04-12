@@ -14,11 +14,9 @@ import net.ollie.maths.numbers.constants.Zero
  * @see http://mathworld.wolfram.com/Polynomial.html
  */
 trait Polynomial
-    extends Represented {
+    extends PowerSeries with Represented {
 
-    def degree: Natural = variables.map(degreeOf).max
-
-    def degreeOf(x: Variable): Natural
+    def degree: Natural
 
     def of: Expression
 
@@ -54,8 +52,6 @@ class NegatedPolynomial[P <: Polynomial](override val of: P)
     override def representation = -(of.representation)
 
     override def degree = of.degree
-
-    override def degreeOf(x: Variable) = of.degreeOf(x)
 
     override def unary_-(): P = of
 

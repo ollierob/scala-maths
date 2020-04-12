@@ -39,7 +39,7 @@ private class UnivariateNthDegreePolynomial(val x: Variable, val coefficients: S
     override lazy val roots = new NthDegreeRoots(this)
 
     override def coefficient(power: Natural): Complex = {
-        if (power < coefficients.length) coefficients.apply(power)
+        if (power < coefficients.length) coefficients.apply(power.requireInt)
         else 0
     }
 

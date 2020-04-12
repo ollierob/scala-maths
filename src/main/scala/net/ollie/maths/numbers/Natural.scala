@@ -66,7 +66,7 @@ object Natural {
 
     implicit def convert(int: Integer): Natural = apply(int).right.getOrElse(Operation.illegal(s"Int $int is negative!"))
 
-    implicit def convert(n: Natural): Int = n.requireInt
+    //implicit def convert(n: Natural): Int = n.requireInt
 
     def apply(int: BigInt): Natural = int match {
         case ZERO => Zero

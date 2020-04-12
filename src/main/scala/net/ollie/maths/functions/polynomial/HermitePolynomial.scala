@@ -1,17 +1,17 @@
 package net.ollie.maths.functions.polynomial
 
 import net.ollie.maths.expressions.Expression
-import net.ollie.maths.numbers.{Integer, Natural}
-import net.ollie.maths.numbers.constants.{MinusOne, One, Zero}
 import net.ollie.maths.functions.numeric.Exp
 import net.ollie.maths.methods.Differentiate
+import net.ollie.maths.numbers.constants.{MinusOne, One, Zero}
+import net.ollie.maths.numbers.{Integer, Natural}
 import net.ollie.maths.sequences.HermiteSequence
 
 /**
  * Created by Ollie on 25/02/14.
  */
 trait HermitePolynomial
-        extends Polynomial {
+    extends Polynomial {
 
     override def toString = s"HermiteP($degree)($of)"
 
@@ -31,15 +31,15 @@ object HermitePolynomial {
 }
 
 class ZeroHermitePolynomial(val of: Expression)
-        extends ConstantPolynomial(One)
+    extends ConstantPolynomial(One)
         with HermitePolynomial {
 
-    def degree = Zero
+    override def degree = Zero
 
 }
 
-class HermitePolynomialOf(val degree: Natural)(val of: Expression)
-        extends HermitePolynomial {
+class HermitePolynomialOf(override val degree: Natural)(val of: Expression)
+    extends HermitePolynomial {
 
     private lazy val repr: Expression = {
         if (of.isEmpty) HermiteSequence(degree)

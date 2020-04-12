@@ -55,7 +55,7 @@ class LZeroHarmonic(val degree: Natural, val theta: Expression)
         with Represented {
 
     private lazy val repr: Expression = {
-        PositiveSquareRoot(((2 * degree + 1) !) / (4 * Pi)) * LegendrePolynomial(degree)(Cos(theta))
+        PositiveSquareRoot(((2 * degree + 1) !) / (4* Pi)) * LegendrePolynomial(degree)(Cos(theta))
     }
 
     def representation = repr

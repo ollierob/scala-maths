@@ -14,6 +14,7 @@ import net.ollie.maths.numbers.constants.{One, Zero}
 sealed trait ChebyshevPolynomial
         extends Polynomial
 
+
 /**
  * @see http://mathworld.wolfram.com/ChebyshevPolynomialoftheFirstKind.html
  */
@@ -90,7 +91,7 @@ object ChebyshevSecondKind {
 private class UZero(val of: Expression)
         extends ChebyshevSecondKind {
 
-    def degree = Zero
+    override def degree = Zero
 
     def representation = One
 

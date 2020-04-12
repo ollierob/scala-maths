@@ -37,7 +37,7 @@ object AssociatedLegendrePolynomial {
 /**
  * When |m| > l the polynomial is empty.
  */
-private class EmptyAssociatedLegendrePolynomial(val degree: Natural, val order: Integer)(val of: Expression)
+private class EmptyAssociatedLegendrePolynomial(override val degree: Natural, val order: Integer)(val of: Expression)
         extends AssociatedLegendrePolynomial
         with EmptyPolynomial
 

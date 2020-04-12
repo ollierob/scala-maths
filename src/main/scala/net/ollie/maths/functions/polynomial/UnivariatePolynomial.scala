@@ -15,16 +15,11 @@ trait UnivariatePolynomial
 
     def degree: Natural
 
-    override def degreeOf(x: Variable) = {
-        if (of == x) degree
-        else 0
-    }
-
     def coefficient(power: Natural): Constant
 
     override def representation: Expression = {
         var expr: Expression = 0
-        for (i <- 0 to degree) {
+        for (i <- 0 to degree.requireInt) {
             val coeff = coefficient(i)
             if (!coeff.isZero) {
                 if (i == 0) expr += coeff
@@ -70,7 +65,7 @@ trait UnivariatePolynomial
 
     def equals(that: UnivariatePolynomial): Boolean = {
         if (degree != that.degree) return false;
-        for (i <- 0 until this.degree) {
+        for (i <- 0 until degree.requireInt) {
             if (this.coefficient(i) != that.coefficient(i)) return false
         }
         true
