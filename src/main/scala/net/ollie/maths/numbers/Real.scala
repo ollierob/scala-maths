@@ -26,10 +26,6 @@ trait Real
 
     def abs: PositiveReal = Real.abs(this)
 
-    def isNegative = this < 0;
-
-    def isPositive = this > 0;
-
     def isInteger = Integer.is(this)
 
     override def ?+(that: Expression)(leftToRight: Boolean) = Real(that.toConstant) match {
@@ -132,7 +128,9 @@ trait Real
         }
     }
 
-    def isStrictlyPositive: Boolean = Zero < this
+    def isNegative = this < 0;
+
+    def isPositive = this > 0;
 
     def toReal = Some(this)
 

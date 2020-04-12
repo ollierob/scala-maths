@@ -27,7 +27,7 @@ trait PositiveReal
 
     override def ^(that: Integer): PositiveReal = PositiveReal.pow(this, that)
 
-    override def isStrictlyPositive = !this.isEmpty
+    override def isPositive = !this.isEmpty
 
 }
 
@@ -40,7 +40,7 @@ object PositiveReal {
 
     def apply(re: Real): Option[PositiveReal] = re match {
         case p: PositiveReal => Some(p)
-        case _ if re.isEmpty || re.isStrictlyPositive => Some(re.abs)
+        case _ if re.isEmpty || re.isPositive => Some(re.abs)
         case _ => None
     }
 
@@ -79,7 +79,7 @@ object PositiveReal {
 
         def minus(x: PositiveReal, y: PositiveReal) = {
             val z: Real = x - y
-            if (z.isStrictlyPositive) z.abs
+            if (z.isPositive) z.abs
             else Operation.illegal(s"$x -$y is not positive!")
         }
 

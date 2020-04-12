@@ -109,7 +109,7 @@ class SignificantFigures(val digits: Natural)
     extends AnyRef
         with Precision {
 
-    require(digits.isStrictlyPositive)
+    require(digits.isPositive)
     private val digitsI = digits.toInt.get
 
     def apply(bd: BigDecimal)(implicit mode: RoundingMode = Precision.DEFAULT_ROUNDING) = {

@@ -27,7 +27,7 @@ object Log {
     def apply(of: PositiveReal, base: Real): Real = {
         if (of.isEmpty) -Infinity
         else base match {
-            case _ if base.isStrictlyPositive => Ln(of) / Ln(base.abs)
+            case _ if base.isPositive => Ln(of) / Ln(base.abs)
             case _ => ???
         }
     }
@@ -50,7 +50,7 @@ object Ln
     override type Z = Constant
 
     override def apply(re: Real): Complex = re match {
-        case _ if re.isStrictlyPositive => Complex(Ln(re.abs))
+        case _ if re.isPositive => Complex(Ln(re.abs))
         case Zero => ComplexInfinity
         case _ => apply(Complex(re)).principal
     }
@@ -109,7 +109,7 @@ class RealLn(override val of: PositiveReal)
 
     require(!of.isEmpty)
 
-    override def isStrictlyPositive = of > One
+    override def isPositive = of > One
 
     def isEmpty = of == One
 

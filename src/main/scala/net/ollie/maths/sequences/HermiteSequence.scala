@@ -44,6 +44,6 @@ class EvenHermiteNumber(val n: Natural)
 
     override def isEven = !n.isEmpty
 
-    override def isStrictlyPositive = Modulo(n, 4).remainder.isEmpty
+    override def isPositive = Modulo(n, 4).remainder.isEmpty
 
 }

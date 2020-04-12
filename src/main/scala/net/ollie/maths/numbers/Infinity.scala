@@ -69,7 +69,7 @@ object Infinity
         case _ => 1
     }
 
-    override def isStrictlyPositive = true
+    override def isPositive = true
 
     override def toString = "∞"
 
@@ -85,7 +85,7 @@ object MinusInfinity
         case _ => -1
     }
 
-    override def isStrictlyPositive = false
+    override def isPositive = false
 
     override def toString = "-∞"
 

@@ -29,7 +29,7 @@ object BinomialCoefficient {
     def apply(i: Int, j: Int): BinomialCoefficient = apply(Natural(i), Natural(j))
 
     def apply(n: Integer, k: Integer): Real = (n, k) match {
-        case _ if n.isStrictlyPositive && k.isStrictlyPositive => apply(n.abs, k.abs)
+        case _ if n.isPositive && k.isPositive => apply(n.abs, k.abs)
         case _ => (MinusOne ^ k) * (n.abs multichoose k)
     }
 

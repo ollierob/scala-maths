@@ -45,7 +45,7 @@ private class RealRisingFactorial(val of: Real, val order: Natural)
         extends Real
         with RisingFactorial {
 
-    def isEmpty = of.isEmpty && order.isStrictlyPositive
+    def isEmpty = of.isEmpty && order.isPositive
 
     private lazy val evaluated: Real = Gamma(of + order) / Gamma(of)
 

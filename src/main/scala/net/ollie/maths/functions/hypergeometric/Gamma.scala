@@ -27,7 +27,7 @@ object Gamma
         with UnivariateFunction[Real, Real] {
 
     def apply(re: Real): Real = re match {
-        case i: Integer if i.isStrictlyPositive => apply(i.abs)
+        case i: Integer if i.isPositive => apply(i.abs)
         case _ => new RealGamma(re)
     }
 

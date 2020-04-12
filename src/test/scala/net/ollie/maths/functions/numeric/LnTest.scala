@@ -30,7 +30,7 @@ class LnTest extends FlatSpec with Matchers {
         }
 
         it should "be positive" in {
-            Ln(4).isStrictlyPositive shouldBe true
+            Ln(4).isPositive shouldBe true
             Ln(4) > 1 shouldBe true
         }
 

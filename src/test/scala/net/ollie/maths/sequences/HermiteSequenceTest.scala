@@ -29,7 +29,7 @@ class HermiteSequenceTest extends FlatSpec with Matchers {
     }
 
     "H(80)" should "be positive and even" in {
-        HermiteSequence(80).isStrictlyPositive shouldBe true
+        HermiteSequence(80).isPositive shouldBe true
         HermiteSequence(80).isEven shouldBe true
     }
 

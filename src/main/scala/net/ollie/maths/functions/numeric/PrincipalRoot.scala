@@ -29,7 +29,7 @@ object PrincipalRoot {
         case Zero => Zero
         case One => One
         case MinusOne => if (degree.isEven) ImaginaryUnit else MinusOne
-        case _ if of.isStrictlyPositive => apply(of.abs, degree)
+        case _ if of.isPositive => apply(of.abs, degree)
         case _ => apply(Complex(of), degree)
     }
 

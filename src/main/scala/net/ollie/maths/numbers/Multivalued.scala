@@ -3,10 +3,11 @@ package net.ollie.maths.numbers
 import net.ollie.maths.Constant
 
 /**
+ * Takes multiple values - perhaps an infinite number.
  * Created by Ollie on 09/02/14.
  */
 trait Multivalued
-        extends Constant {
+    extends Constant {
 
     type System = Multivalued
 
@@ -42,7 +43,7 @@ object Multivalued {
 }
 
 class MultivaluedSingleton[N <: Constant](val principal: N)
-        extends Multivalued {
+    extends Multivalued {
 
     type Contents = N
 
@@ -55,7 +56,7 @@ class MultivaluedSingleton[N <: Constant](val principal: N)
 }
 
 class MultivaluedSet[N <: Constant](val principal: N, val values: Set[N])
-        extends Multivalued {
+    extends Multivalued {
 
     type Contents = N
 
@@ -71,7 +72,7 @@ class MultivaluedSet[N <: Constant](val principal: N, val values: Set[N])
 }
 
 class NegatedMultivalued[M <: Multivalued](val of: M)
-        extends Multivalued {
+    extends Multivalued {
 
     type Contents = M#Contents#System
 

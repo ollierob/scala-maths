@@ -75,7 +75,7 @@ object Natural {
     def apply(int: Integer): Either[Integer, Natural] = int match {
         case Zero => Right(Zero)
         case n: Natural => Right(n)
-        case _ if int.isStrictlyPositive => Right(int.abs)
+        case _ if int.isPositive => Right(int.abs)
         case _ => Left(int)
     }
 

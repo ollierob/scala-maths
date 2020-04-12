@@ -41,7 +41,7 @@ object RealExponent {
     def apply(base: Real, power: Integer)(implicit convention: ZeroToPowerZeroConvention = ZeroToPowerZeroIsOne): Real = {
         (base, power) match {
             case (Zero, Zero) => convention.value
-            case (Zero, _) if power.isStrictlyPositive => Zero
+            case (Zero, _) if power.isPositive => Zero
             case (Zero, _) => Zero.inverse
             case (One, _) => One
             case (_, Zero) => One
@@ -111,7 +111,7 @@ class PrincipalRealToIntegerPower(val base: Real, val power: Integer)
         case _ => super.?*(that)
     }
 
-    private lazy val negate: Boolean = !base.isStrictlyPositive && !power.isEven
+    private lazy val negate: Boolean = !base.isPositive && !power.isEven
 
     private val baseAbs = base.abs
 

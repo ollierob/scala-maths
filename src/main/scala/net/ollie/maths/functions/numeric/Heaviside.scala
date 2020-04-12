@@ -20,7 +20,7 @@ object Heaviside
 
     def apply(f: Real): Real = f match {
         case Zero => empty
-        case _ if f.isStrictlyPositive => One
+        case _ if f.isPositive => One
         case _ => Zero
     }
 

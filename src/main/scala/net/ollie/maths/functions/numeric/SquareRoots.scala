@@ -52,21 +52,23 @@ object PositiveSquareRoot
     extends UnivariateFunction[PositiveReal, PositiveReal] {
 
     def apply(i: Int): PositiveReal = i match {
+        case _ if i < 0 => ???
         case 0 => Zero
         case 1 => One
         case 2 => PositiveSquareRootTwo
-        case _ => PositiveSquareRoot(PositiveReal(i))
+        case _ => PositiveSquareRoot(i)
     }
 
     def apply(re: Real): Option[PositiveReal] = re match {
         case Zero => Some(Zero)
-        case _ if re.isStrictlyPositive => Some(apply(re.abs))
+        case _ if re.isPositive => Some(apply(re.abs))
         case _ => None
     }
 
-    def apply(f: PositiveReal): PositiveReal = {
-        if (f.isEmpty) Zero
-        else new PositiveSquareRoot(f)
+    def apply(r: PositiveReal): PositiveReal = r match {
+        case Zero => Zero
+        case One => One
+        case _ => new PositiveSquareRoot(r)
     }
 
     def unapply(root: PositiveSquareRoot): Option[PositiveReal] = Some(root.of)

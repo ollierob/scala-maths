@@ -24,7 +24,7 @@ object RiemannZeta
 
     def apply(i: Integer): Real = i match {
         case Zero => empty
-        case _ if !i.isStrictlyPositive => -BernoulliSequence(i.abs.succ) / i.abs.succ
+        case _ if !i.isPositive => -BernoulliSequence(i.abs.succ) / i.abs.succ
         case One => Infinity
         case _ if i.isEven => new EvenIntegerZeta(i.abs)
         case _ => Zero

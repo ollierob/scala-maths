@@ -17,7 +17,7 @@ object Signum
 
     override def apply(re: Real): Integer = re match {
         case Zero => Zero
-        case _ if re.isStrictlyPositive => One
+        case _ if re.isPositive => One
         case _ => MinusOne
     }
 

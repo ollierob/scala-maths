@@ -11,7 +11,7 @@ class OmegaTest extends FlatSpec with Matchers {
     behavior of "Omega"
 
     it should "be strictly positive" in {
-        Omega.isStrictlyPositive shouldBe true
+        Omega.isPositive shouldBe true
     }
 
     it should "evaluate to 4 dp" in {

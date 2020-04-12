@@ -19,7 +19,7 @@ class ZeroTest extends FlatSpec with Matchers {
     }
 
     it should "not be strictly positive" in {
-        Zero.isStrictlyPositive shouldBe false
+        Zero.isPositive shouldBe false
     }
 
     it should "be even" in {
