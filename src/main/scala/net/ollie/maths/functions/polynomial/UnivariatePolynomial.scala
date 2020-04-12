@@ -1,21 +1,15 @@
 package net.ollie.maths.functions.polynomial
 
-import net.ollie.maths.expressions.{Expression, Univariate}
+import net.ollie.maths.expressions.Expression
 import net.ollie.maths.numbers.Natural
+import net.ollie.maths.numbers.constants.Zero
 import net.ollie.maths.{Constant, Variable}
+import net.ollie.utils.Is
 
 trait UnivariatePolynomial
-    extends Polynomial with Univariate {
-
-    override def of: Variable
-
-    override def variable = of
-
-    override def variables = Set(of)
+    extends Polynomial with UnivariatePowerSeries {
 
     def degree: Natural
-
-    def coefficient(power: Natural): Constant
 
     override def representation: Expression = {
         var expr: Expression = 0
@@ -73,8 +67,26 @@ trait UnivariatePolynomial
 
 }
 
-object UnivariatePolynomial {
+object UnivariatePolynomial extends Is[Polynomial] {
 
     def is(poly: Polynomial) = poly.variables.size == 1
+
+}
+
+class ConstantUnivariatePolynomial(val of: Variable, val c: Constant)
+    extends UnivariatePolynomial {
+
+    override def degree = 0
+
+    override lazy val representation = c
+
+    override def coefficient(power: Natural) = power match {
+        case Zero => c
+        case _ => Zero
+    }
+
+    override def roots = ???
+
+    override def derivative = Polynomial(of) //FIXME technically should not have any variable
 
 }

@@ -96,21 +96,3 @@ trait PolynomialRoots[+F <: Constant, C <: Constant]
     override def degree = of.degree
 
 }
-
-class ConstantUnivariatePolynomial(val of: Variable, val c: Constant)
-    extends UnivariatePolynomial {
-
-    override def degree = 0
-
-    override lazy val representation = c
-
-    override def coefficient(power: Natural) = power match {
-        case Zero => c
-        case _ => Zero
-    }
-
-    override def roots = ???
-
-    override def derivative = Polynomial(of) //FIXME technically should not have any variable
-
-}

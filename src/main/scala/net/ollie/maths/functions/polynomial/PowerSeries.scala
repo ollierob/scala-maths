@@ -5,4 +5,6 @@ import net.ollie.maths.expressions.Expression
 trait PowerSeries
     extends Expression {
 
+    def of: Expression
+
 }
