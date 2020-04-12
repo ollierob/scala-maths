@@ -103,6 +103,6 @@ class ConstantUnivariatePolynomial(val of: Variable, val c: Constant)
 
     override def roots = ???
 
-    override def df = Polynomial(of)
+    override def derivative = Polynomial(of) //FIXME technically should not have any variable
 
 }

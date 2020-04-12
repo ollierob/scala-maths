@@ -15,17 +15,23 @@ class UnivariateQuadraticPolynomialTest extends AnyFlatSpec with Matchers {
 
         val poly = new UnivariateQuadraticPolynomial(x, 5, 6, 1)
 
-        it should "string" in {
-            poly.toString shouldBe "5.x^2 + 6.x + 1"
+        it should "toStirng" in {
+            poly.toString shouldBe "(5.x^2 + 6.x + 1)"
         }
 
-        it should "roots" in {
+        it should "have roots" in {
 
             val roots = poly.roots
 
             roots.principal shouldBe new CartesianComplex(-0.2, 0)
             roots.secondary shouldBe new CartesianComplex(-1, 0)
 
+        }
+
+        it should "differentiate" in {
+
+            poly.df(x) shouldBe new UnivariateLinearPolynomial(x, 10, 6)
+            poly.dx shouldBe poly.df(x)
 
         }
 

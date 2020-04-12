@@ -323,7 +323,7 @@ trait Univariate //TODO make variable optional
 
     def apply(u: Univariate): Univariate = replace(variable, u)
 
-    def df(x: Variable): Univariate
+    override def df(x: Variable): Univariate
 
     def dx: Univariate = df(variable)
 

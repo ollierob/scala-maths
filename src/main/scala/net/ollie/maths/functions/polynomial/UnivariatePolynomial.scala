@@ -27,11 +27,11 @@ trait UnivariatePolynomial
     override def unary_-(): UnivariatePolynomial = ??? //TODO
 
     override def df(x: Variable): UnivariatePolynomial = {
-        if(x == variable) df
+        if(x == variable) derivative
         else this
     }
 
-    def df: UnivariatePolynomial
+    def derivative: UnivariatePolynomial
 
 }
 

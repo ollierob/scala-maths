@@ -36,7 +36,7 @@ class PiTest extends FlatSpec with Matchers {
         }
 
         it should "be irrational" in {
-            Irrational.is(2 * Pi) shouldBe true
+            (2 * Pi).is(Irrational) shouldBe true
         }
 
     }

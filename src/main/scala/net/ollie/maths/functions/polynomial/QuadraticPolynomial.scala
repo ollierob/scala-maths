@@ -13,7 +13,7 @@ trait QuadraticPolynomial
 
     override val degree = 2
 
-    def df: LinearPolynomial
+    //def df(x: Variable): LinearPolynomial
 
 }
 
@@ -51,11 +51,16 @@ class UnivariateQuadraticPolynomial(val x: Variable, val a: Complex, val b: Comp
 
     override def isEmpty = false
 
-    override def df = new UnivariateLinearPolynomial(x, 2 * a, b)
+    override def derivative = Polynomial(x, 2 * a, b)
 
     override def roots = new QuadraticRoots(this)
 
-    override def toString = s"$a.x^2 + $b.x + $c"
+    override def equals(exp: Expression) = exp match {
+        case p: UnivariateQuadraticPolynomial => x == p.x && a == p.a && b == p.b && c == p.c
+        case _ => super.equals(exp)
+    }
+
+    override def toString = s"($a.x^2 + $b.x + $c)"
 
     class QuadraticRoots(val of: UnivariateQuadraticPolynomial)
         extends PolynomialRoots[Complex, Complex] {
