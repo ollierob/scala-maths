@@ -1,5 +1,6 @@
 package net.ollie.maths.numbers.constants
 
+import net.ollie.maths.numbers.Irrational
 import net.ollie.maths.numbers.Precision._
 import org.scalatest.{FlatSpec, Matchers}
 
@@ -28,8 +29,16 @@ class PiTest extends FlatSpec with Matchers {
 
     behavior of "Pi * 2"
 
-    it should "evaluate" in {
-        2 * Pi evaluate (4 dp) shouldBe BigDecimal("6.2832")
+    {
+
+        it should "evaluate" in {
+            2 * Pi evaluate (4 dp) shouldBe BigDecimal("6.2832")
+        }
+
+        it should "be irrational" in {
+            Irrational.is(2 * Pi) shouldBe true
+        }
+
     }
 
     behavior of "Pi / 2"

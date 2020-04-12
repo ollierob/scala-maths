@@ -9,6 +9,7 @@ import net.ollie.maths.numbers.constants.Zero
  */
 object IterativelyEvaluate {
 
+    //FIXME this doesn't converge properly
     def apply(precision: Precision, f: IterativelyEvaluated): BigDecimal = {
         var previous: BigInt = 0
         var current: BigDecimal = 0
@@ -47,7 +48,7 @@ object IterativelyEvaluate {
  * Highest precision result is cached.
  */
 trait IterativelyEvaluated
-        extends CachedEvaluated {
+    extends CachedEvaluated {
 
     final def doEvaluate(precision: Precision): BigDecimal = IterativelyEvaluate(precision, this)
 
@@ -60,7 +61,7 @@ trait IterativelyEvaluated
  * Highest precision result is cached.
  */
 trait ApproximatelyEvaluated
-        extends IterativelyEvaluated {
+    extends IterativelyEvaluated {
 
     def evaluationIterator(startPrecision: Precision) = new EvaluationIterator {
 

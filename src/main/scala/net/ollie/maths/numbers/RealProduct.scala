@@ -55,7 +55,7 @@ class RealProduct protected(override val terms: Seq[Real])
     }
 
     override def tryEvaluate(precision: Precision): OptionalBigDecimal = {
-        if (terms.find(_.isInstanceOf[NotEvaluable]).isDefined) None
+        if (terms.exists(_.isInstanceOf[NotEvaluable])) None
         else super.tryEvaluate(precision)
     }
 

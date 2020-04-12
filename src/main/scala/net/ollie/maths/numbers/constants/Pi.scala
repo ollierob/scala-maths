@@ -22,11 +22,11 @@ object Pi
     }
 
     override def ?*(that: Real) = that match {
-        case n: Natural => Some(this * n)
+        case n: Integer => Some(this * n)
         case _ => super.?*(that)
     }
 
-    def *(that: Natural) = PiProduct(that)
+    def *(that: Integer) = PiProduct(that)
 
     def /(that: Natural): PiOrLess = that.toInt match {
         case Some(0) => ???
@@ -51,9 +51,9 @@ class PiOver protected[constants](val over: Natural)
 
     override def isEmpty = Infinite.is(over)
 
-    def doApproximatelyEvaluate(precision: Precision) = Pi.approximatelyEvaluate(precision) / over.approximatelyEvaluate(precision)
+    override def doApproximatelyEvaluate(precision: Precision) = Pi.approximatelyEvaluate(precision) / over.approximatelyEvaluate(precision)
 
-    override def toString = s"$Pi/$over"
+    override def toString = s"($Pi / $over)"
 
 }
 
@@ -65,22 +65,32 @@ object QuarterPi
 
 object PiProduct {
 
-    def apply(n: Natural) = n match {
+    def apply(i: Integer): Real = i match {
         case Zero => Zero
         case One => Pi
-        case _ => new PiProduct(n)
+        case Two => TwoPi
+        case _ => new PiProduct(i)
     }
 
 }
 
-class PiProduct private(val multiplier: Natural)
+class PiProduct protected(val multiplier: Integer)
     extends IrrationalProduct(Seq(Pi, multiplier)) {
 
+    require(!multiplier.isZero)
+
     override def ?*(that: Real) = that match {
-        case n: Natural => Some(this * n)
+        case i: Integer => Some(this * i)
         case _ => super.?*(that)
     }
 
-    def *(n: Natural) = PiProduct(multiplier * n)
+    def *(n: Integer) = PiProduct(multiplier * n)
+
+    override def doApproximatelyEvaluate(precision: Precision) = Pi.approximatelyEvaluate(precision) * multiplier.approximatelyEvaluate(precision)
+
+    override def toString = s"($multiplier * $Pi)"
 
 }
+
+object TwoPi
+    extends PiProduct(2)

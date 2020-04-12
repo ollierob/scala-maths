@@ -18,7 +18,18 @@ trait Irrational
 
 object Irrational {
 
-    def is(r: Real): Boolean = r.isInstanceOf[Irrational]
+    def is(r: Real): Boolean = r match {
+        case _: Irrational => true
+        case m: MaybeIrrational => m.isIrrational
+        case _ => false
+    }
+
+}
+
+trait MaybeIrrational
+    extends Real {
+
+    def isIrrational: Boolean
 
 }
 

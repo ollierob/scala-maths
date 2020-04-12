@@ -11,7 +11,7 @@ import org.nevec.rjm.BigDecimalMath
  * Created by Ollie on 04/01/14.
  */
 trait PositiveReal
-        extends Real {
+    extends Real {
 
     override def abs = this
 
@@ -28,6 +28,8 @@ trait PositiveReal
     override def ^(that: Integer): PositiveReal = PositiveReal.pow(this, that)
 
     override def isPositive = !this.isEmpty
+
+    override def isNegative = false
 
 }
 
@@ -49,7 +51,7 @@ object PositiveReal {
     def inverse(re: PositiveReal with Evaluable): PositiveReal = new PositiveRealInverse(re)
 
     def pow(base: PositiveReal with Evaluable, power: Real with Evaluable)
-            (implicit convention: ZeroToPowerZeroConvention = ZeroToPowerZeroIsOne): PositiveReal = {
+           (implicit convention: ZeroToPowerZeroConvention = ZeroToPowerZeroIsOne): PositiveReal = {
         (base, power) match {
             case (Zero, Zero) => convention.value.abs
             case (_, Zero) => One
@@ -59,7 +61,7 @@ object PositiveReal {
     }
 
     implicit object Numeric
-            extends scala.Numeric[PositiveReal] {
+        extends scala.Numeric[PositiveReal] {
 
         def compare(x: PositiveReal, y: PositiveReal) = x compare y
 
@@ -92,7 +94,7 @@ object PositiveReal {
 }
 
 class PositiveRealInverse(val re: PositiveReal with Evaluable)
-        extends InverseReal(re)
+    extends InverseReal(re)
         with PositiveReal
 
 /**
@@ -101,7 +103,7 @@ class PositiveRealInverse(val re: PositiveReal with Evaluable)
  * @param power
  */
 class PrincipalPositiveRealPower(val base: PositiveReal, val power: Real)
-        extends PositiveReal
+    extends PositiveReal
         with Exponentiated
         with CachedEvaluated {
 

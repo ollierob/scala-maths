@@ -346,11 +346,13 @@ class InverseReal(val of: Real)
 }
 
 class AbsReal(val of: Real)
-    extends PositiveReal with CachedEvaluated {
+    extends PositiveReal with CachedEvaluated with MaybeIrrational {
 
     def isEmpty = of.isEmpty
 
     override def toString = s"|$of|"
+
+    override def isIrrational = Irrational.is(of)
 
     protected[this] def doEvaluate(precision: Precision) = of.evaluate(precision).abs
 
