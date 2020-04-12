@@ -301,7 +301,7 @@ class ExactBigDecimal(val of: BigDecimal)
 }
 
 class NegatedReal(val of: Real)
-    extends Real {
+    extends Real with MaybeIrrational {
 
     def evaluate(precision: Precision) = -(of.evaluate(precision))
 
@@ -318,6 +318,8 @@ class NegatedReal(val of: Real)
     override def isPositive = of isNegative
 
     override def isInteger = of isInteger
+
+    override def isIrrational = Irrational.is(of)
 
     override def toString = s"-($of)"
 
