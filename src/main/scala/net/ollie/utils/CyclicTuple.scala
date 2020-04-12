@@ -4,7 +4,7 @@ package net.ollie.utils
  * Created by Ollie on 26/01/14.
  */
 trait CyclicTuple
-        extends Product {
+    extends Product {
 
     def cycleLeft: CyclicTuple
 
@@ -21,7 +21,7 @@ object CyclicTuple {
 }
 
 class CyclicTuple3[+T1, +T2, +T3](override val _1: T1, override val _2: T2, override val _3: T3)
-        extends Product3[T1, T2, T3]
+    extends Product3[T1, T2, T3]
         with CyclicTuple {
 
     def cycleLeft: CyclicTuple3[T2, T3, T1] = new CyclicTuple3(_2, _3, _1)
@@ -31,7 +31,7 @@ class CyclicTuple3[+T1, +T2, +T3](override val _1: T1, override val _2: T2, over
     def cycles: Set[CyclicTuple3[_, _, _]] = Set(this, cycleLeft, cycleLeft.cycleLeft)
 
     override def equals(that: Any) = that match {
-        case t: Tuple3[_, _, _] => _1 == t._1 && _2 == t._2 && _3 == t._3
+        case t: Product3[_, _, _] => _1 == t._1 && _2 == t._2 && _3 == t._3
         case _ => false
     }
 

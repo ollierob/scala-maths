@@ -141,6 +141,7 @@ trait Real
 
     override def equals(number: Constant) = number match {
         case re: Real => this.equals(re)
+        case m: MaybeReal => m.toReal.contains(this)
         case _ => super.equals(number)
     }
 

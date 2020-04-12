@@ -288,7 +288,9 @@ object Univariate {
 
         def isEmpty = expression.isEmpty
 
-        def variable = expression.variables.iterator.next()
+        override def variable = expression.variables.iterator.next()
+
+        override def variables = expression.variables
 
         override def ?+(that: Expression)(leftToRight: Boolean) = expression.?+(that)(leftToRight)
 
@@ -298,7 +300,7 @@ object Univariate {
 
         override def ^(that: Expression) = expression ^ that
 
-        override def dx = expression.dx
+        override def dx = expression.df(variable)
 
         override def toString = expression.toString
 
