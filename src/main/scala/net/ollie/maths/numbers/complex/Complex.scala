@@ -110,6 +110,8 @@ object Complex
         else Complex(re, Zero)
     }
 
+    implicit def apply(seq: Seq[Int]): Seq[Complex] = seq.map(apply)
+
     def isGaussian(c: Constant): Boolean = Complex(c) exists (z => z.isGaussian)
 
     def pow(base: Complex, power: Integer): Complex = ComplexPower(base, power)

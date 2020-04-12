@@ -34,11 +34,14 @@ object Polynomial {
 
     def apply(x: Variable): UnivariatePolynomial = apply(x, 0)
 
+    //TODO remove, replace with non-variate
     def apply(x: Variable, z: Complex): UnivariatePolynomial = new ConstantUnivariatePolynomial(x, z)
 
-    def apply(x: Variable, xCoeff: Complex, c: Complex): UnivariatePolynomial = LinearPolynomial.apply(x, xCoeff, c)
+    def apply(x: Variable, xCoeff: Complex, c: Complex): UnivariatePolynomial = LinearPolynomial(x, xCoeff, c)
 
-    def apply(x: Variable, xSquaredCoeff: Complex, xCoeff: Complex, c: Complex): UnivariatePolynomial = QuadraticPolynomial.apply(x, xSquaredCoeff, xCoeff, c)
+    def apply(x: Variable, xSquaredCoeff: Complex, xCoeff: Complex, c: Complex): UnivariatePolynomial = QuadraticPolynomial(x, xSquaredCoeff, xCoeff, c)
+
+    def apply(x: Variable, coefficients: Seq[Complex]): UnivariatePolynomial = NthDegreePolynomial(x, coefficients)
 
 }
 

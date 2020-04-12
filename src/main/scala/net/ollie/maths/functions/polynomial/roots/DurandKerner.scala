@@ -1,4 +1,4 @@
-package net.ollie.maths.functions.polynomial.numeric
+package net.ollie.maths.functions.polynomial.roots
 
 import net.ollie.maths.functions.polynomial.UnivariatePolynomial
 import net.ollie.maths.numbers.complex.Complex
@@ -9,7 +9,7 @@ import scala.collection.mutable.ArrayBuffer
 /**
  * @see [[https://en.wikipedia.org/wiki/Durand-Kerner_method]]
  */
-class DurandKerner(initial: Complex)
+class DurandKerner(val initial: Complex)
     extends NumericalUnivariatePolynomialRootFinder {
 
     def roots(polynomial: UnivariatePolynomial) = {

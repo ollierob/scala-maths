@@ -3,7 +3,9 @@ package net.ollie.maths.functions.polynomial
 import net.ollie.maths.Variable
 import net.ollie.maths.expressions.Expression
 import net.ollie.maths.functions.numeric.SquareRoots
+import net.ollie.maths.numbers.Natural
 import net.ollie.maths.numbers.complex.Complex
+import net.ollie.maths.numbers.constants.{One, Two, Zero}
 
 /**
  * @see [[NthDegreePolynomial]]
@@ -54,6 +56,13 @@ class UnivariateQuadraticPolynomial(val x: Variable, val a: Complex, val b: Comp
     override def derivative = Polynomial(x, 2 * a, b)
 
     override def roots = new QuadraticRoots(this)
+
+    override def coefficient(power: Natural): Complex = power match {
+        case Two => a
+        case One => b
+        case Zero => c
+        case _ => 0
+    }
 
     override def equals(exp: Expression) = exp match {
         case p: UnivariateQuadraticPolynomial => x == p.x && a == p.a && b == p.b && c == p.c

@@ -1,4 +1,4 @@
-package net.ollie.maths.functions.polynomial.numeric
+package net.ollie.maths.functions.polynomial.roots
 
 import net.ollie.maths.functions.polynomial.UnivariatePolynomial
 import net.ollie.maths.numbers.complex.Complex

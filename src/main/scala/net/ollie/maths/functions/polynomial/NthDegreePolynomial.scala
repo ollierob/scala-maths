@@ -1,8 +1,9 @@
 package net.ollie.maths.functions.polynomial
 
-import net.ollie.maths.numbers.complex.Complex
-import net.ollie.maths.Variable
+import net.ollie.maths.{Constant, Variable}
 import net.ollie.maths.expressions.Expression
+import net.ollie.maths.numbers.Natural
+import net.ollie.maths.numbers.complex.Complex
 
 /**
  * @see [[LinearPolynomial]]
@@ -15,25 +16,26 @@ trait NthDegreePolynomial
 
 object NthDegreePolynomial {
 
-    def apply(x: Variable, coefficients: Array[Complex]): UnivariatePolynomial = coefficients.length match {
-        case 0 => Polynomial.apply(x)
-        case 1 => Polynomial.apply(x, coefficients.apply(0))
-        case 2 => Polynomial.apply(x, coefficients.apply(1), coefficients.apply(0))
-        case 3 => Polynomial.apply(x, coefficients.apply(2), coefficients.apply(1), coefficients.apply(0))
+    def apply(x: Variable, coefficients: Seq[Complex]): UnivariatePolynomial = degree(coefficients) match {
+        case 0 => Polynomial(x, coefficients.apply(0))
+        case 1 => Polynomial(x, coefficients.apply(1), coefficients.apply(0))
+        case 2 => Polynomial(x, coefficients.apply(2), coefficients.apply(1), coefficients.apply(0))
         case _ => new UnivariateNthDegreePolynomial(x, coefficients)
     }
 
+    def degree(coefficients: Seq[Complex]): Int = coefficients.lastIndexWhere(c => !c.isZero)
+
 }
 
-private class UnivariateNthDegreePolynomial(val x: Variable, val coefficients: Array[Complex])
+private class UnivariateNthDegreePolynomial(val x: Variable, val coefficients: Seq[Complex])
     extends NthDegreePolynomial with UnivariatePolynomial {
 
     //Should delegate to other types
     require(coefficients.length > 3)
 
-    override def of = x
+    override val of = x
 
-    override def degree = coefficients.length
+    override val degree = NthDegreePolynomial.degree(coefficients)
 
     override lazy val representation = {
         var expr: Expression = 0
@@ -49,6 +51,11 @@ private class UnivariateNthDegreePolynomial(val x: Variable, val coefficients: A
 
     override lazy val roots = new NthDegreeRoots(this)
 
+    override def coefficient(power: Natural): Complex = {
+        if (power < coefficients.length) coefficients.apply(power.requireInt)
+        else 0
+    }
+
     class NthDegreeRoots(val of: UnivariateNthDegreePolynomial)
         extends PolynomialRoots[Complex, Complex] {
 
@@ -58,6 +65,9 @@ private class UnivariateNthDegreePolynomial(val x: Variable, val coefficients: A
 
     }
 
-    override def derivative = ??? //TODO
+    override def derivative: UnivariatePolynomial = {
+        val newCoefficients = coefficients.slice(1, coefficients.length).zipWithIndex.map(t => t._1 * (t._2 + 1))
+        Polynomial(x, newCoefficients);
+    }
 
 }
