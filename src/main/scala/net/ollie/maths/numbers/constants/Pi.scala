@@ -1,16 +1,17 @@
 package net.ollie.maths.numbers.constants
 
-import net.ollie.maths.numbers._
 import net.ollie.maths.functions.angular.ArcTan
 import net.ollie.maths.methods.ApproximatelyEvaluated
+import net.ollie.maths.numbers._
 
 /**
  * Created by Ollie on 05/01/14.
+ *
  * @see http://mathworld.wolfram.com/Pi.html
  * @see http://mathworld.wolfram.com/MachinsFormula.html
  */
 object Pi
-        extends PiOrLess {
+    extends PiOrLess with Irrational {
 
     private val PI_100 = BigDecimal("3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679")
     private lazy val MACHIN: Real = (16 * ArcTan(IntegerFraction(1, 5))) - (4 * ArcTan(IntegerFraction(1, 239)))
@@ -33,10 +34,10 @@ object Pi
 }
 
 sealed trait PiOrLess
-        extends PositiveNamedReal
+    extends PositiveNamedReal
 
 class PiOver protected[constants](val over: Natural)
-        extends PiOrLess
+    extends PiOrLess
         with ApproximatelyEvaluated {
 
     require(!over.isEmpty)
@@ -50,7 +51,7 @@ class PiOver protected[constants](val over: Natural)
 }
 
 object HalfPi
-        extends PiOver(2)
+    extends PiOver(2)
 
 object QuarterPi
-        extends PiOver(4)
+    extends PiOver(4)

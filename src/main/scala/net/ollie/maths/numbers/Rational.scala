@@ -2,16 +2,17 @@ package net.ollie.maths.numbers
 
 import net.ollie.maths.expressions.ExpressionFraction
 import net.ollie.maths.functions.numeric.GreatestCommonDivisor
-import net.ollie.maths.numbers.constants.{MinusOne, One, Zero}
 import net.ollie.maths.methods.ApproximatelyEvaluated
+import net.ollie.maths.numbers.constants.{MinusOne, One, Zero}
 
 /**
  * A number that can be expressed as an integer divided by another integer.
  * Created by Ollie on 04/01/14.
+ *
  * @see http://mathworld.wolfram.com/RationalNumber.html
  */
 trait Rational
-        extends Real {
+    extends Real {
 
     def numerator: Integer
 
@@ -65,8 +66,13 @@ trait Rational
 
 object Rational {
 
+    def apply(r: Real): Option[Rational] = r match {
+        case r: Rational => Some(r)
+        case _: Irrational | _ => None
+    }
+
     implicit object Numeric
-            extends scala.Numeric[Rational] {
+        extends scala.Numeric[Rational] {
 
         def compare(x: Rational, y: Rational) = x.compareTo(y)
 
@@ -126,7 +132,7 @@ object IntegerFraction {
 }
 
 class IntegerFraction private[numbers](override val numerator: Integer, override val denominator: Integer)
-        extends ExpressionFraction(numerator, denominator)
+    extends ExpressionFraction(numerator, denominator)
         with Rational
         with ApproximatelyEvaluated {
 

@@ -176,7 +176,7 @@ object Real
 
     def one = One
 
-    def apply(from: Constant): Option[Real] = from match {
+    implicit def apply(from: Constant): Option[Real] = from match {
         case re: Real => Some(re)
         case m: MaybeReal => m.toReal
         case _ => None
