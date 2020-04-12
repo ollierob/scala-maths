@@ -99,6 +99,8 @@ object Integer {
 
     def abs(i: Integer): Natural = Natural(i.evaluate.abs)
 
+    def is(r: Real): Boolean = r.isInstanceOf[Integer]
+
     implicit object IntegerArithmetic
         extends Numeric[Integer] {
 

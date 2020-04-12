@@ -30,7 +30,7 @@ trait Real
 
     def isPositive = this > 0;
 
-    def isInteger = this.isInstanceOf[Integer]
+    def isInteger = Integer.is(this)
 
     override def ?+(that: Expression)(leftToRight: Boolean) = Real(that.toConstant) match {
         case Some(r) => Some(this + r) //Order is irrelevant

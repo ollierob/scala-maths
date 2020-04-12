@@ -16,11 +16,18 @@ trait Irrational
 
 }
 
+object Irrational {
+
+    def is(r: Real): Boolean = r.isInstanceOf[Irrational]
+
+}
+
 object IrrationalProduct {
 
-    def apply(i: Irrational, r: Rational) = r match {
-        case Zero => Zero
-        case One => i
+    def apply(i: Irrational, r: Rational) = (i, r) match {
+        case (_, Zero) => Zero
+        case (_, One) => i
+        case (p: IrrationalProduct, _) => p * r
         case _ => new IrrationalProduct(Seq(i, r))
     }
 
