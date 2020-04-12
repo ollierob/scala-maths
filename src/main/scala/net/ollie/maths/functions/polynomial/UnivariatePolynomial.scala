@@ -7,7 +7,7 @@ import net.ollie.maths.{Constant, Variable}
 import net.ollie.utils.Is
 
 trait UnivariatePolynomial
-    extends Polynomial with UnivariatePowerSeries {
+    extends Polynomial with MaclaurinSeries {
 
     def degree: Natural
 
