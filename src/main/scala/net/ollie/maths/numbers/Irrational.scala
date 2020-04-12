@@ -1,6 +1,7 @@
 package net.ollie.maths.numbers
 
 import net.ollie.maths.numbers.constants.{One, Zero}
+import net.ollie.utils.Is
 
 trait Irrational
     extends Real {
@@ -16,20 +17,12 @@ trait Irrational
 
 }
 
-object Irrational {
+object Irrational
+    extends Is[Real] {
 
-    def is(r: Real): Boolean = r match {
-        case _: Irrational => true
-        case m: MaybeIrrational => m.isIrrational
-        case _ => false
-    }
+    type System = Real
 
-}
-
-trait MaybeIrrational
-    extends Real {
-
-    def isIrrational: Boolean
+    def is(t: Real): Boolean = t.isInstanceOf[Irrational]
 
 }
 

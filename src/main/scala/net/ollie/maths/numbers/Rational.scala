@@ -4,6 +4,7 @@ import net.ollie.maths.expressions.ExpressionFraction
 import net.ollie.maths.functions.numeric.GreatestCommonDivisor
 import net.ollie.maths.methods.ApproximatelyEvaluated
 import net.ollie.maths.numbers.constants.{MinusOne, One, Zero}
+import net.ollie.utils.Is
 
 /**
  * A number that can be expressed as an integer divided by another integer.
@@ -64,12 +65,15 @@ trait Rational
 
 }
 
-object Rational {
+object Rational
+    extends Is[Real] {
 
     def apply(r: Real): Option[Rational] = r match {
         case r: Rational => Some(r)
         case _: Irrational | _ => None
     }
+
+    override def is(t: Real) = t.isInstanceOf[Rational]
 
     implicit object Numeric
         extends scala.Numeric[Rational] {

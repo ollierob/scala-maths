@@ -4,6 +4,7 @@ import net.ollie.maths._
 import net.ollie.maths.expressions.{Empty, Expression}
 import net.ollie.maths.methods.ApproximatelyEvaluated
 import net.ollie.maths.numbers.constants.{One, Unity, Zero}
+import net.ollie.utils.Is
 
 /**
  * Created by Ollie on 01/01/14.
@@ -26,7 +27,7 @@ trait Real
 
     def abs: PositiveReal = Real.abs(this)
 
-    def isInteger = Integer.is(this)
+    def isInteger = is(Integer)
 
     override def ?+(that: Expression)(leftToRight: Boolean) = Real(that.toConstant) match {
         case Some(r) => Some(this + r) //Order is irrelevant
@@ -301,7 +302,7 @@ class ExactBigDecimal(val of: BigDecimal)
 }
 
 class NegatedReal(val of: Real)
-    extends Real with MaybeIrrational {
+    extends Real {
 
     def evaluate(precision: Precision) = -(of.evaluate(precision))
 
@@ -317,9 +318,10 @@ class NegatedReal(val of: Real)
 
     override def isPositive = of isNegative
 
-    override def isInteger = of isInteger
-
-    override def isIrrational = Irrational.is(of)
+    override def is(is: Is[Real]) = is match {
+        case Rational | Irrational | Integer => of.is(is)
+        case _ => false
+    }
 
     override def toString = s"-($of)"
 
@@ -348,13 +350,16 @@ class InverseReal(val of: Real)
 }
 
 class AbsReal(val of: Real)
-    extends PositiveReal with CachedEvaluated with MaybeIrrational {
+    extends PositiveReal with CachedEvaluated {
 
     def isEmpty = of.isEmpty
 
     override def toString = s"|$of|"
 
-    override def isIrrational = Irrational.is(of)
+    override def is(is: Is[Real]) = is match {
+        case Rational | Irrational | Integer => of.is(is)
+        case _ => false
+    }
 
     protected[this] def doEvaluate(precision: Precision) = of.evaluate(precision).abs
 

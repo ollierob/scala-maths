@@ -12,14 +12,14 @@ class IrrationalTest extends AnyFlatSpec with Matchers {
 
         it should "be irrational" in {
 
-            Irrational.is(Pi) shouldBe true
+            Pi.is(Irrational) shouldBe true
 
         }
 
         it should "have irrational products" in {
 
-            Irrational.is(Pi * -1) shouldBe true
-            Irrational.is(Pi * 2) shouldBe true
+            (Pi * -1).is(Irrational) shouldBe true
+            (Pi * 2).is(Irrational) shouldBe true
 
         }
 

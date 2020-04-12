@@ -2,6 +2,7 @@ package net.ollie.maths
 
 import net.ollie.maths.expressions.{Empty, Expression, Integrable, Invertible, Multiplied, Nonvariate}
 import net.ollie.maths.numbers.constants.{One, Unity, Zero}
+import net.ollie.utils.Is
 
 import scala.collection.mutable
 
@@ -101,6 +102,8 @@ trait Constant
     def toConstant: Option[System] = Some(narrow)
 
     override def replace(variables: Map[Variable, Expression]): System = narrow
+
+    def is(is: Is[System]): Boolean = is.is(narrow)
 
     final override def equals(expr: Expression) = expr.toConstant match {
         case Some(n) => this.equals(n)

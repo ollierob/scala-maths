@@ -1,6 +1,7 @@
 package net.ollie.maths.numbers
 
 import net.ollie.maths.numbers.constants.{MinusOne, One}
+import net.ollie.utils.Is
 
 /**
  * Integer classes.
@@ -78,7 +79,8 @@ trait Integer
 
 }
 
-object Integer {
+object Integer
+    extends Is[Real] {
 
     private val MINUS_ONE = BigInt(-1)
 
@@ -99,7 +101,7 @@ object Integer {
 
     def abs(i: Integer): Natural = Natural(i.evaluate.abs)
 
-    def is(r: Real): Boolean = r.isInstanceOf[Integer]
+    override def is(r: Real): Boolean = r.isInstanceOf[Integer]
 
     implicit object IntegerArithmetic
         extends Numeric[Integer] {
