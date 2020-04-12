@@ -51,3 +51,11 @@ class NegatedUnivariateCenteredPowerSeries[P <: UnivariateCenteredPowerSeries](o
     override def unary_-() = series
 
 }
+
+trait PowerSeriesCoefficients[C <: Constant] {
+
+    def value(n: Natural): C
+
+    def isEmpty = false
+
+}
