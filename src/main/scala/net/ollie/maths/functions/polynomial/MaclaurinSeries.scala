@@ -1,8 +1,8 @@
 package net.ollie.maths.functions.polynomial
 
-import net.ollie.maths.{Constant, Variable}
 import net.ollie.maths.expressions.{Expression, Univariate}
-import net.ollie.maths.numbers.Natural
+import net.ollie.maths.numbers.{Natural, Real}
+import net.ollie.maths.{Constant, MultiplicationArithmetic, Variable}
 
 trait MaclaurinSeries
     extends PowerSeries with Univariate {
@@ -15,13 +15,17 @@ trait MaclaurinSeries
 
     override def toConstant = None
 
+    override def replace(variables: Map[Variable, Expression]): Expression = ??? //TODO
+
     override def unary_-(): MaclaurinSeries = new NegatedMaclaurinSeries(this)
 
 }
 
 object MaclaurinSeries {
 
-    def apply[C <: Constant](x: Variable, generator: PowerSeriesCoefficients[C]): MaclaurinSeries = new GeneratedMaclaurinSeries(x, generator)
+    def apply[C <: Constant](x: Variable, generator: PowerSeriesCoefficients[C])(implicit arithmetic: MultiplicationArithmetic[C, Real, C]): MaclaurinSeries = {
+        new GeneratedMaclaurinSeries(x, generator)
+    }
 
 }
 
@@ -36,17 +40,17 @@ private class NegatedMaclaurinSeries[S <: MaclaurinSeries](override val series: 
 
 }
 
-private class GeneratedMaclaurinSeries[C <: Constant](val x: Variable, val generator: PowerSeriesCoefficients[C])
+private class GeneratedMaclaurinSeries[C <: Constant]
+(val x: Variable, val generator: PowerSeriesCoefficients[C])
+(implicit arithmetic: MultiplicationArithmetic[C, Real, C])
     extends MaclaurinSeries {
 
     override def isEmpty = generator.isEmpty
 
     override def of = x
 
-    override def dx = ???
-
     override def coefficient(power: Natural) = generator.value(power)
 
-    override def replace(variables: Map[Variable, Expression]) = ???
+    override def dx = MaclaurinSeries(x, new TransformedPowerSeriesCoefficients[C, C](generator, (n, t) => arithmetic.multiply(t, n)))
 
 }

@@ -1,6 +1,6 @@
 package net.ollie.maths.functions.polynomial
 
-import net.ollie.maths.{Constant, Variable}
+import net.ollie.maths.Constant
 import net.ollie.maths.expressions.{Expression, NegatedExpression, Univariate}
 import net.ollie.maths.numbers.Natural
 
@@ -56,6 +56,29 @@ trait PowerSeriesCoefficients[C <: Constant] {
 
     def value(n: Natural): C
 
-    def isEmpty = false
+    def isEmpty: Boolean
+
+    def degree: Option[Natural]
+
+}
+
+object PowerSeriesCoefficients {
+
+    def transformEach[F <: Constant, T <: Constant](c: PowerSeriesCoefficients[F], each: Function2[Natural, F, T]): PowerSeriesCoefficients[T] = {
+        new TransformedPowerSeriesCoefficients(c, each)
+    }
+
+}
+
+class TransformedPowerSeriesCoefficients[F <: Constant, T <: Constant](val delegate: PowerSeriesCoefficients[F], val each: Function2[Natural, F, T])
+    extends PowerSeriesCoefficients[T] {
+
+    override def value(n: Natural): T = {
+        each(n, delegate.value(n))
+    }
+
+    override def isEmpty = delegate.isEmpty
+
+    override def degree = delegate.degree
 
 }
