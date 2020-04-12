@@ -7,6 +7,11 @@ import scala.collection.mutable
 
 /**
  * Created by Ollie on 02/01/14.
+ *
+ * @see [[net.ollie.maths.numbers.Real]] real types
+ * @see [[net.ollie.maths.numbers.Multivalued]] multi-valued types
+ * @see [[net.ollie.maths.numbers.complex.ComplexLike]] various complex number types
+ * @see [[net.ollie.maths.numbers.Infinite]] infinities
  */
 trait Constant
     extends Nonvariate

@@ -1,16 +1,17 @@
 package net.ollie.maths.numbers
 
 import net.ollie.maths.expressions.Empty
-import net.ollie.maths.{Constant, NotEvaluable}
 import net.ollie.maths.numbers.constants.Zero
+import net.ollie.maths.{Constant, NotEvaluable}
 
 /**
  * Basic implementations of infinity.
  * Created by Ollie on 05/01/14.
+ *
  * @see http://mathworld.wolfram.com/AffinelyExtendedRealNumbers.html
  */
 trait Infinite
-        extends NotEvaluable {
+    extends Constant with NotEvaluable {
 
     def isEmpty = false
 
@@ -28,7 +29,7 @@ object Infinite {
 }
 
 trait RealInfinity
-        extends Infinite
+    extends Infinite
         with Real {
 
     override def abs: PositiveReal with Infinite = Infinity
@@ -55,7 +56,7 @@ trait RealInfinity
 }
 
 object Infinity
-        extends PositiveReal
+    extends PositiveReal
         with RealInfinity {
 
     override def abs = this
@@ -76,7 +77,7 @@ object Infinity
 }
 
 object MinusInfinity
-        extends RealInfinity {
+    extends RealInfinity {
 
     override def unary_-() = Infinity
 
@@ -92,7 +93,7 @@ object MinusInfinity
 }
 
 object UnsignedInfinity
-        extends PositiveReal
+    extends PositiveReal
         with RealInfinity {
 
     override def abs = Infinity
