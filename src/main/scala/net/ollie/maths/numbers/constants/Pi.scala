@@ -21,6 +21,13 @@ object Pi
         else MACHIN.evaluate(precision) //TODO this is slow!
     }
 
+    override def ?*(that: Real) = that match {
+        case n: Natural => Some(this * n)
+        case _ => super.?*(that)
+    }
+
+    def *(that: Natural) = PiProduct(that)
+
     def /(that: Natural): PiOrLess = that.toInt match {
         case Some(0) => ???
         case Some(1) => Pi
@@ -55,3 +62,25 @@ object HalfPi
 
 object QuarterPi
     extends PiOver(4)
+
+object PiProduct {
+
+    def apply(n: Natural) = n match {
+        case Zero => Zero
+        case One => Pi
+        case _ => new PiProduct(n)
+    }
+
+}
+
+class PiProduct private(val multiplier: Natural)
+    extends IrrationalProduct(Seq(Pi, multiplier)) {
+
+    override def ?*(that: Real) = that match {
+        case n: Natural => Some(this * n)
+        case _ => super.?*(that)
+    }
+
+    def *(n: Natural) = PiProduct(multiplier * n)
+
+}

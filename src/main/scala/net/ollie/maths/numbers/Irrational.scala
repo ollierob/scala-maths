@@ -35,7 +35,7 @@ object IrrationalProduct {
 
 }
 
-class IrrationalProduct private(override val terms: Seq[Real])
+class IrrationalProduct protected(override val terms: Seq[Real])
     extends RealProduct(terms) with Irrational {
 
     override def *(r: Rational) = r match {

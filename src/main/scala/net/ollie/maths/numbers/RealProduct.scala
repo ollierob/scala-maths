@@ -35,7 +35,7 @@ class RealProduct protected(override val terms: Seq[Real])
 
     override protected[this] def apply(terms: Seq[Real]) = RealProduct(terms)
 
-    override def ?*(that: Real) = that match {
+    override def ?*(that: Real): Option[Real] = that match {
         case p: RealProduct => Some(RealProduct(simplify(terms ++ p.terms)))
         case _ => Some(RealProduct(simplify(terms :+ that)))
     }
