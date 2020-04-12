@@ -17,6 +17,11 @@ trait LegendrePolynomial
 
     override def isEmpty = false
 
+    override def equals(expr: Expression) = expr match {
+        case p: LegendrePolynomial => degree == p.degree && of == p.of
+        case _ => super.equals(expr)
+    }
+
     override def toString = s"LegendreP($degree)($of)"
 
 }

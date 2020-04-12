@@ -26,6 +26,10 @@ trait Polynomial
 
     override def toString = representation.toString
 
+    override def equals(expr: Expression) = expr match {
+        case p: Polynomial => representation == p.representation
+        case _ => super.equals(expr)
+    }
 }
 
 object Polynomial {
