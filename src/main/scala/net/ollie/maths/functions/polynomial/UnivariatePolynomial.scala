@@ -2,7 +2,6 @@ package net.ollie.maths.functions.polynomial
 
 import net.ollie.maths.expressions.{Expression, Univariate}
 import net.ollie.maths.numbers.Natural
-import net.ollie.maths.numbers.constants.Zero
 import net.ollie.maths.{Constant, Variable}
 
 trait UnivariatePolynomial
@@ -13,6 +12,13 @@ trait UnivariatePolynomial
     override def variable = of
 
     override def variables = Set(of)
+
+    def degree: Natural
+
+    override def degreeOf(x: Variable) = {
+        if (of == x) degree
+        else 0
+    }
 
     def coefficient(power: Natural): Constant
 
@@ -35,15 +41,15 @@ trait UnivariatePolynomial
 
     def replace(c: Constant): Constant = {
         replace(Map(of -> c)).toConstant.get
-//        var sum: Constant = Zero
-//        for (i <- 0 to degree) {
-//            val coeff = coefficient(i)
-//            if (!coeff.isZero) {
-//                if (i == 0) sum += coeff //FIXME need arithmetic
-//                else sum += coeff * (c ^ i)
-//            }
-//        }
-//        sum
+        //        var sum: Constant = Zero
+        //        for (i <- 0 to degree) {
+        //            val coeff = coefficient(i)
+        //            if (!coeff.isZero) {
+        //                if (i == 0) sum += coeff //FIXME need arithmetic
+        //                else sum += coeff * (c ^ i)
+        //            }
+        //        }
+        //        sum
     }
 
     def roots: PolynomialRoots[_, _]
@@ -63,7 +69,7 @@ trait UnivariatePolynomial
     }
 
     def equals(that: UnivariatePolynomial): Boolean = {
-        if (this.degree != that.degree) return false;
+        if (degree != that.degree) return false;
         for (i <- 0 until this.degree) {
             if (this.coefficient(i) != that.coefficient(i)) return false
         }
