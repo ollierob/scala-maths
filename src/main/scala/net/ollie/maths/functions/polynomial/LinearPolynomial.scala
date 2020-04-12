@@ -1,6 +1,7 @@
 package net.ollie.maths.functions.polynomial
 
 import net.ollie.maths.Variable
+import net.ollie.maths.expressions.Expression
 import net.ollie.maths.numbers.{Natural, Real}
 import net.ollie.maths.numbers.complex.Complex
 
@@ -35,6 +36,11 @@ class UnivariateLinearPolynomial(val x: Variable, val a: Complex, val b: Complex
 
     override def derivative = Polynomial(x, a)
 
-    override def toString = s"$a.x + $b"
+    override def equals(expr: Expression) = expr match {
+        case p: UnivariateLinearPolynomial => x == p.x && a == p.a && b == p.b
+        case _ => super.equals(expr)
+    }
+
+    override def toString = s"($a.x + $b)"
 
 }

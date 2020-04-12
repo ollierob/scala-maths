@@ -15,7 +15,7 @@ class UnivariateQuadraticPolynomialTest extends AnyFlatSpec with Matchers {
 
         val poly = new UnivariateQuadraticPolynomial(x, 5, 6, 1)
 
-        it should "toStirng" in {
+        it should "toString" in {
             poly.toString shouldBe "(5.x^2 + 6.x + 1)"
         }
 
@@ -30,7 +30,7 @@ class UnivariateQuadraticPolynomialTest extends AnyFlatSpec with Matchers {
 
         it should "differentiate" in {
 
-            poly.df(x) shouldBe new UnivariateLinearPolynomial(x, 10, 6)
+            poly.df(x) shouldBe Polynomial(x, 10, 6)
             poly.dx shouldBe poly.df(x)
 
         }
