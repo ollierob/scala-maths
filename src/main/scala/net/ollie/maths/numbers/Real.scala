@@ -267,6 +267,10 @@ class ExactDouble(val of: Double)
 
     override def isEmpty = of == 0d
 
+    override def isNegative = of < 0
+
+    override def isPositive = of > 0
+
     override def evaluate(precision: Precision) = precision(of)
 
     override def isInteger = of == Math.round(of)

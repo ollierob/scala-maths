@@ -18,7 +18,7 @@ trait Unity
 
 object One
         extends ExactNatural(1)
-        with Unity {
+        with PositiveReal with Unity {
 
     override def !(implicit cache: FactorialCache) = this
 

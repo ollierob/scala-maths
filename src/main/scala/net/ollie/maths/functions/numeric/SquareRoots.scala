@@ -90,7 +90,7 @@ class PositiveSquareRoot(val of: PositiveReal)
         case _ => super.?*(that)
     }
 
-    override def toString = s"+√($of)"
+    override def toString = s"+√($of)" //Symbol usually means the positive root
 
 }
 

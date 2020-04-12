@@ -15,19 +15,23 @@ class RealExponentTest extends AnyFlatSpec with Matchers {
 
     behavior of "1^3"
 
-    it should "equal 1" in {
-        val p = RealExponent(1, 3)
-        p shouldEqual One
+    {
+
+        it should "equal 1" in {
+            val p = RealExponent(1, 3)
+            p shouldEqual One
+        }
+
+        it should "equal 1^4" in {
+            val p1 = RealExponent(1, 3)
+            val p2 = RealExponent(1, 4)
+            p1 shouldEqual p2
+            p2 shouldEqual p1
+        }
+
     }
 
-    it should "equal 1^4" in {
-        val p1 = RealExponent(1, 3)
-        val p2 = RealExponent(1, 4)
-        p1 shouldEqual p2
-        p2 shouldEqual p1
-    }
-
-    behavior of "5 ^ (2/3)"
+    behavior of "5 ^ (2/3)" //Rational exponent
 
     {
 

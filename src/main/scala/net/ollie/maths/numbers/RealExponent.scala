@@ -55,7 +55,8 @@ object RealExponent {
      */
     def apply(base: Real, power: Real): RealExponent = power match {
         case r: Rational => new RealToRationalExponent(base, r)
-        case _ => ??? //TODO
+        case _ if base.isPositive && power.isPositive => new PositiveToPositiveExponent(base, power)
+        case _ => ???
     }
 
     trait ZeroToPowerZeroConvention {
@@ -89,8 +90,7 @@ object RealExponent {
 private class RealToRationalExponent(val base: Real, val power: Rational)
     extends RealExponent {
 
-    private val primary = base ^ (power.numerator)
-
+    private val primary = base ^ power.numerator
     private lazy val roots: NumericRoots[Real, Complex] = NumericRoots(primary, power.denominator)
 
     override def principal: Complex = roots.principal
@@ -126,5 +126,12 @@ class PrincipalRealToIntegerPower(val base: Real, val power: Integer)
     }
 
     override def df(x: Variable) = super[Real].df(x)
+
+}
+
+private class PositiveToPositiveExponent(val base: Real, val power: Real)
+    extends RealExponent {
+
+    override def values: Set[Complex] = ???
 
 }
