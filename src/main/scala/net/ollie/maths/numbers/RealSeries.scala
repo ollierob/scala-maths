@@ -25,7 +25,7 @@ object RealSeries {
 }
 
 class RealSeries private(override val terms: Seq[Real])
-        extends ConstantSeries(terms)
+    extends ConstantSeries(terms)
         with Real
         with ApproximatelyEvaluated {
 
@@ -34,7 +34,7 @@ class RealSeries private(override val terms: Seq[Real])
     }
 
     override def tryEvaluate(precision: Precision): OptionalBigDecimal = {
-        if (terms.find(_.isInstanceOf[NotEvaluable]).isDefined) None
+        if (terms.exists(_.isInstanceOf[NotEvaluable])) None
         else super.tryEvaluate(precision)
     }
 

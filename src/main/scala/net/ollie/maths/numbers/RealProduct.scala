@@ -12,8 +12,8 @@ object RealProduct {
 
     def apply(left: Real, right: Real): Real = {
         if (left.isZero || right.isZero) Zero
-        else if (One.isExactly(left)) right;
-        else if (One.isExactly(right)) left;
+        else if (One.isExactly(left)) right
+        else if (One.isExactly(right)) left
         else new RealProduct(Seq(left, right))
     }
 
@@ -28,14 +28,17 @@ object RealProduct {
 
 }
 
-private class RealProduct(override val terms: Seq[Real])
+case class RealProduct protected(override val terms: Seq[Real])
     extends ConstantProduct(terms)(Real)
         with Real
         with ApproximatelyEvaluated {
 
     override protected[this] def apply(terms: Seq[Real]) = RealProduct(terms)
 
-    override def ?*(that: Real) = Some(RealProduct(simplify(terms :+ that)))
+    override def ?*(that: Real) = that match {
+        case RealProduct(seq) => Some(RealProduct(simplify(terms ++ seq)))
+        case _ => Some(RealProduct(simplify(terms :+ that)))
+    }
 
     protected[this] def tryMultiply(left: Real, right: Real) = left ?*? right
 
