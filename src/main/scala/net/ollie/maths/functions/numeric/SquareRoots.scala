@@ -56,7 +56,7 @@ object PositiveSquareRoot
         case 0 => Zero
         case 1 => One
         case 2 => PositiveSquareRootTwo
-        case _ => PositiveSquareRoot(i)
+        case _ => new PositiveSquareRoot(i)
     }
 
     def apply(re: Real): Option[PositiveReal] = re match {
