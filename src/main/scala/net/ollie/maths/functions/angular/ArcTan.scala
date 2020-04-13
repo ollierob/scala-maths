@@ -1,10 +1,11 @@
 package net.ollie.maths.functions.angular
 
-import ch.obermuhlner.math.big.BigDecimalMath
+import net.ollie.maths.CachedEvaluated
 import net.ollie.maths.expressions.Expression
 import net.ollie.maths.functions.{BuiltFunction, RealFunctionBuilder, UnivariateFunction}
 import net.ollie.maths.numbers.constants.Zero
 import net.ollie.maths.numbers.{EmptyConstant, Precision, Real}
+import net.ollie.utils.BigDecimals
 
 /**
  *
@@ -17,9 +18,9 @@ object ArcTan
         with UnivariateFunction[Real, Angle] {
 
     def apply(re: Real): Angle with ArcTan = {
-        if (re.isZero) ZeroArcTan
+        if (re.isZero) ZeroArcTanRadians
         //TODO arctan(1) = pi/4 rad
-        else new RealArcTan(re)
+        else new RealArcTanRadians(re)
     }
 
     protected[this] def create(expr: Expression) = new ExpressionArcTan(expr)
@@ -48,7 +49,7 @@ class ExpressionArcTan(val of: Expression)
 
 }
 
-private object ZeroArcTan
+private object ZeroArcTanRadians
     extends ArcTan with Radians with EmptyConstant {
 
     override val of = Zero
@@ -63,33 +64,26 @@ private object ZeroArcTan
 
 }
 
-private class RealArcTan(val of: Real)
+private class RealArcTanRadians(val of: Real)
     extends ArcTan with Radians {
 
-    val value: Real = new ArcTanEvaluator
+    override lazy val value: Real = new RealArcTan(of)
 
     override def isEmpty = of.isEmpty //Only zero at x=0
 
     override def toString = super[ArcTan].toString
 
-    private class ArcTanEvaluator
-        extends Real {
+}
 
-        def isEmpty = RealArcTan.this.isEmpty
+private class RealArcTan(val of: Real)
+    extends ArcTan with Real with CachedEvaluated {
 
-        var maxPrecision: Precision = _
-        var evaluated: BigDecimal = _
+    def isEmpty = of.isEmpty
 
-        def evaluate(precision: Precision) = {
-            if (maxPrecision == null || !(precision > maxPrecision).contains(false)) {
-                maxPrecision = precision
-                evaluated = BigDecimalMath.atan(of.evaluate(precision).underlying(), precision.toMathContext)
-            }
-            evaluated
-        }
+    override def toString = super[ArcTan].toString
 
-        override def toString = RealArcTan.this.toString
-
+    override protected[this] def doEvaluate(precision: Precision): BigDecimal = {
+        BigDecimals.atan(of.evaluate(precision), precision)
     }
 
 }

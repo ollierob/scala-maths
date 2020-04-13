@@ -6,6 +6,7 @@ import net.ollie.maths.methods.{EvaluationIterator, IterativelyEvaluated}
 import net.ollie.maths.numbers.complex.{Complex, ImaginaryUnit}
 import net.ollie.maths.numbers.constants.{MinusOne, One, Zero}
 import net.ollie.maths.numbers.{Natural, PositiveReal, Precision, Real}
+import net.ollie.utils.BigDecimals
 
 /**
  * Created by Ollie on 15/02/14.
@@ -51,7 +52,7 @@ private class DirectPrincipalRoot(val of: PositiveReal, val n: Int)
     private lazy val degreeBd = BigDecimal(n).underlying()
 
     protected[this] def doEvaluate(precision: Precision) = {
-        BigDecimalMath.root(degreeBd, of.evaluate(precision).underlying(), precision.toMathContext)
+        BigDecimals.root(of.evaluate(precision), degreeBd, precision)
     }
 
 }

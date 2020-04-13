@@ -7,6 +7,7 @@ import net.ollie.maths.functions.{BuiltFunction, FunctionBuilder}
 import net.ollie.maths.numbers.constants.{One, Pi}
 import net.ollie.maths.numbers.{Precision, Real}
 import net.ollie.maths.{CachedEvaluated, Constant}
+import net.ollie.utils.BigDecimals
 
 /**
  * Created by Ollie on 10/02/14.
@@ -62,7 +63,9 @@ class RealArcCos(override val of: Real)
         with ArcCos
         with CachedEvaluated {
 
-    protected[this] def doEvaluate(precision: Precision) = BigDecimalMath.acos(of.evaluate(precision).underlying(), precision.toMathContext)
+    protected[this] def doEvaluate(precision: Precision) = {
+        BigDecimals.acos(of.evaluate(precision), precision)
+    }
 
     def isEmpty = of == One
 

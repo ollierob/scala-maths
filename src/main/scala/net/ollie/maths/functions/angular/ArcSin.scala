@@ -7,6 +7,7 @@ import net.ollie.maths.functions.{FunctionBuilder, OddBuiltFunction, UnivariateF
 import net.ollie.maths.numbers.constants.{One, Zero}
 import net.ollie.maths.numbers.{Precision, Real}
 import net.ollie.maths.{CachedEvaluated, Constant, Operation}
+import net.ollie.utils.BigDecimals
 
 /**
  * Created by Ollie on 10/02/14.
@@ -63,7 +64,7 @@ class RealArcSin(val of: Real)
         with CachedEvaluated {
 
     protected[this] def doEvaluate(precision: Precision) = {
-        BigDecimalMath.asin(of.approximatelyEvaluate(precision).underlying(), precision.toMathContext)
+        BigDecimals.asin(of.evaluate(precision), precision)
     }
 
 }

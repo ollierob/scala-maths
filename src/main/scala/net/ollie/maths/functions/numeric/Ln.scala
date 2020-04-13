@@ -7,6 +7,7 @@ import net.ollie.maths.functions.ComplexFunctionBuilder
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.complex.{Complex, ComplexInfinity}
 import net.ollie.maths.numbers.constants.{EulersNumber, One, Zero}
+import net.ollie.utils.BigDecimals
 
 /**
  * Created by Ollie on 16/01/14.
@@ -116,7 +117,7 @@ class RealLn(override val of: PositiveReal)
     override def abs = super[Real].abs
 
     protected[this] def doEvaluate(precision: Precision) = {
-        BigDecimalMath.log(of.evaluate(precision).underlying(), precision.toMathContext)
+        BigDecimals.logE(of.evaluate(precision), precision)
     }
 
     override def toConstant = super[Real].toConstant

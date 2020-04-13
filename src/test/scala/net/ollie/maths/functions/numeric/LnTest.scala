@@ -6,20 +6,31 @@ import net.ollie.maths.numbers.complex.{Complex, ImaginaryUnit}
 import net.ollie.maths.numbers.constants.{EulersNumber, One, Pi, Zero}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import net.ollie.maths.numbers.Precision._
 
 /**
  * Created by Ollie on 16/01/14.
  */
 class LnTest extends AnyFlatSpec with Matchers {
 
-    import net.ollie.maths.numbers.Precision._
+    behavior of "Ln(1)"
 
-    "Ln(1)" should "be 0" in {
-        Ln(One) shouldBe Zero
+    {
+
+        it should "be 0" in {
+            Ln(One) shouldBe Zero
+        }
+
     }
 
-    "Ln(2)" should "be 0" in {
-        Ln(2).evaluate(4 dp) shouldBe BigDecimal("0.6931")
+    behavior of "Ln(2)"
+
+    {
+        
+        it should "be 0" in {
+            Ln(2).evaluate(4 dp) shouldBe BigDecimal("0.6931")
+        }
+
     }
 
     behavior of "Ln(4)"

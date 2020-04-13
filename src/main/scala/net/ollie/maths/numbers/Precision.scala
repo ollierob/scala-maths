@@ -3,6 +3,7 @@ package net.ollie.maths.numbers
 import java.math.MathContext
 
 import net.ollie.maths.numbers.Precision._
+import net.ollie.utils.BigDecimals
 
 import scala.math.BigDecimal.RoundingMode
 import scala.math.BigDecimal.RoundingMode.RoundingMode
@@ -15,9 +16,9 @@ sealed trait Precision {
 
     def digits: Natural
 
-    def apply(bd: BigDecimal)(implicit mode: RoundingMode = Precision.DEFAULT_ROUNDING): BigDecimal
+    def apply(bd: BigDecimal)(implicit mode: RoundingMode = DEFAULT_ROUNDING): BigDecimal
 
-    def toMathContext(implicit mode: RoundingMode = Precision.DEFAULT_ROUNDING): MathContext
+    def applyTo(bd: BigDecimal, fn: (BigDecimal, MathContext) => BigDecimal)(implicit mode: RoundingMode = DEFAULT_ROUNDING): BigDecimal
 
     def increase: Precision = increaseBy(1)
 
@@ -85,9 +86,16 @@ class DecimalPlaces(val digits: Natural)
     extends Precision {
 
     private lazy val tolerance = BigDecimal(Math.pow(10, -digits.requireInt))
+    private lazy val defaultContext = new MathContext(digits.requireInt, DEFAULT_ROUNDING)
 
-    def apply(bd: BigDecimal)(implicit mode: RoundingMode = Precision.DEFAULT_ROUNDING) = {
+    def apply(bd: BigDecimal)(implicit mode: RoundingMode = DEFAULT_ROUNDING) = {
         bd.setScale(digits.toInt.get, mode)
+    }
+
+    override def applyTo(bd: BigDecimal, fn: (BigDecimal, MathContext) => BigDecimal)(implicit mode: RoundingMode) = {
+        val firstAttempt = fn(bd, defaultContext)
+        val d = BigDecimals.nonDecimalDigits(firstAttempt)
+        if (d > 0) fn(bd, new MathContext(digits.requireInt + d, mode)) else firstAttempt
     }
 
     def increaseBy(value: Natural) = new DecimalPlaces(this.digits + value)
@@ -99,10 +107,6 @@ class DecimalPlaces(val digits: Natural)
     override def >(that: Precision) = that match {
         case d: DecimalPlaces => Some(this.digits > d.digits)
         case _ => super.>(that)
-    }
-
-    override def toMathContext(implicit mode: RoundingMode) = {
-        new MathContext(digits.requireInt, mode) //FIXME + non-decimal part
     }
 
     override def toString = digits.toString + " decimal places"
@@ -137,6 +141,12 @@ class SignificantFigures(val digits: Natural)
         bd.setScale(digitsI, mode).round(toMathContext(mode))
     }
 
+    override def applyTo(bd: BigDecimal, fn: (BigDecimal, MathContext) => BigDecimal)(implicit mode: RoundingMode) = {
+        fn(bd, toMathContext(mode))
+    }
+
+    private def toMathContext(mode: RoundingMode) = new MathContext(digitsI, mode)
+
     def increaseBy(value: Natural) = new SignificantFigures(this.digits + value)
 
     override def within(bd1: BigDecimal, bd2: BigDecimal): Boolean = {
@@ -155,8 +165,6 @@ class SignificantFigures(val digits: Natural)
         case s: SignificantFigures => Some(this.digits > s.digits)
         case _ => super.>(that)
     }
-
-    override def toMathContext(implicit mode: RoundingMode) = new MathContext(digitsI, mode)
 
     override def toString = digits.toString + " significant figures"
 

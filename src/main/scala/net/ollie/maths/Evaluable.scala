@@ -13,7 +13,7 @@ import scala.math.BigDecimal.RoundingMode._
  * Created by Ollie on 12/01/14.
  */
 trait Evaluable
-        extends MaybeEvaluable {
+    extends MaybeEvaluable {
 
     protected implicit def rounding: RoundingMode = Precision.DEFAULT_ROUNDING
 
@@ -36,7 +36,7 @@ trait MaybeEvaluable {
 }
 
 trait NotEvaluable
-        extends MaybeEvaluable {
+    extends MaybeEvaluable {
 
     def evaluate(precision: Precision): BigDecimal = Operation.illegal(s"Cannot evaluate $this")
 
@@ -45,7 +45,7 @@ trait NotEvaluable
 }
 
 trait CachedEvaluated
-        extends Evaluable {
+    extends Evaluable {
 
     private var max: Option[(Precision, BigDecimal)] = None
 
@@ -70,7 +70,7 @@ trait CachedEvaluated
             max = Some(precision, evaluated)
         }
 
-        return precision(evaluated)(rounding)
+        precision(evaluated)(rounding)
 
     }
 
