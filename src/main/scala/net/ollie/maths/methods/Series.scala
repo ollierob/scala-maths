@@ -1,12 +1,12 @@
 package net.ollie.maths.methods
 
-import scala.Some
-import scala.collection.mutable
-import scala.collection.mutable.ArrayBuffer
 import net.ollie.maths._
 import net.ollie.maths.expressions.{Aggregate, Expression}
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.constants.Zero
+
+import scala.collection.mutable
+import scala.collection.mutable.ArrayBuffer
 
 /**
  * Created by Ollie on 19/01/14.
@@ -44,7 +44,7 @@ object Series {
     def apply(f: Integer => Real, start: Integer, end: Integer): Real = {
         if (end < start) return Zero
         def g(i: Int): Real = f(Integer(i) + start)
-        Seq.tabulate((end - start).toInt.get)(g).sum
+        Seq.tabulate((end - start).toInt.get + 1)(g).sum
     }
 
     def apply(f: Natural => Real, start: Natural, end: Natural): Real = {

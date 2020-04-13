@@ -1,18 +1,25 @@
 package net.ollie.maths.functions.hypergeometric
 
-import org.scalatest.{Matchers, FlatSpec}
-import net.ollie.maths.numbers.constants.One
 import net.ollie.maths.numbers.Precision._
+import net.ollie.maths.numbers.constants.One
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
 /**
  * Created by Ollie on 17/02/14.
  */
-class HarmonicTest extends FlatSpec with Matchers {
+class HarmonicTest extends AnyFlatSpec with Matchers {
 
-    "Harmonic(1)" should "equal 1" in {
-        val h = Harmonic(One)
-        h.evaluate(4 dp) shouldBe BigDecimal("1.0000")
-        h shouldBe One
+    behavior of "Harmonic(1)"
+
+    {
+
+        it should "equal 1" in {
+            val h = Harmonic(One)
+            h.evaluate(4 dp) shouldBe BigDecimal("1.0000")
+            h shouldBe One
+        }
+
     }
 
 }

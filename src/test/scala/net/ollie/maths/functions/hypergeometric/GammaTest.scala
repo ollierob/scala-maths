@@ -1,13 +1,13 @@
 package net.ollie.maths.functions.hypergeometric
 
-import net.ollie.maths.numbers.Real
-import org.scalatest.{FlatSpec, Matchers}
 import net.ollie.maths.numbers.Precision._
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
 /**
  * Created by Ollie on 21/01/14.
  */
-class GammaTest extends FlatSpec with Matchers {
+class GammaTest extends AnyFlatSpec with Matchers {
 
     "Gamma(4.5)" should "evaluate" in {
         val g = Gamma(4.5)
