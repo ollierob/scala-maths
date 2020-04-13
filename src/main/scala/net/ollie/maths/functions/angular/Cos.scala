@@ -1,12 +1,11 @@
 package net.ollie.maths.functions.angular
 
-import scala.Some
+import ch.obermuhlner.math.big.BigDecimalMath
 import net.ollie.maths._
 import net.ollie.maths.expressions.{Expression, Invertible}
 import net.ollie.maths.functions.{BuiltFunction, FunctionBuilder, RealFunctionBuilder}
-import net.ollie.maths.numbers.{EmptyConstant, Integer, PositiveReal, Precision, Real}
-import net.ollie.maths.numbers.constants.{MinusOne, One, Pi, Unity, Zero}
-import org.nevec.rjm.BigDecimalMath
+import net.ollie.maths.numbers.constants.{MinusOne, One, Pi, Zero}
+import net.ollie.maths.numbers.{Integer, PositiveReal, Precision, Real}
 
 /**
  * Created by Ollie on 03/01/14.
@@ -94,7 +93,7 @@ private class RealCos(override val of: Angle)
         with CachedEvaluated {
 
     protected[this] def doEvaluate(precision: Precision) = {
-        precision(BigDecimalMath.cos(of.evaluate(precision).underlying()))
+        precision(BigDecimalMath.cos(of.evaluate(precision).underlying(), precision.toMathContext))
     }
 
     private lazy val empty: Boolean = {

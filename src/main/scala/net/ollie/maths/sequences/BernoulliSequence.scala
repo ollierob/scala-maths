@@ -1,9 +1,7 @@
 package net.ollie.maths.sequences
 
-import net.ollie.maths.methods.ApproximatelyEvaluated
 import net.ollie.maths.numbers.constants.{Half, One, Zero}
-import net.ollie.maths.numbers.{Integer, Natural, Precision, Rational}
-import org.nevec.rjm.Bernoulli
+import net.ollie.maths.numbers.{Natural, Rational}
 
 /**
  * Created by Ollie on 19/02/14.
@@ -14,7 +12,7 @@ object BernoulliSequence
 
     type Element = Rational
 
-    private val calculator = new Bernoulli
+    //private val calculator = ??? //FIXME
 
     override def apply(n: Natural): Rational = n match {
         case One => -Half
@@ -25,7 +23,7 @@ object BernoulliSequence
     protected[this] def initial = Map(Zero -> One, One -> -Half)
 
     protected[this] def create(n: Natural): Rational = n.toInt match {
-        case Some(m) => new SmallBernoulliNumber(m, calculator)
+        //case Some(m) => new SmallBernoulliNumber(m, calculator)
         case _ => ??? //TODO
     }
 
@@ -33,20 +31,20 @@ object BernoulliSequence
 
 }
 
-private class SmallBernoulliNumber(val n: Int, val calculator: Bernoulli)
-        extends Rational
-        with ApproximatelyEvaluated {
-
-    private lazy val rational = calculator.at(n)
-
-    def numerator = Integer(rational.numer())
-
-    def denominator = Integer(rational.denom())
-
-    override protected[this] def doApproximatelyEvaluate(precision: Precision) = {
-        numerator.evaluate(precision) / denominator.evaluate(precision)
-    }
-
-    override def toString = s"Bernoulli($n)"
-
-}
+//private class SmallBernoulliNumber(val n: Int, val calculator: Bernoulli)
+//        extends Rational
+//        with ApproximatelyEvaluated {
+//
+//    private lazy val rational = calculator.at(n)
+//
+//    def numerator = Integer(rational.numer())
+//
+//    def denominator = Integer(rational.denom())
+//
+//    override protected[this] def doApproximatelyEvaluate(precision: Precision) = {
+//        numerator.evaluate(precision) / denominator.evaluate(precision)
+//    }
+//
+//    override def toString = s"Bernoulli($n)"
+//
+//}

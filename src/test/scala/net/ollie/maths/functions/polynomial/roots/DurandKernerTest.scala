@@ -16,7 +16,7 @@ class DurandKernerTest extends AnyFlatSpec with Matchers {
 
         val poly = Polynomial(x, Seq(-5, 3, 3, 1))
 
-        it should "solve to 1dp" in {
+        ignore should "solve to 1dp" in {
 
             val roots = new DurandKerner(i => (i, i + 1)).roots(poly, 1 dp)
 

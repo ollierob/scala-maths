@@ -1,10 +1,10 @@
 package net.ollie.maths.functions.angular
 
+import ch.obermuhlner.math.big.BigDecimalMath
 import net.ollie.maths.expressions.Expression
 import net.ollie.maths.functions.{BuiltFunction, RealFunctionBuilder, UnivariateFunction}
 import net.ollie.maths.numbers.constants.Zero
 import net.ollie.maths.numbers.{EmptyConstant, Precision, Real}
-import org.nevec.rjm.BigDecimalMath
 
 /**
  *
@@ -77,8 +77,15 @@ private class RealArcTan(val of: Real)
 
         def isEmpty = RealArcTan.this.isEmpty
 
+        var maxPrecision: Precision = _
+        var evaluated: BigDecimal = _
+
         def evaluate(precision: Precision) = {
-            BigDecimalMath.atan(of.evaluate(precision).underlying())
+            if (maxPrecision == null || !(precision > maxPrecision).contains(false)) {
+                maxPrecision = precision
+                evaluated = BigDecimalMath.atan(of.evaluate(precision).underlying(), precision.toMathContext)
+            }
+            evaluated
         }
 
         override def toString = RealArcTan.this.toString

@@ -1,5 +1,6 @@
 package net.ollie.maths.functions.angular
 
+import ch.obermuhlner.math.big.BigDecimalMath
 import net.ollie.maths._
 import net.ollie.maths.expressions.{Expression, Invertible}
 import net.ollie.maths.functions.angular.Angle._
@@ -7,7 +8,6 @@ import net.ollie.maths.functions.special.Sinc
 import net.ollie.maths.functions.{FunctionBuilder, OddBuiltFunction, RealFunctionBuilder, UnivariateFunction}
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.constants.{Pi, Zero}
-import org.nevec.rjm.BigDecimalMath
 
 /**
  * Created by Ollie on 02/01/14.
@@ -88,8 +88,9 @@ class RealSin(val of: Angle)
 
     private lazy val reduced: Angle = of.reduce
 
-    protected[this] def doEvaluate(precision: Precision) = of match {
-        case _ => BigDecimalMath.sin(reduced.evaluate(precision).underlying())
+    protected[this] def doEvaluate(precision: Precision) = {
+        //FIXME BigDecimalMath.sin is crap and blows up too often e.g. sin(3.3) => explode
+        BigDecimalMath.sin(reduced.evaluate(precision).underlying(), precision.toMathContext)
     }
 
     override def variables = super[Real].variables

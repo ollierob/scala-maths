@@ -1,11 +1,11 @@
 package net.ollie.maths.numbers
 
+import ch.obermuhlner.math.big.BigDecimalMath
 import net.ollie.maths.expressions.Exponentiated
 import net.ollie.maths.functions.numeric.NumericRoots
 import net.ollie.maths.numbers.complex.Complex
 import net.ollie.maths.numbers.constants.{One, Two, Zero}
 import net.ollie.maths.{CachedEvaluated, Operation, Variable}
-import org.nevec.rjm.BigDecimalMath
 
 /**
  * Created by Ollie on 12/01/14.
@@ -121,7 +121,7 @@ class PrincipalRealToIntegerPower(val base: Real, val power: Integer)
     }
 
     override protected[this] def doEvaluate(precision: Precision): BigDecimal = {
-        val bd: BigDecimal = BigDecimalMath.pow(baseAbs.evaluate(precision).underlying(), power.evaluate(precision).underlying())
+        val bd: BigDecimal = BigDecimalMath.pow(baseAbs.evaluate(precision).underlying(), power.evaluate(precision).underlying(), precision.toMathContext)
         if (negate) -bd else bd
     }
 

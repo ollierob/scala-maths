@@ -18,7 +18,7 @@ trait Prime
 
 object Prime {
 
-    private val DEFAULT_CALCULATOR = RjmPrimes
+    private val DEFAULT_CALCULATOR: PrimeCalculator = ???
 
     def apply(n: Natural)(implicit calculator: PrimeCalculator = DEFAULT_CALCULATOR): Option[Prime] = {
         if (is(n)(calculator)) Some(new KnownPrime(n))
@@ -80,20 +80,5 @@ trait PrimeCalculator {
     def next(i: BigInt): BigInt
 
     def pi(i: BigInt): BigInt
-
-}
-
-object RjmPrimes
-    extends PrimeCalculator {
-
-    val prime = new org.nevec.rjm.Prime()
-
-    def next(i: BigInt) = synchronized {
-        prime.nextprime(i.underlying())
-    }
-
-    def pi(i: BigInt) = synchronized {
-        prime.pi(i.underlying())
-    }
 
 }

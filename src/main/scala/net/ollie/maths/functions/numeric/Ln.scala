@@ -1,18 +1,18 @@
 package net.ollie.maths.functions.numeric
 
+import ch.obermuhlner.math.big.BigDecimalMath
 import net.ollie.maths._
 import net.ollie.maths.expressions.{Composition, Expression, Invertible}
 import net.ollie.maths.functions.ComplexFunctionBuilder
 import net.ollie.maths.numbers._
-import net.ollie.maths.numbers.constants.{EulersNumber, One, Zero}
-import org.nevec.rjm.BigDecimalMath
 import net.ollie.maths.numbers.complex.{Complex, ComplexInfinity}
+import net.ollie.maths.numbers.constants.{EulersNumber, One, Zero}
 
 /**
  * Created by Ollie on 16/01/14.
  */
 trait Log
-        extends Invertible {
+    extends Invertible {
 
     def base: Real
 
@@ -45,7 +45,7 @@ object Log10 {
 }
 
 object Ln
-        extends ComplexFunctionBuilder {
+    extends ComplexFunctionBuilder {
 
     override type Z = Constant
 
@@ -75,7 +75,7 @@ object Ln
 }
 
 trait Ln
-        extends Log {
+    extends Log {
 
     def of: Expression
 
@@ -86,7 +86,7 @@ trait Ln
 }
 
 class LnOf(val of: Expression)
-        extends Log
+    extends Log
         with Composition
         with Ln {
 
@@ -103,7 +103,7 @@ class LnOf(val of: Expression)
 }
 
 class RealLn(override val of: PositiveReal)
-        extends Real
+    extends Real
         with Ln
         with CachedEvaluated {
 
@@ -116,7 +116,7 @@ class RealLn(override val of: PositiveReal)
     override def abs = super[Real].abs
 
     protected[this] def doEvaluate(precision: Precision) = {
-        BigDecimalMath.log(of.evaluate(precision).underlying())
+        BigDecimalMath.log(of.evaluate(precision).underlying(), precision.toMathContext)
     }
 
     override def toConstant = super[Real].toConstant
@@ -126,7 +126,7 @@ class RealLn(override val of: PositiveReal)
 }
 
 trait ComplexLogarithms
-        extends Multivalued
+    extends Multivalued
         with Ln {
 
     type Contents = Complex
@@ -136,7 +136,7 @@ trait ComplexLogarithms
 }
 
 private class ComplexLn(val of: Complex)
-        extends ComplexLogarithms {
+    extends ComplexLogarithms {
 
     require(!of.isEmpty)
 

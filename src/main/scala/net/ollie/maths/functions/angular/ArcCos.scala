@@ -1,12 +1,12 @@
 package net.ollie.maths.functions.angular
 
+import ch.obermuhlner.math.big.BigDecimalMath
 import net.ollie.maths.expressions.{Expression, Invertible}
 import net.ollie.maths.functions.numeric.SquareRoots
 import net.ollie.maths.functions.{BuiltFunction, FunctionBuilder}
 import net.ollie.maths.numbers.constants.{One, Pi}
 import net.ollie.maths.numbers.{Precision, Real}
 import net.ollie.maths.{CachedEvaluated, Constant}
-import org.nevec.rjm.BigDecimalMath
 
 /**
  * Created by Ollie on 10/02/14.
@@ -62,7 +62,7 @@ class RealArcCos(override val of: Real)
         with ArcCos
         with CachedEvaluated {
 
-    protected[this] def doEvaluate(precision: Precision) = BigDecimalMath.acos(of.evaluate(precision).underlying())
+    protected[this] def doEvaluate(precision: Precision) = BigDecimalMath.acos(of.evaluate(precision).underlying(), precision.toMathContext)
 
     def isEmpty = of == One
 

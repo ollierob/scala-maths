@@ -1,10 +1,10 @@
 package net.ollie.maths.numbers
 
+import ch.obermuhlner.math.big.BigDecimalMath
 import net.ollie.maths._
 import net.ollie.maths.expressions.Exponentiated
 import net.ollie.maths.numbers.RealExponent.{ZeroToPowerZeroConvention, ZeroToPowerZeroIsOne}
 import net.ollie.maths.numbers.constants.{One, Zero}
-import org.nevec.rjm.BigDecimalMath
 
 /**
  * Numbers known to be equal to or greater than zero at compile time.
@@ -110,7 +110,7 @@ class PrincipalPositiveRealPower(val base: PositiveReal, val power: Real)
     override def df(x: Variable) = super[PositiveReal].df(x)
 
     protected[this] def doEvaluate(precision: Precision): BigDecimal = {
-        BigDecimalMath.pow(base.evaluate(precision).underlying(), power.evaluate(precision).underlying())
+        BigDecimalMath.pow(base.evaluate(precision).underlying(), power.evaluate(precision).underlying(), precision.toMathContext)
     }
 
 }

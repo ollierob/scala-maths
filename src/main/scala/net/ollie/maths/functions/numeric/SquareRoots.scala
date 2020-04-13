@@ -1,12 +1,12 @@
 package net.ollie.maths.functions.numeric
 
+import ch.obermuhlner.math.big.BigDecimalMath
 import net.ollie.maths.expressions.Expression
 import net.ollie.maths.functions.UnivariateFunction
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.complex.Complex
 import net.ollie.maths.numbers.constants.{Half, One, Two, Zero}
 import net.ollie.maths.{CachedEvaluated, Constant}
-import org.nevec.rjm.BigDecimalMath
 
 /**
  * Created by Ollie on 08/01/14.
@@ -79,8 +79,7 @@ class PositiveSquareRoot(val of: PositiveReal)
     extends PositiveReal with CachedEvaluated {
 
     override def doEvaluate(precision: Precision) = {
-        if (precision.digits < 16) Math.sqrt(of.evaluate(precision).toDouble)
-        else BigDecimalMath.sqrt(of.evaluate(precision).underlying())
+        BigDecimalMath.sqrt(of.evaluate(precision).underlying(), precision.toMathContext)
     }
 
     def isEmpty = of.isEmpty

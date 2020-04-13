@@ -1,18 +1,18 @@
 package net.ollie.maths.functions.angular
 
+import ch.obermuhlner.math.big.BigDecimalMath
 import net.ollie.maths.expressions.Expression
+import net.ollie.maths.functions.numeric.{Signum, SquareRoots}
 import net.ollie.maths.functions.{FunctionBuilder, OddBuiltFunction, UnivariateFunction}
+import net.ollie.maths.numbers.constants.{One, Zero}
 import net.ollie.maths.numbers.{Precision, Real}
 import net.ollie.maths.{CachedEvaluated, Constant, Operation}
-import net.ollie.maths.functions.numeric.{Signum, SquareRoots}
-import net.ollie.maths.numbers.constants.{One, Zero}
-import org.nevec.rjm.BigDecimalMath
 
 /**
  * Created by Ollie on 10/02/14.
  */
 object ArcSin
-        extends FunctionBuilder
+    extends FunctionBuilder
         with UnivariateFunction[Real, Angle] {
 
     import Angle._
@@ -37,7 +37,7 @@ object ArcSin
 }
 
 trait ArcSin
-        extends Expression {
+    extends Expression {
 
     def of: Expression
 
@@ -48,7 +48,7 @@ trait ArcSin
 }
 
 class ArcSinOf(val of: Expression)
-        extends OddBuiltFunction
+    extends OddBuiltFunction
         with ArcSin {
 
     protected[this] def builder = ArcSin
@@ -58,12 +58,12 @@ class ArcSinOf(val of: Expression)
 }
 
 class RealArcSin(val of: Real)
-        extends Real
+    extends Real
         with ArcSin
         with CachedEvaluated {
 
     protected[this] def doEvaluate(precision: Precision) = {
-        BigDecimalMath.asin(of.approximatelyEvaluate(precision).underlying())
+        BigDecimalMath.asin(of.approximatelyEvaluate(precision).underlying(), precision.toMathContext)
     }
 
 }

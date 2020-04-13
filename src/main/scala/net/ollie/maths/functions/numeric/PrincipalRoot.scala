@@ -1,17 +1,17 @@
 package net.ollie.maths.functions.numeric
 
-import net.ollie.maths.numbers.{Real, Precision, Natural, PositiveReal}
-import org.nevec.rjm.BigDecimalMath
-import net.ollie.maths.methods.{EvaluationIterator, IterativelyEvaluated}
-import net.ollie.maths.numbers.complex.{ImaginaryUnit, Complex}
-import net.ollie.maths.numbers.constants.{MinusOne, One, Zero}
+import ch.obermuhlner.math.big.BigDecimalMath
 import net.ollie.maths.CachedEvaluated
+import net.ollie.maths.methods.{EvaluationIterator, IterativelyEvaluated}
+import net.ollie.maths.numbers.complex.{Complex, ImaginaryUnit}
+import net.ollie.maths.numbers.constants.{MinusOne, One, Zero}
+import net.ollie.maths.numbers.{Natural, PositiveReal, Precision, Real}
 
 /**
  * Created by Ollie on 15/02/14.
  */
 trait PrincipalRoot
-        extends PositiveReal {
+    extends PositiveReal {
 
     def of: PositiveReal
 
@@ -43,13 +43,15 @@ object PrincipalRoot {
 }
 
 private class DirectPrincipalRoot(val of: PositiveReal, val n: Int)
-        extends PrincipalRoot
+    extends PrincipalRoot
         with CachedEvaluated {
 
     def degree = n
 
+    private lazy val degreeBd = BigDecimal(n).underlying()
+
     protected[this] def doEvaluate(precision: Precision) = {
-        BigDecimalMath.root(n, of.evaluate(precision).underlying())
+        BigDecimalMath.root(degreeBd, of.evaluate(precision).underlying(), precision.toMathContext)
     }
 
 }
@@ -59,7 +61,7 @@ private class DirectPrincipalRoot(val of: PositiveReal, val n: Int)
  * @see http://en.wikipedia.org/wiki/Nth_root_algorithm
  */
 private class NewtonPrincipalRoot(val of: PositiveReal, val degree: Natural)
-        extends PrincipalRoot
+    extends PrincipalRoot
         with IterativelyEvaluated {
 
     def initialGuess: Real = of / degree

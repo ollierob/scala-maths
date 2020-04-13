@@ -17,6 +17,8 @@ sealed trait Precision {
 
     def apply(bd: BigDecimal)(implicit mode: RoundingMode = Precision.DEFAULT_ROUNDING): BigDecimal
 
+    def toMathContext(implicit mode: RoundingMode = Precision.DEFAULT_ROUNDING): MathContext
+
     def increase: Precision = increaseBy(1)
 
     def increaseBy(value: Natural): Precision
@@ -24,6 +26,8 @@ sealed trait Precision {
     def within(bd1: BigDecimal, bd2: BigDecimal): Boolean
 
     def >(that: Precision): Option[Boolean] = None
+
+    def <(that: Precision): Option[Boolean] = that > this
 
     def >=(that: Precision): Option[Boolean] = {
         if (this equals that) Some(true)
@@ -96,6 +100,10 @@ class DecimalPlaces(val digits: Natural)
         case _ => super.>(that)
     }
 
+    override def toMathContext(implicit mode: RoundingMode) = {
+        new MathContext(digits.requireInt, mode) //FIXME + non-decimal part
+    }
+
     override def toString = digits.toString + " decimal places"
 
     def equals(that: Precision) = that match {
@@ -124,7 +132,7 @@ class SignificantFigures(val digits: Natural)
     private val digitsI = digits.toInt.get
 
     def apply(bd: BigDecimal)(implicit mode: RoundingMode = Precision.DEFAULT_ROUNDING) = {
-        bd.setScale(digitsI, mode).round(new MathContext(digitsI, mode))
+        bd.setScale(digitsI, mode).round(toMathContext(mode))
     }
 
     def increaseBy(value: Natural) = new SignificantFigures(this.digits + value)
@@ -137,6 +145,8 @@ class SignificantFigures(val digits: Natural)
         case s: SignificantFigures => Some(this.digits > s.digits)
         case _ => super.>(that)
     }
+
+    override def toMathContext(implicit mode: RoundingMode) = new MathContext(digitsI, mode)
 
     override def toString = digits.toString + " significant figures"
 
