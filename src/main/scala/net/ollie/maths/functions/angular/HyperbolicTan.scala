@@ -23,8 +23,6 @@ object HyperbolicTan
 
     override protected[this] def create(expr: Expression) = new HyperbolicTanOf(expr)
 
-    override protected[this] def empty = Zero
-
 }
 
 class HyperbolicTanOf(val of: Expression)

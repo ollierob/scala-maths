@@ -4,6 +4,7 @@ import net.ollie.maths._
 import net.ollie.maths.expressions.{Composition, Expression}
 import net.ollie.maths.numbers.Real
 import net.ollie.maths.numbers.complex.Complex
+import net.ollie.maths.numbers.constants.Zero
 
 /**
  * Can convert an expression into another expression, or a number into another number.
@@ -24,7 +25,7 @@ trait FunctionBuilder {
 
     protected[this] def create(expr: Expression): Expression
 
-    protected[this] def empty: Expression
+    protected[this] def empty: Expression = Zero
 
 }
 

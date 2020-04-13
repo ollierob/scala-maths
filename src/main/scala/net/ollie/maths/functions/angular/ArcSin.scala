@@ -31,8 +31,6 @@ object ArcSin
         case _ => Operation.undefined
     }
 
-    protected[this] def empty = Zero
-
     protected[this] def create(expr: Expression) = new ArcSinOf(expr)
 
 }

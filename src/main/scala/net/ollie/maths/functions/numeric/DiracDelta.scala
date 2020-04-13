@@ -20,7 +20,7 @@ object DiracDelta
 
     protected[this] def create(expr: Expression) = new DiracDeltaOf(expr)
 
-    protected[this] def empty = Infinity
+    override protected[this] def empty = Infinity
 
     override def toString = "δ(?)"
 

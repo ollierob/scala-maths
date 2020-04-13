@@ -22,8 +22,6 @@ object ArcHyperbolicTan
 
     override protected[this] def create(expr: Expression) = new ArcHyperbolicTanOf(expr)
 
-    override protected[this] def empty = Zero
-
 }
 
 class ArcHyperbolicTanOf(val of: Expression)

@@ -28,7 +28,7 @@ object Heaviside
 
     override def toString = "Heaviside(?)"
 
-    protected[this] def empty = Half
+    override protected[this] def empty = Half
 
 }
 

@@ -30,7 +30,7 @@ object ArcCos
 
     protected[this] def create(x: Expression) = new ArcCosOf(x)
 
-    protected[this] def empty = Pi / 2
+    override protected[this] def empty = Pi / 2
 
 }
 

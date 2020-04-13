@@ -17,8 +17,6 @@ object Abs
 
     def apply(f: Complex) = f.abs
 
-    protected[this] def empty = Zero
-
     protected[this] def create(expr: Expression) = new AbsOf(expr)
 
 }

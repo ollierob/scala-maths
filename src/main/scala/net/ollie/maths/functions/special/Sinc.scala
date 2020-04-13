@@ -30,7 +30,7 @@ object Sinc
 
     protected[this] def create(expr: Expression) = new Sinc(expr)
 
-    protected[special] def empty = One
+    override protected[special] def empty = One
 
 }
 

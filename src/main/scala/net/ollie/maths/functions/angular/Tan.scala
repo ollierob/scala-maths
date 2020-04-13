@@ -25,7 +25,7 @@ object Tan
 
     protected[this] def create(expr: Expression) = new Tan(expr)
 
-    protected[angular] def empty = Zero
+    override protected[angular] def empty = Zero
 
 }
 
@@ -69,6 +69,6 @@ object CoTan
 
     protected[this] def create(expr: Expression) = 1 / Tan(expr)
 
-    protected[this] def empty = Tan.empty.inverse
+    override protected[this] def empty = Tan.empty.inverse
 
 }

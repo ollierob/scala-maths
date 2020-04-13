@@ -31,7 +31,7 @@ object RiemannZeta
         case _ => Zero
     }
 
-    protected[this] def empty = -Half
+    override protected[this] def empty = -Half
 
     protected[this] def create(expr: Expression) = new RiemannZetaOf(expr)
 

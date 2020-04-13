@@ -83,7 +83,7 @@ object Digamma
 
     protected[this] def create(expr: Expression) = new DigammaOf(expr)
 
-    protected[this] def empty = ComplexInfinity
+    override protected[this] def empty = ComplexInfinity
 
 }
 

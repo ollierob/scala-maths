@@ -30,8 +30,6 @@ object LambertW
 
     protected[this] def create(expr: Expression) = new LambertWFunction(expr)
 
-    protected[this] def empty = Zero
-
 }
 
 trait LambertW {

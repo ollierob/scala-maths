@@ -39,7 +39,7 @@ object Exp
         case _ => new ExpOf(expr)
     }
 
-    protected[this] def empty = One
+    override protected[this] def empty = One
 
 }
 

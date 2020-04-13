@@ -23,8 +23,6 @@ object HyperbolicSin
 
     def apply(z: Complex): Complex with HyperbolicSin = ???
 
-    protected[this] def empty = Zero
-
     protected[this] def create(expr: Expression) = new HyperbolicSinOf(expr)
 
 }

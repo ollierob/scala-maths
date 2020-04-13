@@ -32,7 +32,7 @@ object Sin
 
     protected[this] def create(expr: Expression): Sin = new SinOf(expr)
 
-    protected[angular] def empty = SinZero
+    override protected[angular] def empty = SinZero
 
 }
 
@@ -127,6 +127,6 @@ object Cosec
 
     protected[this] def create(expr: Expression) = 1 / Sin(expr)
 
-    protected[this] def empty = Sin.empty.inverse
+    override protected[this] def empty = Sin.empty.inverse
 
 }

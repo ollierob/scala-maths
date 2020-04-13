@@ -68,7 +68,7 @@ object Ln
         case _ => new LnOf(expr)
     }
 
-    protected[this] def empty: Real = -Infinity
+    override protected[this] def empty: Real = -Infinity
 
     def unapply(ln: Ln): Option[Expression] = Some(ln.of)
 

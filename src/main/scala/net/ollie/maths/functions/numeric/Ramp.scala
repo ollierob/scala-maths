@@ -9,7 +9,7 @@ import net.ollie.maths.numbers.constants.Zero
  * Created by Ollie on 11/01/14.
  */
 object Ramp
-        extends RealFunctionBuilder
+    extends RealFunctionBuilder
         with UnivariateFunction[Real, Real] {
 
     def apply(re: Real): Real = re match {
@@ -20,14 +20,10 @@ object Ramp
 
     protected[this] def create(expr: Expression) = new RampOf(expr)
 
-    protected[this] def empty = Zero
-
-    override def toString = "Ramp(?)"
-
 }
 
 class RampOf(val expression: Expression)
-        extends Represented {
+    extends Represented {
 
     def representation = expression * Heaviside(expression)
 

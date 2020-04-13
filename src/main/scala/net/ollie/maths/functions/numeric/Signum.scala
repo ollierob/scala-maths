@@ -29,8 +29,6 @@ object Signum
         case otherwise => otherwise
     }
 
-    protected[this] def empty = Zero
-
     protected[this] def create(expr: Expression) = new SignumOf(expr)
 
     override def toString = "Signum"

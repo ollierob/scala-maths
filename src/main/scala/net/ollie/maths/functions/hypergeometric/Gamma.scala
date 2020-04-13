@@ -35,7 +35,7 @@ object Gamma
 
     protected[this] def create(expr: Expression) = new GammaOf(expr)
 
-    protected[this] def empty = ComplexInfinity
+    override protected[this] def empty = ComplexInfinity
 
 }
 

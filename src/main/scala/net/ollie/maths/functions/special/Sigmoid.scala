@@ -18,7 +18,7 @@ object Sigmoid
 
     protected[this] def create(expr: Expression) = new SigmoidOf(expr)
 
-    protected[this] def empty = Half
+    override protected[this] def empty = Half
 
 }
 

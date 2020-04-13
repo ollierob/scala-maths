@@ -32,7 +32,7 @@ object Cos
 
     protected[this] def create(expr: Expression) = new CosOf(expr)
 
-    protected[angular] def empty = One
+    override protected[angular] def empty = One
 
 }
 
@@ -125,6 +125,6 @@ object Sec
 
     protected[this] def create(expr: Expression) = 1 / Cos(expr)
 
-    protected[this] def empty = Cos.empty.inverse
+    override protected[this] def empty = Cos.empty.inverse
 
 }

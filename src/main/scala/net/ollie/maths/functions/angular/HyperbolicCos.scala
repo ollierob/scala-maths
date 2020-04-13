@@ -24,7 +24,7 @@ object HyperbolicCos
 
     def apply(z: Complex): Complex with HyperbolicCos = ???
 
-    protected[this] def empty = One
+    override protected[this] def empty = One
 
     protected[this] def create(expr: Expression) = new HyperbolicCosOf(expr)
 

@@ -25,7 +25,7 @@ object ArcTan
 
     protected[this] def create(expr: Expression) = new ExpressionArcTan(expr)
 
-    protected[this] def empty: Angle = EmptyAngle
+    override protected[this] def empty: Angle = EmptyAngle
 
 }
 
