@@ -15,22 +15,26 @@ trait Modal {
 
     def m = order
 
+    def isZero = l == 0 && m == 0
+
+    override def toString = s"($l, $m)"
+
 }
 
-object ModalPair {
+object Modal {
 
     implicit def apply(t: Tuple2[Natural, Integer]): ModalPair = new ModalPair(t._1, t._2)
+
+    def unapply(m: Modal): Option[(Natural, Integer)] = Some((m.l, m.m))
 
 }
 
 class ModalPair(val degree: Natural, val order: Integer)
-        extends Modal {
+    extends Modal {
 
-    override def equals(that: Any) = that match {
-        case pair: ModalPair => this.degree == pair.degree && this.order == pair.order
-        case _ => super.equals(that)
-    }
-
-    override def toString = s"($degree, $order)"
+    require(order <= degree)
 
 }
+
+object ZeroModal
+    extends ModalPair(0, 0)

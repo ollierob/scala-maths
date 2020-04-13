@@ -13,7 +13,7 @@ import net.ollie.maths.numbers.constants.{MinusOne, Pi, Zero}
  * Created by Ollie on 08/01/14.
  */
 trait SphericalHarmonic
-        extends Expression
+    extends Expression
         with Modal {
 
     require(degree >= order.abs)
@@ -48,7 +48,7 @@ object SphericalHarmonic {
 }
 
 private class EmptyHarmonic(val degree: Natural, val order: Integer, val theta: Expression, val phi: Expression)
-        extends SphericalHarmonic
+    extends SphericalHarmonic
         with Empty {
 
     def minusM = SphericalHarmonic(degree, -order, theta, phi)
@@ -60,7 +60,7 @@ private class EmptyHarmonic(val degree: Natural, val order: Integer, val theta: 
 }
 
 class LMHarmonic(val degree: Natural, val order: Integer, val theta: Expression, val phi: Expression)
-        extends SphericalHarmonic
+    extends SphericalHarmonic
         with Represented {
 
     require(degree >= order.abs)
@@ -70,15 +70,17 @@ class LMHarmonic(val degree: Natural, val order: Integer, val theta: Expression,
     lazy val lpm: Natural = degree + order
 
     def representation = (PositiveSquareRoot(((2 * degree) + 1) * (lmm !) / (4 * Pi * (lpm !)))
-            * AssociatedLegendrePolynomial(degree, order)(Cos(theta))
-            * Exp(i * order * phi))
+        * AssociatedLegendrePolynomial(degree, order)(Cos(theta))
+        * Exp(i * order * phi))
 
     def minusM = SphericalHarmonic(degree, -order, theta, phi)
+
+    override def isEmpty = super.isEmpty
 
 }
 
 class ConjugatedSphericalHarmonic(val ylm: SphericalHarmonic)
-        extends SphericalHarmonic
+    extends SphericalHarmonic
         with Represented {
 
     def degree = ylm.degree

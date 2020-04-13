@@ -32,6 +32,7 @@ object IterativelyEvaluate {
 
             if (continue) n = n.succ
             if (continue && increasePrecision) {
+                //FIXME need to restart with increased precision
                 currentPrecision = currentPrecision.increase
                 if ((currentPrecision > maxPrecision).contains(true)) continue = false //Failed to converge
             }
