@@ -43,16 +43,7 @@ class RealProduct protected(override val terms: Seq[Real])
     protected[this] def tryMultiply(left: Real, right: Real) = left ?*? right
 
     def doApproximatelyEvaluate(precision: Precision) = {
-        //FIXME use a more efficient evaluation algorithm - this can go haywire
-        val evaluated = terms.map(_.approximatelyEvaluate(precision))
-        val totalPrecision: Integer = evaluated.foldLeft(precision.digits.asInstanceOf[Integer])((current, term) => current + intLength(term))
-        if (totalPrecision <= precision.digits) {
-            evaluated.product;
-        } else {
-            val diff: Natural = Natural.convert(totalPrecision - precision.digits);
-            val newPrecision = precision.increaseBy(diff)
-            terms.map(_.approximatelyEvaluate(newPrecision)).product
-        }
+        terms.map(_.approximatelyEvaluate(precision)).product
     }
 
     override def tryEvaluate(precision: Precision): OptionalBigDecimal = {

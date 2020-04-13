@@ -4,12 +4,13 @@ import net.ollie.maths.Variable
 import net.ollie.maths.numbers._
 import net.ollie.maths.numbers.complex.{Complex, ImaginaryUnit}
 import net.ollie.maths.numbers.constants.{EulersNumber, One, Pi, Zero}
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
 /**
  * Created by Ollie on 16/01/14.
  */
-class LnTest extends FlatSpec with Matchers {
+class LnTest extends AnyFlatSpec with Matchers {
 
     import net.ollie.maths.numbers.Precision._
 

@@ -121,6 +121,8 @@ class ExactNatural(override val int: Int)
 
     require(int >= 0, "Int [" + int + "] is not positive!")
 
+    override def hashCode = int
+
 }
 
 class ExactBigNatural(override val evaluate: BigInt)

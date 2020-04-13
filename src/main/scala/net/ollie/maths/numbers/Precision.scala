@@ -23,6 +23,8 @@ sealed trait Precision {
 
     def increaseBy(value: Natural): Precision
 
+    lazy val doubled = increaseBy(digits)
+
     def within(bd1: BigDecimal, bd2: BigDecimal): Boolean
 
     def >(that: Precision): Option[Boolean] = None
@@ -33,6 +35,10 @@ sealed trait Precision {
         if (this equals that) Some(true)
         else this > that
     }
+
+    override def equals(obj: Any) = obj.isInstanceOf[Precision] && this.equals(obj.asInstanceOf[Precision])
+
+    override def hashCode = digits.hashCode
 
     def equals(that: Precision): Boolean
 
@@ -78,6 +84,8 @@ object Precision {
 class DecimalPlaces(val digits: Natural)
     extends Precision {
 
+    private lazy val tolerance = BigDecimal(Math.pow(10, -digits.requireInt))
+
     def apply(bd: BigDecimal)(implicit mode: RoundingMode = Precision.DEFAULT_ROUNDING) = {
         bd.setScale(digits.toInt.get, mode)
     }
@@ -85,14 +93,7 @@ class DecimalPlaces(val digits: Natural)
     def increaseBy(value: Natural) = new DecimalPlaces(this.digits + value)
 
     override def within(bd1: BigDecimal, bd2: BigDecimal) = {
-        decimalPlaces(bd1 - bd2) < digits
-    }
-
-    def decimalPlaces(bd: BigDecimal): Int = {
-        if (bd.scale == 0) return 0
-        val str = bd.abs.underlying.stripTrailingZeros.toPlainString
-        val dot = str.indexOf('.')
-        if (dot < 0) 0 else str.length - dot - 1
+        (bd1 - bd2).abs < tolerance
     }
 
     override def >(that: Precision) = that match {
@@ -130,6 +131,7 @@ class SignificantFigures(val digits: Natural)
     require(digits.isPositive)
 
     private val digitsI = digits.toInt.get
+    private lazy val tenPowI = BigDecimal(10 ^ digitsI)
 
     def apply(bd: BigDecimal)(implicit mode: RoundingMode = Precision.DEFAULT_ROUNDING) = {
         bd.setScale(digitsI, mode).round(toMathContext(mode))
@@ -137,8 +139,16 @@ class SignificantFigures(val digits: Natural)
 
     def increaseBy(value: Natural) = new SignificantFigures(this.digits + value)
 
-    override def within(bd1: BigDecimal, bd2: BigDecimal) = {
-        ???
+    override def within(bd1: BigDecimal, bd2: BigDecimal): Boolean = {
+        val delta = (bd1 - bd2).abs
+        digits(delta) < digits
+    }
+
+    private def digits(d: BigDecimal): Int = {
+        val s = d.underlying().toPlainString
+        val c = s.indexOf('.')
+        if (c < 0) s.length
+        else s.length - 1
     }
 
     override def >(that: Precision) = that match {

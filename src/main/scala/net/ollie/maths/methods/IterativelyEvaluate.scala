@@ -1,39 +1,28 @@
 package net.ollie.maths.methods
 
 import net.ollie.maths.CachedEvaluated
-import net.ollie.maths.numbers.{Natural, Precision}
 import net.ollie.maths.numbers.constants.Zero
+import net.ollie.maths.numbers.{Natural, Precision}
 
 /**
  * Created by Ollie on 12/01/14.
  */
 object IterativelyEvaluate {
 
-    //FIXME this doesn't converge properly
     def apply(precision: Precision, f: IterativelyEvaluated): BigDecimal = {
-        var previous: BigInt = 0
+        val max = precision.doubled
         var current: BigDecimal = 0
-        var continue = true
         var currentPrecision = precision
-        var n: Natural = Zero
+        val n: Natural = Zero
+        var continue: Boolean = true
         val iterator = f.evaluationIterator(precision)
-        var life = true
-        while (continue) {
+        do {
+            val prev = current
             current = iterator.next(n, currentPrecision)
-            val next = toBigInt(current, precision)
-            continue = next.compare(previous) != 0
-            if (continue)
-                life = true
-            else {
-                continue = life;
-                life = false
-            }
-            if (continue) {
-                previous = next
-                currentPrecision = currentPrecision.increase
-                n = n.succ
-            }
-        }
+            if (precision.within(current, prev)) continue = false
+            else currentPrecision = currentPrecision.increase
+            if (continue && (currentPrecision > max).contains(true)) continue = false //FIXME check convergence better
+        } while (continue)
         current to precision
     }
 
