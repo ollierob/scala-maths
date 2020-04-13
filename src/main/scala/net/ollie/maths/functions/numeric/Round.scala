@@ -29,14 +29,14 @@ object Nearest extends Round {
 }
 
 sealed trait Round
-        extends UnivariateFunction[Real, Integer] {
+    extends UnivariateFunction[Real, Integer] {
 
     protected[this] def roundingMode: RoundingMode
 
     def apply(d: BigDecimal): Integer = IntegerPrecision(d)(roundingMode).toBigInt
 
     def apply(re: Real): Integer = {
-        val bd = re.evaluate(Round.ONE_DP)
+        val bd = re.evaluate(DEFAULT_PRECISION)
         Integer(bd.setScale(0, roundingMode).toBigInt)
     }
 
@@ -47,5 +47,11 @@ sealed trait Round
 object Round {
 
     protected val ONE_DP = 1 dp
+
+}
+
+trait Roundable {
+
+    def round: Integer
 
 }

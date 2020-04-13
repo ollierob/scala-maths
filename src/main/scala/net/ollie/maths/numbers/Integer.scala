@@ -1,5 +1,6 @@
 package net.ollie.maths.numbers
 
+import net.ollie.maths.functions.numeric.{Nearest, Roundable}
 import net.ollie.maths.numbers.constants.{MinusOne, One, Zero}
 import net.ollie.utils.Is
 
@@ -87,7 +88,9 @@ object Integer
     private val ZERO = BigInt(0)
     private val MINUS_ONE = BigInt(-1)
 
-    implicit def apply(int: Int): Integer = int match {
+    implicit def apply(int: Int): Integer = apply(int.toLong)
+
+    implicit def apply(int: Long): Integer = int match {
         case -1 => MinusOne
         case _ if int >= 0 => Natural(int)
         case _ => new ExactInteger(int)
@@ -110,6 +113,18 @@ object Integer
     def abs(i: Integer): Natural = Natural(i.evaluate.abs)
 
     override def is(r: Real): Boolean = r.isInstanceOf[Integer]
+
+    def round(r: Real): Integer = r match {
+        case Zero => Zero
+        case i: Integer => i
+        case r: Roundable => r.round
+        case _ => Nearest(r)
+    }
+
+    def round(bd: BigDecimal): Integer = bd match {
+        case Zero.BIG_DECIMAL => Zero
+        case _ => apply(bd.rounded.toLongExact)
+    }
 
     implicit object IntegerArithmetic
         extends Numeric[Integer] {
@@ -140,7 +155,7 @@ object Integer
 
 }
 
-class ExactInteger(val int: Int)
+class ExactInteger(val int: Long)
     extends Integer {
 
     val evaluate = BigInt(int)

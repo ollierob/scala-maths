@@ -117,13 +117,13 @@ object Natural {
 
 }
 
-class ExactNatural(override val int: Int)
+class ExactNatural(override val int: Long)
     extends ExactInteger(int)
         with Natural {
 
     require(int >= 0, "Int [" + int + "] is not positive!")
 
-    override def hashCode = int
+    override def hashCode = int.hashCode()
 
 }
 

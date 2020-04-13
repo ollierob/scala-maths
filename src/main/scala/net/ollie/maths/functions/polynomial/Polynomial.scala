@@ -10,6 +10,8 @@ import net.ollie.maths.numbers.complex.Complex
 import net.ollie.maths.numbers.constants.Zero
 
 /**
+ * Finite-length power series.
+ *
  * Created by Ollie on 08/01/14.
  *
  * @see http://mathworld.wolfram.com/Polynomial.html

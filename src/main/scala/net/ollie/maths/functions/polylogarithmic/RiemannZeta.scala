@@ -59,19 +59,20 @@ class RiemannZetaOf(val of: Expression)
 
 }
 
-private class EvenIntegerZeta(val of: Natural)
+private class EvenIntegerZeta(val n: Natural)
     extends Real
         with RiemannZeta
         with CachedEvaluated {
 
-    require(!of.isEmpty)
-    require(of.isEven)
+    require(!n.isEmpty && n.isEven)
 
     def isEmpty = false
 
-    private lazy val halfN: Natural = (of / 2).numerator.abs
+    def of = n
 
-    private lazy val rep: Real = (MinusOne ^ (halfN.succ)) * BernoulliPlusSequence(of) * ((2 * Pi) ^ of) / (2 * (of !))
+    private lazy val halfN: Integer = Integer.round(n / 2)
+
+    private lazy val rep: Real = (MinusOne ^ (halfN + 1)) * BernoulliPlusSequence(n) * ((2 * Pi) ^ n) / (2 * (n !))
 
     protected[this] def doEvaluate(precision: Precision) = rep.evaluate(precision)
 

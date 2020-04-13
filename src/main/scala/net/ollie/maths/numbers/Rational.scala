@@ -1,7 +1,7 @@
 package net.ollie.maths.numbers
 
 import net.ollie.maths.expressions.ExpressionFraction
-import net.ollie.maths.functions.numeric.GreatestCommonDivisor
+import net.ollie.maths.functions.numeric.{GreatestCommonDivisor, Roundable}
 import net.ollie.maths.methods.ApproximatelyEvaluated
 import net.ollie.maths.numbers.constants.{MinusOne, One, Zero}
 import net.ollie.utils.Is
