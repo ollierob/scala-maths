@@ -4,7 +4,7 @@ import net.ollie.maths.Variable
 import net.ollie.maths.numbers.Precision._
 import net.ollie.maths.numbers.complex.ImaginaryUnit
 import net.ollie.maths.numbers.constants.{One, Pi, Zero}
-import net.ollie.maths.numbers.{Infinity, Integer, Precision}
+import net.ollie.maths.numbers.{Infinity, Integer}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 

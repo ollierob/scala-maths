@@ -3,8 +3,8 @@ package net.ollie.maths.methods
 import net.ollie.maths._
 import net.ollie.maths.expressions.Univariate
 import net.ollie.maths.functions.FunctionBuilder
-import net.ollie.maths.numbers.{Natural, Precision, Real}
 import net.ollie.maths.numbers.constants.Zero
+import net.ollie.maths.numbers.{Natural, Precision, Real}
 
 /**
  * Evaluates a univariate expression at a value, using the derivatives at another value (whose value is, ideally, already explicitly known).
@@ -59,8 +59,7 @@ private class RealTaylorSeries(val f: Univariate, val x: Real, val a: Real)(impl
 object RealMaclaurinSeries {
 
     def apply(builder: FunctionBuilder, at: Real): Real = {
-        val x = Variable("$x")
-        RealMaclaurinSeries(builder(x), at)
+        RealMaclaurinSeries(builder(Variable.temp), at)
     }
 
     def apply(expression: Univariate, at: Real): Real = RealTaylorSeries(expression, at, Zero)

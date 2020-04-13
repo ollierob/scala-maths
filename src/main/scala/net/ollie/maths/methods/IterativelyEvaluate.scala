@@ -10,21 +10,36 @@ import net.ollie.maths.numbers.{Natural, Precision}
 object IterativelyEvaluate {
 
     def apply(precision: Precision, f: IterativelyEvaluated): BigDecimal = {
-        val max = precision.doubled
+
+        val maxPrecision = precision.doubled
+
         var current: BigDecimal = null
         var currentPrecision = precision
         var n: Natural = Zero
         var continue: Boolean = true
         val iterator = f.evaluationIterator(precision)
+        var increasePrecision = false
+
         do {
+
             val prev = current
             current = iterator.next(n, currentPrecision)
-            if (prev != null && precision.within(current, prev)) continue = false
-            else currentPrecision = currentPrecision.increase
-            if (continue && (currentPrecision > max).contains(true)) continue = false //FIXME check convergence better
+            if (prev != null) {
+                val isPrecise = precision.within(current, prev) || current == prev
+                if (isPrecise && !increasePrecision) increasePrecision = true
+                else if (isPrecise) continue = false
+            }
+
             if (continue) n = n.succ
+            if (continue && increasePrecision) {
+                currentPrecision = currentPrecision.increase
+                if ((currentPrecision > maxPrecision).contains(true)) continue = false //Failed to converge
+            }
+
         } while (continue)
+
         current to precision
+
     }
 
 }
