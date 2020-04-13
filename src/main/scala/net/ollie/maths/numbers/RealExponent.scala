@@ -3,7 +3,7 @@ package net.ollie.maths.numbers
 import net.ollie.maths.expressions.Exponentiated
 import net.ollie.maths.functions.numeric.NumericRoots
 import net.ollie.maths.numbers.complex.Complex
-import net.ollie.maths.numbers.constants.{One, Zero}
+import net.ollie.maths.numbers.constants.{One, Two, Zero}
 import net.ollie.maths.{CachedEvaluated, Operation, Variable}
 import org.nevec.rjm.BigDecimalMath
 

@@ -85,6 +85,11 @@ class PositiveSquareRoot(val of: PositiveReal)
 
     def isEmpty = of.isEmpty
 
+    override def ^(that: Integer) = that match {
+        case Two => squared
+        case _ => super.^(that)
+    }
+
     override def squared = of
 
     override def ?*(that: Real) = that match {

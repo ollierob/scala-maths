@@ -37,14 +37,16 @@ trait Complex
 
     def isGaussian = re.isInteger && im.isInteger
 
-    override def ^(that: Expression) = Complex(that.toConstant) match {
-        case Some(z) => this ^ z
+    override def ^(that: Expression) = that.toConstant match {
+        case Some(i: Integer) => this ^ i
+        case Some(r: Real) => this ^ r
+        case Some(z: Complex) => this ^ z
         case _ => super.^(that)
     }
 
-    def ^(that: Real): ComplexPower = this ^ Complex(that)
-
     def ^(that: Integer): Complex = Complex.pow(this, that)
+
+    def ^(that: Real): ComplexPower = this ^ Complex(that)
 
     def ^(that: Complex): ComplexPower = Complex.pow(this, that)
 
@@ -94,6 +96,8 @@ object Complex
         }
         case _ => None
     }
+
+    implicit def convert(pair: (Int, Int)): Complex = apply((Real(pair._1), Real(pair._2)))
 
     implicit def apply(pair: (Real, Real)): Complex = pair match {
         case (Zero, Zero) => zero

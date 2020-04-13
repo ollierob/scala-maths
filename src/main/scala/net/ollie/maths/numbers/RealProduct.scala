@@ -79,4 +79,6 @@ class RealProduct protected(override val terms: Seq[Real])
         case _ => super.equals(that)
     }
 
+    override def toString: String = super.toString
+
 }

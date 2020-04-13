@@ -70,6 +70,8 @@ private class RealArcTan(val of: Real)
 
     override def isEmpty = of.isEmpty //Only zero at x=0
 
+    override def toString = super[ArcTan].toString
+
     private class ArcTanEvaluator
         extends Real {
 

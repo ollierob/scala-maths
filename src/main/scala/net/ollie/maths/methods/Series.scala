@@ -50,7 +50,7 @@ object Series {
     def apply(f: Natural => Real, start: Natural, end: Natural): Real = {
         if (end < start) return Zero
         def g(i: Int): Real = f(Natural(i) + start)
-        Seq.tabulate((end - start).toInt.get)(g).sum
+        Seq.tabulate((end - start).toInt.get + 1)(g).sum
     }
 
     def apply(f: Integer => Expression, start: Integer): Expression = {

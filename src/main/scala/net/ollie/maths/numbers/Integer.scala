@@ -1,6 +1,6 @@
 package net.ollie.maths.numbers
 
-import net.ollie.maths.numbers.constants.{MinusOne, One}
+import net.ollie.maths.numbers.constants.{MinusOne, One, Zero}
 import net.ollie.utils.Is
 
 /**
@@ -82,6 +82,7 @@ trait Integer
 object Integer
     extends Is[Real] {
 
+    private val ZERO = BigInt(0)
     private val MINUS_ONE = BigInt(-1)
 
     implicit def apply(int: Int): Integer = int match {
@@ -90,7 +91,12 @@ object Integer
         case _ => new ExactInteger(int)
     }
 
-    implicit def apply(int: BigInt): Integer = if (int > 0) Natural(int) else if (int == MINUS_ONE) MinusOne else new ExactBigInteger(int)
+    implicit def apply(int: BigInt): Integer = {
+        if (int > 0) Natural(int)
+        else if (int == ZERO) Zero
+        else if (int == MINUS_ONE) MinusOne
+        else new ExactBigInteger(int)
+    }
 
     def negate(i: Integer): Integer = {
         if (i.isEmpty) i

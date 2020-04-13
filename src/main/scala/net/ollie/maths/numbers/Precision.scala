@@ -1,9 +1,11 @@
 package net.ollie.maths.numbers
 
 import java.math.MathContext
+
+import net.ollie.maths.numbers.Precision._
+
 import scala.math.BigDecimal.RoundingMode
 import scala.math.BigDecimal.RoundingMode.RoundingMode
-import Precision._
 
 /**
  * Precision object that allows specification to a number of significant figures, decimal places, or bytes.
@@ -19,7 +21,7 @@ sealed trait Precision {
 
     def increaseBy(value: Natural): Precision
 
-    def getType: Class[_ <: Precision]
+    def within(bd1: BigDecimal, bd2: BigDecimal): Boolean
 
     def >(that: Precision): Option[Boolean] = None
 
@@ -78,14 +80,23 @@ class DecimalPlaces(val digits: Natural)
 
     def increaseBy(value: Natural) = new DecimalPlaces(this.digits + value)
 
+    override def within(bd1: BigDecimal, bd2: BigDecimal) = {
+        decimalPlaces(bd1 - bd2) < digits
+    }
+
+    def decimalPlaces(bd: BigDecimal): Int = {
+        if (bd.scale == 0) return 0
+        val str = bd.abs.underlying.stripTrailingZeros.toPlainString
+        val dot = str.indexOf('.')
+        if (dot < 0) 0 else str.length - dot - 1
+    }
+
     override def >(that: Precision) = that match {
         case d: DecimalPlaces => Some(this.digits > d.digits)
         case _ => super.>(that)
     }
 
     override def toString = digits.toString + " decimal places"
-
-    def getType = classOf[DecimalPlaces]
 
     def equals(that: Precision) = that match {
         case d: DecimalPlaces => this.digits == d.digits
@@ -106,10 +117,10 @@ object IntegerPrecision
  * @param digits
  */
 class SignificantFigures(val digits: Natural)
-    extends AnyRef
-        with Precision {
+    extends Precision {
 
     require(digits.isPositive)
+
     private val digitsI = digits.toInt.get
 
     def apply(bd: BigDecimal)(implicit mode: RoundingMode = Precision.DEFAULT_ROUNDING) = {
@@ -118,14 +129,16 @@ class SignificantFigures(val digits: Natural)
 
     def increaseBy(value: Natural) = new SignificantFigures(this.digits + value)
 
+    override def within(bd1: BigDecimal, bd2: BigDecimal) = {
+        ???
+    }
+
     override def >(that: Precision) = that match {
         case s: SignificantFigures => Some(this.digits > s.digits)
         case _ => super.>(that)
     }
 
     override def toString = digits.toString + " significant figures"
-
-    def getType = classOf[SignificantFigures]
 
     def equals(that: Precision) = that match {
         case s: SignificantFigures => this.digits == s.digits
@@ -140,8 +153,11 @@ object SignificantFigures {
 
 }
 
-object SinglePrecision extends SignificantFigures(7)
+object SinglePrecision
+    extends SignificantFigures(7)
 
-object DoublePrecision extends SignificantFigures(16)
+object DoublePrecision
+    extends SignificantFigures(16)
 
-object QuadPrecision extends SignificantFigures(34)
+object QuadPrecision
+    extends SignificantFigures(34)

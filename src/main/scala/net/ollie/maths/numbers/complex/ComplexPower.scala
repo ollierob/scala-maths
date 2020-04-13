@@ -10,10 +10,11 @@ import net.ollie.maths.numbers.constants.{One, Zero}
 
 /**
  * Created by Ollie on 25/02/14.
+ *
  * @see http://mathworld.wolfram.com/ComplexExponentiation.html
  */
 trait ComplexPower
-        extends Multivalued
+    extends Multivalued
         with Exponentiated {
 
     type Contents = Complex
@@ -33,9 +34,9 @@ trait ComplexPower
 object ComplexPower {
 
     def apply(base: Complex, power: Integer): Complex = {
-        if (base.isEmpty) return Zero
-        if (power.isEmpty) return One
-        return new ComplexToIntegerPower(base, power)
+        if (base.isEmpty) Zero
+        else if (power.isEmpty) One
+        else new ComplexToIntegerPower(base, power)
     }
 
     def apply(base: Complex, power: Complex): ComplexPower = new ComplexPowers(base, power)
@@ -43,14 +44,14 @@ object ComplexPower {
 }
 
 private class ComplexPowers(val base: Complex, val power: Complex)
-        extends ComplexPower {
+    extends ComplexPower {
 
     private lazy val log: ComplexLogarithms = Ln(base)
 
     val principal: Complex = new PrincipalComplexPower(base, power)
 
     private class PrincipalComplexPower(val base: Complex, val power: Complex)
-            extends PolarComplex
+        extends PolarComplex
             with Exponentiated {
 
         val r: Real = Exp((base * log.principal).re)
@@ -69,7 +70,7 @@ private class ComplexPowers(val base: Complex, val power: Complex)
  *
  */
 private class ComplexToIntegerPower(val base: Complex, val power: Integer)
-        extends PolarComplex
+    extends PolarComplex
         with Exponentiated {
 
     private lazy val p = PolarComplex(base)
@@ -81,5 +82,7 @@ private class ComplexToIntegerPower(val base: Complex, val power: Integer)
     override def isEmpty = super[PolarComplex].isEmpty
 
     override def df(x: Variable) = super[PolarComplex].df(x)
+
+    override def toString = s"($base ^ $power)"
 
 }

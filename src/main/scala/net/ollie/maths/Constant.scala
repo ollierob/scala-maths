@@ -1,6 +1,6 @@
 package net.ollie.maths
 
-import net.ollie.maths.expressions.{Empty, Expression, Integrable, Invertible, Multiplied, Nonvariate}
+import net.ollie.maths.expressions._
 import net.ollie.maths.numbers.constants.{One, Unity, Zero}
 import net.ollie.utils.Is
 
@@ -111,6 +111,8 @@ trait Constant
     }
 
     def equals(n: Constant) = super.equals(n)
+
+    def as[N <: Constant](identity: NumberIdentityArithmetic[N]): N = identity(this).get
 
 }
 
