@@ -59,6 +59,8 @@ trait Integer
 
     def isEven: Boolean = this.evaluate % 2 == 0
 
+    def isOdd: Boolean = !this.isEven
+
     override def isEmpty = evaluate == 0
 
     override def equals(that: Real): Boolean = that match {

@@ -2,12 +2,12 @@ package net.ollie.maths.functions.polylogarithmic
 
 import net.ollie.maths.CachedEvaluated
 import net.ollie.maths.expressions.Expression
-import net.ollie.maths.functions.{BuiltFunction, RealFunctionBuilder}
-import net.ollie.maths.numbers._
-import net.ollie.maths.methods.Series
-import net.ollie.maths.numbers.constants._
 import net.ollie.maths.functions.numeric.Ln
-import net.ollie.maths.sequences.{BernoulliPlusSequence, BernoulliSequence}
+import net.ollie.maths.functions.{BuiltFunction, RealFunctionBuilder}
+import net.ollie.maths.methods.Series
+import net.ollie.maths.numbers._
+import net.ollie.maths.numbers.constants._
+import net.ollie.maths.sequences.{BernoulliMinusSequence, BernoulliPlusSequence}
 
 /**
  * Created by Ollie on 17/02/14.
@@ -25,7 +25,7 @@ object RiemannZeta
 
     def apply(i: Integer): Real = i match {
         case Zero => empty
-        case _ if !i.isPositive => -BernoulliPlusSequence(i.abs.succ) / i.abs.succ
+        case _ if !i.isPositive => -BernoulliMinusSequence(i.abs.succ) / i.abs.succ
         case One => Infinity
         case _ if i.isEven => new EvenIntegerZeta(i.abs)
         case _ => Zero

@@ -5,7 +5,7 @@ import net.ollie.maths.functions.BivariateFunction
 import net.ollie.maths.numbers.combinatorial.BinomialCoefficient._
 import net.ollie.maths.numbers.constants.{Half, One, Zero}
 import net.ollie.maths.numbers.{Natural, Rational, Real}
-import net.ollie.maths.sequences.BernoulliPlusSequence
+import net.ollie.maths.sequences.BernoulliMinusSequence
 
 /**
  * Created by Ollie on 08/03/14.
@@ -18,7 +18,7 @@ trait BernoulliPolynomial
 
     override type Coefficient = Rational
 
-    override def coefficient(k: Natural) = (degree choose k) * BernoulliPlusSequence(Natural.require(degree - k))
+    override def coefficient(k: Natural) = (degree choose k) * BernoulliMinusSequence(Natural.require(degree - k))
 
     override def toString = s"BernoulliPolynomial($degree)($of)" //B_n(x)
 

@@ -31,7 +31,7 @@ object Series {
         }
     }
 
-    def natural(f: Natural => Expression, start: Natural, end: Natural): Expression = {
+    def apply(f: Natural => Expression, start: Natural, end: Natural): Expression = {
         if (end < start) Zero
         else new NaturalFiniteSumOf(f, start, end)
     }
@@ -43,17 +43,13 @@ object Series {
 
     def apply(f: Integer => Real, start: Integer, end: Integer): Real = {
         if (end < start) return Zero
-
         def g(i: Int): Real = f(Integer(i) + start)
-
         Seq.tabulate((end - start).toInt.get + 1)(g).sum
     }
 
     def apply(f: Natural => Real, start: Natural, end: Natural): Real = {
         if (end < start) return Zero
-
         def g(i: Int): Real = f(Natural(i) + start)
-
         Seq.tabulate((end - start).toInt.get + 1)(g).sum
     }
 
