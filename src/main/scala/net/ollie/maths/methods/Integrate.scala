@@ -36,7 +36,7 @@ object Integrate {
     }
 
     def apply(fn: Variable => Expression, from: Expression, to: Expression): Expression = {
-        val v = Variable.virtual
+        val v = Variable.temp
         Integrate(fn(v), v, from, to)
     }
 

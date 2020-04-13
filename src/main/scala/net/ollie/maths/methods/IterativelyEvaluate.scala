@@ -13,7 +13,7 @@ object IterativelyEvaluate {
         val max = precision.doubled
         var current: BigDecimal = 0
         var currentPrecision = precision
-        val n: Natural = Zero
+        var n: Natural = Zero
         var continue: Boolean = true
         val iterator = f.evaluationIterator(precision)
         do {
@@ -22,6 +22,7 @@ object IterativelyEvaluate {
             if (precision.within(current, prev)) continue = false
             else currentPrecision = currentPrecision.increase
             if (continue && (currentPrecision > max).contains(true)) continue = false //FIXME check convergence better
+            if (continue) n = n.succ
         } while (continue)
         current to precision
     }

@@ -13,7 +13,7 @@ object Variable {
 
     def apply(name: String): Variable = new NamedVariable(name)
 
-    def virtual: Variable = Variable("$" + UUID.randomUUID.toString)
+    def temp: Variable = Variable("$" + UUID.randomUUID.toString)
 
 }
 

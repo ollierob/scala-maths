@@ -26,8 +26,12 @@ class LnTest extends AnyFlatSpec with Matchers {
     behavior of "Ln(2)"
 
     {
-        
-        it should "be 0" in {
+
+        it should "not be empty" in {
+            Ln(2).isEmpty shouldBe false
+        }
+
+        it should "evaluate" in {
             Ln(2).evaluate(4 dp) shouldBe BigDecimal("0.6931")
         }
 

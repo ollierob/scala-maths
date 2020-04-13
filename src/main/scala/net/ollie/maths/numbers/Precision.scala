@@ -86,7 +86,7 @@ class DecimalPlaces(val digits: Natural)
     extends Precision {
 
     private lazy val tolerance = BigDecimal(Math.pow(10, -digits.requireInt))
-    private lazy val defaultContext = new MathContext(digits.requireInt, DEFAULT_ROUNDING)
+    private lazy val defaultContext = new MathContext(1 + digits.requireInt, DEFAULT_ROUNDING)
 
     def apply(bd: BigDecimal)(implicit mode: RoundingMode = DEFAULT_ROUNDING) = {
         bd.setScale(digits.toInt.get, mode)
@@ -95,7 +95,7 @@ class DecimalPlaces(val digits: Natural)
     override def applyTo(bd: BigDecimal, fn: (BigDecimal, MathContext) => BigDecimal)(implicit mode: RoundingMode) = {
         val firstAttempt = fn(bd, defaultContext)
         val d = BigDecimals.nonDecimalDigits(firstAttempt)
-        if (d > 0) fn(bd, new MathContext(digits.requireInt + d, mode)) else firstAttempt
+        if (d > 1) fn(bd, new MathContext(digits.requireInt + d, mode)) else firstAttempt
     }
 
     def increaseBy(value: Natural) = new DecimalPlaces(this.digits + value)
