@@ -33,6 +33,8 @@ class RealProduct protected(override val terms: Seq[Real])
         with Real
         with ApproximatelyEvaluated {
 
+    private lazy val empty = isEmpty
+
     override protected[this] def apply(terms: Seq[Real]) = RealProduct(terms)
 
     override def ?*(that: Real): Option[Real] = that match {
@@ -43,7 +45,9 @@ class RealProduct protected(override val terms: Seq[Real])
     protected[this] def tryMultiply(left: Real, right: Real) = left ?*? right
 
     def doApproximatelyEvaluate(precision: Precision) = {
-        terms.map(_.approximatelyEvaluate(precision)).product
+        val product = terms.map(_.approximatelyEvaluate(precision)).product
+        if (!empty && product == 0) doApproximatelyEvaluate(precision.increase) //FIXME only increase a certain number of times
+        else product
     }
 
     override def tryEvaluate(precision: Precision): OptionalBigDecimal = {

@@ -45,6 +45,8 @@ private class GeneratedMaclaurinSeries[C <: Constant]
 (implicit arithmetic: MultiplicationArithmetic[C, Real, C])
     extends MaclaurinSeries {
 
+    override type Coefficient = C
+
     override def isEmpty = generator.isEmpty
 
     override def of = x

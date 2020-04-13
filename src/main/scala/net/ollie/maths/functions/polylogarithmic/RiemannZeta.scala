@@ -7,14 +7,15 @@ import net.ollie.maths.numbers._
 import net.ollie.maths.methods.Series
 import net.ollie.maths.numbers.constants._
 import net.ollie.maths.functions.numeric.Ln
-import net.ollie.maths.sequences.BernoulliSequence
+import net.ollie.maths.sequences.{BernoulliPlusSequence, BernoulliSequence}
 
 /**
  * Created by Ollie on 17/02/14.
+ *
  * @see http://mathworld.wolfram.com/RiemannZetaFunction.html
  */
 object RiemannZeta
-        extends RealFunctionBuilder {
+    extends RealFunctionBuilder {
 
     def apply(re: Real): Real = re match {
         case Zero => empty
@@ -24,7 +25,7 @@ object RiemannZeta
 
     def apply(i: Integer): Real = i match {
         case Zero => empty
-        case _ if !i.isPositive => -BernoulliSequence(i.abs.succ) / i.abs.succ
+        case _ if !i.isPositive => -BernoulliPlusSequence(i.abs.succ) / i.abs.succ
         case One => Infinity
         case _ if i.isEven => new EvenIntegerZeta(i.abs)
         case _ => Zero
@@ -45,7 +46,7 @@ trait RiemannZeta {
 }
 
 class RiemannZetaOf(val of: Expression)
-        extends BuiltFunction
+    extends BuiltFunction
         with RiemannZeta {
 
     def isEmpty = false
@@ -59,7 +60,7 @@ class RiemannZetaOf(val of: Expression)
 }
 
 private class EvenIntegerZeta(val of: Natural)
-        extends Real
+    extends Real
         with RiemannZeta
         with CachedEvaluated {
 
@@ -70,7 +71,7 @@ private class EvenIntegerZeta(val of: Natural)
 
     private lazy val halfN: Natural = (of / 2).numerator.abs
 
-    private lazy val rep: Real = (MinusOne ^ (halfN.succ)) * BernoulliSequence(of) * ((2 * Pi) ^ of) / (2 * (of !))
+    private lazy val rep: Real = (MinusOne ^ (halfN.succ)) * BernoulliPlusSequence(of) * ((2 * Pi) ^ of) / (2 * (of !))
 
     protected[this] def doEvaluate(precision: Precision) = rep.evaluate(precision)
 

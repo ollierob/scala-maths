@@ -1,20 +1,24 @@
 package net.ollie.maths.sequences
 
+import net.ollie.maths.numbers.IntegerFraction
 import net.ollie.maths.numbers.Precision._
-import net.ollie.maths.numbers.{Integer, IntegerFraction}
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
 /**
  * Created by Ollie on 19/02/14.
  */
-class BernoulliSequenceTest extends FlatSpec with Matchers {
+class BernoulliSequenceTest extends AnyFlatSpec with Matchers {
+
+    "Bernoulli(2)" should "be 1/6" in {
+        val b = BernoulliPlusSequence(2)
+        b shouldBe IntegerFraction(1, 6)
+    }
 
     "Bernoulli(6)" should "be 1/42" in {
-        val b = BernoulliSequence(6)
-        b.numerator shouldBe Integer(1)
-        b.denominator shouldBe Integer(42)
-        b.evaluate(4 dp) shouldBe BigDecimal("0.0238")
+        val b = BernoulliPlusSequence(6)
         b shouldBe IntegerFraction(1, 42)
+        b.evaluate(4 dp) shouldBe BigDecimal("0.0238")
     }
 
 }

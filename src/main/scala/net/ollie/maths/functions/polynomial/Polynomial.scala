@@ -53,6 +53,8 @@ class NegatedPolynomial[P <: Polynomial](override val expression: P)
     extends NegatedExpression[P](expression)
         with Polynomial {
 
+    override type Coefficient = Constant
+
     override def of = expression.of
 
     override def representation = -(expression.representation)
@@ -78,6 +80,8 @@ class NegatedPolynomial[P <: Polynomial](override val expression: P)
 trait EmptyPolynomial
     extends Polynomial
         with Empty {
+
+    override type Coefficient = Zero.type
 
     def representation: Expression with Empty = Zero
 

@@ -71,11 +71,13 @@ object UnivariatePolynomial extends Is[Polynomial] {
 class ConstantUnivariatePolynomial(val of: Variable, val c: Constant)
     extends UnivariatePolynomial {
 
+    override type Coefficient = Constant
+
     override def degree = 0
 
     override lazy val representation = c
 
-    override def coefficient(power: Natural) = power match {
+    override def coefficient(power: Natural): Constant = power match {
         case Zero => c
         case _ => Zero
     }

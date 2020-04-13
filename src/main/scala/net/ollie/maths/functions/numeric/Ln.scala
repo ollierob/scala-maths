@@ -1,6 +1,5 @@
 package net.ollie.maths.functions.numeric
 
-import ch.obermuhlner.math.big.BigDecimalMath
 import net.ollie.maths._
 import net.ollie.maths.expressions.{Composition, Expression, Invertible}
 import net.ollie.maths.functions.ComplexFunctionBuilder

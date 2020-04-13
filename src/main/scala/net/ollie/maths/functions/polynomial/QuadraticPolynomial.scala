@@ -43,6 +43,8 @@ class UnivariateQuadraticPolynomial(val x: Variable, val a: Complex, val b: Comp
 
     require(!a.isZero)
 
+    override type Coefficient = Complex
+
     override def of = x;
 
     override def replace(variables: Map[Variable, Expression]) = {
@@ -55,7 +57,7 @@ class UnivariateQuadraticPolynomial(val x: Variable, val a: Complex, val b: Comp
 
     override def roots = new QuadraticRoots(this)
 
-    override def coefficient(power: Natural): Complex = power match {
+    override def coefficient(power: Natural) = power match {
         case Two => a
         case One => b
         case Zero => c

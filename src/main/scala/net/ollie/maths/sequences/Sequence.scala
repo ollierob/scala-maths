@@ -17,7 +17,7 @@ trait Sequence {
 }
 
 trait CachingSequence
-        extends Sequence {
+    extends Sequence {
 
     private val cache = new mutable.HashMap[Natural, Element]() ++ initial
 
@@ -25,11 +25,10 @@ trait CachingSequence
         if (!shouldCache(n)) return createNoCache(n)
         cache.get(n) match {
             case Some(m) => m
-            case _ => {
+            case _ =>
                 val m = create(n)
                 cache.put(n, m)
-                return m
-            }
+                m
         }
     }
 

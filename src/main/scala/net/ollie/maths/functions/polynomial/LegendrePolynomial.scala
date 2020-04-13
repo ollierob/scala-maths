@@ -11,9 +11,11 @@ import net.ollie.maths.numbers.constants.{One, Zero}
 trait LegendrePolynomial
     extends AssociatedLegendrePolynomial {
 
+    override type Coefficient = Rational
+
     override def order = Zero
 
-    override def coefficient(power: Natural): Constant = ??? //TODO
+    override def coefficient(power: Natural): Rational = ??? //TODO
 
     override def isEmpty = false
 

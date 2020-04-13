@@ -81,6 +81,8 @@ object Natural {
         case _ => Left(int)
     }
 
+    def require(int: Integer): Natural = apply(int).right.get
+
     def unapply(n: Natural): Option[Int] = n.toInt
 
     def divide(numerator: Natural, denominator: Natural): PositiveReal with Rational = IntegerFraction.common(numerator, denominator) match {

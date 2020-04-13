@@ -1,18 +1,19 @@
 package net.ollie.maths.sequences
 
-import net.ollie.maths.numbers.constants.{Half, One, Zero}
-import net.ollie.maths.numbers.{Natural, Rational}
+import net.ollie.maths.numbers.constants.{Half, One, Two, Zero}
+import net.ollie.maths.numbers.{IntegerFraction, Natural, Rational}
 
 /**
  * Created by Ollie on 19/02/14.
+ *
  * @see http://mathworld.wolfram.com/BernoulliNumber.html
  */
-object BernoulliSequence
-        extends CachingSequence {
+sealed trait BernoulliSequence
+    extends CachingSequence {
 
     type Element = Rational
 
-    //private val calculator = ??? //FIXME
+    def oneConvention: Rational
 
     override def apply(n: Natural): Rational = n match {
         case One => -Half
@@ -20,14 +21,30 @@ object BernoulliSequence
         case _ => super.apply(n)
     }
 
-    protected[this] def initial = Map(Zero -> One, One -> -Half)
-
     protected[this] def create(n: Natural): Rational = n.toInt match {
         //case Some(m) => new SmallBernoulliNumber(m, calculator)
         case _ => ??? //TODO
     }
 
-    override def toString = "BernoulliSequence"
+    protected[this] def initial = Map(Zero -> One, One -> oneConvention, Two -> IntegerFraction(1, 6))
+
+}
+
+object BernoulliPlusSequence
+    extends BernoulliSequence {
+
+    override def oneConvention = Half
+
+    override def toString = "BernoulliPlusSequence"
+
+}
+
+object BernoulliMinusSequence
+    extends BernoulliSequence {
+
+    override def oneConvention = -Half
+
+    override def toString = "BernoulliMinusSequence"
 
 }
 

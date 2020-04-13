@@ -7,9 +7,11 @@ import net.ollie.maths.numbers.Natural
 trait PowerSeries
     extends Expression {
 
+    type Coefficient <: Constant
+
     def of: Expression
 
-    def coefficient(power: Natural): Constant
+    def coefficient(power: Natural): Coefficient
 
     override def unary_-(): PowerSeries = new NegatedPowerSeries(this)
 
@@ -28,6 +30,8 @@ trait UnivariateCenteredPowerSeries
 
 class NegatedPowerSeries[P <: PowerSeries](val series: P)
     extends NegatedExpression(series) with PowerSeries {
+
+    override type Coefficient = Constant
 
     override def of: Expression = series.of
 

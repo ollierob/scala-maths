@@ -29,8 +29,9 @@ object NthDegreePolynomial {
 private class UnivariateNthDegreePolynomial(val x: Variable, val coefficients: Seq[Complex])
     extends NthDegreePolynomial with UnivariatePolynomial {
 
-    //Should delegate to other types
     require(coefficients.length > 3)
+
+    override type Coefficient = Complex
 
     override val of = x
 

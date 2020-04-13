@@ -11,7 +11,7 @@ object IterativelyEvaluate {
 
     def apply(precision: Precision, f: IterativelyEvaluated): BigDecimal = {
         val max = precision.doubled
-        var current: BigDecimal = 0
+        var current: BigDecimal = null
         var currentPrecision = precision
         var n: Natural = Zero
         var continue: Boolean = true
@@ -19,16 +19,12 @@ object IterativelyEvaluate {
         do {
             val prev = current
             current = iterator.next(n, currentPrecision)
-            if (precision.within(current, prev)) continue = false
+            if (prev != null && precision.within(current, prev)) continue = false
             else currentPrecision = currentPrecision.increase
             if (continue && (currentPrecision > max).contains(true)) continue = false //FIXME check convergence better
             if (continue) n = n.succ
         } while (continue)
         current to precision
-    }
-
-    private def toBigInt(decimal: BigDecimal, precision: Precision): BigInt = {
-        return precision(decimal.underlying.movePointRight(precision.digits.toInt.get)) toBigInt
     }
 
 }
@@ -60,7 +56,7 @@ trait ApproximatelyEvaluated
     }
 
     override final def approximatelyEvaluate(precision: Precision): BigDecimal = {
-        precision(doApproximatelyEvaluate(precision))
+        doApproximatelyEvaluate(precision) to precision
     }
 
     protected[this] def doApproximatelyEvaluate(precision: Precision): BigDecimal

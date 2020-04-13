@@ -25,6 +25,8 @@ object LinearPolynomial {
 class UnivariateLinearPolynomial(val x: Variable, val a: Complex, val b: Complex)
     extends LinearPolynomial with UnivariatePolynomial {
 
+    override type Coefficient = Complex
+
     require(!a.isZero)
 
     override def of = x
