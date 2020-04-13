@@ -2,7 +2,6 @@ package net.ollie.maths.functions.polynomial
 
 import net.ollie.maths.expressions.Expression
 import net.ollie.maths.functions.BivariateFunction
-import net.ollie.maths.methods.Series
 import net.ollie.maths.numbers.combinatorial.BinomialCoefficient._
 import net.ollie.maths.numbers.constants.{Half, One, Zero}
 import net.ollie.maths.numbers.{Natural, Rational, Real}
@@ -41,15 +40,8 @@ object BernoulliPolynomial
 
 }
 
-private class KnownBernoulliPolynomial(val degree: Natural, val of: Expression, val representation: Expression)
+private class KnownBernoulliPolynomial(val degree: Natural, val of: Expression, override val representation: Expression)
     extends BernoulliPolynomial
 
 private class ComputedBernoulliPolynomial(val degree: Natural, val of: Expression)
-    extends BernoulliPolynomial {
-
-
-    def representation = Series(nth _, Zero, degree)
-
-    private def nth(k: Natural): Expression = coefficient(k) * (of ^ k)
-
-}
+    extends BernoulliPolynomial

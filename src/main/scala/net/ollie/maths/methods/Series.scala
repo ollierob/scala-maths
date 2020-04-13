@@ -31,25 +31,29 @@ object Series {
         }
     }
 
+    def natural(f: Natural => Expression, start: Natural, end: Natural): Expression = {
+        if (end < start) Zero
+        else new NaturalFiniteSumOf(f, start, end)
+    }
+
     def apply(f: Integer => Expression, start: Integer, end: Integer): Expression = {
         if (end < start) Zero
         else new IntegerFiniteSumOf(f, start, end)
     }
 
-    def apply(f: Natural => Expression, start: Natural, end: Natural): Expression = {
-        if (end < start) Zero
-        else new NaturalFiniteSumOf(f, start, end)
-    }
-
     def apply(f: Integer => Real, start: Integer, end: Integer): Real = {
         if (end < start) return Zero
+
         def g(i: Int): Real = f(Integer(i) + start)
+
         Seq.tabulate((end - start).toInt.get + 1)(g).sum
     }
 
     def apply(f: Natural => Real, start: Natural, end: Natural): Real = {
         if (end < start) return Zero
+
         def g(i: Int): Real = f(Natural(i) + start)
+
         Seq.tabulate((end - start).toInt.get + 1)(g).sum
     }
 
@@ -77,7 +81,7 @@ object Series {
 }
 
 class Series[+T <: Expression] protected(val terms: Seq[T])
-        extends Aggregate {
+    extends Aggregate {
 
     protected[this] def apply(expressions: Seq[Expression]) = Series(expressions)
 
@@ -115,21 +119,21 @@ class Series[+T <: Expression] protected(val terms: Seq[T])
 }
 
 private class NaturalFiniteSumOf(f: (Natural) => Expression, start: Natural, end: Natural)
-        extends FiniteSumOf(f, start, end) {
+    extends FiniteSumOf(f, start, end) {
 
     override def add(i: Int): Expression = f(start + i)
 
 }
 
 private class IntegerFiniteSumOf(f: (Integer) => Expression, start: Integer, end: Integer)
-        extends FiniteSumOf(f, start, end) {
+    extends FiniteSumOf(f, start, end) {
 
     override def add(i: Int): Expression = f(start + i)
 
 }
 
 private abstract class FiniteSumOf[I <: Integer](f: (I) => Expression, start: I, end: I)
-        extends Expression {
+    extends Expression {
 
     private val size = (end - start).toInt.get
 
@@ -158,10 +162,11 @@ private abstract class FiniteSumOf[I <: Integer](f: (I) => Expression, start: I,
 }
 
 private class InfiniteSumOf(f: Integer => Expression, start: Integer)
-        extends Expression {
+    extends Expression {
 
     def df(x: Variable): Expression = {
         def df(i: Integer): Expression = f(i).df(x)
+
         val s = if (df(start).isEmpty) start + 1 else start
         Series(df _, s)
     }
@@ -176,6 +181,7 @@ private class InfiniteSumOf(f: Integer => Expression, start: Integer)
 
     def replace(variables: Map[Variable, Expression]) = {
         def replaced(i: Integer): Expression = f(i).replace(variables)
+
         Series(replaced _, start)
     }
 
@@ -186,7 +192,7 @@ private class InfiniteSumOf(f: Integer => Expression, start: Integer)
 }
 
 private class InfiniteRealSum(f: Integer => Real, start: Integer)
-        extends Real
+    extends Real
         with IterativelyEvaluated {
 
     def isEmpty = false
@@ -206,7 +212,7 @@ private class InfiniteRealSum(f: Integer => Real, start: Integer)
 }
 
 private class InfiniteNaturalSum(f: Natural => Real, start: Natural)
-        extends Real
+    extends Real
         with IterativelyEvaluated {
 
     def isEmpty = false
@@ -226,7 +232,7 @@ private class InfiniteNaturalSum(f: Natural => Real, start: Natural)
 }
 
 private class SumOver[N <: Integer](f: N => Real, over: Seq[N])
-        extends Real
+    extends Real
         with CachedEvaluated {
 
     private val series: Iterable[Real] = {

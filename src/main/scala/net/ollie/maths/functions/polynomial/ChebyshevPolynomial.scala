@@ -12,18 +12,17 @@ import net.ollie.maths.numbers.{Integer, Natural}
  * Created by Ollie on 18/01/14.
  */
 sealed trait ChebyshevPolynomial
-        extends Polynomial {
+    extends Polynomial {
 
     override def coefficient(power: Natural) = ??? //TODO
 
 }
 
-
 /**
  * @see http://mathworld.wolfram.com/ChebyshevPolynomialoftheFirstKind.html
  */
 trait ChebyshevFirstKind
-        extends ChebyshevPolynomial {
+    extends ChebyshevPolynomial {
 
     def of: Expression
 
@@ -42,29 +41,29 @@ object ChebyshevFirstKind {
 }
 
 private class TZero(val of: Expression)
-        extends ChebyshevFirstKind {
+    extends ChebyshevFirstKind {
 
     def degree = Zero
 
-    def representation = One
+    override def representation = One
 
     override def df(x: Variable) = One.df(x)
 
 }
 
 private class TOne(val of: Expression)
-        extends ChebyshevFirstKind {
+    extends ChebyshevFirstKind {
 
     def degree = One
 
-    def representation = of
+    override def representation = of
 
 }
 
 private class TAny(val degree: Natural)(val of: Expression)
-        extends ChebyshevFirstKind {
+    extends ChebyshevFirstKind {
 
-    def representation = (2 * of * ChebyshevFirstKind(degree - 1)(of)) - ChebyshevFirstKind(degree - 2)(of)
+    override def representation = (2 * of * ChebyshevFirstKind(degree - 1)(of)) - ChebyshevFirstKind(degree - 2)(of)
 
     override def df(x: Variable) = degree * ChebyshevSecondKind(degree - 1)(x)
 
@@ -74,7 +73,7 @@ private class TAny(val degree: Natural)(val of: Expression)
  * @see http://mathworld.wolfram.com/ChebyshevPolynomialoftheSecondKind.html
  */
 trait ChebyshevSecondKind
-        extends ChebyshevPolynomial {
+    extends ChebyshevPolynomial {
 
     def of: Expression
 
@@ -93,27 +92,27 @@ object ChebyshevSecondKind {
 }
 
 private class UZero(val of: Expression)
-        extends ChebyshevSecondKind {
+    extends ChebyshevSecondKind {
 
     override def degree = Zero
 
-    def representation = One
+    override def representation = One
 
 }
 
 private class UOne(val of: Expression)
-        extends ChebyshevSecondKind {
+    extends ChebyshevSecondKind {
 
     def degree = One
 
-    def representation = 2 * of
+    override def representation = 2 * of
 
 }
 
 private class UAny(override val degree: Natural, val of: Expression)
-        extends ChebyshevSecondKind {
+    extends ChebyshevSecondKind {
 
-    def representation = Series(nth _, Zero, Floor(degree / 2))
+    override def representation = Series(nth _, Zero, Floor(degree / 2))
 
     private def nth(r: Integer): Expression = {
         ((-One) ^ r) * BinomialCoefficient(degree - r, r) * ((2 * of) ^ (degree - (2 * r)))
@@ -123,9 +122,9 @@ private class UAny(override val degree: Natural, val of: Expression)
 }
 
 private class RecursiveUAny(override val degree: Natural)(val of: Expression)
-        extends ChebyshevSecondKind {
+    extends ChebyshevSecondKind {
 
-    def representation = (2 * of * ChebyshevSecondKind(degree - 1)(of)) - ChebyshevSecondKind(degree - 2)(of)
+    override def representation = (2 * of * ChebyshevSecondKind(degree - 1)(of)) - ChebyshevSecondKind(degree - 2)(of)
 
     override def df(x: Variable) = ((degree.succ) * ChebyshevFirstKind(degree.succ)(of) - (of * this)) / (of ^ 2 - 1)
 

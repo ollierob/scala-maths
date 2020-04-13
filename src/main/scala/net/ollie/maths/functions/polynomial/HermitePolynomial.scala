@@ -48,6 +48,6 @@ class HermitePolynomialOf(override val degree: Natural)(val of: Expression)
         else (MinusOne ^ degree) * Exp(of ^ 2) * Differentiate(Exp((-of) ^ 2), degree)
     }
 
-    def representation = repr
+    override def representation = repr
 
 }

@@ -38,7 +38,7 @@ class EulerPolynomialOf(val degree: Natural)(val of: Expression)
 
     private val n = degree.succ
 
-    def representation = {
+    override def representation = {
         2 * (BernoulliPolynomial(n)(of) - ((2 ^ n) * BernoulliPolynomial(n)(of / 2))) / n
     }
 

@@ -4,6 +4,7 @@ import net.ollie.maths._
 import net.ollie.maths.expressions.{Empty, Expression, NegatedExpression}
 import net.ollie.maths.functions.Represented
 import net.ollie.maths.functions.numeric.Roots
+import net.ollie.maths.methods.Series
 import net.ollie.maths.numbers.Natural
 import net.ollie.maths.numbers.complex.Complex
 import net.ollie.maths.numbers.constants.Zero
@@ -20,7 +21,7 @@ trait Polynomial
 
     def of: Expression
 
-    override def representation: Expression
+    override def representation: Expression = Series.natural(n => coefficient(n) * of ^ n, Zero, degree)
 
     override def unary_-(): Polynomial = Polynomial.negate(this)
 
@@ -83,7 +84,7 @@ trait EmptyPolynomial
 
     override type Coefficient = Zero.type
 
-    def representation: Expression with Empty = Zero
+    override def representation: Expression with Empty = Zero
 
     override def unary_-(): Polynomial with Empty = this
 
@@ -99,7 +100,7 @@ trait EmptyPolynomial
 
 }
 
-abstract class ConstantPolynomial[N <: Constant](val representation: N)
+abstract class ConstantPolynomial[N <: Constant](override val representation: N)
     extends Polynomial
 
 trait PolynomialRoots[+F <: Constant, C <: Constant]

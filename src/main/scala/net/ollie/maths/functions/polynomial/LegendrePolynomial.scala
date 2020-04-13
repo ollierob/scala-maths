@@ -62,7 +62,7 @@ class OneLegendrePolynomial(val of: Expression)
 
     override def coefficient(power: Natural) = Zero
 
-    def representation = of
+    override def representation = of
 
 }
 
@@ -71,7 +71,7 @@ class SomeLegendrePolynomial(override val degree: Natural)(val of: Expression)
 
     require(degree > One)
 
-    def representation = {
+    override def representation = {
         ((((2 * degree) - 1) * of * LegendrePolynomial(degree - 1)(of)) - ((degree - 1) * LegendrePolynomial(degree - 2)(of))) / degree
     }
 

@@ -1,16 +1,15 @@
 package net.ollie.maths.functions.polynomial
 
-import net.ollie.maths._
 import net.ollie.maths.expressions.Expression
-import net.ollie.maths.functions.{Modal, Represented}
-import net.ollie.maths.numbers.{Integer, Natural}
+import net.ollie.maths.functions.Modal
 import net.ollie.maths.numbers.constants.Zero
+import net.ollie.maths.numbers.{Integer, Natural}
 
 /**
  * Created by Ollie on 08/01/14.
  */
 trait AssociatedLegendrePolynomial
-        extends Modal
+    extends Modal
         with Polynomial {
 
     override def toString = s"LegendreP($degree, $order)($of)"
@@ -38,17 +37,17 @@ object AssociatedLegendrePolynomial {
  * When |m| > l the polynomial is empty.
  */
 private class EmptyAssociatedLegendrePolynomial(override val degree: Natural, val order: Integer)(val of: Expression)
-        extends AssociatedLegendrePolynomial
+    extends AssociatedLegendrePolynomial
         with EmptyPolynomial
 
 private class RegularAssociatedLegendrePolynomial(val degree: Natural, val order: Integer)(val of: Expression)
-        extends AssociatedLegendrePolynomial {
+    extends AssociatedLegendrePolynomial {
 
     import net.ollie.maths.functions.polynomial.{AssociatedLegendrePolynomial => Plm}
 
     require(degree <= order.abs)
 
-    def representation = {
+    override lazy val representation = {
         ((((2 * l) - 1) * Plm(degree - 1, order)(of)) - ((degree + order) * Plm(degree - 2, order)(of))) / (degree - order + 1)
     }
 
