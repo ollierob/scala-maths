@@ -1,18 +1,18 @@
 package net.ollie.maths.functions.angular
 
 import net.ollie.maths.expressions.Expression
+import net.ollie.maths.functions.numeric.Exp
 import net.ollie.maths.functions.{BuiltFunction, RealFunctionBuilder, UnivariateFunction}
 import net.ollie.maths.numbers.complex.Complex
-import net.ollie.maths.{CachedEvaluated, Constant}
-import net.ollie.maths.numbers.{Precision, Real}
-import net.ollie.maths.functions.numeric.Exp
 import net.ollie.maths.numbers.constants.One
+import net.ollie.maths.numbers.{Precision, Real}
+import net.ollie.maths.{CachedEvaluated, Constant}
 
 /**
  * Created by Ollie on 09/02/14.
  */
 object HyperbolicCos
-        extends RealFunctionBuilder
+    extends RealFunctionBuilder
         with UnivariateFunction[Complex, Complex] {
 
     override def apply(n: Constant): Constant = Complex(n) match {
@@ -30,7 +30,8 @@ object HyperbolicCos
 
 }
 
-trait HyperbolicCos {
+trait HyperbolicCos
+    extends Expression {
 
     def of: Expression
 
@@ -39,10 +40,10 @@ trait HyperbolicCos {
 }
 
 class HyperbolicCosOf(val of: Expression)
-        extends BuiltFunction
+    extends BuiltFunction
         with HyperbolicCos {
 
-    def isEmpty = false
+    override def isEmpty = false
 
     protected[this] def derivative(x: Expression) = HyperbolicSin(x)
 
@@ -51,11 +52,11 @@ class HyperbolicCosOf(val of: Expression)
 }
 
 class RealHyperbolicCos(val of: Real)
-        extends Real
+    extends Real
         with HyperbolicCos
         with CachedEvaluated {
 
-    def isEmpty = false
+    override def isEmpty = false
 
     private lazy val representation = (Exp(of) + Exp(-of)) / 2
 

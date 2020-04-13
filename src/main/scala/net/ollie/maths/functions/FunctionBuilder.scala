@@ -9,6 +9,7 @@ import net.ollie.maths.numbers.complex.Complex
  * Can convert an expression into another expression, or a number into another number.
  *
  * Created by Ollie on 11/01/14.
+ *
  * @see [[BuiltFunction]]
  */
 trait FunctionBuilder {
@@ -28,7 +29,7 @@ trait FunctionBuilder {
 }
 
 trait RealFunctionBuilder
-        extends FunctionBuilder {
+    extends FunctionBuilder {
 
     def apply(n: Constant): Constant = Real(n) match {
         case Some(re) => apply(re)
@@ -40,7 +41,7 @@ trait RealFunctionBuilder
 }
 
 trait ComplexFunctionBuilder
-        extends RealFunctionBuilder {
+    extends RealFunctionBuilder {
 
     type Z <: Constant
 
@@ -62,7 +63,7 @@ trait ComplexFunctionBuilder
  * Function built by a function builder.
  */
 trait BuiltFunction
-        extends Composition {
+    extends Composition {
 
     protected[this] def builder: FunctionBuilder
 
@@ -74,10 +75,11 @@ trait BuiltFunction
 
 /**
  * Builds an odd function.
+ *
  * @see http://mathworld.wolfram.com/OddFunction.html
  */
 trait OddBuiltFunction
-        extends BuiltFunction {
+    extends BuiltFunction {
 
     override def unary_-() = apply(-of)
 

@@ -1,23 +1,22 @@
 package net.ollie.maths.functions.angular
 
 import net.ollie.maths.expressions.Expression
-import net.ollie.maths.functions.{BuiltFunction, OddBuiltFunction, RealFunctionBuilder, UnivariateFunction}
-import net.ollie.maths.numbers.complex.Complex
-import net.ollie.maths.{CachedEvaluated, Constant}
-import net.ollie.maths.numbers.{Precision, Real}
-import net.ollie.maths.numbers.constants.Zero
 import net.ollie.maths.functions.numeric.Exp
+import net.ollie.maths.functions.{OddBuiltFunction, RealFunctionBuilder, UnivariateFunction}
+import net.ollie.maths.numbers.complex.Complex
+import net.ollie.maths.numbers.constants.Zero
+import net.ollie.maths.numbers.{Precision, Real}
+import net.ollie.maths.{CachedEvaluated, Constant}
 
 /**
  * Created by Ollie on 09/02/14.
  */
 object HyperbolicSin
-        extends RealFunctionBuilder
-        with UnivariateFunction[Complex, Complex] {
+    extends RealFunctionBuilder {
 
     override def apply(n: Constant): Constant = Complex(n) match {
         case Some(z) => apply(z)
-        case _ => super.apply(n)
+        case _ => super.apply(n) //Checks real
     }
 
     def apply(re: Real): Real with HyperbolicSin = new RealHyperbolicSin(re)
@@ -31,7 +30,7 @@ object HyperbolicSin
 }
 
 trait HyperbolicSin
-        extends Expression {
+    extends Expression {
 
     def of: Expression
 
@@ -40,19 +39,19 @@ trait HyperbolicSin
 }
 
 class HyperbolicSinOf(val of: Expression)
-        extends OddBuiltFunction
+    extends OddBuiltFunction
         with HyperbolicSin {
 
     protected[this] def builder = HyperbolicSin
 
-    def isEmpty = of.isEmpty
+    override def isEmpty = of.isEmpty
 
     protected[this] def derivative(x: Expression) = HyperbolicCos(x)
 
 }
 
 class RealHyperbolicSin(val of: Real)
-        extends Real
+    extends Real
         with HyperbolicSin
         with CachedEvaluated {
 
