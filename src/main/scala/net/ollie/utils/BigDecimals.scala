@@ -1,9 +1,11 @@
 package net.ollie.utils
 
 import java.math
+import java.math.MathContext
 
 import ch.obermuhlner.math.big.BigDecimalMath
-import net.ollie.maths.numbers.Precision
+import net.ollie.maths.numbers.{Integer, Precision}
+import net.ollie.maths.numbers.Precision._
 
 object BigDecimals {
 
@@ -58,6 +60,11 @@ object BigDecimals {
 
     def root(base: BigDecimal, power: BigDecimal, precision: Precision): BigDecimal = {
         precision.applyTo(base, (bd, mc) => BigDecimalMath.root(bd, power, mc))
+    }
+
+    def pi(precision: Precision): BigDecimal = {
+        val mc = new MathContext(precision.digits.requireInt + 1, Precision.DEFAULT_ROUNDING)
+        BigDecimalMath.pi(mc)
     }
 
     private implicit def apply(bd: math.BigDecimal): BigDecimal = BigDecimal(bd)

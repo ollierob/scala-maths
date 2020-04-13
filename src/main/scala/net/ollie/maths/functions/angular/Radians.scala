@@ -3,7 +3,8 @@ package net.ollie.maths.functions.angular
 import net.ollie.maths.functions.angular.Angle.AngleBuilder
 import net.ollie.maths.functions.numeric.Modulo
 import net.ollie.maths.numbers.constants.{Pi, Zero}
-import net.ollie.maths.numbers.{Integer, Real}
+import net.ollie.maths.numbers.{Integer, Precision, Real}
+import net.ollie.utils.BigDecimals
 
 trait Radians
     extends Angle {
@@ -53,6 +54,8 @@ case class PiRadians(n: Integer)
     extends Radians {
 
     override def value = n * Pi
+
+    override def evaluate(precision: Precision): BigDecimal = BigDecimals.pi(precision) * n.evaluate(precision)
 
 }
 
