@@ -1,9 +1,18 @@
 package net.ollie.maths.functions.angular
 
-import net.ollie.maths.expressions.Expression
+import net.ollie.maths.expressions.{Expression, Invertible}
 import net.ollie.maths.functions.{OddBuiltFunction, RealFunctionBuilder}
 import net.ollie.maths.numbers.constants.Zero
 import net.ollie.maths.numbers.{Precision, Real}
+
+trait HyperbolicTan
+    extends Expression with Invertible {
+
+    val of: Expression
+
+    override def toString = s"HyperbolicTan($of)"
+
+}
 
 object HyperbolicTan
     extends RealFunctionBuilder {
@@ -18,15 +27,6 @@ object HyperbolicTan
 
 }
 
-trait HyperbolicTan
-    extends Expression {
-
-    val of: Expression
-
-    override def toString = s"HyperbolicTan($of)"
-
-}
-
 class HyperbolicTanOf(val of: Expression)
     extends OddBuiltFunction
         with HyperbolicTan {
@@ -36,6 +36,8 @@ class HyperbolicTanOf(val of: Expression)
     override def isEmpty = of.isEmpty
 
     protected[this] def derivative(x: Expression) = 1 - HyperbolicTan.squared(of)
+
+    override def inverse = ArcHyperbolicTan(of)
 
 }
 
