@@ -21,7 +21,7 @@ trait Polynomial
 
     def of: Expression
 
-    override def representation: Expression = Series.natural(n => coefficient(n) * of ^ n, Zero, degree)
+    override def representation: Expression = Series.natural(n => coefficient(n) * (of ^ n), Zero, degree)
 
     override def unary_-(): Polynomial = Polynomial.negate(this)
 
