@@ -33,7 +33,7 @@ class DurandKerner(val initial: Function[Int, Complex])
         def withinPrecision(prev: Seq[Complex], next: Seq[Complex], precision: Precision): Boolean = {
             if (prev == Nil) return false
             require(prev.length == next.length)
-            for (i <- 0 to prev.length) {
+            for (i <- prev.indices) {
                 val z1 = prev.apply(i)
                 val z2 = next.apply(i)
                 if (!withinPrecision(z1, z2, precision)) return false
@@ -48,14 +48,18 @@ class DurandKerner(val initial: Function[Int, Complex])
         def next(current: Seq[Complex]): Seq[Complex] = {
             val next = new ArrayBuffer[Complex](current.length)
             for (i <- current.indices) {
-                val z = current.apply(i)
+                val z = evaluate(current.apply(i))
                 next += z - (numerator(z) / denominator(i, current))
             }
             next.toSeq
         }
 
+        private def evaluate(z: Complex): Complex = {
+            Complex(z.re.evaluate(precision), z.im.evaluate(precision))
+        }
+
         def numerator(z: Complex): Complex = {
-            polynomial.replace(z).as(Complex)
+            evaluate(polynomial.replace(z).as(Complex))
         }
 
         def denominator(index: Int, coefficients: Seq[Complex]): Complex = {
@@ -66,7 +70,7 @@ class DurandKerner(val initial: Function[Int, Complex])
                     product *= (pn - coefficients.apply(i))
                 }
             }
-            product
+            evaluate(product)
         }
 
     }

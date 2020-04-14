@@ -3,6 +3,7 @@ package net.ollie.maths
 import net.ollie.maths.numbers.Precision
 import net.ollie.utils.OptionalBigDecimal
 
+import scala.collection.mutable
 import scala.math.BigDecimal.RoundingMode._
 
 /**
@@ -47,11 +48,13 @@ trait NotEvaluable
 trait CachedEvaluated
     extends Evaluable {
 
-    private var max: Option[(Precision, BigDecimal)] = None
+    private val max: mutable.Map[String, (Precision, BigDecimal)] = mutable.Map()
 
     def evaluate(precision: Precision): BigDecimal = {
 
-        max match {
+        val maxForType: Option[(Precision, BigDecimal)] = max.get(precision.precisionType)
+
+        maxForType match {
             case Some((maxPrecision, value)) => (maxPrecision >= precision) match {
                 case Some(true) => return precision(value)
                 case _ =>
@@ -61,13 +64,13 @@ trait CachedEvaluated
 
         val evaluated = this.doEvaluate(precision) to precision //Ensure evaluated at the correct precision
 
-        if (max.isDefined) {
-            precision > max.get._1 match {
-                case Some(true) => max = Some(precision, evaluated)
+        if (maxForType.isDefined) {
+            precision > maxForType.get._1 match {
+                case Some(true) => max.put(precision.precisionType, (precision, evaluated))
                 case _ =>
             }
         } else {
-            max = Some(precision, evaluated)
+            max.put(precision.precisionType, (precision, evaluated))
         }
 
         precision(evaluated)(rounding)
@@ -78,7 +81,7 @@ trait CachedEvaluated
 
     protected[this] def cache(precision: Precision): Boolean = true
 
-    protected[this] def atMaxPrecision: Option[BigDecimal] = max match {
+    protected[this] def atMaxPrecision(precision: Precision): Option[BigDecimal] = max.get(precision.precisionType) match {
         case Some((p, bd)) => Some(bd)
         case _ => None
     }

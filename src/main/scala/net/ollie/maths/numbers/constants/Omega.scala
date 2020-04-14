@@ -18,7 +18,7 @@ object Omega
 
         def evaluationIterator(startPrecision: Precision) = new EvaluationIterator {
 
-            private var current = atMaxPrecision match {
+            private var current = atMaxPrecision(startPrecision) match {
                 case Some(bd) => bd
                 case _ => OMEGA_100
             }

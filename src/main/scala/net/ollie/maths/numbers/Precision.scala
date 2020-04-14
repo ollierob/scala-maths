@@ -37,6 +37,8 @@ sealed trait Precision {
         else this > that
     }
 
+    def precisionType: String = getClass.getSimpleName
+
     override def equals(obj: Any) = obj.isInstanceOf[Precision] && this.equals(obj.asInstanceOf[Precision])
 
     override def hashCode = digits.hashCode
