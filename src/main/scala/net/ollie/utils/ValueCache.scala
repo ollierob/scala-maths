@@ -9,20 +9,22 @@ import scala.jdk.CollectionConverters._;
  * Created by Ollie on 05/08/2015.
  */
 abstract class ValueCache[K, V]
-        extends (K => V) {
+    extends (K => V) {
 
-    private val cache: mutable.Map[K, V] = new ConcurrentHashMap[K, V].asScala
+    private val cache: mutable.Map[K, V] = new ConcurrentHashMap[K, V].asScala ++ initial
 
     def apply(key: K) = cache.getOrElseUpdate(key, compute(key))
 
-    protected def compute(key: K): V
+    protected[this] def compute(key: K): V
+
+    protected[this] def initial: Map[K, V] = Map()
 
     def reset() = cache.clear()
 
 }
 
 abstract class BiValueCache[K1, K2, V]
-        extends ValueCache[(K1, K2), V]
+    extends ValueCache[(K1, K2), V]
         with ((K1, K2) => V) {
 
     def apply(k1: K1, k2: K2): V = apply((k1, k2))
