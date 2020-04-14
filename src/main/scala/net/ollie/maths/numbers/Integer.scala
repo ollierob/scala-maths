@@ -184,11 +184,6 @@ class ExactBigInteger(val evaluate: BigInt)
 
 object NegatedInteger {
 
-    def unapply(negated: NegatedInteger): Option[Int] = negated.evaluate match {
-        case i if i.isValidInt => Some(i.toInt)
-        case _ => None
-    }
-
 }
 
 class NegatedInteger(val i: Integer)
@@ -202,7 +197,7 @@ class NegatedInteger(val i: Integer)
     override def isEmpty = super[NegatedReal].isEmpty
 
     override def equals(that: Integer) = that match {
-        case NegatedInteger(j) => i == j || super.equals(that)
+        case j: NegatedInteger => i == -j.i || super.equals(that)
         case _ => super.equals(that)
     }
 
