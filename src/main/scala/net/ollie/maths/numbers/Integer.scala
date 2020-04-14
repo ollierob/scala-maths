@@ -123,7 +123,7 @@ object Integer
 
     def round(bd: BigDecimal): Integer = bd match {
         case Zero.BIG_DECIMAL => Zero
-        case _ => apply(bd.rounded.toLongExact)
+        case _ => apply(bd.rounded.toLong)
     }
 
     implicit object IntegerArithmetic

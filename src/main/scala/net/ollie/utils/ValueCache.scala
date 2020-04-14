@@ -13,11 +13,16 @@ abstract class ValueCache[K, V]
 
     private val cache: mutable.Map[K, V] = new ConcurrentHashMap[K, V].asScala ++ initial
 
-    def apply(key: K) = cache.getOrElseUpdate(key, compute(key))
+    def apply(key: K) = {
+        if (shouldCache(key)) cache.getOrElseUpdate(key, compute(key))
+        else compute(key)
+    }
 
     protected[this] def compute(key: K): V
 
     protected[this] def initial: Map[K, V] = Map()
+
+    protected[this] def shouldCache(k: K): Boolean = true
 
     def reset() = cache.clear()
 

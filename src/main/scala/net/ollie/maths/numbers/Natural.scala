@@ -111,7 +111,7 @@ object Natural {
         extends ValueCache[Natural, Natural]
             with FactorialCache {
 
-        override protected[this] def initial = Map(Zero -> One, One -> One, Two -> Two, 9 -> 362880, 10 -> 3628800)
+        override protected[this] def initial = Map(Zero -> One, One -> One, Two -> Two, Natural(9) -> Natural(362880), Natural(10) -> Natural(3628800))
 
         override protected[this] def compute(n: Natural) = computeFactorial(n, FactorialCache.this)
 

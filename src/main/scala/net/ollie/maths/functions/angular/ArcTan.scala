@@ -4,8 +4,8 @@ import net.ollie.maths.CachedEvaluated
 import net.ollie.maths.expressions.Expression
 import net.ollie.maths.functions.{BuiltFunction, RealFunctionBuilder, UnivariateFunction}
 import net.ollie.maths.numbers.constants.Zero
-import net.ollie.maths.numbers.{EmptyConstant, Precision, Real}
-import net.ollie.utils.BigDecimals
+import net.ollie.maths.numbers.{EmptyConstant, Precision, Rational, Real}
+import net.ollie.utils.{BigDecimals, ValueCache}
 
 /**
  *
@@ -26,6 +26,20 @@ object ArcTan
     protected[this] def create(expr: Expression) = new ExpressionArcTan(expr)
 
     override protected[this] def empty: Angle = EmptyAngle
+
+    private[angular] def createReal(re: Real): RealArcTan = RealArcTanCache(re)
+
+    private object RealArcTanCache
+        extends ValueCache[Real, RealArcTan] {
+
+        override protected[this] def compute(key: Real) = new RealArcTan(key)
+
+        override protected[this] def shouldCache(k: Real) = k match {
+            case _: Rational => true
+            case _ => false
+        }
+
+    }
 
 }
 
@@ -67,7 +81,7 @@ private object ZeroArcTanRadians
 private class RealArcTanRadians(val of: Real)
     extends ArcTan with Radians {
 
-    override lazy val value: Real = new RealArcTan(of)
+    override lazy val value: Real = ArcTan.createReal(of)
 
     override def isEmpty = of.isEmpty //Only zero at x=0
 

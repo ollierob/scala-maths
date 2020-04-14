@@ -52,7 +52,7 @@ trait CachedEvaluated
     def evaluate(precision: Precision): BigDecimal = {
 
         max match {
-            case Some((maxPrecision, value)) => maxPrecision >= precision match {
+            case Some((maxPrecision, value)) => (maxPrecision >= precision) match {
                 case Some(true) => return precision(value)
                 case _ =>
             }

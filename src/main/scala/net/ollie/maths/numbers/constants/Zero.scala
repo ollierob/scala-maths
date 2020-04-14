@@ -3,14 +3,14 @@ package net.ollie.maths.numbers.constants
 import net.ollie.maths.expressions.Expression
 import net.ollie.maths.numbers.Natural.FactorialCache
 import net.ollie.maths.numbers._
-import net.ollie.maths.{Operation, Variable}
+import net.ollie.maths.{Constant, Operation, Variable}
 
 /**
  * Empty real number.
  * Created by Ollie on 01/01/14.
  */
 object Zero
-        extends Natural
+    extends Natural
         with EmptyConstant {
 
     private final val i = BigInt(0)
@@ -50,6 +50,8 @@ object Zero
     override def ~=(that: Real)(implicit precision: Precision) = that.isEmpty || super.~=(that)
 
     override def toString = super[EmptyConstant].toString
+
+    override def equals(n: Constant) = n.isEmpty
 
     val BIG_DECIMAL = BigDecimal.valueOf(0)
 
