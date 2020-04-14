@@ -19,6 +19,7 @@ class DurandKernerTest extends AnyFlatSpec with Matchers {
         it should "solve to 1dp" in {
 
             val roots = new DurandKerner(i => (i, i + 1)).roots(poly, 1 dp)
+            roots.length shouldBe 3
 
         }
 
