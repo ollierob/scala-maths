@@ -319,10 +319,7 @@ class NegatedReal(val of: Real)
 
     override def isPositive = of isNegative
 
-    override def is(is: Is[Real]) = is match {
-        case Rational | Irrational | Integer => of.is(is)
-        case _ => false
-    }
+    override def is(test: Is[Real]) = test.is(of)
 
     override def toString = s"-($of)"
 
@@ -357,10 +354,7 @@ class AbsReal(val of: Real)
 
     override def toString = s"|$of|"
 
-    override def is(is: Is[Real]) = is match {
-        case Rational | Irrational | Integer => of.is(is)
-        case _ => false
-    }
+    override def is(is: Is[Real]) = is.is(of)
 
     protected[this] def doEvaluate(precision: Precision) = of.evaluate(precision).abs
 

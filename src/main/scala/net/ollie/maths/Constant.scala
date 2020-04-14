@@ -103,7 +103,7 @@ trait Constant
 
     override def replace(variables: Map[Variable, Expression]): System = narrow
 
-    def is(is: Is[System]): Boolean = is.is(narrow)
+    def is(test: Is[System]): Boolean = test.is(narrow)
 
     final override def equals(expr: Expression) = expr.toConstant match {
         case Some(n) => this.equals(n)
